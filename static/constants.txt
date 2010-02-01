@@ -1,0 +1,26 @@
+plugin.tx_imagecycle_pi1 {
+	# cat=plugin.tx_imagecycle.basic/enable/010; type=options[jquery]; label=JS Library: JS-Library to use
+	jsLibrary = jquery
+
+
+	# cat=plugin.tx_imagecycle.basic/file/010; type=file[html,htm,tmpl,txt]; label=HTML-Template File: Location of the used template
+	file.templateFile = EXT:imagecycle/pi1/tx_imagecycle_pi1.tmpl
+
+	# cat=plugin.tx_imagecycle.basic/file/020; type=file[css]; label=CSS file: CSS-File to include
+	file.cssFile = EXT:imagecycle/pi1/tx_imagecycle_pi1.css
+
+
+	# cat=plugin.tx_imagecycle.basic/dims/040; type=string; label=Image width: Width of the images
+	imagewidth = 200c
+
+	# cat=plugin.tx_imagecycle.basic/dims/050; type=string; label=Image height: Height of the images
+	imageheight = 200c
+
+
+	# cat=plugin.tx_imagecycle.jquery/enable/010; type=boolean; label=jQuery noConflict: Use the noConflict methode
+	jQueryNoConflict = 1
+
+	# cat=plugin.tx_imagecycle.jquery/file/020; type=file[js]; label=jQuery Library: Location of the jQuery Lib
+	file.jQueryLibrary = EXT:imagecycle/res/jquery/js/jquery-1.4.1.min.js
+}
+

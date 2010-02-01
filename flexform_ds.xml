@@ -1,0 +1,380 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<general>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sheet_general</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<images>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.images</label>
+							<config>
+								<type>group</type>
+								<internal_type>file</internal_type>
+								<allowed>files</allowed>
+								<size>6</size>
+								<maxitems>32</maxitems>
+								<minitems>0</minitems>
+								<show_thumbs>1</show_thumbs>
+								<allowed>gif,jpg,jpeg,png</allowed>
+								<max_size>10240</max_size>
+								<uploadfolder>uploads/tx_imagecycle</uploadfolder>
+							</config>
+						</TCEforms>
+					</images>
+					<hrefs>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.href</label>
+							<config>
+								<type>text</type>
+								<wrap>OFF</wrap>
+								<cols>48</cols>
+								<rows>6</rows>
+							</config>
+						</TCEforms>
+					</hrefs>
+					<captions>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.caption</label>
+							<config>
+								<type>text</type>
+								<wrap>OFF</wrap>
+								<cols>48</cols>
+								<rows>6</rows>
+							</config>
+						</TCEforms>
+					</captions>
+				</el>
+			</ROOT>
+		</general>
+		<settings>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sheet_settings
+					</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<imagewidth>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imagewidth</label>
+							<config>
+								<type>input</type>
+								<size>6</size>
+								<max>6</max>
+								<eval>string</eval>
+							</config>
+						</TCEforms>
+					</imagewidth>
+					<imageheight>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imageheight</label>
+							<config>
+								<type>input</type>
+								<size>6</size>
+								<max>6</max>
+								<eval>string</eval>
+							</config>
+						</TCEforms>
+					</imageheight>
+					<showcaption>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showcaption</label>
+							<config>
+								<type>check</type>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</showcaption>
+					<random>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.random</label>
+							<config>
+								<type>check</type>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</random>
+				</el>
+			</ROOT>
+		</settings>
+		<movement>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sheet_movement
+					</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<type>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.type</label>
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0"></numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">none</numIndex>
+										<numIndex index="1">none</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">blindX</numIndex>
+										<numIndex index="1">blindX</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">blindY</numIndex>
+										<numIndex index="1">blindY</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">blindZ</numIndex>
+										<numIndex index="1">blindZ</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">cover</numIndex>
+										<numIndex index="1">cover</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">curtainX</numIndex>
+										<numIndex index="1">curtainX</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">curtainY</numIndex>
+										<numIndex index="1">curtainY</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">fade</numIndex>
+										<numIndex index="1">fade</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">fadeZoom</numIndex>
+										<numIndex index="1">fadeZoom</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">growX</numIndex>
+										<numIndex index="1">growX</numIndex>
+									</numIndex>
+									<numIndex index="11" type="array">
+										<numIndex index="0">growY</numIndex>
+										<numIndex index="1">growY</numIndex>
+									</numIndex>
+									<numIndex index="12" type="array">
+										<numIndex index="0">scrollUp</numIndex>
+										<numIndex index="1">scrollUp</numIndex>
+									</numIndex>
+									<numIndex index="13" type="array">
+										<numIndex index="0">scrollDown</numIndex>
+										<numIndex index="1">scrollDown</numIndex>
+									</numIndex>
+									<numIndex index="14" type="array">
+										<numIndex index="0">scrollLeft</numIndex>
+										<numIndex index="1">scrollLeft</numIndex>
+									</numIndex>
+									<numIndex index="15" type="array">
+										<numIndex index="0">scrollRight</numIndex>
+										<numIndex index="1">scrollRight</numIndex>
+									</numIndex>
+									<numIndex index="16" type="array">
+										<numIndex index="0">scrollHorz</numIndex>
+										<numIndex index="1">scrollHorz</numIndex>
+									</numIndex>
+									<numIndex index="17" type="array">
+										<numIndex index="0">scrollVert</numIndex>
+										<numIndex index="1">scrollVert</numIndex>
+									</numIndex>
+									<numIndex index="18" type="array">
+										<numIndex index="0">shuffle</numIndex>
+										<numIndex index="1">shuffle</numIndex>
+									</numIndex>
+									<numIndex index="19" type="array">
+										<numIndex index="0">slideX</numIndex>
+										<numIndex index="1">slideX</numIndex>
+									</numIndex>
+									<numIndex index="20" type="array">
+										<numIndex index="0">slideY</numIndex>
+										<numIndex index="1">slideY</numIndex>
+									</numIndex>
+									<numIndex index="21" type="array">
+										<numIndex index="0">toss</numIndex>
+										<numIndex index="1">toss</numIndex>
+									</numIndex>
+									<numIndex index="22" type="array">
+										<numIndex index="0">turnUp</numIndex>
+										<numIndex index="1">turnUp</numIndex>
+									</numIndex>
+									<numIndex index="23" type="array">
+										<numIndex index="0">turnDown</numIndex>
+										<numIndex index="1">turnDown</numIndex>
+									</numIndex>
+									<numIndex index="24" type="array">
+										<numIndex index="0">turnLeft</numIndex>
+										<numIndex index="1">turnLeft</numIndex>
+									</numIndex>
+									<numIndex index="25" type="array">
+										<numIndex index="0">turnRight</numIndex>
+										<numIndex index="1">turnRight</numIndex>
+									</numIndex>
+									<numIndex index="26" type="array">
+										<numIndex index="0">uncover</numIndex>
+										<numIndex index="1">uncover</numIndex>
+									</numIndex>
+									<numIndex index="27" type="array">
+										<numIndex index="0">wipe</numIndex>
+										<numIndex index="1">wipe</numIndex>
+									</numIndex>
+									<numIndex index="28" type="array">
+										<numIndex index="0">zoom</numIndex>
+										<numIndex index="1">zoom</numIndex>
+									</numIndex>
+									<numIndex index="29" type="array">
+										<numIndex index="0">all</numIndex>
+										<numIndex index="1">all</numIndex>
+									</numIndex>
+								</items>
+								<size>1</size>
+								<maxitems>1</maxitems>
+							</config>
+						</TCEforms>
+					</type>
+					<transition>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transition</label>
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0"></numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Quad</numIndex>
+										<numIndex index="1">Quad</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Cubic</numIndex>
+										<numIndex index="1">Cubic</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">Quart</numIndex>
+										<numIndex index="1">Quart</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">Quint</numIndex>
+										<numIndex index="1">Quint</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">Expo</numIndex>
+										<numIndex index="1">Expo</numIndex>
+									</numIndex>
+									<numIndex index="6" type="array">
+										<numIndex index="0">Circ</numIndex>
+										<numIndex index="1">Circ</numIndex>
+									</numIndex>
+									<numIndex index="7" type="array">
+										<numIndex index="0">Sine</numIndex>
+										<numIndex index="1">Sine</numIndex>
+									</numIndex>
+									<numIndex index="8" type="array">
+										<numIndex index="0">Back</numIndex>
+										<numIndex index="1">Back</numIndex>
+									</numIndex>
+									<numIndex index="9" type="array">
+										<numIndex index="0">Bounce</numIndex>
+										<numIndex index="1">Bounce</numIndex>
+									</numIndex>
+									<numIndex index="10" type="array">
+										<numIndex index="0">Elastic</numIndex>
+										<numIndex index="1">Elastic</numIndex>
+									</numIndex>
+								</items>
+								<size>1</size>
+								<maxitems>1</maxitems>
+							</config>
+						</TCEforms>
+					</transition>
+					<transitiondir>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transitiondir</label>
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0"></numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">In</numIndex>
+										<numIndex index="1">In</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Out</numIndex>
+										<numIndex index="1">Out</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">InOut</numIndex>
+										<numIndex index="1">InOut</numIndex>
+									</numIndex>
+								</items>
+								<size>1</size>
+								<maxitems>1</maxitems>
+							</config>
+						</TCEforms>
+					</transitiondir>
+					<transitionduration>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transitionduration</label>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<max>5</max>
+								<checkbox>0</checkbox>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</transitionduration>
+					<displayduration>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.displayduration</label>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<max>5</max>
+								<checkbox>0</checkbox>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</displayduration>
+					<sync>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sync</label>
+							<config>
+								<type>check</type>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</sync>
+				</el>
+			</ROOT>
+		</movement>
+	</sheets>
+</T3DataStructure>

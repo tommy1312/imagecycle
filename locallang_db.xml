@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'imagecycle'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="pages.tx_imagecycle_images">Images Cycle</label>
+			<label index="pages.tx_imagecycle_stoprecursion">Stop Recursion (Reset)</label>
+			<label index="pages.tx_imagecycle_href">Image links</label>
+			<label index="pages.tx_imagecycle_caption">Image Captions</label>
+
+			<label index="tt_content.tx_imagecycle_activate">Activate Image Slide</label>
+			<label index="tt_content.tx_imagecycle_duration">Duration in ms</label>
+
+			<label index="tt_content.list_type_pi1">Image cycle</label>
+
+			<label index="tt_content.pi_flexform.sheet_general">General</label>
+			<label index="tt_content.pi_flexform.images">Slide Images</label>
+			<label index="tt_content.pi_flexform.href">Image links</label>
+			<label index="tt_content.pi_flexform.caption">Image Captions</label>
+
+			<label index="tt_content.pi_flexform.sheet_settings">Settings</label>
+			<label index="tt_content.pi_flexform.imagewidth">Width</label>
+			<label index="tt_content.pi_flexform.imageheight">Height</label>
+			<label index="tt_content.pi_flexform.showcaption">Show caption</label>
+			<label index="tt_content.pi_flexform.random">Random order</label>
+
+			<label index="tt_content.pi_flexform.sheet_movement">Movement</label>
+			<label index="tt_content.pi_flexform.type">Type of movement</label>
+			<label index="tt_content.pi_flexform.transition">Type of transition</label>
+			<label index="tt_content.pi_flexform.transitiondir">Direction of transition</label>
+			<label index="tt_content.pi_flexform.transitionduration">Duration of transition (ms)</label>
+			<label index="tt_content.pi_flexform.displayduration">Duration of display (ms)</label>
+			<label index="tt_content.pi_flexform.sync">Simultaneously animation</label>
+
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="pages.tx_imagecycle_images">Bilder Zyklus</label>
+			<label index="pages.tx_imagecycle_stoprecursion">Stopp Rekursion (Zurücksetzen)</label>
+			<label index="pages.tx_imagecycle_href">Bilder Links</label>
+			<label index="pages.tx_imagecycle_caption">Bilder Beschreibungen</label>
+
+			<label index="tt_content.tx_imagecycle_activate">Bilder Slide aktivieren</label>
+			<label index="tt_content.tx_imagecycle_duration">Dauer in ms</label>
+
+			<label index="tt_content.list_type_pi1">Image cycle</label>
+
+			<label index="tt_content.pi_flexform.sheet_general">General</label>
+			<label index="tt_content.pi_flexform.images">Slide Bilder</label>
+			<label index="tt_content.pi_flexform.href">Bilder Links</label>
+			<label index="tt_content.pi_flexform.caption">Bilder Beschreibungen</label>
+
+			<label index="tt_content.pi_flexform.sheet_settings">Einstellungen</label>
+			<label index="tt_content.pi_flexform.imagewidth">Breite</label>
+			<label index="tt_content.pi_flexform.imageheight">Höhe</label>
+			<label index="tt_content.pi_flexform.showcaption">Beschreibung anzeigen</label>
+			<label index="tt_content.pi_flexform.random">Zufällige wiedergabe</label>
+
+			<label index="tt_content.pi_flexform.sheet_movement">Bewegung</label>
+			<label index="tt_content.pi_flexform.type">Art der Bewegung</label>
+			<label index="tt_content.pi_flexform.transition">Übergangsart</label>
+			<label index="tt_content.pi_flexform.transitiondir">Übergangsrichtung</label>
+			<label index="tt_content.pi_flexform.transitionduration">Übergangsdauer (ms)</label>
+			<label index="tt_content.pi_flexform.displayduration">Anzeigedauer (ms)</label>
+			<label index="tt_content.pi_flexform.sync">Simultane Animation</label>
+
+		</languageKey>
+	</data>
+</T3locallang>
