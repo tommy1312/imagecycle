@@ -107,6 +107,16 @@
 							</config>
 						</TCEforms>
 					</random>
+					<stoponmousover>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.stoponmousover</label>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</stoponmousover>
 				</el>
 			</ROOT>
 		</settings>
@@ -363,6 +373,19 @@
 							</config>
 						</TCEforms>
 					</displayduration>
+					<delayduration>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.delayduration</label>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<max>5</max>
+								<checkbox>0</checkbox>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</delayduration>
 					<sync>
 						<TCEforms>
 							<exclude>1</exclude>
@@ -376,5 +399,27 @@
 				</el>
 			</ROOT>
 		</movement>
+		<special>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sheet_special</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<options>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.options</label>
+							<config>
+								<type>text</type>
+								<wrap>OFF</wrap>
+								<cols>48</cols>
+								<rows>10</rows>
+							</config>
+						</TCEforms>
+					</options>
+				</el>
+			</ROOT>
+		</special>
 	</sheets>
 </T3DataStructure>

@@ -29,6 +29,9 @@
 
 require_once(PATH_tslib.'class.tslib_pibase.php');
 
+if (t3lib_extMgm::isLoaded('t3jquery')) {
+	require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
+}
 
 /**
  * Plugin 'Image Cycle' for the 'imagecycle' extension.
@@ -133,16 +136,29 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 			$options[] = "easing: 'ease{$this->lConf['transitiondir']}{$this->lConf['transition']}'";
 		}
 
-		if ($this->lConf['transitionduration']) {
+		if ($this->lConf['transitionduration'] > 0) {
 			$options[] = "speed: '{$this->lConf['transitionduration']}'";
 		}
 
-		if ($this->lConf['displayduration']) {
+		if ($this->lConf['displayduration'] > 0) {
 			$options[] = "timeout: '{$this->lConf['displayduration']}'";
+		}
+
+		if (is_numeric($this->lConf['delayduration']) && $this->lConf['delayduration'] != 0) {
+			$options[] = "delay: {$this->lConf['delayduration']}";
+		}
+
+		if ($this->lConf['stoponmousover']) {
+			$options[] = "pause: true";
 		}
 
 		$options[] = "sync: ".($this->lConf['sync'] ? 'true' : 'false');
 		$options[] = "random: ".($this->lConf['random'] ? 'true' : 'false');
+
+		// overwrite all options if set
+		if (trim($this->lConf['options'])) {
+			$options = array($this->lConf['options']);
+		}
 
 		$this->addJS(
 $jQueryNoConflict . "
