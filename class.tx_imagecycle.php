@@ -55,7 +55,7 @@ class tx_imagecycle {
 			$obj->conf['imagewidth'] = $GLOBALS['TSFE']->register['imagewidth'];
 			$obj->conf['imageheight'] = $GLOBALS['TSFE']->register['imageheight'];
 			$obj->cObj = $this->cObj;
-			$return_string = $obj->parseTemplate($data, 'uploads/pics/');
+			$return_string = $obj->parseTemplate($data, 'uploads/pics/', true);
 		}
 		return $return_string;
 	}

@@ -165,7 +165,7 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 	 * @param $data
 	 * @return string
 	 */
-	function parseTemplate($data=array(), $dir='')
+	function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
 		// define the directory of images
 		if ($dir == '') {
@@ -249,6 +249,10 @@ $jQueryNoConflict . "
 
 		// Add the ressources
 		$this->addResources();
+
+		if ($onlyJS === true) {
+			return true;
+		}
 
 		$return_string = null;
 		// Render the Template

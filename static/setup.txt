@@ -27,21 +27,35 @@ plugin.tx_imagecycle_pi1 {
 }
 
 # For the content Elements
-includeLibs.imagecycle = EXT:imagecycle/class.tx_imagecycle.php
-tt_content.image.20 {
-	userFunc = tx_imagecycle->getSlideshow
-	imgMax = 1000
-	rendering {
-		dl {
-			imgTagStdWrap.wrap >
-			imgTagStdWrap.dataWrap = <dt id="imagecycle_{field:uid}"> | </dt>
-		}
-		ul {
-			imgTagStdWrap.dataWrap = <div id="imagecycle_{field:uid}"> | </div>
-		}
-		div {
-			imgTagStdWrap.wrap >
-			imgTagStdWrap.dataWrap = <div id="imagecycle_{field:uid}"> | </div>
-		}
-	}
-}
+#includeLibs.imagecycle = EXT:imagecycle/class.tx_imagecycle.php
+#tt_content.image.20 {
+#	imgMax = 1000
+#	imageStdWrap.dataWrap = <div id="imagecycle_{field:uid}"> | </div>
+#	imageStdWrapNoWidth.wrap = <div id="imagecycle_{field:uid}"> | </div>
+#	rendering {
+#		dl {
+#			imageRowStdWrap.dataWrap = |
+#			imageLastRowStdWrap.dataWrap = |
+#			noRowsStdWrap.wrap =
+#			oneImageStdWrap.dataWrap = |
+#			imgTagStdWrap.wrap = |
+#			editIconsStdWrap.wrap = |
+#		}
+#		ul {
+#			imageRowStdWrap.dataWrap = |
+#			imageLastRowStdWrap.dataWrap = |
+#			noRowsStdWrap.wrap =
+#			oneImageStdWrap.dataWrap = |
+#			imgTagStdWrap.wrap = |
+#			editIconsStdWrap.wrap = |
+#		}
+#		div {
+#			imageRowStdWrap.dataWrap = |
+#			imageLastRowStdWrap.dataWrap = |
+#			noRowsStdWrap.wrap =
+#			oneImageStdWrap.dataWrap = |
+#			imgTagStdWrap.wrap = |
+#			editIconsStdWrap.wrap = |
+#		}
+#	}
+#}
