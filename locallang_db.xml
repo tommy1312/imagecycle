@@ -7,11 +7,11 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="pages.tx_imagecycle_images">Images Cycle</label>
+			<label index="pages.tx_imagecycle_hrefs">Image links</label>
+			<label index="pages.tx_imagecycle_captions">Image Captions</label>
 			<label index="pages.tx_imagecycle_stoprecursion">Stop Recursion (Reset)</label>
-			<label index="pages.tx_imagecycle_href">Image links</label>
-			<label index="pages.tx_imagecycle_caption">Image Captions</label>
 
-			<label index="tt_content.tx_imagecycle_activate">Activate Image Slide</label>
+			<label index="tt_content.tx_imagecycle_activate">Activate Image Cycle</label>
 			<label index="tt_content.tx_imagecycle_duration">Duration in ms</label>
 
 			<label index="tt_content.list_type_pi1">Image cycle</label>
@@ -43,11 +43,11 @@
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="pages.tx_imagecycle_images">Bilder Zyklus</label>
+			<label index="pages.tx_imagecycle_hrefs">Bilder Links</label>
+			<label index="pages.tx_imagecycle_captions">Bilder Beschreibungen</label>
 			<label index="pages.tx_imagecycle_stoprecursion">Stopp Rekursion (Zurücksetzen)</label>
-			<label index="pages.tx_imagecycle_href">Bilder Links</label>
-			<label index="pages.tx_imagecycle_caption">Bilder Beschreibungen</label>
 
-			<label index="tt_content.tx_imagecycle_activate">Bilder Slide aktivieren</label>
+			<label index="tt_content.tx_imagecycle_activate">Bilder Zyklus aktivieren</label>
 			<label index="tt_content.tx_imagecycle_duration">Dauer in ms</label>
 
 			<label index="tt_content.list_type_pi1">Image cycle</label>

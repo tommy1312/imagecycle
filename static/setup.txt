@@ -1,13 +1,47 @@
 plugin.tx_imagecycle_pi1 {
 	jsLibrary = {$plugin.tx_imagecycle_pi1.jsLibrary}
 
+	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
+	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
+	showcaption = {$plugin.tx_imagecycle_pi1.showcaption}
+	random = {$plugin.tx_imagecycle_pi1.random}
+	stopOnMousover = {$plugin.tx_imagecycle_pi1.stopOnMousover}
+	disableRecursion = {$plugin.tx_imagecycle_pi1.disableRecursion}
+
 	templateFile = {$plugin.tx_imagecycle_pi1.file.templateFile}
 	cssFile = {$plugin.tx_imagecycle_pi1.file.cssFile}
 
 	imagewidth = {$plugin.tx_imagecycle_pi1.imagewidth}
 	imageheight = {$plugin.tx_imagecycle_pi1.imageheight}
 
+	type = {$plugin.tx_imagecycle_pi1.type}
+	transition = {$plugin.tx_imagecycle_pi1.transition}
+	transitionDir = {$plugin.tx_imagecycle_pi1.transitionDir}
+	transitionDuration = {$plugin.tx_imagecycle_pi1.transitionDuration}
+	displayDuration = {$plugin.tx_imagecycle_pi1.displayDuration}
+	delayDuration = {$plugin.tx_imagecycle_pi1.delayDuration}
+	sync = {$plugin.tx_imagecycle_pi1.sync}
+
 	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
 }
 
+# For the content Elements
+includeLibs.imagecycle = EXT:imagecycle/class.tx_imagecycle.php
+tt_content.image.20 {
+	userFunc = tx_imagecycle->getSlideshow
+	imgMax = 1000
+	rendering {
+		dl {
+			imgTagStdWrap.wrap >
+			imgTagStdWrap.dataWrap = <dt id="imagecycle_{field:uid}"> | </dt>
+		}
+		ul {
+			imgTagStdWrap.dataWrap = <div id="imagecycle_{field:uid}"> | </div>
+		}
+		div {
+			imgTagStdWrap.wrap >
+			imgTagStdWrap.dataWrap = <div id="imagecycle_{field:uid}"> | </div>
+		}
+	}
+}

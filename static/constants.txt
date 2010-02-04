@@ -3,6 +3,25 @@ plugin.tx_imagecycle_pi1 {
 	jsLibrary = jquery
 
 
+	# cat=plugin.tx_imagecycle.basic/enable/010; type=options[_self,_new,_top,_parent]; label=Internal linktarget:The target where internal links will be opend
+	linkTarget = _self
+
+	# cat=plugin.tx_imagecycle.basic/enable/020; type=options[_self,_new,_top,_parent]; label=External linktarget:The target where external links will be opend
+	extlinkTarget = _new
+
+	# cat=plugin.tx_imagecycle.basic/enable/030; type=boolean; label=Show captions:If set, the captions will be displayed
+	showcaption = 1
+
+	# cat=plugin.tx_imagecycle.basic/enable/040; type=boolean; label=Random: Show the images random
+	random = 0
+
+	# cat=plugin.tx_imagecycle.basic/enable/050; type=boolean; label=Stop on mouseover: Stop the slideshow when mouse over
+	stopOnMousover = 0
+
+	# cat=plugin.tx_imagecycle.basic/enable/060; type=boolean; label=Disable Recursion:Disable the root line fetching if there are no images
+	disableRecursion = 0
+
+
 	# cat=plugin.tx_imagecycle.basic/file/010; type=file[html,htm,tmpl,txt]; label=HTML-Template File: Location of the used template
 	file.templateFile = EXT:imagecycle/pi1/tx_imagecycle_pi1.tmpl
 
@@ -10,11 +29,33 @@ plugin.tx_imagecycle_pi1 {
 	file.cssFile = EXT:imagecycle/pi1/tx_imagecycle_pi1.css
 
 
-	# cat=plugin.tx_imagecycle.basic/dims/040; type=string; label=Image width: Width of the images
+	# cat=plugin.tx_imagecycle.basic/dims/010; type=string; label=Image width: Width of the images
 	imagewidth = 200c
 
-	# cat=plugin.tx_imagecycle.basic/dims/050; type=string; label=Image height: Height of the images
+	# cat=plugin.tx_imagecycle.basic/dims/020; type=string; label=Image height: Height of the images
 	imageheight = 200c
+
+
+	# cat=plugin.tx_imagecycle.basic/typo/010; type=options[,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all]; label=Type of the movement
+	type = fade
+
+	# cat=plugin.tx_imagecycle.basic/typo/020; type=options[,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition:Effect of transition
+	transition = Back
+
+	# cat=plugin.tx_imagecycle.basic/typo/030; type=options[,In,Out,InOut]; label=Transition direction:Direction of transition
+	transitionDir = InOut
+
+	# cat=plugin.tx_imagecycle.basic/typo/040; type=int+; label=Duration transition:The duration of the transition in milliseconds
+	transitionDuration = 
+
+	# cat=plugin.tx_imagecycle.basic/typo/050; type=int+; label=Duration of display:The display duration of the image in milliseconds
+	displayDuration = 
+
+	# cat=plugin.tx_imagecycle.basic/typo/060; type=int; label=Duration of delay:The delay duration for animation begin in milliseconds
+	delayDuration = 
+
+	# cat=plugin.tx_imagecycle.basic/typo/070; type=boolean; label=Simultaneously animation:Animates in and out simultaneously
+	sync = 1
 
 
 	# cat=plugin.tx_imagecycle.jquery/enable/010; type=boolean; label=jQuery noConflict: Use the noConflict methode

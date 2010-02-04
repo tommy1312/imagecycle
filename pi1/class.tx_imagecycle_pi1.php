@@ -69,35 +69,117 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
 
-		// Set the Flexform information
-		$this->pi_initPIflexForm();
-		$piFlexForm = $this->cObj->data['pi_flexform'];
-		foreach ($piFlexForm['data'] as $sheet => $data) {
-			foreach ($data as $lang => $value) {
-				foreach ($value as $key => $val) {
-					$this->lConf[$key] = $this->pi_getFFvalue($piFlexForm, $key, $sheet);
+		// define the key of the element
+		$this->contentKey = "imagecycle";
+
+		$pageID = false;
+		if ($this->cObj->data['list_type'] == $this->extKey.'_pi1') {
+			// It's a content, al data from flexform
+			// Set the Flexform information
+			$this->pi_initPIflexForm();
+			$piFlexForm = $this->cObj->data['pi_flexform'];
+			foreach ($piFlexForm['data'] as $sheet => $data) {
+				foreach ($data as $lang => $value) {
+					foreach ($value as $key => $val) {
+						$this->lConf[$key] = $this->pi_getFFvalue($piFlexForm, $key, $sheet);
+					}
+				}
+			}
+			// define the key of the element
+			$this->contentKey .= "_c" . $this->cObj->data['uid'];
+			// define the images
+			if ($this->lConf['images']) {
+				$this->images = t3lib_div::trimExplode(',', $this->lConf['images']);
+			}
+			// define the hrefs
+			if ($this->lConf['hrefs']) {
+				$this->hrefs = t3lib_div::trimExplode(chr(10), $this->lConf['hrefs']);
+			}
+			// define the captions
+			if ($this->lConf['captions'] && $this->lConf['showcaption']) {
+				$this->captions = t3lib_div::trimExplode(chr(10), $this->lConf['captions']);
+			}
+			// Override the config with flexform data
+			if ($this->lConf['imagewidth']) {
+				$this->conf['imagewidth'] = $this->lConf['imagewidth'];
+			}
+			if ($this->lConf['imageheight']) {
+				$this->conf['imageheight'] = $this->lConf['imageheight'];
+			}
+			if ($this->lConf['type']) {
+				$this->conf['type'] = $this->lConf['type'];
+			}
+			if ($this->lConf['transitiondir']) {
+				$this->conf['transitionDir'] = $this->lConf['transitiondir'];
+			}
+			if ($this->lConf['transitionduration']) {
+				$this->conf['transitionDuration'] = $this->lConf['transitionduration'];
+			}
+			if ($this->lConf['displayduration']) {
+				$this->conf['displayDuration'] = $this->lConf['displayduration'];
+			}
+			if (is_numeric($this->lConf['delayduration']) && $this->lConf['delayduration'] != 0) {
+				$this->conf['delayDuration'] = $this->lConf['delayduration'];
+			}
+			$this->conf['stopOnMousover'] = $this->lConf['stoponmousover'];
+			$this->conf['sync'] = $this->lConf['sync'];
+			$this->conf['random'] = $this->lConf['random'];
+			$this->conf['options'] = $this->lConf['options'];
+		} else {
+			// It's the header
+			foreach ($GLOBALS['TSFE']->rootLine as $page) {
+				if ($page['tx_imagecycle_stoprecursion']) {
+					break;
+				}
+				if (trim($page['tx_imagecycle_images']) != '' || $this->conf['disableRecursion']) {
+					$this->images   = t3lib_div::trimExplode(',', $page['tx_imagecycle_images']);
+					$this->hrefs    = t3lib_div::trimExplode(chr(10), $page['tx_imagecycle_hrefs']);
+					$this->captions = t3lib_div::trimExplode(chr(10), $page['tx_imagecycle_captions']);
+					$pageID  = $page['uid'];
+					break;
+				}
+			}
+			if ($pageID && $GLOBALS['TSFE']->sys_language_content) {
+				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$GLOBALS['TSFE']->sys_language_content,'','',1);
+				$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+				if (trim($row['tx_imagecycle_images']) != '') {
+					$this->images   = t3lib_div::trimExplode(',', $row['tx_imagecycle_images']);
+					$this->hrefs    = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
+					$this->captions = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_captions']);
 				}
 			}
 		}
 
-		// add the CSS file
-		$this->addCssFile($this->conf['cssFile']);
-
-		// define the key of the element
-		$this->contentKey = "imagecycle_c" . $this->cObj->data['uid'];
-
-		// define th images
-		if ($this->lConf['images']) {
-			$this->images = t3lib_div::trimExplode(',', $this->lConf['images']);
-		}
-		// define the hrefs
-		if ($this->lConf['hrefs']) {
-			$this->hrefs = t3lib_div::trimExplode(chr(10), $this->lConf['hrefs']);
+		$data = array();
+		foreach ($this->images as $key => $image) {
+			$data[$key]['image']   = $image;
+			$data[$key]['href']    = $this->hrefs[$key];
+			$data[$key]['caption'] = $this->captions[$key];
 		}
 
-		// define the captions
-		if ($this->lConf['captions'] && $this->lConf['showcaption']) {
-			$this->captions = t3lib_div::trimExplode(chr(10), $this->lConf['captions']);
+		return $this->pi_wrapInBaseClass($this->parseTemplate($data));
+	}
+
+	/**
+	 * Parse all images into the template
+	 * @param $data
+	 * @return string
+	 */
+	function parseTemplate($data=array(), $dir='')
+	{
+		// define the directory of images
+		if ($dir == '') {
+			$dir = $this->imageDir;
+		}
+
+		// Check if $data is array
+		if (count($data) == 0) {
+			return false;
+		}
+
+		// define the contentKey if not exist
+		if ($this->contentKey == '') {
+			$this->contentKey = "imagecycle_key";
 		}
 
 		// define the jQuery mode and function
@@ -116,49 +198,45 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 			return "<p>NO TEMPLATE FOUND!</p>";
 		}
 
-		// define the js files
-		$this->addJsFile("EXT:imagecycle/res/jquery/js/jquery.cycle.all.min.js");
-
 		// get the options from flexform
 		$options = array();
-		if (! $this->lConf['imagewidth']) {
-			$this->lConf['imagewidth'] = ($this->conf['imagewidth'] ? $this->conf['imagewidth'] : "200c");
+		if (! $this->conf['imagewidth']) {
+			$this->conf['imagewidth'] = ($this->conf['imagewidth'] ? $this->conf['imagewidth'] : "200c");
 		}
-		if (! $this->lConf['imageheight']) {
-			$this->lConf['imageheight'] = ($this->conf['imageheight'] ? $this->conf['imageheight'] : "200c");
+		if (! $this->conf['imageheight']) {
+			$this->conf['imageheight'] = ($this->conf['imageheight'] ? $this->conf['imageheight'] : "200c");
 		}
-
-		if ($this->lConf['type']) {
-			$options[] = "fx: '{$this->lConf['type']}'";
+		if ($this->conf['type']) {
+			$options[] = "fx: '{$this->conf['type']}'";
 		}
-
-		if ($this->lConf['transitiondir'] && $this->lConf['transition']) {
-			$options[] = "easing: 'ease{$this->lConf['transitiondir']}{$this->lConf['transition']}'";
+		if ($this->conf['transitionDir'] && $this->conf['transition']) {
+			$options[] = "easing: 'ease{$this->conf['transitionDir']}{$this->conf['transition']}'";
 		}
-
-		if ($this->lConf['transitionduration'] > 0) {
-			$options[] = "speed: '{$this->lConf['transitionduration']}'";
+		if ($this->conf['transitionDuration'] > 0) {
+			$options[] = "speed: '{$this->conf['transitionDuration']}'";
 		}
-
-		if ($this->lConf['displayduration'] > 0) {
-			$options[] = "timeout: '{$this->lConf['displayduration']}'";
+		if ($this->conf['displayDuration'] > 0) {
+			$options[] = "timeout: '{$this->conf['displayDuration']}'";
 		}
-
-		if (is_numeric($this->lConf['delayduration']) && $this->lConf['delayduration'] != 0) {
-			$options[] = "delay: {$this->lConf['delayduration']}";
+		if (is_numeric($this->conf['delayDuration']) && $this->conf['delayDuration'] != 0) {
+			$options[] = "delay: {$this->conf['delayDuration']}";
 		}
-
-		if ($this->lConf['stoponmousover']) {
+		if ($this->conf['stopOnMousover']) {
 			$options[] = "pause: true";
 		}
-
-		$options[] = "sync: ".($this->lConf['sync'] ? 'true' : 'false');
-		$options[] = "random: ".($this->lConf['random'] ? 'true' : 'false');
+		$options[] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
+		$options[] = "random: ".($this->conf['random'] ? 'true' : 'false');
 
 		// overwrite all options if set
-		if (trim($this->lConf['options'])) {
-			$options = array($this->lConf['options']);
+		if (trim($this->conf['options'])) {
+			$options = array($this->conf['options']);
 		}
+
+		// add the CSS file
+		$this->addCssFile($this->conf['cssFile']);
+
+		// define the js files
+		$this->addJsFile("EXT:imagecycle/res/jquery/js/jquery.cycle.all.min.js");
 
 		$this->addJS(
 $jQueryNoConflict . "
@@ -166,12 +244,13 @@ $jQueryNoConflict . "
 	{$jQuery}('#{$this->contentKey}').cycle(".(count($options) ? "{\n		".implode(",\n		", $options)."\n	}" : "").");
 });");
 
-		preg_match("/^([0-9]*)/i", $this->lConf['imagewidth'], $reg_width);
-		preg_match("/^([0-9]*)/i", $this->lConf['imageheight'], $reg_height);
+		preg_match("/^([0-9]*)/i", $this->conf['imagewidth'], $reg_width);
+		preg_match("/^([0-9]*)/i", $this->conf['imageheight'], $reg_height);
 
 		// Add the ressources
 		$this->addResources();
 
+		$return_string = null;
 		// Render the Template
 		$markerArray = array();
 		// get the template
@@ -180,35 +259,34 @@ $jQueryNoConflict . "
 		$imagesCode = $this->cObj->getSubpart($templateCode, "###IMAGES###");
 		// Replace default values
 		$markerArray["KEY"] = $this->contentKey;
-		$markerArray["CLASS"] = $skin_class;
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
-		if (count($this->images) < 1) {
-			return '<p>NOTHING TO DISPLAY</p>';
-		} else {
-			foreach ($this->images as $key => $image) {
+		if (count($data) > 0) {
+			foreach ($data as $key => $item) {
 				$markerArray = array();
 				$image_config = array();
 				// render the image to the gifen size
 				$image_config['img'] = 'IMAGE';
-				if (! $this->hrefs[$key]) {
+				if (! $item['href']) {
 					$image_config['img.'] = $GLOBALS['TSFE']->tmpl->setup['tt_content.']['image.']['20.']['1.'];
 					unset($image_config['img.']['file.']['import.']);
 					unset($image_config['img.']['altText.']);
 					unset($image_config['img.']['titleText.']);
 					unset($image_config['img.']['file.']['width.']);
 				}
-				$image_config['img.']['file'] = $this->imageDir . $image;
-				$image_config['img.']['file.']['width']  = $this->lConf['imagewidth'];
-				$image_config['img.']['file.']['height'] = $this->lConf['imageheight'];
-				$image_config['img.']['altText'] = $this->captions[$key];
+				$image_config['img.']['file'] = $dir . $item['image'];
+				$image_config['img.']['file.']['width']  = $this->conf['imagewidth'];
+				$image_config['img.']['file.']['height'] = $this->conf['imageheight'];
+				$image_config['img.']['altText'] = $item['caption'];
 				$image_config['img.']['altText.']['stripHtml'] = 1;
-				$image_config['img.']['titleText'] = $this->captions[$key];
+				$image_config['img.']['titleText'] = $item['caption'];
 				$image_config['img.']['titleText.']['stripHtml'] = 1;
 				$image = $this->cObj->IMAGE($image_config['img.']);
-				if ($this->hrefs[$key]) {
+				if ($item['href']) {
 					$link_config = array(
-						'parameter' => $this->hrefs[$key],
-						'title' =>     $this->captions[$key],
+						'parameter' => $item['href'],
+						'title'     => $item['caption'],
+						'target'    => $this->conf['linkTarget'],
+						'extTarget' => $this->conf['extlinkTarget']
 					);
 					$markerArray["IMAGE"] = $this->cObj->typolink($image, $link_config);
 				} else {
@@ -219,10 +297,8 @@ $jQueryNoConflict . "
 			$return_string = $templateCode;
 			$return_string = $this->cObj->substituteSubpart($return_string, '###IMAGES###', $images, 0);
 		}
-
-		return $this->pi_wrapInBaseClass($return_string);
+		return $return_string;
 	}
-
 
 	/**
 	 * Include all defined resources (JS / CSS)
