@@ -109,6 +109,9 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 			if ($this->lConf['type']) {
 				$this->conf['type'] = $this->lConf['type'];
 			}
+			if ($this->lConf['transition']) {
+				$this->conf['transition'] = $this->lConf['transition'];
+			}
 			if ($this->lConf['transitiondir']) {
 				$this->conf['transitionDir'] = $this->lConf['transitiondir'];
 			}
@@ -135,7 +138,7 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 					$this->images   = t3lib_div::trimExplode(',', $page['tx_imagecycle_images']);
 					$this->hrefs    = t3lib_div::trimExplode(chr(10), $page['tx_imagecycle_hrefs']);
 					$this->captions = t3lib_div::trimExplode(chr(10), $page['tx_imagecycle_captions']);
-					$pageID  = $page['uid'];
+					$pageID = $page['uid'];
 					break;
 				}
 			}
@@ -243,9 +246,6 @@ $jQueryNoConflict . "
 {$jQuery}(document).ready(function() {
 	{$jQuery}('#{$this->contentKey}').cycle(".(count($options) ? "{\n		".implode(",\n		", $options)."\n	}" : "").");
 });");
-
-		preg_match("/^([0-9]*)/i", $this->conf['imagewidth'], $reg_width);
-		preg_match("/^([0-9]*)/i", $this->conf['imageheight'], $reg_height);
 
 		// Add the ressources
 		$this->addResources();

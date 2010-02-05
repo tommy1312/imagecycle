@@ -21,6 +21,7 @@ plugin.tx_imagecycle_pi1 {
 	displayDuration = {$plugin.tx_imagecycle_pi1.displayDuration}
 	delayDuration = {$plugin.tx_imagecycle_pi1.delayDuration}
 	sync = {$plugin.tx_imagecycle_pi1.sync}
+	options = {$plugin.tx_imagecycle_pi1.options}
 
 	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}

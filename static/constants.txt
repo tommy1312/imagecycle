@@ -36,13 +36,13 @@ plugin.tx_imagecycle_pi1 {
 	imageheight = 200c
 
 
-	# cat=plugin.tx_imagecycle.basic/typo/010; type=options[,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all]; label=Type of the movement
+	# cat=plugin.tx_imagecycle.basic/typo/010; type=options[,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all]; label=Type of the movement: Values are none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all
 	type = fade
 
-	# cat=plugin.tx_imagecycle.basic/typo/020; type=options[,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition:Effect of transition
+	# cat=plugin.tx_imagecycle.basic/typo/020; type=options[,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition:Effect of transition (Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
 	transition = Back
 
-	# cat=plugin.tx_imagecycle.basic/typo/030; type=options[,In,Out,InOut]; label=Transition direction:Direction of transition
+	# cat=plugin.tx_imagecycle.basic/typo/030; type=options[,In,Out,InOut]; label=Transition direction:Direction of transition (In, Out, InOut)
 	transitionDir = InOut
 
 	# cat=plugin.tx_imagecycle.basic/typo/040; type=int+; label=Duration transition:The duration of the transition in milliseconds
@@ -57,6 +57,8 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/typo/070; type=boolean; label=Simultaneously animation:Animates in and out simultaneously
 	sync = 1
 
+	# cat=plugin.tx_imagecycle.basic/typo/080; type=string; label=Own Options:Enter own options (see http://malsup.com/jquery/cycle/)
+	options = 
 
 	# cat=plugin.tx_imagecycle.jquery/enable/010; type=boolean; label=jQuery noConflict: Use the noConflict methode
 	jQueryNoConflict = 1
