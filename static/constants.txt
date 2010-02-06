@@ -22,13 +22,6 @@ plugin.tx_imagecycle_pi1 {
 	disableRecursion = 0
 
 
-	# cat=plugin.tx_imagecycle.basic/file/010; type=file[html,htm,tmpl,txt]; label=HTML-Template File: Location of the used template
-	file.templateFile = EXT:imagecycle/pi1/tx_imagecycle_pi1.tmpl
-
-	# cat=plugin.tx_imagecycle.basic/file/020; type=file[css]; label=CSS file: CSS-File to include
-	file.cssFile = EXT:imagecycle/pi1/tx_imagecycle_pi1.css
-
-
 	# cat=plugin.tx_imagecycle.basic/dims/010; type=string; label=Image width: Width of the images
 	imagewidth = 200c
 

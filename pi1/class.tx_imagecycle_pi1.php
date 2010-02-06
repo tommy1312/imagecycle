@@ -50,12 +50,12 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 	var $contentKey = null;
 	var $jsFiles = array();
 	var $js = array();
-	var $cssFiles = array();
 	var $css = array();
 	var $images = array();
 	var $hrefs = array();
 	var $captions = array();
 	var $imageDir = 'uploads/tx_imagecycle/';
+	var $type = 'normal';
 
 	/**
 	 * The main method of the PlugIn
@@ -74,6 +74,7 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 
 		$pageID = false;
 		if ($this->cObj->data['list_type'] == $this->extKey.'_pi1') {
+			$this->type = 'normal';
 			// It's a content, al data from flexform
 			// Set the Flexform information
 			$this->pi_initPIflexForm();
@@ -96,10 +97,13 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 				$this->hrefs = t3lib_div::trimExplode(chr(10), $this->lConf['hrefs']);
 			}
 			// define the captions
-			if ($this->lConf['captions'] && $this->lConf['showcaption']) {
+			if ($this->lConf['captions']) {
 				$this->captions = t3lib_div::trimExplode(chr(10), $this->lConf['captions']);
 			}
 			// Override the config with flexform data
+			if ($this->lConf['showcaption']) {
+				$this->conf['showcaption'] = $this->lConf['showcaption'];
+			}
 			if ($this->lConf['imagewidth']) {
 				$this->conf['imagewidth'] = $this->lConf['imagewidth'];
 			}
@@ -129,6 +133,7 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 			$this->conf['random'] = $this->lConf['random'];
 			$this->conf['options'] = $this->lConf['options'];
 		} else {
+			$this->type = 'header';
 			// It's the header
 			foreach ($GLOBALS['TSFE']->rootLine as $page) {
 				if ($page['tx_imagecycle_stoprecursion']) {
@@ -157,7 +162,7 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 		foreach ($this->images as $key => $image) {
 			$data[$key]['image']   = $image;
 			$data[$key]['href']    = $this->hrefs[$key];
-			$data[$key]['caption'] = $this->captions[$key];
+			$data[$key]['caption'] = ($this->conf['showcaption'] ? $this->captions[$key] : '');
 		}
 
 		return $this->pi_wrapInBaseClass($this->parseTemplate($data));
@@ -194,13 +199,6 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 			$jQuery = "$";
 		}
 
-		// The template
-		if ($this->conf['templateFile']) {
-			$this->templateFile = $this->cObj->fileResource($this->conf['templateFile']);
-		} else {
-			return "<p>NO TEMPLATE FOUND!</p>";
-		}
-
 		// get the options from flexform
 		$options = array();
 		if (! $this->conf['imagewidth']) {
@@ -235,9 +233,6 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 			$options = array($this->conf['options']);
 		}
 
-		// add the CSS file
-		$this->addCssFile($this->conf['cssFile']);
-
 		// define the js files
 		$this->addJsFile("EXT:imagecycle/res/jquery/js/jquery.cycle.all.min.js");
 
@@ -255,51 +250,29 @@ $jQueryNoConflict . "
 		}
 
 		$return_string = null;
-		// Render the Template
-		$markerArray = array();
-		// get the template
-		$templateCode = $this->cObj->getSubpart($this->templateFile, "###TEMPLATE_CYCLE###");
-		// Get the images template
-		$imagesCode = $this->cObj->getSubpart($templateCode, "###IMAGES###");
-		// Replace default values
-		$markerArray["KEY"] = $this->contentKey;
-		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
+		$images = null;
+		$GLOBALS['TSFE']->register['key'] = $this->contentKey;
+		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
+		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
+		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
 		if (count($data) > 0) {
 			foreach ($data as $key => $item) {
-				$markerArray = array();
-				$image_config = array();
-				// render the image to the gifen size
-				$image_config['img'] = 'IMAGE';
-				if (! $item['href']) {
-					$image_config['img.'] = $GLOBALS['TSFE']->tmpl->setup['tt_content.']['image.']['20.']['1.'];
-					unset($image_config['img.']['file.']['import.']);
-					unset($image_config['img.']['altText.']);
-					unset($image_config['img.']['titleText.']);
-					unset($image_config['img.']['file.']['width.']);
+				$imgConf = $this->conf['cycle.'][$this->type.'.']['image.'];
+				$totalImagePath = $dir . $item['image'];
+				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
+				$GLOBALS['TSFE']->register['href']    = $item['href'];
+				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
+				$link = $this->cObj->imageLinkWrap('', $totalImagePath, $imgConf['imageLinkWrap.']);
+				if ($link) {
+					unset($imgConf['titleText']);
+					unset($imgConf['titleText.']);
+					$imgConf['emptyTitleHandling'] = 'removeAttr';
 				}
-				$image_config['img.']['file'] = $dir . $item['image'];
-				$image_config['img.']['file.']['width']  = $this->conf['imagewidth'];
-				$image_config['img.']['file.']['height'] = $this->conf['imageheight'];
-				$image_config['img.']['altText'] = $item['caption'];
-				$image_config['img.']['altText.']['stripHtml'] = 1;
-				$image_config['img.']['titleText'] = $item['caption'];
-				$image_config['img.']['titleText.']['stripHtml'] = 1;
-				$image = $this->cObj->IMAGE($image_config['img.']);
-				if ($item['href']) {
-					$link_config = array(
-						'parameter' => $item['href'],
-						'title'     => $item['caption'],
-						'target'    => $this->conf['linkTarget'],
-						'extTarget' => $this->conf['extlinkTarget']
-					);
-					$markerArray["IMAGE"] = $this->cObj->typolink($image, $link_config);
-				} else {
-					$markerArray["IMAGE"] = $image;
-				}
-				$images .= $this->cObj->substituteMarkerArray($imagesCode, $markerArray, '###|###', 0);
+				$image = $this->cObj->IMAGE($imgConf);
+				$images .= $this->cObj->typolink($image, $imgConf['imageLinkWrap.']);
+				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] ++;
 			}
-			$return_string = $templateCode;
-			$return_string = $this->cObj->substituteSubpart($return_string, '###IMAGES###', $images, 0);
+			$return_string = $this->cObj->stdWrap($images, $this->conf['cycle.'][$this->type.'.']['stdWrap.']);
 		}
 		return $return_string;
 	}

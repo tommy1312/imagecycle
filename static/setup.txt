@@ -8,9 +8,6 @@ plugin.tx_imagecycle_pi1 {
 	stopOnMousover = {$plugin.tx_imagecycle_pi1.stopOnMousover}
 	disableRecursion = {$plugin.tx_imagecycle_pi1.disableRecursion}
 
-	templateFile = {$plugin.tx_imagecycle_pi1.file.templateFile}
-	cssFile = {$plugin.tx_imagecycle_pi1.file.cssFile}
-
 	imagewidth = {$plugin.tx_imagecycle_pi1.imagewidth}
 	imageheight = {$plugin.tx_imagecycle_pi1.imageheight}
 
@@ -25,6 +22,41 @@ plugin.tx_imagecycle_pi1 {
 
 	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
+
+	cycle {
+		normal {
+			image {
+				file.import.data = register:file
+				file.width.data = register:imagewidth
+				file.height.data = register:imageheight
+				imageLinkWrap = 1
+				imageLinkWrap {
+					enable.data = register:href
+					typolink {
+						parameter.data = register:href
+						title.data = register:caption
+						target = {$plugin.tx_imagecycle_pi1.linkTarget}
+						extTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
+					}
+				}
+				altText = TEXT
+				altText {
+					value.data = register:caption
+					stripHtml = 1
+				}
+				titleText < .altText
+				longdescURL < .altText
+			}
+			stdWrap {
+				dataWrap = <div id="{register:key}"> | </div>
+				required = 1
+			}
+		}
+		header < .normal
+		content < .normal
+	}
+	_CSS_DEFAULT_STYLE (
+	)
 }
 
 # For the content Elements
