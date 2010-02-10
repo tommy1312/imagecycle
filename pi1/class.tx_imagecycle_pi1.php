@@ -257,18 +257,24 @@ $jQueryNoConflict . "
 		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
 		if (count($data) > 0) {
 			foreach ($data as $key => $item) {
+				$image = null;
 				$imgConf = $this->conf['cycle.'][$this->type.'.']['image.'];
 				$totalImagePath = $dir . $item['image'];
 				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
-				$link = $this->cObj->imageLinkWrap('', $totalImagePath, $imgConf['imageLinkWrap.']);
-				if ($link) {
-					unset($imgConf['titleText']);
-					unset($imgConf['titleText.']);
-					$imgConf['emptyTitleHandling'] = 'removeAttr';
+				if ($this->hrefs[$key]) {
+					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
+					$image = $this->cObj->IMAGE($imgConf);
+				} else {
+					$link = $this->cObj->imageLinkWrap('', $totalImagePath, $imgConf['imageLinkWrap.']);
+					if ($link) {
+						unset($imgConf['titleText']);
+						unset($imgConf['titleText.']);
+						$imgConf['emptyTitleHandling'] = 'removeAttr';
+					}
+					$image = $this->cObj->IMAGE($imgConf);
 				}
-				$image = $this->cObj->IMAGE($imgConf);
 				$images .= $this->cObj->typolink($image, $imgConf['imageLinkWrap.']);
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] ++;
 			}
