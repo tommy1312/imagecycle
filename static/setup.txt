@@ -1,5 +1,4 @@
 plugin.tx_imagecycle_pi1 {
-	jsLibrary = {$plugin.tx_imagecycle_pi1.jsLibrary}
 
 	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
 	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}

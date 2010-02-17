@@ -193,10 +193,8 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 		// define the jQuery mode and function
 		if ($this->conf['jQueryNoConflict']) {
 			$jQueryNoConflict = "jQuery.noConflict();";
-			$jQuery = "jQuery";
 		} else {
 			$jQueryNoConflict = "";
-			$jQuery = "$";
 		}
 
 		// get the options from flexform
@@ -238,8 +236,8 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 
 		$this->addJS(
 $jQueryNoConflict . "
-{$jQuery}(document).ready(function() {
-	{$jQuery}('#{$this->contentKey}').cycle(".(count($options) ? "{\n		".implode(",\n		", $options)."\n	}" : "").");
+jQuery(document).ready(function() {
+	jQuery('#{$this->contentKey}').cycle(".(count($options) ? "{\n		".implode(",\n		", $options)."\n	}" : "").");
 });");
 
 		// Add the ressources
