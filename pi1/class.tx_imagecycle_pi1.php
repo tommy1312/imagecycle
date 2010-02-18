@@ -139,6 +139,9 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 				if ($page['tx_imagecycle_stoprecursion']) {
 					break;
 				}
+				if (trim($page['tx_imagecycle_effect']) && ! $this->conf['disableRecursion']) {
+					$this->conf['type'] = $page['tx_imagecycle_effect'];
+				}
 				if (trim($page['tx_imagecycle_images']) != '' || $this->conf['disableRecursion']) {
 					$this->images   = t3lib_div::trimExplode(',', $page['tx_imagecycle_images']);
 					$this->hrefs    = t3lib_div::trimExplode(chr(10), $page['tx_imagecycle_hrefs']);
@@ -150,6 +153,9 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 			if ($pageID && $GLOBALS['TSFE']->sys_language_content) {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$GLOBALS['TSFE']->sys_language_content,'','',1);
 				$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+				if (trim($page['tx_imagecycle_effect'])) {
+					$this->conf['type'] = $row['tx_imagecycle_effect'];
+				}
 				if (trim($row['tx_imagecycle_images']) != '') {
 					$this->images   = t3lib_div::trimExplode(',', $row['tx_imagecycle_images']);
 					$this->hrefs    = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);

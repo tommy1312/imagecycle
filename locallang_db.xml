@@ -9,6 +9,7 @@
 			<label index="pages.tx_imagecycle_images">Images Cycle</label>
 			<label index="pages.tx_imagecycle_hrefs">Image links</label>
 			<label index="pages.tx_imagecycle_captions">Image Captions</label>
+			<label index="pages.tx_imagecycle_effect">Effect</label>
 			<label index="pages.tx_imagecycle_stoprecursion">Stop Recursion (Reset)</label>
 
 			<label index="tt_content.tx_imagecycle_activate">Activate Image Cycle</label>
@@ -45,6 +46,7 @@
 			<label index="pages.tx_imagecycle_images">Bilder Zyklus</label>
 			<label index="pages.tx_imagecycle_hrefs">Bilder Links</label>
 			<label index="pages.tx_imagecycle_captions">Bilder Beschreibungen</label>
+			<label index="pages.tx_imagecycle_effect">Effekt</label>
 			<label index="pages.tx_imagecycle_stoprecursion">Stopp Rekursion (Zurücksetzen)</label>
 
 			<label index="tt_content.tx_imagecycle_activate">Bilder Zyklus aktivieren</label>
