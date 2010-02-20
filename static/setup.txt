@@ -6,6 +6,9 @@ plugin.tx_imagecycle_pi1 {
 	random = {$plugin.tx_imagecycle_pi1.random}
 	stopOnMousover = {$plugin.tx_imagecycle_pi1.stopOnMousover}
 	disableRecursion = {$plugin.tx_imagecycle_pi1.disableRecursion}
+	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
+
+	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
 
 	imagewidth = {$plugin.tx_imagecycle_pi1.imagewidth}
 	imageheight = {$plugin.tx_imagecycle_pi1.imageheight}
@@ -18,9 +21,6 @@ plugin.tx_imagecycle_pi1 {
 	delayDuration = {$plugin.tx_imagecycle_pi1.delayDuration}
 	sync = {$plugin.tx_imagecycle_pi1.sync}
 	options = {$plugin.tx_imagecycle_pi1.options}
-
-	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
-	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
 
 	cycle {
 		normal {
