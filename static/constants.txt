@@ -19,10 +19,10 @@ plugin.tx_imagecycle_pi1 {
 	disableRecursion = 0
 
 
-	# cat=plugin.tx_imagecycle/enable/070; type=boolean; label=jQuery noConflict: Use the noConflict methode
+	# cat=plugin.tx_imagecycle/file/010; type=boolean; label=jQuery noConflict: Use the noConflict methode
 	jQueryNoConflict = 0
 
-	# cat=plugin.tx_imagecycle/file/010; type=file[js]; label=jQuery Library: Location of the jQuery Lib
+	# cat=plugin.tx_imagecycle/file/020; type=file[js]; label=jQuery Library: Location of the jQuery Lib
 	file.jQueryLibrary = EXT:imagecycle/res/jquery/js/jquery-1.4.2.min.js
 
 

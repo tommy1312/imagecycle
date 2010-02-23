@@ -46,7 +46,6 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 	var $extKey        = 'imagecycle';	// The extension key.
 	var $pi_checkCHash = true;
 	var $lConf = array();
-	var $templateFile = null;
 	var $contentKey = null;
 	var $jsFiles = array();
 	var $js = array();
@@ -101,9 +100,6 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 				$this->captions = t3lib_div::trimExplode(chr(10), $this->lConf['captions']);
 			}
 			// Override the config with flexform data
-			if ($this->lConf['showcaption']) {
-				$this->conf['showcaption'] = $this->lConf['showcaption'];
-			}
 			if ($this->lConf['imagewidth']) {
 				$this->conf['imagewidth'] = $this->lConf['imagewidth'];
 			}
@@ -128,6 +124,7 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 			if (is_numeric($this->lConf['delayduration']) && $this->lConf['delayduration'] != 0) {
 				$this->conf['delayDuration'] = $this->lConf['delayduration'];
 			}
+			$this->conf['showcaption'] = $this->lConf['showcaption'];
 			$this->conf['stopOnMousover'] = $this->lConf['stoponmousover'];
 			$this->conf['sync'] = $this->lConf['sync'];
 			$this->conf['random'] = $this->lConf['random'];
@@ -237,12 +234,23 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 			$options = array($this->conf['options']);
 		}
 
+		// add caption
+		$jcaption = null;
+		if ($this->conf['showcaption']) {
+			$this->addJsFile("EXT:imagecycle/res/jquery/js/jcaption.min.js");
+			$jcaption = "
+	jQuery('#{$this->contentKey} img').jcaption({
+		animate: true,
+		show: {height: 'show'},
+		hide: {height: 'hide'}
+	});";
+		}
 		// define the js files
 		$this->addJsFile("EXT:imagecycle/res/jquery/js/jquery.cycle.all.min.js");
 
 		$this->addJS(
 $jQueryNoConflict . "
-jQuery(document).ready(function() {
+jQuery(document).ready(function() { {$jcaption}
 	jQuery('#{$this->contentKey}').cycle(".(count($options) ? "{\n		".implode(",\n		", $options)."\n	}" : "").");
 });");
 
@@ -259,6 +267,7 @@ jQuery(document).ready(function() {
 		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
 		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
 		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
+		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'];
 		if (count($data) > 0) {
 			foreach ($data as $key => $item) {
 				$image = null;

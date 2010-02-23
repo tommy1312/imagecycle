@@ -54,6 +54,27 @@ plugin.tx_imagecycle_pi1 {
 		content < .normal
 	}
 	_CSS_DEFAULT_STYLE (
+.tx-imagecycle-pi1 div.caption {
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+.tx-imagecycle-pi1 div.caption p {
+	position: absolute;
+	margin: 0;
+	padding: 5px;
+	font-size: .9em;
+	bottom: 0;
+	left: 0;
+	background: black;
+	color: white;
+	opacity: .7;
+}
+.tx-imagecycle-pi1 div.caption img {
+	margin: 0;
+	padding: 0;
+	display: block;
+}
 	)
 }
 
