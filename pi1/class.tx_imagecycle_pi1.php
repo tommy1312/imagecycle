@@ -184,7 +184,7 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 		}
 
 		// Check if $data is array
-		if (count($data) == 0) {
+		if (count($data) == 0 && $onlyJS === false) {
 			return false;
 		}
 
@@ -200,7 +200,6 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 			$jQueryNoConflict = "";
 		}
 
-		// get the options from flexform
 		$options = array();
 		if (! $this->conf['imagewidth']) {
 			$this->conf['imagewidth'] = ($this->conf['imagewidth'] ? $this->conf['imagewidth'] : "200c");

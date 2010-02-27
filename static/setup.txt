@@ -78,36 +78,51 @@ plugin.tx_imagecycle_pi1 {
 	)
 }
 
-# For the content Elements
+#
+# For content elements
+#
 #includeLibs.imagecycle = EXT:imagecycle/class.tx_imagecycle.php
-#tt_content.image.20 {
+#lib.tt_content_image_20 < tt_content.image.20
+#lib.imagecycle < tt_content.image.20
+#lib.imagecycle {
 #	imgMax = 1000
-#	imageStdWrap.dataWrap = <div id="imagecycle_{field:uid}"> | </div>
-#	imageStdWrapNoWidth.wrap = <div id="imagecycle_{field:uid}"> | </div>
-#	rendering {
-#		dl {
-#			imageRowStdWrap.dataWrap = |
-#			imageLastRowStdWrap.dataWrap = |
-#			noRowsStdWrap.wrap =
-#			oneImageStdWrap.dataWrap = |
-#			imgTagStdWrap.wrap = |
-#			editIconsStdWrap.wrap = |
-#		}
-#		ul {
-#			imageRowStdWrap.dataWrap = |
-#			imageLastRowStdWrap.dataWrap = |
-#			noRowsStdWrap.wrap =
-#			oneImageStdWrap.dataWrap = |
-#			imgTagStdWrap.wrap = |
-#			editIconsStdWrap.wrap = |
-#		}
-#		div {
-#			imageRowStdWrap.dataWrap = |
-#			imageLastRowStdWrap.dataWrap = |
-#			noRowsStdWrap.wrap =
-#			oneImageStdWrap.dataWrap = |
-#			imgTagStdWrap.wrap = |
-#			editIconsStdWrap.wrap = |
+#	imageStdWrap.innerWrap = <div class="tx-imagecycle-pi1"><div id="imagecycle_{field:uid}"> | </div></div>
+#	imageStdWrap.innerWrap.insertData = 1
+#	imageStdWrapNoWidth.innerWrap < .imageStdWrap.innerWrap
+#	rendering.simple.caption >
+#	renderMethod = simple
+#	stdWrap.preUserFunc = tx_imagecycle->getSlideshow
+#}
+#tt_content.image.20 >
+#tt_content.image.20 = CASE
+#tt_content.image.20 {
+#	key.field = tx_imagecycle_activate
+#	default < lib.tt_content_image_20
+#	1 < lib.imagecycle
+#}
+#tt_content.textpic.20 >
+#tt_content.textpic.20 = CASE
+#tt_content.textpic.20 {
+#	key.field = tx_imagecycle_activate
+#	default < tt_content.image.20.default
+#	default {
+#		text {
+#			10 < tt_content.textpic.20.1.text.10
+#			20 < tt_content.text.20
+#			wrap = <div class="csc-textpic-text"> | </div>
 #		}
 #	}
+#	1 < tt_content.image.20.1
+#	1 {
+#		text.10 = COA
+#		text.10 {
+#			if.value = 24
+#			if.isGreaterThan.field = imageorient
+#			10 =< lib.stdheader
+#			10.stdWrap.dataWrap = <div class="csc-textpicHeader csc-textpicHeader-{field:imageorient}">|</div>
+#		}
+#		text.20 < tt_content.text.20
+#		text.wrap = <div class="csc-textpic-text"> | </div>
+#	}
 #}
+
