@@ -18,9 +18,12 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle/enable/060; type=boolean; label=Disable Recursion:Disable the root line fetching if there are no images
 	disableRecursion = 0
 
-
-	# cat=plugin.tx_imagecycle/file/010; type=boolean; label=jQuery noConflict: Use the noConflict methode
+	# cat=plugin.tx_imagecycle/enable/070; type=boolean; label=jQuery noConflict: Use the noConflict methode
 	jQueryNoConflict = 0
+
+	# cat=plugin.tx_imagecycle/enable/080; type=boolean; label=Javascript in Footer: If set, the Javascript will be rendered in Footer
+	jsInFooter = 0
+
 
 	# cat=plugin.tx_imagecycle/file/020; type=file[js]; label=jQuery Library: Location of the jQuery Lib
 	file.jQueryLibrary = EXT:imagecycle/res/jquery/js/jquery-1.4.2.min.js
