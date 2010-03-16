@@ -250,7 +250,7 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 		$this->addJS(
 $jQueryNoConflict . "
 jQuery(document).ready(function() { {$jcaption}
-	jQuery('#{$this->contentKey}').cycle(".(count($options) ? "{\n		".implode(",\n		", $options)."\n	}" : "").");
+	jQuery('#{$this->contentKey}').show().cycle(".(count($options) ? "{\n		".implode(",\n		", $options)."\n	}" : "").");
 });");
 
 		// Add the ressources

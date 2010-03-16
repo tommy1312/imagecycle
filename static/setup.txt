@@ -47,7 +47,7 @@ plugin.tx_imagecycle_pi1 {
 				longdescURL < .altText
 			}
 			stdWrap {
-				dataWrap = <div id="{register:key}"> | </div>
+				dataWrap = <div id="{register:key}" style="display:none;"> | </div>
 				required = 1
 			}
 		}
