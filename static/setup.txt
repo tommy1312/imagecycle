@@ -10,6 +10,8 @@ plugin.tx_imagecycle_pi1 {
 	jsInFooter = {$plugin.tx_imagecycle_pi1.jsInFooter}
 
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
+	jQueryCycle = {$plugin.tx_imagecycle_pi1.file.jQueryCycle}
+	jQueryCaption = {$plugin.tx_imagecycle_pi1.file.jQueryCaption}
 
 	imagewidth = {$plugin.tx_imagecycle_pi1.imagewidth}
 	imageheight = {$plugin.tx_imagecycle_pi1.imageheight}
@@ -87,7 +89,7 @@ plugin.tx_imagecycle_pi1 {
 #lib.imagecycle < tt_content.image.20
 #lib.imagecycle {
 #	imgMax = 1000
-#	imageStdWrap.innerWrap = <div class="tx-imagecycle-pi1"><div id="imagecycle_{field:uid}"> | </div></div>
+#	imageStdWrap.innerWrap = <div class="tx-imagecycle-pi1"><div id="imagecycle_{field:uid}" style="display:none;"> | </div></div>
 #	imageStdWrap.innerWrap.insertData = 1
 #	imageStdWrapNoWidth.innerWrap < .imageStdWrap.innerWrap
 #	rendering.simple.caption >

@@ -236,7 +236,7 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 		// add caption
 		$jcaption = null;
 		if ($this->conf['showcaption']) {
-			$this->addJsFile("EXT:imagecycle/res/jquery/js/jcaption.min.js");
+			$this->addJsFile($this->conf['jQueryCaption']);
 			$jcaption = "
 	jQuery('#{$this->contentKey} img').jcaption({
 		animate: true,
@@ -245,7 +245,7 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 	});";
 		}
 		// define the js files
-		$this->addJsFile("EXT:imagecycle/res/jquery/js/jquery.cycle.all.min.js");
+		$this->addJsFile($this->conf['jQueryCycle']);
 
 		$this->addJS(
 $jQueryNoConflict . "
