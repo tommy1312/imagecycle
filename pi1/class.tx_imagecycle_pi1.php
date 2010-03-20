@@ -237,14 +237,40 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 		$jcaption = null;
 		if ($this->conf['showcaption']) {
 			$this->addJsFile($this->conf['jQueryCaption']);
+			// define the animation for the caption
+			$fxShow = array();
+			$fxHide = array();
+			if ($this->conf['captionTypeOpacity']) {
+				$fxShow[] = "opacity: 'show'";
+				$fxHide[] = "opacity: 'hide'";
+			}
+			if ($this->conf['captionTypeHeight']) {
+				$fxShow[] = "height: 'show'";
+				$fxHide[] = "height: 'hide'";
+			}
+			if ($this->conf['captionTypeWidth']) {
+				$fxShow[] = "width: 'show'";
+				$fxHide[] = "width: 'hide'";
+			}
+			// if no effect is choosen, opacity is the fallback
+			if (count($fxShow) < 1) {
+				$fxShow[] = "opacity: 'show'";
+				$fxHide[] = "opacity: 'hide'";
+			}
+
+			if (! is_numeric($this->conf['captionSpeed'])) {
+				$this->conf['captionSpeed'] = 200;
+			}
 			$jcaption = "
 	jQuery('#{$this->contentKey} img').jcaption({
-		animate: true,
-		show: {height: 'show'},
-		hide: {height: 'hide'}
+		animate: ".($this->conf['captionAnimate'] ? 'true' : 'false').",
+		show: {".(implode(",", $fxShow))."},
+		showDuration: {$this->conf['captionSpeed']},
+		hide: {".(implode(",", $fxHide))."},
+		hideDuration: {$this->conf['captionSpeed']},
 	});";
 		}
-		// define the js files
+		// define the js file
 		$this->addJsFile($this->conf['jQueryCycle']);
 
 		$this->addJS(

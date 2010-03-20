@@ -2,7 +2,6 @@ plugin.tx_imagecycle_pi1 {
 
 	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
 	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
-	showcaption = {$plugin.tx_imagecycle_pi1.showcaption}
 	random = {$plugin.tx_imagecycle_pi1.random}
 	stopOnMousover = {$plugin.tx_imagecycle_pi1.stopOnMousover}
 	disableRecursion = {$plugin.tx_imagecycle_pi1.disableRecursion}
@@ -24,6 +23,13 @@ plugin.tx_imagecycle_pi1 {
 	delayDuration = {$plugin.tx_imagecycle_pi1.delayDuration}
 	sync = {$plugin.tx_imagecycle_pi1.sync}
 	options = {$plugin.tx_imagecycle_pi1.options}
+
+	showcaption = {$plugin.tx_imagecycle_pi1.showcaption}
+	captionAnimate = {$plugin.tx_imagecycle_pi1.captionAnimation}
+	captionTypeOpacity = {$plugin.tx_imagecycle_pi1.captionTypeOpacity}
+	captionTypeHeight = {$plugin.tx_imagecycle_pi1.captionTypeHeight}
+	captionTypeWidth = {$plugin.tx_imagecycle_pi1.captionTypeWidth}
+	captionSpeed = {$plugin.tx_imagecycle_pi1.captionSpeed}
 
 	cycle {
 		normal {
@@ -72,6 +78,7 @@ plugin.tx_imagecycle_pi1 {
 	background: black;
 	color: white;
 	opacity: .7;
+	white-space: nowrap;
 }
 .tx-imagecycle-pi1 div.caption img {
 	margin: 0;
