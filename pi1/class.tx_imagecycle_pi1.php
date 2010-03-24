@@ -234,49 +234,40 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 		}
 
 		// add caption
-		$jcaption = null;
 		if ($this->conf['showcaption']) {
-			$this->addJsFile($this->conf['jQueryCaption']);
 			// define the animation for the caption
-			$fxShow = array();
-			$fxHide = array();
-			if ($this->conf['captionTypeOpacity']) {
-				$fxShow[] = "opacity: 'show'";
-				$fxHide[] = "opacity: 'hide'";
+			$fx = array();
+			if (! $this->conf['captionAnimate']) {
+				$options[] = "before: function() {jQuery('span', this).css('display', 'none');}";
+				$options[] = "after: function() {jQuery('span', this).css('display', 'block');}";
+			} else {
+				if ($this->conf['captionTypeOpacity']) {
+					$fx[] = "opacity: 'show'";
+				}
+				if ($this->conf['captionTypeHeight']) {
+					$fx[] = "height: 'show'";
+				}
+				if ($this->conf['captionTypeWidth']) {
+					$fx[] = "width: 'show'";
+				}
+				// if no effect is choosen, opacity is the fallback
+				if (count($fx) < 1) {
+					$fx[] = "opacity: 'show'";
+				}
+				if (! is_numeric($this->conf['captionSpeed'])) {
+					$this->conf['captionSpeed'] = 200;
+				}
+				$options[] = "before: function() {jQuery('span', this).css('display', 'none');}";
+				$options[] = "after:  function() {jQuery('span', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});}";
 			}
-			if ($this->conf['captionTypeHeight']) {
-				$fxShow[] = "height: 'show'";
-				$fxHide[] = "height: 'hide'";
-			}
-			if ($this->conf['captionTypeWidth']) {
-				$fxShow[] = "width: 'show'";
-				$fxHide[] = "width: 'hide'";
-			}
-			// if no effect is choosen, opacity is the fallback
-			if (count($fxShow) < 1) {
-				$fxShow[] = "opacity: 'show'";
-				$fxHide[] = "opacity: 'hide'";
-			}
-
-			if (! is_numeric($this->conf['captionSpeed'])) {
-				$this->conf['captionSpeed'] = 200;
-			}
-			$jcaption = "
-	jQuery('#{$this->contentKey} img').jcaption({
-		animate: ".($this->conf['captionAnimate'] ? 'true' : 'false').",
-		show: {".(implode(",", $fxShow))."},
-		showDuration: {$this->conf['captionSpeed']},
-		hide: {".(implode(",", $fxHide))."},
-		hideDuration: {$this->conf['captionSpeed']},
-	});";
 		}
 		// define the js file
 		$this->addJsFile($this->conf['jQueryCycle']);
 
 		$this->addJS(
-$jQueryNoConflict . "
-jQuery(document).ready(function() { {$jcaption}
-	jQuery('#{$this->contentKey}').show().cycle(".(count($options) ? "{\n		".implode(",\n		", $options)."\n	}" : "").");
+			$jQueryNoConflict . "
+jQuery(document).ready(function() {
+	jQuery('#". $this->contentKey ."').show().cycle(".(count($options) ? "{".implode(",\n		", $options)."}" : "").");
 });");
 
 		// Add the ressources
@@ -303,7 +294,6 @@ jQuery(document).ready(function() { {$jcaption}
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
 				if ($this->hrefs[$key]) {
 					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
-					$image = $this->cObj->IMAGE($imgConf);
 				} else {
 					$link = $this->cObj->imageLinkWrap('', $totalImagePath, $imgConf['imageLinkWrap.']);
 					if ($link) {
@@ -311,9 +301,14 @@ jQuery(document).ready(function() { {$jcaption}
 						unset($imgConf['titleText.']);
 						$imgConf['emptyTitleHandling'] = 'removeAttr';
 					}
-					$image = $this->cObj->IMAGE($imgConf);
 				}
-				$images .= $this->cObj->typolink($image, $imgConf['imageLinkWrap.']);
+				$image = $this->cObj->IMAGE($imgConf);
+				$image = $this->cObj->typolink($image, $imgConf['imageLinkWrap.']);
+				if ($item['caption'] && $this->conf['showcaption']) {
+					$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['captionWrap.']);
+				}
+				$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['itemWrap.']);
+				$images .= $image;
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] ++;
 			}
 			$return_string = $this->cObj->stdWrap($images, $this->conf['cycle.'][$this->type.'.']['stdWrap.']);
@@ -332,7 +327,7 @@ jQuery(document).ready(function() { {$jcaption}
 			tx_t3jquery::addJqJS();
 		} else {
 			$this->addJsFile($this->conf['jQueryLibrary'], true);
-			$this->addJsFile("EXT:imagecycle/res/jquery/js/jquery.easing-1.3.js");
+			$this->addJsFile($this->conf['jQueryEasing']);
 		}
 		// add all defined JS files
 		if (count($this->jsFiles) > 0) {

@@ -1,2 +1,2 @@
-script=res/jquery/js/jquery.ccycle.all.min.js
+script=res/jquery/js/jquery.cycle.all.min-2.80.js
 components=jQuery,Core,Easing

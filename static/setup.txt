@@ -9,8 +9,8 @@ plugin.tx_imagecycle_pi1 {
 	jsInFooter = {$plugin.tx_imagecycle_pi1.jsInFooter}
 
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
+	jQueryEasing = {$plugin.tx_imagecycle_pi1.file.jQueryEasing}
 	jQueryCycle = {$plugin.tx_imagecycle_pi1.file.jQueryCycle}
-	jQueryCaption = {$plugin.tx_imagecycle_pi1.file.jQueryCaption}
 
 	imagewidth = {$plugin.tx_imagecycle_pi1.imagewidth}
 	imageheight = {$plugin.tx_imagecycle_pi1.imageheight}
@@ -25,7 +25,7 @@ plugin.tx_imagecycle_pi1 {
 	options = {$plugin.tx_imagecycle_pi1.options}
 
 	showcaption = {$plugin.tx_imagecycle_pi1.showcaption}
-	captionAnimate = {$plugin.tx_imagecycle_pi1.captionAnimation}
+	captionAnimate = {$plugin.tx_imagecycle_pi1.captionAnimate}
 	captionTypeOpacity = {$plugin.tx_imagecycle_pi1.captionTypeOpacity}
 	captionTypeHeight = {$plugin.tx_imagecycle_pi1.captionTypeHeight}
 	captionTypeWidth = {$plugin.tx_imagecycle_pi1.captionTypeWidth}
@@ -55,7 +55,15 @@ plugin.tx_imagecycle_pi1 {
 				longdescURL < .altText
 			}
 			stdWrap {
-				dataWrap = <div id="{register:key}" style="display:none;"> | </div>
+				dataWrap = <ul id="{register:key}" class="tx-imagecycle-pi1"> | </ul>
+				required = 1
+			}
+			captionWrap {
+				dataWrap = | <span>{register:caption}</span>
+				required = 1
+			}
+			itemWrap {
+				wrap = <li> | </li>
 				required = 1
 			}
 		}
@@ -63,27 +71,44 @@ plugin.tx_imagecycle_pi1 {
 		content < .normal
 	}
 	_CSS_DEFAULT_STYLE (
-.tx-imagecycle-pi1 div.caption {
+ul.tx-imagecycle-pi1 {
+	display: none;
+	position: relative;
+	overflow: hidden;
+	list-style: none;
 	margin: 0;
 	padding: 0;
-	position: relative;
 }
-.tx-imagecycle-pi1 div.caption p {
+ul.tx-imagecycle-pi1 img {
+	display: block;
+}
+ul.tx-imagecycle-pi1 li {
 	position: absolute;
 	margin: 0;
-	padding: 5px;
-	font-size: .9em;
-	bottom: 0;
-	left: 0;
-	background: black;
-	color: white;
-	opacity: .7;
-	white-space: nowrap;
-}
-.tx-imagecycle-pi1 div.caption img {
-	margin: 0;
 	padding: 0;
+}
+ul.tx-imagecycle-pi1 li,
+ul.tx-imagecycle-pi1 a {
 	display: block;
+	position: relative;
+}
+ul.tx-imagecycle-pi1 a:hover {
+	background: none;
+	border: 0! important;
+}
+ul.tx-imagecycle-pi1 span {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	/* remove the below 'width' line if you want the caption
+	background to be just the width of the caption text */
+	width: 100%;
+	padding: 5px;
+	color: #fff;
+	background: #000;
+	opacity: 0.8;
+	white-space: nowrap;
+	display: none;
 }
 	)
 }
