@@ -58,8 +58,7 @@
 		<settings>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sheet_settings
-					</sheetTitle>
+					<sheetTitle>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sheet_settings</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
@@ -123,8 +122,7 @@
 		<movement>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sheet_movement
-					</sheetTitle>
+					<sheetTitle>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sheet_movement</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
