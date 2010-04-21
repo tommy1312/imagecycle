@@ -6,6 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tx_dam.tx_jfdam_link">Link</label>
 			<label index="pages.tx_imagecycle_images">Images Cycle</label>
 			<label index="pages.tx_imagecycle_hrefs">Image links</label>
 			<label index="pages.tx_imagecycle_captions">Image Captions</label>
@@ -15,6 +16,14 @@
 			<label index="tt_content.tx_imagecycle_duration">Duration in ms</label>
 			<label index="tt_content.list_type_pi1">Image cycle</label>
 			<label index="tt_content.pi_flexform.sheet_general">General</label>
+			<label index="tt_content.pi_flexform.mode">Mode (DAM)</label>
+			<label index="tt_content.pi_flexform.mode.I.upload">Upload Images</label>
+			<label index="tt_content.pi_flexform.mode.I.folder">Folder</label>
+			<label index="tt_content.pi_flexform.mode.I.dam">DAM (dam)</label>
+			<label index="tt_content.pi_flexform.mode.I.dam_catedit">DAM category (dam_catedit)</label>
+			<label index="tt_content.pi_flexform.damimages">Images in DAM (dam)</label>
+			<label index="tt_content.pi_flexform.damcategories">Images from DAM category (dam_catedit)</label>
+			<label index="tt_content.pi_flexform.folder">Image folder</label>
 			<label index="tt_content.pi_flexform.images">Slide Images</label>
 			<label index="tt_content.pi_flexform.href">Image links</label>
 			<label index="tt_content.pi_flexform.caption">Image Captions</label>

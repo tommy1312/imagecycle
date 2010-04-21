@@ -29,5 +29,14 @@ CREATE TABLE pages_language_overlay (
 #
 CREATE TABLE tt_content (
 	tx_imagecycle_activate tinyint(3) DEFAULT '0' NOT NULL,
-	tx_imagecycle_duration int(11) DEFAULT '0' NOT NULL,
+	tx_imagecycle_duration int(11) DEFAULT '0' NOT NULL
+);
+
+
+
+#
+# Table structure for table 'tx_dam'
+#
+CREATE TABLE tx_dam (
+	tx_jfdam_link varchar(255) DEFAULT '' NOT NULL
 );

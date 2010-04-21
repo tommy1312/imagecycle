@@ -3,6 +3,9 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
+
+
+// PAGE
 $tempColumns = array (
 	'tx_imagecycle_images' => array (
 		'exclude' => 1,
@@ -59,14 +62,16 @@ $tempColumns = array (
 );
 
 t3lib_div::loadTCA('pages');
-t3lib_extMgm::addTCAcolumns('pages',$tempColumns,1);
+t3lib_extMgm::addTCAcolumns('pages', $tempColumns, 1);
 t3lib_extMgm::addToAllTCAtypes('pages','tx_imagecycle_images;;;;1-1-1, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
 
 t3lib_div::loadTCA('pages_language_overlay');
-t3lib_extMgm::addTCAcolumns('pages_language_overlay',$tempColumns,1);
+t3lib_extMgm::addTCAcolumns('pages_language_overlay', $tempColumns, 1);
 t3lib_extMgm::addToAllTCAtypes('pages_language_overlay','tx_imagecycle_images;;;;1-1-1, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
 
-// Content
+
+
+// CONTENT
 $tempColumns = Array (
 	"tx_imagecycle_activate" => Array (
 		"exclude" => 1,
@@ -88,7 +93,7 @@ $tempColumns = Array (
 );
 
 t3lib_div::loadTCA('tt_content');
-t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns,1);
+t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
 $GLOBALS['TCA']['tt_content']['palettes']['7']['showitem'] .= ',tx_imagecycle_activate,tx_imagecycle_duration';
 
 t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Image Cycle');
@@ -98,6 +103,39 @@ $TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi1'] = '
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi1'] = 'pi_flexform,image_zoom';
 
 
+
+// DAM
+$tempColumns = array(
+	'tx_jfdam_link' => array(
+		'exclude' => 1,
+		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:tx_dam.tx_jfdam_link',
+		'config' => array(
+			'type' => 'input',
+			'size' => '30',
+			'wizards' => array(
+				'_PADDING' => 2,
+				'link' => array(
+					'type' => 'popup',
+					'title' => 'Link',
+					'icon' => 'link_popup.gif',
+					'script' => 'browse_links.php?mode=wizard',
+					'JSopenParams' => 'height=600,width=500,status=0,menubar=0,scrollbars=1'
+				)
+			)
+		)
+	),
+);
+
+t3lib_div::loadTCA('tx_dam');
+t3lib_extMgm::addTCAcolumns('tx_dam', $tempColumns, 1);
+t3lib_extMgm::addToAllTCAtypes('tx_dam', '--div--;LLL:EXT:dam/locallang_db.xml:tx_dam_item.div_custom, tx_jfdam_link;;;;1-1-1');
+
+// add fields to index preset fields
+$TCA['tx_dam']['txdamInterface']['index_fieldList'] .= ',tx_jfdam_link';
+
+
+
+// ICON
 t3lib_extMgm::addPlugin(array(
 	'LLL:EXT:imagecycle/locallang_db.xml:tt_content.list_type_pi1',
 	$_EXTKEY . '_pi1',

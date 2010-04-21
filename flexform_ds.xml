@@ -10,9 +10,22 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
+					<mode>
+						<TCEforms>
+							<onChange>reload</onChange>
+							<displayCond>EXT:dam:LOADED:true</displayCond>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode</label>
+							<config>
+								<type>select</type>
+								<size>1</size>
+								<maxitems>1</maxitems>
+								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getModes</itemsProcFunc>
+							</config>
+						</TCEforms>
+					</mode>
 					<images>
 						<TCEforms>
-							<exclude>1</exclude>
+							<displayCond>FIELD:mode:!IN:dam,dam_catedit</displayCond>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.images</label>
 							<config>
 								<type>group</type>
@@ -30,7 +43,7 @@
 					</images>
 					<hrefs>
 						<TCEforms>
-							<exclude>1</exclude>
+							<displayCond>FIELD:mode:!IN:dam,dam_catedit</displayCond>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.href</label>
 							<config>
 								<type>text</type>
@@ -42,7 +55,7 @@
 					</hrefs>
 					<captions>
 						<TCEforms>
-							<exclude>1</exclude>
+							<displayCond>FIELD:mode:!IN:dam,dam_catedit</displayCond>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.caption</label>
 							<config>
 								<type>text</type>
@@ -52,6 +65,51 @@
 							</config>
 						</TCEforms>
 					</captions>
+					<damimages>
+						<TCEforms>
+							<displayCond>FIELD:mode:=:dam</displayCond>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.damimages</label>
+							<config>
+								<type>group</type>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:dam/lib/class.tx_dam_tcefunc.php:&tx_dam_tceFunc->getSingleField_typeMedia]]></userFunc>
+								<userProcessClass><![CDATA[EXT:mmforeign/class.tx_mmforeign_tce.php:tx_mmforeign_tce]]></userProcessClass>
+								<internal_type>db</internal_type>
+								<allowed>tx_dam</allowed>
+								<allowed_types>gif,jpg,jpeg,png</allowed_types>
+								<prepend_tname>1</prepend_tname>
+								<MM>tx_dam_mm_ref</MM>
+								<MM_foreign_select>1</MM_foreign_select>
+								<MM_opposite_field>1</MM_opposite_field>
+								<MM_match_fields>
+									<ident>imagecycle</ident>
+								</MM_match_fields>
+								<show_thumbs>1</show_thumbs>
+								<size>10</size>
+								<maxitems>1000</maxitems>
+								<minitems>0</minitems>
+								<autoSizeMax>30</autoSizeMax>
+							</config>
+						</TCEforms>
+					</damimages>
+					<damcategories>
+						<TCEforms>
+							<displayCond>FIELD:mode:=:dam_catedit</displayCond>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.damcategories</label>
+							<config>
+								<type>select</type>
+								<form_type>user</form_type>
+								<userFunc>EXT:dam/lib/class.tx_dam_tcefunc.php:tx_dam_tceFunc->getSingleField_selectTree</userFunc>
+								<treeViewClass>EXT:dam/components/class.tx_dam_selectionCategory.php:tx_dam_selectionCategory</treeViewClass>
+								<foreign_table>tx_dam_cat</foreign_table>
+								<size>5</size>
+								<autoSizeMax>25</autoSizeMax>
+								<minitems>0</minitems>
+								<maxitems>99</maxitems>
+								<default></default>
+							</config>
+						</TCEforms>
+					</damcategories>
 				</el>
 			</ROOT>
 		</general>
@@ -64,7 +122,6 @@
 				<el>
 					<imagewidth>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imagewidth</label>
 							<config>
 								<type>input</type>
@@ -76,7 +133,6 @@
 					</imagewidth>
 					<imageheight>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imageheight</label>
 							<config>
 								<type>input</type>
@@ -88,7 +144,6 @@
 					</imageheight>
 					<showcaption>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showcaption</label>
 							<config>
 								<type>check</type>
@@ -98,7 +153,6 @@
 					</showcaption>
 					<random>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.random</label>
 							<config>
 								<type>check</type>
@@ -108,7 +162,6 @@
 					</random>
 					<stoponmousover>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.stoponmousover</label>
 							<config>
 								<type>check</type>
@@ -128,7 +181,6 @@
 				<el>
 					<type>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.type</label>
 							<config>
 								<type>select</type>
@@ -140,7 +192,6 @@
 					</type>
 					<transition>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transition</label>
 							<config>
 								<type>select</type>
@@ -197,7 +248,6 @@
 					</transition>
 					<transitiondir>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transitiondir</label>
 							<config>
 								<type>select</type>
@@ -226,7 +276,6 @@
 					</transitiondir>
 					<transitionduration>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transitionduration</label>
 							<config>
 								<type>input</type>
@@ -239,7 +288,6 @@
 					</transitionduration>
 					<displayduration>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.displayduration</label>
 							<config>
 								<type>input</type>
@@ -252,7 +300,6 @@
 					</displayduration>
 					<delayduration>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.delayduration</label>
 							<config>
 								<type>input</type>
@@ -265,7 +312,6 @@
 					</delayduration>
 					<sync>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sync</label>
 							<config>
 								<type>check</type>
@@ -285,7 +331,6 @@
 				<el>
 					<options>
 						<TCEforms>
-							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.options</label>
 							<config>
 								<type>text</type>

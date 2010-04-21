@@ -29,7 +29,7 @@ plugin.tx_imagecycle_pi1 {
 	file.jQueryEasing = EXT:imagecycle/res/jquery/js/jquery.easing-1.3.js
 
 	# cat=plugin.tx_imagecycle.basic/file/030; type=file[js]; label=jQuery Cycle: Location of the jQuery Cycle
-	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all.min-2.80.js
+	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all.min-2.86.js
 
 
 	# cat=plugin.tx_imagecycle.basic/dims/010; type=string; label=Image width: Width of the images
@@ -82,5 +82,13 @@ plugin.tx_imagecycle_pi1 {
 
 	# cat=plugin.tx_imagecycle.caption/typo/040; type=int; label=Speed of the animation: Set the speed of the animation in millisecounds
 	captionSpeed = 200
+
+
+
+	# cat=plugin.tx_imagecycle.dam/basic/010; type=string; label=DAM caption fields: Comma separated string with tx_dam fields for caption fields
+	damCaptionFields = caption,description,title
+
+	# cat=plugin.tx_imagecycle.dam/basic/020; type=string; label=DAM href fields: Comma separated string with tx_dam fields for href fields
+	damHrefFields = tx_jfdam_link
 }
 

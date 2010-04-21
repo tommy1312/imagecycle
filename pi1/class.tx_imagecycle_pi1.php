@@ -40,7 +40,8 @@ if (t3lib_extMgm::isLoaded('t3jquery')) {
  * @package	TYPO3
  * @subpackage	tx_imagecycle
  */
-class tx_imagecycle_pi1 extends tslib_pibase {
+class tx_imagecycle_pi1 extends tslib_pibase
+{
 	var $prefixId      = 'tx_imagecycle_pi1';		// Same as class name
 	var $scriptRelPath = 'pi1/class.tx_imagecycle_pi1.php';	// Path to this script relative to the extension dir.
 	var $extKey        = 'imagecycle';	// The extension key.
@@ -63,13 +64,17 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return	The content that is displayed on the website
 	 */
-	function main($content, $conf) {
+	function main($content, $conf)
+	{
 		$this->conf = $conf;
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
 
 		// define the key of the element
 		$this->contentKey = "imagecycle";
+
+		// set the system language
+		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
 
 		$pageID = false;
 		if ($this->cObj->data['list_type'] == $this->extKey.'_pi1') {
@@ -85,19 +90,28 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 					}
 				}
 			}
+
 			// define the key of the element
 			$this->contentKey .= "_c" . $this->cObj->data['uid'];
+
 			// define the images
 			if ($this->lConf['images']) {
-				$this->images = t3lib_div::trimExplode(',', $this->lConf['images']);
-			}
-			// define the hrefs
-			if ($this->lConf['hrefs']) {
-				$this->hrefs = t3lib_div::trimExplode(chr(10), $this->lConf['hrefs']);
-			}
-			// define the captions
-			if ($this->lConf['captions']) {
-				$this->captions = t3lib_div::trimExplode(chr(10), $this->lConf['captions']);
+				switch ($this->lConf['mode']) {
+					case "" : {}
+					case "folder" : {}
+					case "upload" : {
+						$this->setDataUpload();
+						break;
+					}
+					case "dam" : {
+						$this->setDataDam(false);
+						break;
+					}
+					case "dam_catedit" : {
+						$this->setDataDam(true);
+						break;
+					}
+				}
 			}
 			// Override the config with flexform data
 			if ($this->lConf['imagewidth']) {
@@ -147,8 +161,8 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 					break;
 				}
 			}
-			if ($pageID && $GLOBALS['TSFE']->sys_language_content) {
-				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$GLOBALS['TSFE']->sys_language_content,'','',1);
+			if ($pageID && $this->sys_language_uid) {
+				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
 				$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 				if (trim($page['tx_imagecycle_effect'])) {
 					$this->conf['type'] = $row['tx_imagecycle_effect'];
@@ -169,6 +183,133 @@ class tx_imagecycle_pi1 extends tslib_pibase {
 		}
 
 		return $this->pi_wrapInBaseClass($this->parseTemplate($data));
+	}
+
+	/**
+	 * Set the Information of the images if mode = upload
+	 * @return boolean
+	 */
+	function setDataUpload()
+	{
+		// define the images
+		$this->images = t3lib_div::trimExplode(',', $this->lConf['images']);
+		// define the hrefs
+		if ($this->lConf['hrefs']) {
+			$this->hrefs = t3lib_div::trimExplode(chr(10), $this->lConf['hrefs']);
+		}
+		// define the captions
+		if ($this->lConf['captions']) {
+			$this->captions = t3lib_div::trimExplode(chr(10), $this->lConf['captions']);
+		}
+		return true;
+	}
+
+	/**
+	 * Set the Information of the images if mode = dam
+	 * @return boolean
+	 */
+	function setDataDam($fromCategory=false)
+	{
+		// clear the imageDir
+		$this->imageDir = '';
+		// get all fields for captions
+		$damCaptionFields = t3lib_div::trimExplode(',', $this->conf['damCaptionFields'], true);
+		$damHrefFields    = t3lib_div::trimExplode(',', $this->conf['damHrefFields'], true);
+		$fields  = (count($damCaptionFields) > 0 ? ','.implode(',tx_dam.', $damCaptionFields) : '');
+		$fields .= (count($damHrefFields) > 0    ? ','.implode(',tx_dam.', $damHrefFields)    : '');
+		if ($fromCategory === true) {
+			// Get the images from dam category
+			$damcategories = $this->getDamcats($this->lConf['damcategories']);
+			$res = $GLOBALS['TYPO3_DB']->exec_SELECT_mm_query(
+				tx_dam_db::getMetaInfoFieldList() . $fields,
+				'tx_dam',
+				'tx_dam_mm_cat',
+				'tx_dam_cat',
+				" AND tx_dam_cat.uid IN (".implode(",", $damcategories).") AND tx_dam.file_mime_type='image' AND tx_dam.sys_language_uid=" . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->sys_language_uid),
+				'',
+				'tx_dam.sorting',
+				''
+			);
+			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				$images['rows'][] = $row;
+			}
+		} else {
+			// Get the images from dam
+			$images = tx_dam_db::getReferencedFiles(
+				'tt_content',
+				$this->cObj->data['uid'],
+				'imagecycle',
+				'tx_dam_mm_ref',
+				tx_dam_db::getMetaInfoFieldList() . $fields,
+				"tx_dam.file_mime_type = 'image'"
+			);
+		}
+		if (count($images['rows']) > 0) {
+			// overlay the translation
+			$conf = array(
+				'sys_language_uid' => $this->sys_language_uid,
+				'lovl_mode' => ''
+			);
+			// add image
+			foreach ($images['rows'] as $key => $row) {
+				$row = tx_dam_db::getRecordOverlay('tx_dam', $row, $conf);
+				// set the data
+				$this->images[] = $row['file_path'].$row['file_dl_name'];$
+				// set the href
+				$href = '';
+				unset($href);
+				if (count($damHrefFields) > 0) {
+					foreach ($damHrefFields as $damHrefField) {
+						if (! isset($href) && trim($row[$damHrefField])) {
+							$href = $row[$damHrefField];
+							break;
+						}
+					}
+				}
+				$this->hrefs[] = $href;
+				// set the caption
+				$caption = '';
+				unset($caption);
+				if (count($damCaptionFields) > 0) {
+					foreach ($damCaptionFields as $damCaptionField) {
+						if (! isset($caption) && trim($row[$damCaptionField])) {
+							$caption = $row[$damCaptionField];
+							break;
+						}
+					}
+				}
+				$this->captions[] = $caption;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * return all DAM categories including subcategories
+	 *
+	 * @return	array
+	 */
+	function getDamcats($dam_cat='')
+	{
+		$damCats = t3lib_div::trimExplode(",", $dam_cat, true);
+		if (count($damCats) < 1) {
+			return;
+		} else {
+			// select subcategories
+			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+				'uid, parent_id',
+				'tx_dam_cat',
+				'parent_id IN ('.implode(",", $damCats).') '.$this->cObj->enableFields('tx_dam_cat'),
+				'',
+				'parent_id',
+				''
+			);
+			$subcats = array();
+			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+				$damCats[] = $row['uid'];
+			}
+		}
+		return $damCats;
 	}
 
 	/**
