@@ -7,6 +7,7 @@ plugin.tx_imagecycle_pi1 {
 	disableRecursion = {$plugin.tx_imagecycle_pi1.disableRecursion}
 	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
 	jsInFooter = {$plugin.tx_imagecycle_pi1.jsInFooter}
+	jsMinify = {$plugin.tx_imagecycle_pi1.jsMinify}
 
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
 	jQueryEasing = {$plugin.tx_imagecycle_pi1.file.jQueryEasing}

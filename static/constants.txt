@@ -21,6 +21,9 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/enable/080; type=boolean; label=Javascript in Footer: If set, the Javascript will be rendered in Footer
 	jsInFooter = 0
 
+	# cat=plugin.tx_imagecycle.basic/enable/090; type=boolean; label=Minify Javascript: If set, the Javascript will be minified
+	jsMinify = 0
+
 
 	# cat=plugin.tx_imagecycle.basic/file/010; type=file[js]; label=jQuery Library: Location of the jQuery Lib
 	file.jQueryLibrary = EXT:imagecycle/res/jquery/js/jquery-1.4.2.min.js
