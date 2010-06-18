@@ -30,7 +30,8 @@
 class tx_imagecycle {
 	var $cObj;
 
-	function getSlideshow($content, $conf) {
+	function getSlideshow($content, $conf)
+	{
 		if ($this->cObj->data['tx_imagecycle_activate']) {
 			require_once(t3lib_extMgm::extPath('imagecycle') . 'pi1/class.tx_imagecycle_pi1.php');
 			$obj = t3lib_div::makeInstance('tx_imagecycle_pi1');

@@ -1,2 +1,2 @@
-script=res/jquery/js/jquery.cycle.all.min-2.80.js
+script=res/jquery/js/jquery.cycle.all-2.88.min.js
 components=jQuery,Core,Easing
