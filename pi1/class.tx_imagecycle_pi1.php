@@ -380,8 +380,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			// define the animation for the caption
 			$fx = array();
 			if (! $this->conf['captionAnimate']) {
-				$options[] = "before: function() {jQuery('span', this).css('display', 'none');}";
-				$options[] = "after: function() {jQuery('span', this).css('display', 'block');}";
+				$before = "jQuery('span', this).css('display', 'none');";
+				$after  = "jQuery('span', this).css('display', 'block');";
 			} else {
 				if ($this->conf['captionTypeOpacity']) {
 					$fx[] = "opacity: 'show'";
@@ -399,8 +399,14 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				if (! is_numeric($this->conf['captionSpeed'])) {
 					$this->conf['captionSpeed'] = 200;
 				}
-				$options[] = "before: function() {jQuery('span', this).css('display', 'none');}";
-				$options[] = "after:  function() {jQuery('span', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});}";
+				$before = "jQuery('span', this).css('display', 'none');";
+				$after  = "jQuery('span', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
+			}
+			if ($this->conf['captionSync']) {
+				$options[] = "before: function() {".$before."".$after."}";
+			} else {
+				$options[] = "before: function() {".$before."}";
+				$options[] = "after:  function() {".$after."}";
 			}
 		}
 		// define the js file

@@ -30,6 +30,7 @@ plugin.tx_imagecycle_pi1 {
 	captionTypeOpacity = {$plugin.tx_imagecycle_pi1.captionTypeOpacity}
 	captionTypeHeight = {$plugin.tx_imagecycle_pi1.captionTypeHeight}
 	captionTypeWidth = {$plugin.tx_imagecycle_pi1.captionTypeWidth}
+	captionSync = {$plugin.tx_imagecycle_pi1.captionSync}
 	captionSpeed = {$plugin.tx_imagecycle_pi1.captionSpeed}
 
 	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}

@@ -68,6 +68,7 @@ plugin.tx_imagecycle_pi1 {
 
 
 
+
 	# cat=plugin.tx_imagecycle.caption/enable/010; type=boolean; label=Show captions:If set, the captions will be displayed
 	showcaption = 1
 
@@ -77,14 +78,19 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.caption/typo/010; type=boolean; label=Animate opacity: If set, the opacity of the caption will be animated
 	captionTypeOpacity = 1
 
+
 	# cat=plugin.tx_imagecycle.caption/typo/020; type=boolean; label=Animate height: If set, the height of the caption will be animated
 	captionTypeHeight = 0
 
 	# cat=plugin.tx_imagecycle.caption/typo/030; type=boolean; label=Animate width: If set, the width of the caption will be animated
 	captionTypeWidth = 0
 
-	# cat=plugin.tx_imagecycle.caption/typo/040; type=int; label=Speed of the animation: Set the speed of the animation in millisecounds
+	# cat=plugin.tx_imagecycle.caption/typo/040; type=boolean; label=Animate Sync: If set, the caption will be displayed synchron to the image
+	captionSync = 0
+
+	# cat=plugin.tx_imagecycle.caption/typo/050; type=int; label=Speed of the animation: Set the speed of the animation in millisecounds
 	captionSpeed = 200
+
 
 
 
