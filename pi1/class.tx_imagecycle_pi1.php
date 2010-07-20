@@ -370,11 +370,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$options[] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
 		$options[] = "random: ".($this->conf['random'] ? 'true' : 'false');
 
-		// overwrite all options if set
-		if (trim($this->conf['options'])) {
-			$options = array($this->conf['options']);
-		}
-
 		// add caption
 		if ($this->conf['showcaption']) {
 			// define the animation for the caption
@@ -409,6 +404,12 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				$options[] = "after:  function() {".$after."}";
 			}
 		}
+
+		// overwrite all options if set
+		if (trim($this->conf['options'])) {
+			$options = array($this->conf['options']);
+		}
+
 		// define the js file
 		$this->addJsFile($this->conf['jQueryCycle']);
 
