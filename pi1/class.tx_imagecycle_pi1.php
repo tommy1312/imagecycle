@@ -76,7 +76,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
 
-		$pageID = false;
 		if ($this->cObj->data['list_type'] == $this->extKey.'_pi1') {
 			$this->type = 'normal';
 			// It's a content, al data from flexform
@@ -103,11 +102,11 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					break;
 				}
 				case "dam" : {
-					$this->setDataDam(false);
+					$this->setDataDam(false, 'tt_content', $this->cObj->data['uid']);
 					break;
 				}
 				case "dam_catedit" : {
-					$this->setDataDam(true);
+					$this->setDataDam(true, 'tt_content', $this->cObj->data['uid']);
 					break;
 				}
 			}
@@ -144,31 +143,59 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		} else {
 			$this->type = 'header';
 			// It's the header
+			$used_page = array();
+			$pageID    = false;
 			foreach ($GLOBALS['TSFE']->rootLine as $page) {
-				if ($page['tx_imagecycle_stoprecursion']) {
-					break;
-				}
-				if (trim($page['tx_imagecycle_effect']) && ! $this->conf['disableRecursion']) {
-					$this->conf['type'] = $page['tx_imagecycle_effect'];
-				}
-				if (trim($page['tx_imagecycle_images']) != '' || $this->conf['disableRecursion']) {
-					$this->images   = t3lib_div::trimExplode(',', $page['tx_imagecycle_images']);
-					$this->hrefs    = t3lib_div::trimExplode(chr(10), $page['tx_imagecycle_hrefs']);
-					$this->captions = t3lib_div::trimExplode(chr(10), $page['tx_imagecycle_captions']);
-					$pageID = $page['uid'];
-					break;
+				if (! $pageID) {
+					if (trim($page['tx_imagecycle_effect']) && ! $this->conf['disableRecursion']) {
+						$this->conf['type'] = $page['tx_imagecycle_effect'];
+					}
+					if (
+						($page['tx_imagecycle_mode'] == 'upload'      && trim($page['tx_imagecycle_images']) != '') ||
+						($page['tx_imagecycle_mode'] == 'dam'         && trim($page['tx_imagecycle_damimages']) != '') ||
+						($page['tx_imagecycle_mode'] == 'dam_catedit' && trim($page['tx_imagecycle_damcategories']) != '') ||
+						$this->conf['disableRecursion'] ||
+						$page['tx_imagecycle_stoprecursion']
+					) {
+						$used_page = $page;
+						$pageID    = $used_page['uid'];
+						$this->lConf['mode']          = $used_page['tx_imagecycle_mode'];
+						$this->lConf['damcategories'] = $used_page['tx_imagecycle_damcategories'];
+					}
 				}
 			}
-			if ($pageID && $this->sys_language_uid) {
-				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
-				$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-				if (trim($page['tx_imagecycle_effect'])) {
-					$this->conf['type'] = $row['tx_imagecycle_effect'];
-				}
-				if (trim($row['tx_imagecycle_images']) != '') {
-					$this->images   = t3lib_div::trimExplode(',', $row['tx_imagecycle_images']);
-					$this->hrefs    = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
-					$this->captions = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_captions']);
+			if ($pageID) {
+				// define the images
+				switch ($this->lConf['mode']) {
+					case "" : {}
+					case "folder" : {}
+					case "upload" : {
+						$this->images   = t3lib_div::trimExplode(',',     $used_page['tx_imagecycle_images']);
+						$this->hrefs    = t3lib_div::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
+						$this->captions = t3lib_div::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
+						// Language overlay
+						if ($this->sys_language_uid) {
+							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
+							$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+							if (trim($used_page['tx_imagecycle_effect'])) {
+								$this->conf['type'] = $row['tx_imagecycle_effect'];
+							}
+							if (trim($row['tx_imagecycle_images']) != '') {
+								$this->images   = t3lib_div::trimExplode(',',     $row['tx_imagecycle_images']);
+								$this->hrefs    = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
+								$this->captions = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_captions']);
+							}
+						}
+						break;
+					}
+					case "dam" : {
+						$this->setDataDam(false, 'pages', $pageID);
+						break;
+					}
+					case "dam_catedit" : {
+						$this->setDataDam(true, 'pages', $pageID);
+						break;
+					}
 				}
 			}
 		}
@@ -209,7 +236,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 * Set the Information of the images if mode = dam
 	 * @return boolean
 	 */
-	function setDataDam($fromCategory=false)
+	function setDataDam($fromCategory=false, $table='tt_content', $uid=0)
 	{
 		// clear the imageDir
 		$this->imageDir = '';
@@ -237,8 +264,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		} else {
 			// Get the images from dam
 			$images = tx_dam_db::getReferencedFiles(
-				'tt_content',
-				$this->cObj->data['uid'],
+				$table,
+				$uid,
 				'imagecycle',
 				'tx_dam_mm_ref',
 				tx_dam_db::getMetaInfoFieldList() . $fields,

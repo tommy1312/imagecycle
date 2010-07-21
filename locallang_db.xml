@@ -7,7 +7,10 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tx_dam.tx_jfdam_link">Link</label>
-			<label index="pages.tx_imagecycle_images">Images Cycle</label>
+			<label index="pages.tx_imagecycle_mode">Images Cycle Mode (DAM)</label>
+			<label index="pages.tx_imagecycle_damimages">Images in DAM (dam)</label>
+			<label index="pages.tx_imagecycle_damcategories">Images from DAM category (dam_catedit)</label>
+			<label index="pages.tx_imagecycle_images">Images from Upload</label>
 			<label index="pages.tx_imagecycle_hrefs">Image links</label>
 			<label index="pages.tx_imagecycle_captions">Image Captions</label>
 			<label index="pages.tx_imagecycle_effect">Effect</label>

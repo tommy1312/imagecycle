@@ -7,9 +7,63 @@ if (!defined ('TYPO3_MODE')) {
 
 // PAGE
 $tempColumns = array (
+	'tx_imagecycle_mode' => array (
+		'exclude' => 1,
+		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_mode',
+		'displayCond' => 'EXT:dam:LOADED:true',
+		'config' => array (
+			'type' => 'select',
+			'itemsProcFunc' => 'tx_imagecycle_itemsProcFunc->getModes',
+			'size' => 1,
+			'maxitems' => 1,
+		)
+	),
+	'tx_imagecycle_damimages' => array (
+		'exclude' => 1,
+		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damimages',
+		'displayCond' => 'FIELD:tx_imagecycle_mode:=:dam',
+		'config' => array (
+			'type' => 'group',
+			'form_type' => 'user',
+			'userFunc' => 'EXT:dam/lib/class.tx_dam_tcefunc.php:&tx_dam_tceFunc->getSingleField_typeMedia',
+			'userProcessClass' => 'EXT:mmforeign/class.tx_mmforeign_tce.php:tx_mmforeign_tce',
+			'internal_type' => 'db',
+			'allowed' => 'tx_dam',
+			'allowed_types' => 'gif,jpg,jpeg,png',
+			'prepend_tname' => 1,
+			'MM' => 'tx_dam_mm_ref',
+			'MM_foreign_select' => 1,
+			'MM_opposite_field' => 1,
+			'MM_match_fields' => array(
+				'ident' => 'imagecycle',
+			),
+			'show_thumbs' => true,
+			'size' => 10,
+			'autoSizeMax' => 30,
+			'minitems' => 0,
+			'maxitems' => 1000,
+		)
+	),
+	'tx_imagecycle_damcategories' => array (
+		'exclude' => 1,
+		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damcategories',
+		'displayCond' => 'FIELD:tx_imagecycle_mode:=:dam_catedit',
+		'config' => array (
+			'type' => 'select',
+			'form_type' => 'user',
+			'userFunc' => 'EXT:dam/lib/class.tx_dam_tcefunc.php:tx_dam_tceFunc->getSingleField_selectTree',
+			'treeViewClass' => 'EXT:dam/components/class.tx_dam_selectionCategory.php:tx_dam_selectionCategory',
+			'foreign_table' => 'tx_dam_cat',
+			'size' => 5,
+			'autoSizeMax' => 25,
+			'minitems' => 0,
+			'maxitems' => 99,
+		)
+	),
 	'tx_imagecycle_images' => array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_images',
+		'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
 		'config' => array (
 			'type' => 'group',
 			'internal_type' => 'file',
@@ -25,6 +79,7 @@ $tempColumns = array (
 	'tx_imagecycle_hrefs' => array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_hrefs',
+		'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
 		'config' => array (
 			'type' => 'text',
 			'wrap' => 'OFF',
@@ -35,6 +90,7 @@ $tempColumns = array (
 	'tx_imagecycle_captions' => array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_captions',
+		'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
 		'config' => array (
 			'type' => 'text',
 			'wrap' => 'OFF',
@@ -63,12 +119,13 @@ $tempColumns = array (
 
 t3lib_div::loadTCA('pages');
 t3lib_extMgm::addTCAcolumns('pages', $tempColumns, 1);
-t3lib_extMgm::addToAllTCAtypes('pages','tx_imagecycle_images;;;;1-1-1, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
+t3lib_extMgm::addToAllTCAtypes('pages','tx_imagecycle_mode;;;;1-1-1, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
 
 t3lib_div::loadTCA('pages_language_overlay');
 t3lib_extMgm::addTCAcolumns('pages_language_overlay', $tempColumns, 1);
-t3lib_extMgm::addToAllTCAtypes('pages_language_overlay','tx_imagecycle_images;;;;1-1-1, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
+t3lib_extMgm::addToAllTCAtypes('pages_language_overlay','tx_imagecycle_mode;;;;1-1-1, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
 
+$TCA['pages']['ctrl']['requestUpdate'] .= ($TCA['pages']['ctrl']['requestUpdate'] ? ',' : ''). 'tx_imagecycle_mode';
 
 
 // CONTENT
@@ -94,7 +151,7 @@ $tempColumns = Array (
 
 t3lib_div::loadTCA('tt_content');
 t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
-$GLOBALS['TCA']['tt_content']['palettes']['7']['showitem'] .= ',tx_imagecycle_activate,tx_imagecycle_duration';
+$TCA['tt_content']['palettes']['7']['showitem'] .= ',tx_imagecycle_activate,tx_imagecycle_duration';
 
 t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Image Cycle');
 
