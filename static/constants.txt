@@ -34,6 +34,12 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/file/030; type=file[js]; label=jQuery Cycle: Location of the jQuery Cycle
 	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all-2.88.min.js
 
+	# cat=plugin.tx_imagecycle.basic/file/040; type=file[js]; label=JS-Template file: Location of the used template for JS
+	file.templateFileJS = EXT:imagecycle/pi1/tx_imagecycle_pi1.js
+
+	# cat=plugin.tx_imagecycle.basic/file/050; type=file[css]; label=CSS file: The Path to the stylesheet file
+	file.cssFile = EXT:imagecycle/res/css/style.css
+
 
 	# cat=plugin.tx_imagecycle.basic/dims/010; type=string; label=Image width: Width of the images
 	imagewidth = 200c
@@ -45,31 +51,34 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/typo/010; type=options[,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all]; label=Type of the movement: Values are none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all
 	type = fade
 
-	# cat=plugin.tx_imagecycle.basic/typo/020; type=options[,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition:Effect of transition (Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
+	# cat=plugin.tx_imagecycle.basic/typo/020; type=options[,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition: Effect of transition (Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
 	transition = Back
 
-	# cat=plugin.tx_imagecycle.basic/typo/030; type=options[,In,Out,InOut]; label=Transition direction:Direction of transition (In, Out, InOut)
+	# cat=plugin.tx_imagecycle.basic/typo/030; type=options[,In,Out,InOut]; label=Transition direction: Direction of transition (In, Out, InOut)
 	transitionDir = InOut
 
-	# cat=plugin.tx_imagecycle.basic/typo/040; type=int+; label=Duration transition:The duration of the transition in milliseconds
+	# cat=plugin.tx_imagecycle.basic/typo/040; type=int+; label=Duration transition: The duration of the transition in milliseconds
 	transitionDuration = 
 
-	# cat=plugin.tx_imagecycle.basic/typo/050; type=int+; label=Duration of display:The display duration of the image in milliseconds
+	# cat=plugin.tx_imagecycle.basic/typo/050; type=int+; label=Duration of display: The display duration of the image in milliseconds
 	displayDuration = 
 
-	# cat=plugin.tx_imagecycle.basic/typo/060; type=int; label=Duration of delay:The delay duration for animation begin in milliseconds
+	# cat=plugin.tx_imagecycle.basic/typo/060; type=int; label=Duration of delay: The delay duration for animation begin in milliseconds
 	delayDuration = 
 
-	# cat=plugin.tx_imagecycle.basic/typo/070; type=boolean; label=Simultaneously animation:Animates in and out simultaneously
+	# cat=plugin.tx_imagecycle.basic/typo/070; type=boolean; label=Simultaneously animation: Animates in and out simultaneously
 	sync = 1
 
-	# cat=plugin.tx_imagecycle.basic/typo/080; type=string; label=Own Options:Enter own options (see http://malsup.com/jquery/cycle/)
+	# cat=plugin.tx_imagecycle.basic/typo/080; type=boolean; label=Show Control: If set, the control panel will be displayed
+	showControl = 0
+
+	# cat=plugin.tx_imagecycle.basic/typo/090; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
 	options = 
 
 
 
 
-	# cat=plugin.tx_imagecycle.caption/enable/010; type=boolean; label=Show captions:If set, the captions will be displayed
+	# cat=plugin.tx_imagecycle.caption/enable/010; type=boolean; label=Show captions: If set, the captions will be displayed
 	showcaption = 1
 
 	# cat=plugin.tx_imagecycle.caption/enable/020; type=boolean; label=Animate the caption: If set, the caption will be animated

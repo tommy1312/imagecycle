@@ -136,6 +136,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				$this->conf['delayDuration'] = $this->lConf['delayduration'];
 			}
 			$this->conf['showcaption'] = $this->lConf['showcaption'];
+			$this->conf['showControl'] = $this->lConf['showControl'];
 			$this->conf['stopOnMousover'] = $this->lConf['stoponmousover'];
 			$this->conf['sync'] = $this->lConf['sync'];
 			$this->conf['random'] = $this->lConf['random'];
@@ -370,6 +371,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		}
 
 		$options = array();
+
 		if (! $this->conf['imagewidth']) {
 			$this->conf['imagewidth'] = ($this->conf['imagewidth'] ? $this->conf['imagewidth'] : "200c");
 		}
@@ -440,11 +442,46 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		// define the js file
 		$this->addJsFile($this->conf['jQueryCycle']);
 
-		$this->addJS(
-			$jQueryNoConflict . "
-jQuery(document).ready(function() {
-	jQuery('#". $this->contentKey ."').show().cycle(".(count($options) ? "{\n		".implode(",\n		", $options)."\n	}" : "").");
-});");
+		// define the css file
+		$this->addCssFile($this->conf['cssFile']);
+
+		// The template for JS
+		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
+			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/pi1/tx_imagecycle_pi1.js");
+		}
+		// get the Template of the Javascript
+		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_JS###"))) {
+			$templateCode = "alert('Template TEMPLATE_JS is missing')";
+		}
+		// set the key
+		$markerArray = array();
+		$markerArray["KEY"] = $this->contentKey;
+		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
+		// define the control
+		if ($this->conf['showControl']) {
+			$templateControl = trim($this->cObj->getSubpart($templateCode, "###CONTROL###"));
+			$templateControlAfter = trim($this->cObj->getSubpart($templateCode, "###CONTROL_AFTER###"));
+			$options[] = trim($this->cObj->getSubpart($templateCode, "###CONTROL_OPTIONS###"));
+		} else {
+			$templateControl = null;
+		}
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL###', $templateControl, 0);
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL_AFTER###', $templateControlAfter, 0);
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL_OPTIONS###', '', 0);
+		// define the play class
+		if ($this->conf['displayDuration'] > 0) {
+			$templatePaused = null;
+		} else {
+			$templatePaused = $this->cObj->getSubpart($templateCode, "###PAUSED###");
+		}
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAUSED###', $templatePaused, 0);
+		// define the markers
+		$markerArray = array();
+		$markerArray["OPTIONS"] = implode(",\n		", $options);
+		// set the markers
+		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
+
+		$this->addJS($templateCode);
 
 		// Add the ressources
 		$this->addResources();
@@ -458,8 +495,8 @@ jQuery(document).ready(function() {
 		$GLOBALS['TSFE']->register['key'] = $this->contentKey;
 		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
 		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
-		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
 		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'];
+		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
 		if (count($data) > 0) {
 			foreach ($data as $key => $item) {
 				$image = null;

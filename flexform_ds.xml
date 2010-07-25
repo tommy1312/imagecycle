@@ -151,6 +151,15 @@
 							</config>
 						</TCEforms>
 					</showcaption>
+					<showControl>
+						<TCEforms>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showControl</label>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</showControl>
 					<random>
 						<TCEforms>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.random</label>

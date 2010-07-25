@@ -12,6 +12,8 @@ plugin.tx_imagecycle_pi1 {
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
 	jQueryEasing = {$plugin.tx_imagecycle_pi1.file.jQueryEasing}
 	jQueryCycle = {$plugin.tx_imagecycle_pi1.file.jQueryCycle}
+	templateFile = {$plugin.tx_imagecycle_pi1.file.templateFile}
+	cssFile = {$plugin.tx_imagecycle_pi1.file.cssFile}
 
 	imagewidth = {$plugin.tx_imagecycle_pi1.imagewidth}
 	imageheight = {$plugin.tx_imagecycle_pi1.imageheight}
@@ -23,6 +25,7 @@ plugin.tx_imagecycle_pi1 {
 	displayDuration = {$plugin.tx_imagecycle_pi1.displayDuration}
 	delayDuration = {$plugin.tx_imagecycle_pi1.delayDuration}
 	sync = {$plugin.tx_imagecycle_pi1.sync}
+	showControl = {$plugin.tx_imagecycle_pi1.showControl}
 	options = {$plugin.tx_imagecycle_pi1.options}
 
 	showcaption = {$plugin.tx_imagecycle_pi1.showcaption}
