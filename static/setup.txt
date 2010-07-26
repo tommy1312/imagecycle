@@ -12,7 +12,7 @@ plugin.tx_imagecycle_pi1 {
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
 	jQueryEasing = {$plugin.tx_imagecycle_pi1.file.jQueryEasing}
 	jQueryCycle = {$plugin.tx_imagecycle_pi1.file.jQueryCycle}
-	templateFile = {$plugin.tx_imagecycle_pi1.file.templateFile}
+	templateFileJS = {$plugin.tx_imagecycle_pi1.file.templateFileJS}
 	cssFile = {$plugin.tx_imagecycle_pi1.file.cssFile}
 
 	imagewidth = {$plugin.tx_imagecycle_pi1.imagewidth}
