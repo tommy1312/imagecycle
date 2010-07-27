@@ -481,7 +481,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
-		$this->addJS($templateCode);
+		$this->addJS($jQueryNoConflict . $templateCode);
 
 		// Add the ressources
 		$this->addResources();
