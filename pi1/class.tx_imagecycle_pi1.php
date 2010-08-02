@@ -153,7 +153,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 						$this->conf['type'] = $page['tx_imagecycle_effect'];
 					}
 					if (
-						($page['tx_imagecycle_mode'] == 'upload'      && trim($page['tx_imagecycle_images']) != '') ||
+						(($page['tx_imagecycle_mode'] == 'upload' || ! $page['tx_imagecycle_mode']) && trim($page['tx_imagecycle_images']) != '') ||
 						($page['tx_imagecycle_mode'] == 'dam'         && trim($page['tx_imagecycle_damimages']) != '') ||
 						($page['tx_imagecycle_mode'] == 'dam_catedit' && trim($page['tx_imagecycle_damcategories']) != '') ||
 						$this->conf['disableRecursion'] ||
