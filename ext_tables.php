@@ -6,8 +6,9 @@ if (!defined ('TYPO3_MODE')) {
 
 
 // PAGE
-$tempColumns = array (
-	'tx_imagecycle_mode' => array (
+$tempColumns = array ();
+if (t3lib_extMgm::isLoaded('dam')) {
+	$tempColumns['tx_imagecycle_mode'] = array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_mode',
 		'displayCond' => 'EXT:dam:LOADED:true',
@@ -17,8 +18,8 @@ $tempColumns = array (
 			'size' => 1,
 			'maxitems' => 1,
 		)
-	),
-	'tx_imagecycle_damimages' => array (
+	);
+	$tempColumns['tx_imagecycle_damimages'] = array (
 		'exclude' => 1,
 		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damimages',
 		'displayCond' => 'FIELD:tx_imagecycle_mode:=:dam',
@@ -43,78 +44,81 @@ $tempColumns = array (
 			'minitems' => 0,
 			'maxitems' => 1000,
 		)
-	),
-	'tx_imagecycle_damcategories' => array (
-		'exclude' => 1,
-		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damcategories',
-		'displayCond' => 'FIELD:tx_imagecycle_mode:=:dam_catedit',
-		'config' => array (
-			'type' => 'select',
-			'form_type' => 'user',
-			'userFunc' => 'EXT:dam/lib/class.tx_dam_tcefunc.php:tx_dam_tceFunc->getSingleField_selectTree',
-			'treeViewClass' => 'EXT:dam/components/class.tx_dam_selectionCategory.php:tx_dam_selectionCategory',
-			'foreign_table' => 'tx_dam_cat',
-			'size' => 5,
-			'autoSizeMax' => 25,
-			'minitems' => 0,
-			'maxitems' => 99,
-		)
-	),
-	'tx_imagecycle_images' => array (
-		'exclude' => 1,
-		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_images',
-		'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
-		'config' => array (
-			'type' => 'group',
-			'internal_type' => 'file',
-			'allowed' => 'gif,png,jpeg,jpg',
-			'max_size' => $GLOBALS['TYPO3_CONF_VARS']['BE']['maxFileSize'],
-			'uploadfolder' => 'uploads/tx_imagecycle',
-			'show_thumbs' => 1,
-			'size' => 6,
-			'minitems' => 0,
-			'maxitems' => 25,
-		)
-	),
-	'tx_imagecycle_hrefs' => array (
-		'exclude' => 1,
-		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_hrefs',
-		'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
-		'config' => array (
-			'type' => 'text',
-			'wrap' => 'OFF',
-			'cols' => '48',
-			'rows' => '6',
-		)
-	),
-	'tx_imagecycle_captions' => array (
-		'exclude' => 1,
-		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_captions',
-		'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
-		'config' => array (
-			'type' => 'text',
-			'wrap' => 'OFF',
-			'cols' => '48',
-			'rows' => '6',
-		)
-	),
-	'tx_imagecycle_effect' => array (
-		'exclude' => 1,
-		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_effect',
-		'config' => array (
-			'type' => 'select',
-			'itemsProcFunc' => 'tx_imagecycle_itemsProcFunc->getEffects',
-			'size' => 1,
-			'maxitems' => 1,
-		)
-	),
-	'tx_imagecycle_stoprecursion' => array (
-		'exclude' => 1,
-		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_stoprecursion',
-		'config' => array (
-			'type' => 'check',
-		)
-	),
+	);
+	if (t3lib_extMgm::isLoaded("dam_catedit")) {
+		$tempColumns['tx_imagecycle_damcategories'] = array (
+			'exclude' => 1,
+			'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damcategories',
+			'displayCond' => 'FIELD:tx_imagecycle_mode:=:dam_catedit',
+			'config' => array (
+				'type' => 'select',
+				'form_type' => 'user',
+				'userFunc' => 'EXT:dam/lib/class.tx_dam_tcefunc.php:tx_dam_tceFunc->getSingleField_selectTree',
+				'treeViewClass' => 'EXT:dam/components/class.tx_dam_selectionCategory.php:tx_dam_selectionCategory',
+				'foreign_table' => 'tx_dam_cat',
+				'size' => 5,
+				'autoSizeMax' => 25,
+				'minitems' => 0,
+				'maxitems' => 99,
+			)
+		);
+	}
+}
+// Normal page fields
+$tempColumns['tx_imagecycle_images'] = array (
+	'exclude' => 1,
+	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_images',
+	'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
+	'config' => array (
+		'type' => 'group',
+		'internal_type' => 'file',
+		'allowed' => 'gif,png,jpeg,jpg',
+		'max_size' => $GLOBALS['TYPO3_CONF_VARS']['BE']['maxFileSize'],
+		'uploadfolder' => 'uploads/tx_imagecycle',
+		'show_thumbs' => 1,
+		'size' => 6,
+		'minitems' => 0,
+		'maxitems' => 25,
+	)
+);
+$tempColumns['tx_imagecycle_hrefs'] = array (
+	'exclude' => 1,
+	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_hrefs',
+	'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
+	'config' => array (
+		'type' => 'text',
+		'wrap' => 'OFF',
+		'cols' => '48',
+		'rows' => '6',
+	)
+);
+$tempColumns['tx_imagecycle_captions'] = array (
+	'exclude' => 1,
+	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_captions',
+	'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
+	'config' => array (
+		'type' => 'text',
+		'wrap' => 'OFF',
+		'cols' => '48',
+		'rows' => '6',
+	)
+);
+$tempColumns['tx_imagecycle_effect'] = array (
+	'exclude' => 1,
+	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_effect',
+	'config' => array (
+		'type' => 'select',
+		'itemsProcFunc' => 'tx_imagecycle_itemsProcFunc->getEffects',
+		'size' => 1,
+		'maxitems' => 1,
+	)
+);
+$tempColumns['tx_imagecycle_stoprecursion'] = array (
+	'exclude' => 1,
+	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_stoprecursion',
+	'config' => array (
+		'type' => 'check',
+	)
 );
 
 t3lib_div::loadTCA('pages');
@@ -151,13 +155,17 @@ $tempColumns = Array (
 
 t3lib_div::loadTCA('tt_content');
 t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
-$TCA['tt_content']['palettes']['7']['showitem'] .= ',tx_imagecycle_activate,tx_imagecycle_duration';
-
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Image Cycle');
-
-t3lib_div::loadTCA('tt_content');
+$TCA['tt_content']['palettes']['tx_imagecycle'] = array(
+	'showitem' => 'tx_imagecycle_activate,tx_imagecycle_duration',
+	'canNotCollapse' => 1,
+);
+t3lib_extMgm::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:imagecycle/locallang_db.xml:tt_content.tx_imagecycle_title;tx_imagecycle', 'textpic', 'before:imagecaption');
 $TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi1'] = 'layout,select_key,pages';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi1'] = 'pi_flexform,image_zoom';
+
+
+
+t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Image Cycle');
 
 
 
