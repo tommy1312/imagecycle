@@ -142,6 +142,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$this->conf['sync'] = $this->lConf['sync'];
 			$this->conf['random'] = $this->lConf['random'];
 			$this->conf['options'] = $this->lConf['options'];
+			$this->conf['showPager'] = $this->lConf['showPager'];
 		} else {
 			$this->type = 'header';
 			// It's the header
@@ -209,7 +210,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$data[$key]['caption'] = ($this->conf['showcaption'] ? $this->captions[$key] : '');
 		}
 
-		return $this->pi_wrapInBaseClass($this->parseTemplate($data));
+		return $this->parseTemplate($data);
 	}
 
 	/**
@@ -476,6 +477,13 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$templatePaused = $this->cObj->getSubpart($templateCode, "###PAUSED###");
 		}
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAUSED###', $templatePaused, 0);
+		// define the pager
+		if ($this->conf['showPager']) {
+			$templatePager = $this->cObj->getSubpart($templateCode, "###PAGER###");
+		} else {
+			$templatePager = null;
+		}
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAGER###', $templatePager, 0);
 		// define the markers
 		$markerArray = array();
 		$markerArray["OPTIONS"] = implode(",\n		", $options);
@@ -493,6 +501,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 		$return_string = null;
 		$images = null;
+		$pager = null;
 		$GLOBALS['TSFE']->register['key'] = $this->contentKey;
 		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
 		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
@@ -506,6 +515,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
+				$GLOBALS['TSFE']->register['CURRENT_ID'] = $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] + 1;
 				if ($this->hrefs[$key]) {
 					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
 				} else {
@@ -523,9 +533,16 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				}
 				$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['itemWrap.']);
 				$images .= $image;
+				// create the pager
+				if ($this->conf['showPager']) {
+					$pager .= trim($this->cObj->cObjGetSingle($this->conf['cycle.'][$this->type.'.']['pager'], $this->conf['cycle.'][$this->type.'.']['pager.']));
+				}
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] ++;
 			}
-			$return_string = $this->cObj->stdWrap($images, $this->conf['cycle.'][$this->type.'.']['stdWrap.']);
+			$markerArray['PAGER'] = $this->cObj->stdWrap($pager, $this->conf['cycle.'][$this->type.'.']['pagerWrap.']);
+			// the stdWrap
+			$images = $this->cObj->stdWrap($images, $this->conf['cycle.'][$this->type.'.']['stdWrap.']);
+			$return_string = $this->cObj->substituteMarkerArray($images, $markerArray, '###|###', 0);
 		}
 		return $return_string;
 	}

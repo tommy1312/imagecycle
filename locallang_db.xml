@@ -36,6 +36,7 @@
 			<label index="tt_content.pi_flexform.imageheight">Height</label>
 			<label index="tt_content.pi_flexform.showcaption">Show caption</label>
 			<label index="tt_content.pi_flexform.showControl">Show Control</label>
+			<label index="tt_content.pi_flexform.showPager">Show Pager</label>
 			<label index="tt_content.pi_flexform.random">Random order</label>
 			<label index="tt_content.pi_flexform.stoponmousover">Stop animation if mouse over</label>
 			<label index="tt_content.pi_flexform.sheet_movement">Movement</label>

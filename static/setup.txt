@@ -26,6 +26,7 @@ plugin.tx_imagecycle_pi1 {
 	delayDuration = {$plugin.tx_imagecycle_pi1.delayDuration}
 	sync = {$plugin.tx_imagecycle_pi1.sync}
 	showControl = {$plugin.tx_imagecycle_pi1.showControl}
+	showPager = {$plugin.tx_imagecycle_pi1.showPager}
 	options = {$plugin.tx_imagecycle_pi1.options}
 
 	showcaption = {$plugin.tx_imagecycle_pi1.showcaption}
@@ -62,8 +63,17 @@ plugin.tx_imagecycle_pi1 {
 				titleText < .altText
 				longdescURL < .altText
 			}
+			pager = TEXT
+			pager {
+				value = <a href="#" rev="{register:IMAGE_NUM_CURRENT}">{register:CURRENT_ID}</a>
+				insertData = 1
+			}
+			pagerWrap {
+				dataWrap = <div class="tx-imagecycle-pi1-pager"> | </div>
+				required = 1
+			}
 			stdWrap {
-				dataWrap = <ul id="{register:key}" class="tx-imagecycle-pi1"> | </ul>
+				dataWrap = <div class="tx-imagecycle-pi1">###PAGER###<ul id="{register:key}" class="tx-imagecycle-pi1-images"> | </ul></div>
 				required = 1
 			}
 			captionWrap {
@@ -79,7 +89,7 @@ plugin.tx_imagecycle_pi1 {
 		content < .normal
 	}
 	_CSS_DEFAULT_STYLE (
-ul.tx-imagecycle-pi1 {
+.tx-imagecycle-pi1-images {
 	display: none;
 	position: relative;
 	overflow: hidden;
@@ -87,29 +97,28 @@ ul.tx-imagecycle-pi1 {
 	margin: 0;
 	padding: 0;
 }
-ul.tx-imagecycle-pi1 img {
+.tx-imagecycle-pi1-images img {
 	display: block;
 }
-ul.tx-imagecycle-pi1 li {
+.tx-imagecycle-pi1-images li {
 	position: absolute;
 	margin: 0;
 	padding: 0;
 }
-ul.tx-imagecycle-pi1 li,
-ul.tx-imagecycle-pi1 a {
+.tx-imagecycle-pi1-images li,
+.tx-imagecycle-pi1-images a {
 	display: block;
 	position: relative;
 }
-ul.tx-imagecycle-pi1 a:hover {
+.tx-imagecycle-pi1-images a:hover {
 	background: none;
 	border: 0! important;
 }
-ul.tx-imagecycle-pi1 span {
+.tx-imagecycle-pi1-images span {
 	position: absolute;
 	left: 0;
 	bottom: 0;
-	/* remove the below 'width' line if you want the caption
-	background to be just the width of the caption text */
+	/* remove the below 'width' line if you want the caption background to be just the width of the caption text */
 	width: 100%;
 	padding: 5px;
 	color: #fff;
@@ -117,6 +126,17 @@ ul.tx-imagecycle-pi1 span {
 	opacity: 0.8;
 	white-space: nowrap;
 	display: none;
+}
+.tx-imagecycle-pi1-pager {
+	margin: 0 0 5px 0;
+	text-align: center;
+}
+.tx-imagecycle-pi1-pager a {
+	border: 1px solid #ccc;
+	background: #fc0;
+	text-decoration: none;
+	margin: 0 5px;
+	padding: 3px 5px;
 }
 	)
 }
@@ -130,7 +150,7 @@ ul.tx-imagecycle-pi1 span {
 #lib.imagecycle {
 #  imgMax = 1000
 #  rendering.ul {
-#    imageStdWrap.dataWrap = <div class="csc-textpic-imagewrap" style="width:{register:rowwidth}px;"><ul id="imagecycle_{field:uid}" class="tx-imagecycle-pi1" style="display:none;overflow:hidden;"> | </ul></div>
+#    imageStdWrap.dataWrap = <div class="csc-textpic-imagewrap" style="width:{register:rowwidth}px;"><ul id="imagecycle_{field:uid}" class="tx-imagecycle-pi1-images" style="display:none;overflow:hidden;"> | </ul></div>
 #    imageStdWrapNoWidth.dataWrap < .imageStdWrap.dataWrap
 #    imageRowStdWrap.dataWrap = |
 #    imageLastRowStdWrap.dataWrap =  |

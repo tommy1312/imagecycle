@@ -72,7 +72,10 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/typo/080; type=boolean; label=Show Control: If set, the control panel will be displayed
 	showControl = 0
 
-	# cat=plugin.tx_imagecycle.basic/typo/090; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
+	# cat=plugin.tx_imagecycle.basic/typo/090; type=boolean; label=Show Pager: If set, the pager will be displayed
+	showPager = 0
+
+	# cat=plugin.tx_imagecycle.basic/typo/100; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
 	options = 
 
 
@@ -84,9 +87,9 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.caption/enable/020; type=boolean; label=Animate the caption: If set, the caption will be animated
 	captionAnimate = 1
 
+
 	# cat=plugin.tx_imagecycle.caption/typo/010; type=boolean; label=Animate opacity: If set, the opacity of the caption will be animated
 	captionTypeOpacity = 1
-
 
 	# cat=plugin.tx_imagecycle.caption/typo/020; type=boolean; label=Animate height: If set, the height of the caption will be animated
 	captionTypeHeight = 0

@@ -29,13 +29,21 @@ jQuery(document).ready(function() {
 		prev: '####KEY###_prev'
 		<!-- ###CONTROL_OPTIONS### -->
 	});
-	<!-- ###CONTROL_AFTER### -->
 	jQuery('####KEY###').parent().css('width', jQuery('####KEY###').css('width'));
+	<!-- ###CONTROL_AFTER### -->
 	jQuery('####KEY###').parent().hover(function(){
 		jQuery('####KEY###_controller').stop(true,true).fadeIn('fast');
 	}, function(){
 		jQuery('####KEY###_controller').stop(true,true).fadeOut('fast');
 	});
 	<!-- ###CONTROL_AFTER### -->
+	<!-- ###PAGER### -->
+	jQuery('.tx-imagecycle-pi1-pager a').each(function() {
+		jQuery(this).click(function() {
+			jQuery('####KEY###').cycle(parseInt(jQuery(this).attr('rev')));
+			return false;
+		});
+	});
+	<!-- ###PAGER### -->
 });
 <!-- ###TEMPLATE_JS### end -->
