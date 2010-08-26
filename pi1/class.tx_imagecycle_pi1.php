@@ -139,6 +139,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$this->conf['showcaption'] = $this->lConf['showcaption'];
 			$this->conf['showControl'] = $this->lConf['showControl'];
 			$this->conf['stopOnMousover'] = $this->lConf['stoponmousover'];
+			$this->conf['pausedBegin'] = $this->lConf['pausedBegin'];
 			$this->conf['sync'] = $this->lConf['sync'];
 			$this->conf['random'] = $this->lConf['random'];
 			$this->conf['options'] = $this->lConf['options'];
@@ -381,25 +382,25 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$this->conf['imageheight'] = ($this->conf['imageheight'] ? $this->conf['imageheight'] : "200c");
 		}
 		if ($this->conf['type']) {
-			$options[] = "fx: '{$this->conf['type']}'";
+			$options['fx'] = "fx: '{$this->conf['type']}'";
 		}
 		if ($this->conf['transitionDir'] && $this->conf['transition']) {
-			$options[] = "easing: 'ease{$this->conf['transitionDir']}{$this->conf['transition']}'";
+			$options['easing'] = "easing: 'ease{$this->conf['transitionDir']}{$this->conf['transition']}'";
 		}
 		if ($this->conf['transitionDuration'] > 0) {
-			$options[] = "speed: '{$this->conf['transitionDuration']}'";
+			$options['speed'] = "speed: '{$this->conf['transitionDuration']}'";
 		}
 		if ($this->conf['displayDuration'] > 0) {
-			$options[] = "timeout: '{$this->conf['displayDuration']}'";
+			$options['timeout'] = "timeout: '{$this->conf['displayDuration']}'";
 		}
 		if (is_numeric($this->conf['delayDuration']) && $this->conf['delayDuration'] != 0) {
-			$options[] = "delay: {$this->conf['delayDuration']}";
+			$options['delay'] = "delay: {$this->conf['delayDuration']}";
 		}
 		if ($this->conf['stopOnMousover']) {
-			$options[] = "pause: true";
+			$options['pause'] = "pause: true";
 		}
-		$options[] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
-		$options[] = "random: ".($this->conf['random'] ? 'true' : 'false');
+		$options['sync'] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
+		$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
 
 		// add caption
 		if ($this->conf['showcaption']) {
@@ -429,10 +430,10 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				$after  = "jQuery('span', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
 			}
 			if ($this->conf['captionSync']) {
-				$options[] = "before: function() {".$before."".$after."}";
+				$options['before'] = "before: function() {".$before."".$after."}";
 			} else {
-				$options[] = "before: function() {".$before."}";
-				$options[] = "after:  function() {".$after."}";
+				$options['before'] = "before: function() {".$before."}";
+				$options['after'] = "after:  function() {".$after."}";
 			}
 		}
 
@@ -471,12 +472,15 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL_AFTER###', $templateControlAfter, 0);
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL_OPTIONS###', '', 0);
 		// define the play class
-		if ($this->conf['displayDuration'] > 0) {
-			$templatePaused = null;
-		} else {
+		if ($this->conf['pausedBegin']) {
 			$templatePaused = $this->cObj->getSubpart($templateCode, "###PAUSED###");
+			$templatePausedBegin = $this->cObj->getSubpart($templateCode, "###PAUSED_BEGIN###");;
+		} else {
+			$templatePaused = null;
+			$templatePausedBegin = null;
 		}
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAUSED###', $templatePaused, 0);
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAUSED_BEGIN###', $templatePausedBegin, 0);
 		// define the pager
 		if ($this->conf['showPager']) {
 			$templatePager = $this->cObj->getSubpart($templateCode, "###PAGER###");
@@ -518,13 +522,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				$GLOBALS['TSFE']->register['CURRENT_ID'] = $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] + 1;
 				if ($this->hrefs[$key]) {
 					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
-				} else {
-					$link = $this->cObj->imageLinkWrap('', $totalImagePath, $imgConf['imageLinkWrap.']);
-					if ($link) {
-						unset($imgConf['titleText']);
-						unset($imgConf['titleText.']);
-						$imgConf['emptyTitleHandling'] = 'removeAttr';
-					}
 				}
 				$image = $this->cObj->IMAGE($imgConf);
 				$image = $this->cObj->typolink($image, $imgConf['imageLinkWrap.']);

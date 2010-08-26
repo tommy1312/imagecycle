@@ -29,6 +29,9 @@ jQuery(document).ready(function() {
 		prev: '####KEY###_prev'
 		<!-- ###CONTROL_OPTIONS### -->
 	});
+	<!-- ###PAUSED_BEGIN### -->
+	jQuery('####KEY###').cycle('pause');
+	<!-- ###PAUSED_BEGIN### -->
 	jQuery('####KEY###').parent().css('width', jQuery('####KEY###').css('width'));
 	<!-- ###CONTROL_AFTER### -->
 	jQuery('####KEY###').parent().hover(function(){

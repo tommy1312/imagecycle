@@ -187,6 +187,15 @@
 							</config>
 						</TCEforms>
 					</stoponmousover>
+					<pausedBegin>
+						<TCEforms>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.pausedBegin</label>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</pausedBegin>
 				</el>
 			</ROOT>
 		</settings>

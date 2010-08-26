@@ -12,16 +12,19 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/enable/050; type=boolean; label=Stop on mouseover: Stop the slideshow when mouse over
 	stopOnMousover = 0
 
-	# cat=plugin.tx_imagecycle.basic/enable/060; type=boolean; label=Disable Recursion:Disable the root line fetching if there are no images
+	# cat=plugin.tx_imagecycle.basic/enable/060; type=int; label=Paused at beginning: If set, the slide will be paused at beginning
+	pausedBegin = 0
+
+	# cat=plugin.tx_imagecycle.basic/enable/070; type=boolean; label=Disable Recursion:Disable the root line fetching if there are no images
 	disableRecursion = 0
 
-	# cat=plugin.tx_imagecycle.basic/enable/070; type=boolean; label=jQuery noConflict: Use the noConflict methode
+	# cat=plugin.tx_imagecycle.basic/enable/080; type=boolean; label=jQuery noConflict: Use the noConflict methode
 	jQueryNoConflict = 0
 
-	# cat=plugin.tx_imagecycle.basic/enable/080; type=boolean; label=Javascript in Footer: If set, the Javascript will be rendered in Footer
+	# cat=plugin.tx_imagecycle.basic/enable/090; type=boolean; label=Javascript in Footer: If set, the Javascript will be rendered in Footer
 	jsInFooter = 0
 
-	# cat=plugin.tx_imagecycle.basic/enable/090; type=boolean; label=Minify Javascript: If set, the Javascript will be minified
+	# cat=plugin.tx_imagecycle.basic/enable/100; type=boolean; label=Minify Javascript: If set, the Javascript will be minified
 	jsMinify = 0
 
 

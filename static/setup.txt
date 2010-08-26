@@ -4,6 +4,7 @@ plugin.tx_imagecycle_pi1 {
 	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
 	random = {$plugin.tx_imagecycle_pi1.random}
 	stopOnMousover = {$plugin.tx_imagecycle_pi1.stopOnMousover}
+	pausedBegin = {$plugin.tx_imagecycle_pi1.pausedBegin}
 	disableRecursion = {$plugin.tx_imagecycle_pi1.disableRecursion}
 	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
 	jsInFooter = {$plugin.tx_imagecycle_pi1.jsInFooter}
