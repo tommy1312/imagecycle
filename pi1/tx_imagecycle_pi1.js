@@ -22,17 +22,27 @@ jQuery(document).ready(function() {
 		jQuery('####KEY###').cycle(options.elements.length - 1);
 	});
 	<!-- ###CONTROL### -->
-	jQuery('####KEY###').show().cycle({
-		###OPTIONS###
-		<!-- ###CONTROL_OPTIONS### -->
-		next: '####KEY###_next',
-		prev: '####KEY###_prev'
-		<!-- ###CONTROL_OPTIONS### -->
+	jQuery(window).load(function() {
+		jQuery('####KEY###').show().cycle({
+			###OPTIONS###
+			<!-- ###CONTROL_OPTIONS### -->
+			next: '####KEY###_next',
+			prev: '####KEY###_prev'
+			<!-- ###CONTROL_OPTIONS### -->
+		});
+		<!-- ###PAUSED_BEGIN### -->
+		jQuery('####KEY###').cycle('pause');
+		<!-- ###PAUSED_BEGIN### -->
+		jQuery('####KEY###').parent().css('width', jQuery('####KEY###').css('width'));
+		<!-- ###PAGER### -->
+		jQuery('.tx-imagecycle-pi1-pager a').each(function() {
+			jQuery(this).click(function() {
+				jQuery('####KEY###').cycle(parseInt(jQuery(this).attr('rev')));
+				return false;
+			});
+		});
+		<!-- ###PAGER### -->
 	});
-	<!-- ###PAUSED_BEGIN### -->
-	jQuery('####KEY###').cycle('pause');
-	<!-- ###PAUSED_BEGIN### -->
-	jQuery('####KEY###').parent().css('width', jQuery('####KEY###').css('width'));
 	<!-- ###CONTROL_AFTER### -->
 	jQuery('####KEY###').parent().hover(function(){
 		jQuery('####KEY###_controller').stop(true,true).fadeIn('fast');
@@ -40,13 +50,5 @@ jQuery(document).ready(function() {
 		jQuery('####KEY###_controller').stop(true,true).fadeOut('fast');
 	});
 	<!-- ###CONTROL_AFTER### -->
-	<!-- ###PAGER### -->
-	jQuery('.tx-imagecycle-pi1-pager a').each(function() {
-		jQuery(this).click(function() {
-			jQuery('####KEY###').cycle(parseInt(jQuery(this).attr('rev')));
-			return false;
-		});
-	});
-	<!-- ###PAGER### -->
 });
 <!-- ###TEMPLATE_JS### end -->
