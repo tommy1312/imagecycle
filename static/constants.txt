@@ -38,7 +38,7 @@ plugin.tx_imagecycle_pi1 {
 	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all-2.88.min.js
 
 	# cat=plugin.tx_imagecycle.basic/file/040; type=file[js]; label=JS-Template file: Location of the used template for JS
-	file.templateFileJS = EXT:imagecycle/pi1/tx_imagecycle_pi1.js
+	file.templateFileJS = EXT:imagecycle/res/tx_imagecycle_pi1.js
 
 	# cat=plugin.tx_imagecycle.basic/file/050; type=file[css]; label=CSS file: The Path to the stylesheet file
 	file.cssFile = EXT:imagecycle/res/css/style.css
