@@ -27,7 +27,8 @@
  * @package	TYPO3
  * @subpackage	tx_imagecycle
  */
-class tx_imagecycle {
+class tx_imagecycle
+{
 	var $cObj;
 
 	function getSlideshow($content, $conf)
@@ -35,7 +36,7 @@ class tx_imagecycle {
 		if ($this->cObj->data['tx_imagecycle_activate']) {
 			require_once(t3lib_extMgm::extPath('imagecycle') . 'pi1/class.tx_imagecycle_pi1.php');
 			$obj = t3lib_div::makeInstance('tx_imagecycle_pi1');
-			$obj->contentKey = $obj->extKey . '_' . $this->cObj->data['uid'];
+			$obj->setContentKey($obj->extKey . '_' . $this->cObj->data['uid']);
 			$obj->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_imagecycle_pi1.'];
 			// overwrite the width and height of the config
 			$obj->conf['imagewidth'] = $GLOBALS['TSFE']->register['imagewidth'];
@@ -50,6 +51,7 @@ class tx_imagecycle {
 		return $content;
 	}
 }
+
 
 // XCLASS inclusion code
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/class.tx_imagecycle.php']) {

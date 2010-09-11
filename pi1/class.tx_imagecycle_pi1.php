@@ -42,21 +42,22 @@ if (t3lib_extMgm::isLoaded('t3jquery')) {
  */
 class tx_imagecycle_pi1 extends tslib_pibase
 {
-	var $prefixId      = 'tx_imagecycle_pi1';		// Same as class name
-	var $scriptRelPath = 'pi1/class.tx_imagecycle_pi1.php';	// Path to this script relative to the extension dir.
-	var $extKey        = 'imagecycle';	// The extension key.
-	var $pi_checkCHash = true;
-	var $lConf = array();
-	var $contentKey = null;
-	var $jsFiles = array();
-	var $js = array();
-	var $cssFiles = array();
-	var $css = array();
-	var $images = array();
-	var $hrefs = array();
-	var $captions = array();
-	var $imageDir = 'uploads/tx_imagecycle/';
-	var $type = 'normal';
+	public $prefixId      = 'tx_imagecycle_pi1';
+	public $scriptRelPath = 'pi1/class.tx_imagecycle_pi1.php';
+	public $extKey        = 'imagecycle';
+	public $pi_checkCHash = true;
+	public $images        = array();
+	public $hrefs         = array();
+	public $captions      = array();
+	public $type          = 'normal';
+	protected $lConf      = array();
+	protected $contentKey = null;
+	protected $jsFiles    = array();
+	protected $js         = array();
+	protected $cssFiles   = array();
+	protected $css        = array();
+	protected $imageDir   = 'uploads/tx_imagecycle/';
+	protected $templateFileJS = null;
 
 	/**
 	 * The main method of the PlugIn
@@ -65,14 +66,14 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return	The content that is displayed on the website
 	 */
-	function main($content, $conf)
+	public function main($content, $conf)
 	{
 		$this->conf = $conf;
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
 
 		// define the key of the element
-		$this->contentKey = "imagecycle";
+		$this->setContentKey("imagecycle");
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
@@ -92,7 +93,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			}
 
 			// define the key of the element
-			$this->contentKey .= "_c" . $this->cObj->data['uid'];
+			$this->setContentKey("imagecycle_c" . $this->cObj->data['uid']);
 
 			// define the images
 			switch ($this->lConf['mode']) {
@@ -211,14 +212,32 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$data[$key]['caption'] = ($this->conf['showcaption'] ? $this->captions[$key] : '');
 		}
 
-		return $this->parseTemplate($data);
+		return $this->pi_wrapInBaseClass($this->parseTemplate($data));
+	}
+
+	/**
+	 * Set the contentKey
+	 * @param string $contentKey
+	 */
+	public function setContentKey($contentKey=null)
+	{
+		$this->contentKey = ($contentKey == null ? $this->extKey : $contentKey);
+	}
+
+	/**
+	 * Get the contentKey
+	 * @return string
+	 */
+	public function getContentKey()
+	{
+		return $this->contentKey;
 	}
 
 	/**
 	 * Set the Information of the images if mode = upload
 	 * @return boolean
 	 */
-	function setDataUpload()
+	protected function setDataUpload()
 	{
 		if ($this->lConf['images']) {
 			// define the images
@@ -240,7 +259,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 * Set the Information of the images if mode = dam
 	 * @return boolean
 	 */
-	function setDataDam($fromCategory=false, $table='tt_content', $uid=0)
+	protected function setDataDam($fromCategory=false, $table='tt_content', $uid=0)
 	{
 		// clear the imageDir
 		$this->imageDir = '';
@@ -321,7 +340,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 *
 	 * @return	array
 	 */
-	function getDamcats($dam_cat='')
+	protected function getDamcats($dam_cat='')
 	{
 		$damCats = t3lib_div::trimExplode(",", $dam_cat, true);
 		if (count($damCats) < 1) {
@@ -349,7 +368,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 * @param $data
 	 * @return string
 	 */
-	function parseTemplate($data=array(), $dir='', $onlyJS=false)
+	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
 		// define the directory of images
 		if ($dir == '') {
@@ -362,8 +381,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		}
 
 		// define the contentKey if not exist
-		if ($this->contentKey == '') {
-			$this->contentKey = "imagecycle_key";
+		if ($this->getContentKey() == '') {
+			$this->setContentKey("imagecycle_key");
 		}
 
 		// define the jQuery mode and function
@@ -458,7 +477,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		}
 		// set the key
 		$markerArray = array();
-		$markerArray["KEY"] = $this->contentKey;
+		$markerArray["KEY"] = $this->getContentKey();
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 		// define the control
 		if ($this->conf['showControl']) {
@@ -506,7 +525,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$return_string = null;
 		$images = null;
 		$pager = null;
-		$GLOBALS['TSFE']->register['key'] = $this->contentKey;
+		$GLOBALS['TSFE']->register['key'] = $this->getContentKey();
 		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
 		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
 		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'];
@@ -549,7 +568,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 *
 	 * @return void
 	 */
-	function addResources()
+	protected function addResources()
 	{
 		// checks if t3jquery is loaded
 		if (T3JQUERY === true) {
@@ -629,7 +648,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 * @param string $path
 	 * return string
 	 */
-	function getPath($path="")
+	protected function getPath($path="")
 	{
 		return $GLOBALS['TSFE']->tmpl->getFileName($path);
 	}
@@ -641,7 +660,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 * @param boolean $first
 	 * @return void
 	 */
-	function addJsFile($script="", $first=false)
+	protected function addJsFile($script="", $first=false)
 	{
 		$script = t3lib_div::fixWindowsFilePath($script);
 		if ($this->getPath($script) && ! in_array($script, $this->jsFiles)) {
@@ -659,7 +678,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 * @param string $script
 	 * @return void
 	 */
-	function addJS($script="")
+	protected function addJS($script="")
 	{
 		if (! in_array($script, $this->js)) {
 			$this->js[] = $script;
@@ -672,7 +691,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 * @param string $script
 	 * @return void
 	 */
-	function addCssFile($script="")
+	protected function addCssFile($script="")
 	{
 		$script = t3lib_div::fixWindowsFilePath($script);
 		if ($this->getPath($script) && ! in_array($script, $this->cssFiles)) {
@@ -686,7 +705,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 * @param string $script
 	 * @return void
 	 */
-	function addCSS($script="")
+	protected function addCSS($script="")
 	{
 		if (! in_array($script, $this->css)) {
 			$this->css[] = $script;
@@ -698,7 +717,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 * @param string $key
 	 * @return string
 	 */
-	function getExtensionVersion($key)
+	protected function getExtensionVersion($key)
 	{
 		if (! t3lib_extMgm::isLoaded($key)) {
 			return '';
