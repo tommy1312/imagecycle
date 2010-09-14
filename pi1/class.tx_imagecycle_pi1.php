@@ -421,13 +421,15 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$options['sync'] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
 		$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
 
+		$before = null;
+		$after  = null;
 		// add caption
 		if ($this->conf['showcaption']) {
 			// define the animation for the caption
 			$fx = array();
 			if (! $this->conf['captionAnimate']) {
-				$before = "jQuery('span', this).css('display', 'none');";
-				$after  = "jQuery('span', this).css('display', 'block');";
+				$before .= "jQuery('span', this).css('display', 'none');";
+				$after  .= "jQuery('span', this).css('display', 'block');";
 			} else {
 				if ($this->conf['captionTypeOpacity']) {
 					$fx[] = "opacity: 'show'";
@@ -445,15 +447,23 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				if (! is_numeric($this->conf['captionSpeed'])) {
 					$this->conf['captionSpeed'] = 200;
 				}
-				$before = "jQuery('span', this).css('display', 'none');";
-				$after  = "jQuery('span', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
+				$before .= "jQuery('span', this).css('display', 'none');";
+				$after  .= "jQuery('span', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
 			}
 			if ($this->conf['captionSync']) {
-				$options['before'] = "before: function() {".$before."".$after."}";
-			} else {
-				$options['before'] = "before: function() {".$before."}";
-				$options['after'] = "after:  function() {".$after."}";
+				$before = $before . $after;
+				$after = null;
 			}
+		}
+		// 
+		if ($this->conf['showPager']) {
+			// TODO: Change the class of the active slide
+		}
+		if ($before) {
+			$options['before'] = "before: function() {".$before."}";
+		}
+		if ($after) {
+			$options['after'] = "after: function() {".$after."}";
 		}
 
 		// overwrite all options if set
@@ -471,14 +481,17 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
 			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle_pi1.js");
 		}
+
 		// get the Template of the Javascript
 		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_JS###"))) {
 			$templateCode = "alert('Template TEMPLATE_JS is missing')";
 		}
+
 		// set the key
 		$markerArray = array();
 		$markerArray["KEY"] = $this->getContentKey();
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
+
 		// define the control
 		if ($this->conf['showControl']) {
 			$templateControl = trim($this->cObj->getSubpart($templateCode, "###CONTROL###"));
@@ -490,6 +503,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL###', $templateControl, 0);
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL_AFTER###', $templateControlAfter, 0);
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL_OPTIONS###', '', 0);
+
 		// define the play class
 		if ($this->conf['pausedBegin']) {
 			$templatePaused = $this->cObj->getSubpart($templateCode, "###PAUSED###");
@@ -500,6 +514,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		}
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAUSED###', $templatePaused, 0);
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAUSED_BEGIN###', $templatePausedBegin, 0);
+
 		// define the pager
 		if ($this->conf['showPager']) {
 			$templatePager = $this->cObj->getSubpart($templateCode, "###PAGER###");
@@ -507,6 +522,17 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$templatePager = null;
 		}
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAGER###', $templatePager, 0);
+
+		// Slow connection will have a load to start
+		if ($this->conf['fixSlowConnection']) {
+			$templateSlowBefore = $this->cObj->getSubpart($templateCode, "###SLOW_CONNECTION_BEFORE###");
+			$templateSlowAfter  = $this->cObj->getSubpart($templateCode, "###SLOW_CONNECTION_AFTER###");
+		} else {
+			$templateSlowBefore = null;
+		}
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SLOW_CONNECTION_BEFORE###', $templateSlowBefore, 0);
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SLOW_CONNECTION_AFTER###',  $templateSlowAfter, 0);
+
 		// define the markers
 		$markerArray = array();
 		$markerArray["OPTIONS"] = implode(",\n		", $options);

@@ -9,6 +9,7 @@ plugin.tx_imagecycle_pi1 {
 	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
 	jsInFooter = {$plugin.tx_imagecycle_pi1.jsInFooter}
 	jsMinify = {$plugin.tx_imagecycle_pi1.jsMinify}
+	fixSlowConnection = {$plugin.tx_imagecycle_pi1.fixSlowConnection}
 
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
 	jQueryEasing = {$plugin.tx_imagecycle_pi1.file.jQueryEasing}
@@ -70,7 +71,7 @@ plugin.tx_imagecycle_pi1 {
 				insertData = 1
 			}
 			pagerWrap {
-				dataWrap = <div class="tx-imagecycle-pi1-pager"> | </div>
+				dataWrap = <div id="{register:key}_pager" class="tx-imagecycle-pi1-pager"> | </div>
 				required = 1
 			}
 			stdWrap {

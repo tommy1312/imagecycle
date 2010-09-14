@@ -27,6 +27,10 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/enable/100; type=boolean; label=Minify Javascript: If set, the Javascript will be minified
 	jsMinify = 0
 
+	# cat=plugin.tx_imagecycle.basic/enable/110; type=boolean; label=Fix slow connection: If internet connection is very slow, you can force window.load
+	fixSlowConnection = 0
+
+
 
 	# cat=plugin.tx_imagecycle.basic/file/010; type=file[js]; label=jQuery Library: Location of the jQuery Lib
 	file.jQueryLibrary = EXT:imagecycle/res/jquery/js/jquery-1.4.2.min.js
@@ -44,11 +48,13 @@ plugin.tx_imagecycle_pi1 {
 	file.cssFile = EXT:imagecycle/res/css/style.css
 
 
+
 	# cat=plugin.tx_imagecycle.basic/dims/010; type=string; label=Image width: Width of the images
 	imagewidth = 200c
 
 	# cat=plugin.tx_imagecycle.basic/dims/020; type=string; label=Image height: Height of the images
 	imageheight = 200c
+
 
 
 	# cat=plugin.tx_imagecycle.basic/typo/010; type=options[,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all]; label=Type of the movement: Values are none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all
@@ -84,6 +90,7 @@ plugin.tx_imagecycle_pi1 {
 
 
 
+
 	# cat=plugin.tx_imagecycle.caption/enable/010; type=boolean; label=Show captions: If set, the captions will be displayed
 	showcaption = 1
 
@@ -105,6 +112,7 @@ plugin.tx_imagecycle_pi1 {
 
 	# cat=plugin.tx_imagecycle.caption/typo/050; type=int; label=Speed of the animation: Set the speed of the animation in millisecounds
 	captionSpeed = 200
+
 
 
 
