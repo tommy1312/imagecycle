@@ -1,0 +1,134 @@
+plugin.tx_imagecycle_pi2 {
+
+	linkTarget = {$plugin.tx_imagecycle_pi2.linkTarget}
+	extlinkTarget = {$plugin.tx_imagecycle_pi2.extlinkTarget}
+	stopOnMousover = {$plugin.tx_imagecycle_pi2.stopOnMousover}
+	disableRecursion = {$plugin.tx_imagecycle_pi2.disableRecursion}
+	jQueryNoConflict = {$plugin.tx_imagecycle_pi2.jQueryNoConflict}
+	jsInFooter = {$plugin.tx_imagecycle_pi2.jsInFooter}
+	jsMinify = {$plugin.tx_imagecycle_pi2.jsMinify}
+
+	jQueryLibrary = {$plugin.tx_imagecycle_pi2.file.jQueryLibrary}
+	jQueryEasing = {$plugin.tx_imagecycle_pi2.file.jQueryEasing}
+	jQueryCycle = {$plugin.tx_imagecycle_pi2.file.jQueryCycle}
+	templateFileJS = {$plugin.tx_imagecycle_pi2.file.templateFileJS}
+	cssFile = {$plugin.tx_imagecycle_pi2.file.cssFile}
+
+	imagewidth = {$plugin.tx_imagecycle_pi2.imagewidth}
+	imageheight = {$plugin.tx_imagecycle_pi2.imageheight}
+
+	type = {$plugin.tx_imagecycle_pi2.type}
+	transition = {$plugin.tx_imagecycle_pi2.transition}
+	transitionDir = {$plugin.tx_imagecycle_pi2.transitionDir}
+	transitionDuration = {$plugin.tx_imagecycle_pi2.transitionDuration}
+	displayDuration = {$plugin.tx_imagecycle_pi2.displayDuration}
+	delayDuration = {$plugin.tx_imagecycle_pi2.delayDuration}
+	sync = {$plugin.tx_imagecycle_pi2.sync}
+	showControl = {$plugin.tx_imagecycle_pi2.showControl}
+	showPager = {$plugin.tx_imagecycle_pi2.showPager}
+	options = {$plugin.tx_imagecycle_pi2.options}
+
+	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
+	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
+
+	cycle {
+		normal {
+			image {
+				file.import.data = register:file
+				file.width.data = register:imagewidth
+				file.height.data = register:imageheight
+				imageLinkWrap < tt_content.image.20.1.imageLinkWrap
+				imageHrefWrap {
+					enable.data = register:href
+					typolink {
+						parameter.data = register:href
+						title.data = register:caption
+						target = {$plugin.tx_imagecycle_pi2.linkTarget}
+						extTarget = {$plugin.tx_imagecycle_pi2.extlinkTarget}
+					}
+				}
+				altText {
+					data = register:caption
+					stripHtml = 1
+				}
+				titleText < .altText
+				longdescURL < .altText
+			}
+			pager = TEXT
+			pager {
+				value = <a href="#" rev="{register:IMAGE_NUM_CURRENT}">{register:CURRENT_ID}</a>
+				insertData = 1
+			}
+			pagerWrap {
+				dataWrap = <div class="tx-imagecycle-pi2-pager"> | </div>
+				required = 1
+			}
+			stdWrap {
+				dataWrap = <div class="tx-imagecycle-pi2">###PAGER###<ul id="{register:key}" class="tx-imagecycle-pi2-images"> | </ul></div>
+				required = 1
+			}
+			captionWrap {
+				dataWrap = | <span>{register:caption}</span>
+				required = 1
+			}
+			itemWrap {
+				wrap = <li> | </li>
+				required = 1
+			}
+		}
+		header < .normal
+		content < .normal
+	}
+	_CSS_DEFAULT_STYLE (
+.tx-imagecycle-pi2-images {
+	display: none;
+	position: relative;
+	overflow: hidden;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.tx-imagecycle-pi2-images img {
+	display: block;
+}
+.tx-imagecycle-pi2-images li {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+}
+.tx-imagecycle-pi2-images li,
+.tx-imagecycle-pi2-images a {
+	display: block;
+	position: relative;
+}
+.tx-imagecycle-pi2-images a:hover {
+	background: none;
+	border: 0! important;
+}
+.tx-imagecycle-pi2-images span {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	/* remove the below 'width' line if you want the caption background to be just the width of the caption text */
+	width: 100%;
+	padding: 5px;
+	color: #fff;
+	background: #000;
+	opacity: 0.8;
+	white-space: nowrap;
+	display: none;
+}
+.tx-imagecycle-pi2-pager {
+	margin: 0 0 5px 0;
+	text-align: center;
+}
+.tx-imagecycle-pi2-pager a {
+	border: 1px solid #ccc;
+	background: #fc0;
+	text-decoration: none;
+	margin: 0 5px;
+	padding: 3px 5px;
+}
+	)
+}
+

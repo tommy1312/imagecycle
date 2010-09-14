@@ -19,6 +19,7 @@
 			<label index="tt_content.tx_imagecycle_activate">Activate</label>
 			<label index="tt_content.tx_imagecycle_duration">Duration in ms</label>
 			<label index="tt_content.list_type_pi1">Image cycle</label>
+			<label index="tt_content.list_type_pi2">GalleryView</label>
 			<label index="tt_content.pi_flexform.sheet_general">General</label>
 			<label index="tt_content.pi_flexform.mode">Mode (DAM)</label>
 			<label index="tt_content.pi_flexform.mode.I.upload">Upload Images</label>

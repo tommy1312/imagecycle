@@ -27,11 +27,7 @@
  * Hint: use extdeveval to insert/update function index above.
  */
 
-require_once(PATH_tslib.'class.tslib_pibase.php');
-
-if (t3lib_extMgm::isLoaded('t3jquery')) {
-	require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
-}
+require_once(t3lib_extMgm::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
 
 /**
  * Plugin 'Image Cycle' for the 'imagecycle' extension.
@@ -40,24 +36,12 @@ if (t3lib_extMgm::isLoaded('t3jquery')) {
  * @package	TYPO3
  * @subpackage	tx_imagecycle
  */
-class tx_imagecycle_pi1 extends tslib_pibase
+class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 {
-	public $prefixId      = 'tx_imagecycle_pi1';
-	public $scriptRelPath = 'pi1/class.tx_imagecycle_pi1.php';
+	public $prefixId      = 'tx_imagecycle_pi2';
+	public $scriptRelPath = 'pi2/class.tx_imagecycle_pi2.php';
 	public $extKey        = 'imagecycle';
 	public $pi_checkCHash = true;
-	public $images        = array();
-	public $hrefs         = array();
-	public $captions      = array();
-	public $type          = 'normal';
-	protected $lConf      = array();
-	protected $contentKey = null;
-	protected $jsFiles    = array();
-	protected $js         = array();
-	protected $cssFiles   = array();
-	protected $css        = array();
-	protected $imageDir   = 'uploads/tx_imagecycle/';
-	protected $templateFileJS = null;
 
 	/**
 	 * The main method of the PlugIn
@@ -78,7 +62,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
 
-		if ($this->cObj->data['list_type'] == $this->extKey.'_pi1') {
+		if ($this->cObj->data['list_type'] == $this->extKey.'_pi2') {
 			$this->type = 'normal';
 			// It's a content, al data from flexform
 			// Set the Flexform information
@@ -216,154 +200,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	}
 
 	/**
-	 * Set the contentKey
-	 * @param string $contentKey
-	 */
-	public function setContentKey($contentKey=null)
-	{
-		$this->contentKey = ($contentKey == null ? $this->extKey : $contentKey);
-	}
-
-	/**
-	 * Get the contentKey
-	 * @return string
-	 */
-	public function getContentKey()
-	{
-		return $this->contentKey;
-	}
-
-	/**
-	 * Set the Information of the images if mode = upload
-	 * @return boolean
-	 */
-	protected function setDataUpload()
-	{
-		if ($this->lConf['images']) {
-			// define the images
-			$this->images = t3lib_div::trimExplode(',', $this->lConf['images']);
-			// define the hrefs
-			if ($this->lConf['hrefs']) {
-				$this->hrefs = t3lib_div::trimExplode(chr(10), $this->lConf['hrefs']);
-			}
-			// define the captions
-			if ($this->lConf['captions']) {
-				$this->captions = t3lib_div::trimExplode(chr(10), $this->lConf['captions']);
-			}
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Set the Information of the images if mode = dam
-	 * @return boolean
-	 */
-	protected function setDataDam($fromCategory=false, $table='tt_content', $uid=0)
-	{
-		// clear the imageDir
-		$this->imageDir = '';
-		// get all fields for captions
-		$damCaptionFields = t3lib_div::trimExplode(',', $this->conf['damCaptionFields'], true);
-		$damHrefFields    = t3lib_div::trimExplode(',', $this->conf['damHrefFields'], true);
-		$fields  = (count($damCaptionFields) > 0 ? ','.implode(',tx_dam.', $damCaptionFields) : '');
-		$fields .= (count($damHrefFields) > 0    ? ','.implode(',tx_dam.', $damHrefFields)    : '');
-		if ($fromCategory === true) {
-			// Get the images from dam category
-			$damcategories = $this->getDamcats($this->lConf['damcategories']);
-			$res = $GLOBALS['TYPO3_DB']->exec_SELECT_mm_query(
-				tx_dam_db::getMetaInfoFieldList() . $fields,
-				'tx_dam',
-				'tx_dam_mm_cat',
-				'tx_dam_cat',
-				" AND tx_dam_cat.uid IN (".implode(",", $damcategories).") AND tx_dam.file_mime_type='image' AND tx_dam.sys_language_uid=" . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->sys_language_uid, 'tx_dam'),
-				'',
-				'tx_dam.sorting',
-				''
-			);
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-				$images['rows'][] = $row;
-			}
-		} else {
-			// Get the images from dam
-			$images = tx_dam_db::getReferencedFiles(
-				$table,
-				$uid,
-				'imagecycle',
-				'tx_dam_mm_ref',
-				tx_dam_db::getMetaInfoFieldList() . $fields,
-				"tx_dam.file_mime_type = 'image'"
-			);
-		}
-		if (count($images['rows']) > 0) {
-			// overlay the translation
-			$conf = array(
-				'sys_language_uid' => $this->sys_language_uid,
-				'lovl_mode' => ''
-			);
-			// add image
-			foreach ($images['rows'] as $key => $row) {
-				$row = tx_dam_db::getRecordOverlay('tx_dam', $row, $conf);
-				// set the data
-				$this->images[] = $row['file_path'].$row['file_name'];$
-				// set the href
-				$href = '';
-				unset($href);
-				if (count($damHrefFields) > 0) {
-					foreach ($damHrefFields as $damHrefField) {
-						if (! isset($href) && trim($row[$damHrefField])) {
-							$href = $row[$damHrefField];
-							break;
-						}
-					}
-				}
-				$this->hrefs[] = $href;
-				// set the caption
-				$caption = '';
-				unset($caption);
-				if (count($damCaptionFields) > 0) {
-					foreach ($damCaptionFields as $damCaptionField) {
-						if (! isset($caption) && trim($row[$damCaptionField])) {
-							$caption = $row[$damCaptionField];
-							break;
-						}
-					}
-				}
-				$this->captions[] = $caption;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * return all DAM categories including subcategories
-	 *
-	 * @return	array
-	 */
-	protected function getDamcats($dam_cat='')
-	{
-		$damCats = t3lib_div::trimExplode(",", $dam_cat, true);
-		if (count($damCats) < 1) {
-			return;
-		} else {
-			// select subcategories
-			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-				'uid, parent_id',
-				'tx_dam_cat',
-				'parent_id IN ('.implode(",", $damCats).') '.$this->cObj->enableFields('tx_dam_cat'),
-				'',
-				'parent_id',
-				''
-			);
-			$subcats = array();
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-				$damCats[] = $row['uid'];
-			}
-		}
-		return $damCats;
-	}
-
-	/**
 	 * Parse all images into the template
 	 * @param $data
 	 * @return string
@@ -421,15 +257,13 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$options['sync'] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
 		$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
 
-		$before = null;
-		$after  = null;
 		// add caption
 		if ($this->conf['showcaption']) {
 			// define the animation for the caption
 			$fx = array();
 			if (! $this->conf['captionAnimate']) {
-				$before .= "jQuery('span', this).css('display', 'none');";
-				$after  .= "jQuery('span', this).css('display', 'block');";
+				$before = "jQuery('span', this).css('display', 'none');";
+				$after  = "jQuery('span', this).css('display', 'block');";
 			} else {
 				if ($this->conf['captionTypeOpacity']) {
 					$fx[] = "opacity: 'show'";
@@ -447,23 +281,15 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				if (! is_numeric($this->conf['captionSpeed'])) {
 					$this->conf['captionSpeed'] = 200;
 				}
-				$before .= "jQuery('span', this).css('display', 'none');";
-				$after  .= "jQuery('span', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
+				$before = "jQuery('span', this).css('display', 'none');";
+				$after  = "jQuery('span', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
 			}
 			if ($this->conf['captionSync']) {
-				$before = $before . $after;
-				$after = null;
+				$options['before'] = "before: function() {".$before."".$after."}";
+			} else {
+				$options['before'] = "before: function() {".$before."}";
+				$options['after'] = "after:  function() {".$after."}";
 			}
-		}
-		// 
-		if ($this->conf['showPager']) {
-			//$after .= "alert(jQuery(page_selector))";
-		}
-		if ($before) {
-			$options['before'] = "before: function() {".$before."}";
-		}
-		if ($after) {
-			$options['after'] = "after: function() {".$after."}";
 		}
 
 		// overwrite all options if set
@@ -479,19 +305,16 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 		// The template for JS
 		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle_pi1.js");
+			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle_pi2.js");
 		}
-
 		// get the Template of the Javascript
 		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_JS###"))) {
 			$templateCode = "alert('Template TEMPLATE_JS is missing')";
 		}
-
 		// set the key
 		$markerArray = array();
 		$markerArray["KEY"] = $this->getContentKey();
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
-
 		// define the control
 		if ($this->conf['showControl']) {
 			$templateControl = trim($this->cObj->getSubpart($templateCode, "###CONTROL###"));
@@ -503,7 +326,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL###', $templateControl, 0);
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL_AFTER###', $templateControlAfter, 0);
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL_OPTIONS###', '', 0);
-
 		// define the play class
 		if ($this->conf['pausedBegin']) {
 			$templatePaused = $this->cObj->getSubpart($templateCode, "###PAUSED###");
@@ -514,7 +336,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		}
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAUSED###', $templatePaused, 0);
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAUSED_BEGIN###', $templatePausedBegin, 0);
-
 		// define the pager
 		if ($this->conf['showPager']) {
 			$templatePager = $this->cObj->getSubpart($templateCode, "###PAGER###");
@@ -522,17 +343,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$templatePager = null;
 		}
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAGER###', $templatePager, 0);
-
-		// Slow connection will have a load to start
-		if ($this->conf['fixSlowConnection']) {
-			$templateSlowBefore = $this->cObj->getSubpart($templateCode, "###SLOW_CONNECTION_BEFORE###");
-			$templateSlowAfter  = $this->cObj->getSubpart($templateCode, "###SLOW_CONNECTION_AFTER###");
-		} else {
-			$templateSlowBefore = null;
-		}
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SLOW_CONNECTION_BEFORE###', $templateSlowBefore, 0);
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SLOW_CONNECTION_AFTER###',  $templateSlowAfter, 0);
-
 		// define the markers
 		$markerArray = array();
 		$markerArray["OPTIONS"] = implode(",\n		", $options);
@@ -667,97 +477,12 @@ class tx_imagecycle_pi1 extends tslib_pibase
 </style>';
 		}
 	}
-
-	/**
-	 * Return the webbased path
-	 * 
-	 * @param string $path
-	 * return string
-	 */
-	protected function getPath($path="")
-	{
-		return $GLOBALS['TSFE']->tmpl->getFileName($path);
-	}
-
-	/**
-	 * Add additional JS file
-	 * 
-	 * @param string $script
-	 * @param boolean $first
-	 * @return void
-	 */
-	protected function addJsFile($script="", $first=false)
-	{
-		$script = t3lib_div::fixWindowsFilePath($script);
-		if ($this->getPath($script) && ! in_array($script, $this->jsFiles)) {
-			if ($first === true) {
-				$this->jsFiles = array_merge(array($script), $this->jsFiles);
-			} else {
-				$this->jsFiles[] = $script;
-			}
-		}
-	}
-
-	/**
-	 * Add JS to header
-	 * 
-	 * @param string $script
-	 * @return void
-	 */
-	protected function addJS($script="")
-	{
-		if (! in_array($script, $this->js)) {
-			$this->js[] = $script;
-		}
-	}
-
-	/**
-	 * Add additional CSS file
-	 * 
-	 * @param string $script
-	 * @return void
-	 */
-	protected function addCssFile($script="")
-	{
-		$script = t3lib_div::fixWindowsFilePath($script);
-		if ($this->getPath($script) && ! in_array($script, $this->cssFiles)) {
-			$this->cssFiles[] = $script;
-		}
-	}
-
-	/**
-	 * Add CSS to header
-	 * 
-	 * @param string $script
-	 * @return void
-	 */
-	protected function addCSS($script="")
-	{
-		if (! in_array($script, $this->css)) {
-			$this->css[] = $script;
-		}
-	}
-
-	/**
-	 * Returns the version of an extension (in 4.4 its possible to this with t3lib_extMgm::getExtensionVersion)
-	 * @param string $key
-	 * @return string
-	 */
-	protected function getExtensionVersion($key)
-	{
-		if (! t3lib_extMgm::isLoaded($key)) {
-			return '';
-		}
-		$_EXTKEY = $key;
-		include(t3lib_extMgm::extPath($key) . 'ext_emconf.php');
-		return $EM_CONF[$key]['version'];
-	}
 }
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi1/class.tx_imagecycle_pi1.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi1/class.tx_imagecycle_pi1.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi2/class.tx_imagecycle_pi2.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi2/class.tx_imagecycle_pi2.php']);
 }
 
 ?>

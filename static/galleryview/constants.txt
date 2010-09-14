@@ -1,0 +1,82 @@
+plugin.tx_imagecycle_pi2 {
+
+	# cat=plugin.tx_imagecycle.galleryview/enable/010; type=options[_self,_new,_top,_parent]; label=Internal linktarget:The target where internal links will be opend
+	linkTarget = _self
+
+	# cat=plugin.tx_imagecycle.galleryview/enable/020; type=options[_self,_new,_top,_parent]; label=External linktarget:The target where external links will be opend
+	extlinkTarget = _new
+
+	# cat=plugin.tx_imagecycle.galleryview/enable/050; type=boolean; label=Stop on mouseover: Stop the slideshow when mouse over
+	stopOnMousover = 0
+
+	# cat=plugin.tx_imagecycle.galleryview/enable/070; type=boolean; label=Disable Recursion:Disable the root line fetching if there are no images
+	disableRecursion = 0
+
+	# cat=plugin.tx_imagecycle.galleryview/enable/080; type=boolean; label=jQuery noConflict: Use the noConflict methode
+	jQueryNoConflict = 0
+
+	# cat=plugin.tx_imagecycle.galleryview/enable/090; type=boolean; label=Javascript in Footer: If set, the Javascript will be rendered in Footer
+	jsInFooter = 0
+
+	# cat=plugin.tx_imagecycle.galleryview/enable/100; type=boolean; label=Minify Javascript: If set, the Javascript will be minified
+	jsMinify = 0
+
+
+
+	# cat=plugin.tx_imagecycle.galleryview/file/010; type=file[js]; label=jQuery Library: Location of the jQuery Lib
+	file.jQueryLibrary = EXT:imagecycle/res/jquery/js/jquery-1.4.2.min.js
+
+	# cat=plugin.tx_imagecycle.galleryview/file/020; type=file[js]; label=jQuery Easing: Location of the jQuery Easing
+	file.jQueryEasing = EXT:imagecycle/res/jquery/js/jquery.easing-1.3.js
+
+	# cat=plugin.tx_imagecycle.galleryview/file/030; type=file[js]; label=jQuery Cycle: Location of the jQuery Cycle
+	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.galleryview-1.1.js
+
+	# cat=plugin.tx_imagecycle.galleryview/file/040; type=file[js]; label=JS-Template file: Location of the used template for JS
+	file.templateFileJS = EXT:imagecycle/res/tx_imagecycle_pi2.js
+
+	# cat=plugin.tx_imagecycle.galleryview/file/050; type=file[css]; label=CSS file: The Path to the stylesheet file
+	file.cssFile = EXT:imagecycle/res/css/galleryview.css
+
+
+
+	# cat=plugin.tx_imagecycle.galleryview/dims/010; type=string; label=Image width: Width of the images
+	imagewidth = 200c
+
+	# cat=plugin.tx_imagecycle.galleryview/dims/020; type=string; label=Image height: Height of the images
+	imageheight = 200c
+
+
+
+	# cat=plugin.tx_imagecycle.galleryview/typo/010; type=options[,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all]; label=Type of the movement: Values are none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all
+	type = fade
+
+	# cat=plugin.tx_imagecycle.galleryview/typo/020; type=options[,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition: Effect of transition (Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
+	transition = Back
+
+	# cat=plugin.tx_imagecycle.galleryview/typo/030; type=options[,In,Out,InOut]; label=Transition direction: Direction of transition (In, Out, InOut)
+	transitionDir = InOut
+
+	# cat=plugin.tx_imagecycle.galleryview/typo/040; type=int+; label=Duration transition: The duration of the transition in milliseconds
+	transitionDuration = 
+
+	# cat=plugin.tx_imagecycle.galleryview/typo/050; type=int+; label=Duration of display: The display duration of the image in milliseconds
+	displayDuration = 
+
+	# cat=plugin.tx_imagecycle.galleryview/typo/060; type=int; label=Duration of delay: The delay duration for animation begin in milliseconds
+	delayDuration = 
+
+	# cat=plugin.tx_imagecycle.galleryview/typo/070; type=boolean; label=Simultaneously animation: Animates in and out simultaneously
+	sync = 1
+
+	# cat=plugin.tx_imagecycle.galleryview/typo/080; type=boolean; label=Show Control: If set, the control panel will be displayed
+	showControl = 0
+
+	# cat=plugin.tx_imagecycle.galleryview/typo/090; type=boolean; label=Show Pager: If set, the pager will be displayed
+	showPager = 0
+
+	# cat=plugin.tx_imagecycle.galleryview/typo/100; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
+	options = 
+
+}
+
