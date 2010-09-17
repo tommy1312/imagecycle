@@ -140,6 +140,9 @@ plugin.tx_imagecycle_pi1 {
 	margin: 0 5px;
 	padding: 3px 5px;
 }
+.tx-imagecycle-pi1-pager a.activeSlide {
+	background: #ea0;
+}
 	)
 }
 

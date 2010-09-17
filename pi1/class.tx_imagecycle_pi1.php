@@ -385,6 +385,15 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$this->setContentKey("imagecycle_key");
 		}
 
+		// The template for JS
+		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
+			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle_pi1.js");
+		}
+
+		// set the key
+		$markerArray = array();
+		$markerArray["KEY"] = $this->getContentKey();
+
 		// define the jQuery mode and function
 		if ($this->conf['jQueryNoConflict']) {
 			$jQueryNoConflict = "jQuery.noConflict();";
@@ -457,13 +466,14 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		}
 		// 
 		if ($this->conf['showPager']) {
-			// TODO: Change the class of the active slide
+			$templateActivatePagerCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_ACTIVATE_PAGER_JS###"));
+			$after .= $this->cObj->substituteMarkerArray($templateActivatePagerCode, $markerArray, '###|###', 0);
 		}
 		if ($before) {
-			$options['before'] = "before: function() {".$before."}";
+			$options['before'] = "before: function(a,n,o,f) {".$before."}";
 		}
 		if ($after) {
-			$options['after'] = "after: function() {".$after."}";
+			$options['after'] = "after: function(a,n,o,f) {".$after."}";
 		}
 
 		// overwrite all options if set
@@ -477,19 +487,10 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		// define the css file
 		$this->addCssFile($this->conf['cssFile']);
 
-		// The template for JS
-		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle_pi1.js");
-		}
-
 		// get the Template of the Javascript
 		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_JS###"))) {
 			$templateCode = "alert('Template TEMPLATE_JS is missing')";
 		}
-
-		// set the key
-		$markerArray = array();
-		$markerArray["KEY"] = $this->getContentKey();
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
 		// define the control

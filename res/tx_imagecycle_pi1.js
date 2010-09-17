@@ -52,3 +52,9 @@ jQuery(document).ready(function() {
 	<!-- ###CONTROL_AFTER### -->
 });
 <!-- ###TEMPLATE_JS### end -->
+
+
+
+<!-- ###TEMPLATE_ACTIVATE_PAGER_JS### end -->
+jQuery('####KEY###_pager a').removeClass('activeSlide');jQuery('####KEY###_pager a[rev='+(o.currSlide)+']').addClass('activeSlide');
+<!-- ###TEMPLATE_ACTIVATE_PAGER_JS### end -->
