@@ -9,6 +9,8 @@ plugin.tx_imagecycle_pi1 {
 	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
 	jsInFooter = {$plugin.tx_imagecycle_pi1.jsInFooter}
 	jsMinify = {$plugin.tx_imagecycle_pi1.jsMinify}
+	jsInline = {$plugin.tx_imagecycle_pi1.jsInline}
+	cssMinify = {$plugin.tx_imagecycle_pi1.cssMinify}
 	fixSlowConnection = {$plugin.tx_imagecycle_pi1.fixSlowConnection}
 
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
