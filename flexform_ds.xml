@@ -13,7 +13,6 @@
 					<mode>
 						<TCEforms>
 							<onChange>reload</onChange>
-							<displayCond>EXT:dam:LOADED:true</displayCond>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode</label>
 							<config>
 								<type>select</type>
@@ -23,9 +22,10 @@
 							</config>
 						</TCEforms>
 					</mode>
+
 					<images>
 						<TCEforms>
-							<displayCond>FIELD:mode:!IN:dam,dam_catedit</displayCond>
+							<displayCond>FIELD:mode:!IN:dam,dam_catedit,uploadRTE</displayCond>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.images</label>
 							<config>
 								<type>group</type>
@@ -43,8 +43,8 @@
 					</images>
 					<hrefs>
 						<TCEforms>
-							<displayCond>FIELD:mode:!IN:dam,dam_catedit</displayCond>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.href</label>
+							<displayCond>FIELD:mode:!IN:dam,dam_catedit,uploadRTE</displayCond>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.hrefs</label>
 							<config>
 								<type>text</type>
 								<wrap>OFF</wrap>
@@ -55,8 +55,8 @@
 					</hrefs>
 					<captions>
 						<TCEforms>
-							<displayCond>FIELD:mode:!IN:dam,dam_catedit</displayCond>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.caption</label>
+							<displayCond>FIELD:mode:!IN:dam,dam_catedit,uploadRTE</displayCond>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.captions</label>
 							<config>
 								<type>text</type>
 								<wrap>OFF</wrap>
@@ -65,6 +65,7 @@
 							</config>
 						</TCEforms>
 					</captions>
+
 					<damimages>
 						<TCEforms>
 							<displayCond>FIELD:mode:=:dam</displayCond>
@@ -92,6 +93,7 @@
 							</config>
 						</TCEforms>
 					</damimages>
+
 					<damcategories>
 						<TCEforms>
 							<displayCond>FIELD:mode:=:dam_catedit</displayCond>
@@ -110,6 +112,80 @@
 							</config>
 						</TCEforms>
 					</damcategories>
+
+					<imagesRTE>
+						<tx_templavoila>
+							<title>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.uploadRTE</title>
+						</tx_templavoila>
+						<type>array</type>
+						<section>1</section>
+						<el>
+							<data>
+								<type>array</type>
+								<el>
+									<image>
+										<TCEforms>
+											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.image</label>
+											<config>
+												<type>group</type>
+												<internal_type>file</internal_type>
+												<allowed>files</allowed>
+												<size>1</size>
+												<maxitems>1</maxitems>
+												<minitems>0</minitems>
+												<show_thumbs>1</show_thumbs>
+												<allowed>gif,jpg,jpeg,png</allowed>
+												<max_size>10240</max_size>
+												<uploadfolder>uploads/tx_imagecycle</uploadfolder>
+											</config>
+										</TCEforms>
+									</image>
+									<href>
+										<TCEforms>
+											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.href</label>
+											<config>
+												<type>input</type>
+												<size>15</size>
+												<max>255</max>
+												<eval>trim</eval>
+												<wizards>
+													<_PADDING>2</_PADDING>
+													<link>
+														<type>popup</type>
+														<title>Link</title>
+														<icon>link_popup.gif</icon>
+														<script>browse_links.php?mode=wizard</script>
+														<JSopenParams>height=500,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+													</link>
+												</wizards>
+											</config>
+										</TCEforms>
+									</href>
+									<caption>
+										<TCEforms>
+											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.caption</label>
+											<config>
+												<type>text</type>
+												<cols>30</cols>
+												<rows>5</rows>
+											</config>
+											<defaultExtras>richtext[]</defaultExtras>
+										</TCEforms>
+									</caption>
+								</el>
+							</data>
+						</el>
+					</imagesRTE>
+					<hideRTE>
+						<TCEforms>
+							<displayCond>FIELD:mode:!=:uploadRTE</displayCond>
+							<label></label>
+							<config>
+								<type>user</type>
+								<userFunc>tx_imagecycle_TCAform->hideRTE</userFunc>
+							</config>
+						</TCEforms>
+					</hideRTE>
 				</el>
 			</ROOT>
 		</general>
@@ -125,8 +201,8 @@
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imagewidth</label>
 							<config>
 								<type>input</type>
-								<size>6</size>
-								<max>6</max>
+								<size>16</size>
+								<max>16</max>
 								<eval>string</eval>
 							</config>
 						</TCEforms>
@@ -136,8 +212,8 @@
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imageheight</label>
 							<config>
 								<type>input</type>
-								<size>6</size>
-								<max>6</max>
+								<size>16</size>
+								<max>16</max>
 								<eval>string</eval>
 							</config>
 						</TCEforms>

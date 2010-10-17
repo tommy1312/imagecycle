@@ -215,4 +215,6 @@ if (TYPO3_MODE == 'BE') {
 }
 
 require_once(t3lib_extMgm::extPath($_EXTKEY).'lib/class.tx_imagecycle_itemsProcFunc.php');
+require_once(t3lib_extMgm::extPath($_EXTKEY).'lib/class.tx_imagecycle_TCAform.php');
+
 ?>

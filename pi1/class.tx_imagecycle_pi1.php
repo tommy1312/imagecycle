@@ -87,7 +87,21 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			foreach ($piFlexForm['data'] as $sheet => $data) {
 				foreach ($data as $lang => $value) {
 					foreach ($value as $key => $val) {
-						$this->lConf[$key] = $this->pi_getFFvalue($piFlexForm, $key, $sheet);
+						if ($key == 'imagesRTE') {
+							if (count($val['el']) > 0) {
+								foreach ($val['el'] as $elKey => $el) {
+									if (is_numeric($elKey)) {
+										$this->lConf[$key][] = array(
+											"image"   => $el['data']['el']['image']['vDEF'],
+											"href"    => $el['data']['el']['href']['vDEF'],
+											"caption" => $el['data']['el']['caption']['vDEF'],
+										);
+									}
+								}
+							}
+						} else {
+							$this->lConf[$key] = $this->pi_getFFvalue($piFlexForm, $key, $sheet);
+						}
 					}
 				}
 			}
@@ -101,6 +115,10 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				case "folder" : {}
 				case "upload" : {
 					$this->setDataUpload();
+					break;
+				}
+				case "uploadRTE" : {
+					$this->setDataUploadRTE();
 					break;
 				}
 				case "dam" : {
@@ -253,6 +271,20 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Set the information of the images if mode = uploadRTE
+	 */
+	protected function setDataUploadRTE()
+	{
+		if (count($this->lConf['imagesRTE']) > 0) {
+			foreach ($this->lConf['imagesRTE'] as $key => $image) {
+				$this->images[]   = $image['image'];
+				$this->hrefs[]    = $image['href'];
+				$this->captions[] = $image['caption'];
+			}
+		}
 	}
 
 	/**
@@ -629,9 +661,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					if ($file) {
 						if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
 							if ($allJsInFooter) {
-								$pagerender->addJsFooterFile($file, $type, $this->conf['jsMinify']);
+								$pagerender->addJsFooterFile($file, 'text/javascript', $this->conf['jsMinify']);
 							} else {
-								$pagerender->addJsFile($file, $type, $this->conf['jsMinify']);
+								$pagerender->addJsFile($file, 'text/javascript', $this->conf['jsMinify']);
 							}
 						} else {
 							$temp_file = '<script type="text/javascript" src="'.$file.'"></script>';
