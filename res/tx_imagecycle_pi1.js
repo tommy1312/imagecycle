@@ -33,6 +33,10 @@ jQuery(document).ready(function() {
 	<!-- ###PAUSED_BEGIN### -->
 	jQuery('####KEY###').cycle('pause');
 	<!-- ###PAUSED_BEGIN### -->
+	<!-- ###ONLY_ONE_IMAGE### -->
+	jQuery('####KEY###').css('width', jQuery('####KEY### img').css('width'));
+	jQuery('####KEY### span').show();
+	<!-- ###ONLY_ONE_IMAGE### -->
 	jQuery('####KEY###').parent().css('width', jQuery('####KEY###').css('width'));
 	<!-- ###PAGER### -->
 	jQuery('####KEY###_pager a').each(function() {
