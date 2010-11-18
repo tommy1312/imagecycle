@@ -81,9 +81,10 @@ plugin.tx_imagecycle_pi1 {
 				required = 1
 			}
 			captionWrap {
-				dataWrap = | <span>{register:caption}</span>
+				dataWrap = | <div class="imagecycle-caption">{register:caption}</div>
 				required = 1
 			}
+			captionTag = div
 			itemWrap {
 				wrap = <li> | </li>
 				required = 1
@@ -118,7 +119,7 @@ plugin.tx_imagecycle_pi1 {
 	background: none;
 	border: 0! important;
 }
-.tx-imagecycle-pi1-images span {
+.tx-imagecycle-pi1-images .imagecycle-caption {
 	position: absolute;
 	left: 0;
 	bottom: 0;

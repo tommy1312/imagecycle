@@ -462,6 +462,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$options['sync'] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
 		$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
 
+		$captionTag = $this->cObj->stdWrap($this->conf['cycle.'][$this->type.'.']['captionTag'], $this->conf['cycle.'][$this->type.'.']['captionTag.']);
 		$before = null;
 		$after  = null;
 		// add caption
@@ -469,8 +470,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			// define the animation for the caption
 			$fx = array();
 			if (! $this->conf['captionAnimate']) {
-				$before .= "jQuery('span', this).css('display', 'none');";
-				$after  .= "jQuery('span', this).css('display', 'block');";
+				$before .= "jQuery('{$captionTag}', this).css('display', 'none');";
+				$after  .= "jQuery('{$captionTag}', this).css('display', 'block');";
 			} else {
 				if ($this->conf['captionTypeOpacity']) {
 					$fx[] = "opacity: 'show'";
@@ -488,8 +489,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				if (! is_numeric($this->conf['captionSpeed'])) {
 					$this->conf['captionSpeed'] = 200;
 				}
-				$before .= "jQuery('span', this).css('display', 'none');";
-				$after  .= "jQuery('span', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
+				$before .= "jQuery('{$captionTag}', this).css('display', 'none');";
+				$after  .= "jQuery('{$captionTag}', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
 			}
 			if ($this->conf['captionSync']) {
 				$before = $before . $after;
