@@ -227,7 +227,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		foreach ($this->images as $key => $image) {
 			$data[$key]['image']   = $image;
 			$data[$key]['href']    = $this->hrefs[$key];
-			$data[$key]['caption'] = ($this->conf['showcaption'] ? $this->captions[$key] : '');
+			$data[$key]['caption'] = $this->captions[$key];
 		}
 
 		return $this->parseTemplate($data);
@@ -734,7 +734,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
 						$pagerender->addCssFile($file, 'stylesheet', 'all', '', $this->conf['cssMinify']);
 					} else {
-						$GLOBALS['TSFE']->additionalHeaderData['cssFile_'.$this->extKey.'_'.$file] = '<link rel="stylesheet" type="text/css" href="'.$file.'" medai="all" />'.chr(10);
+						$GLOBALS['TSFE']->additionalHeaderData['cssFile_'.$this->extKey.'_'.$file] = '<link rel="stylesheet" type="text/css" href="'.$file.'" media="all" />'.chr(10);
 					}
 				} else {
 					t3lib_div::devLog("'{$cssToLoad}' does not exists!", $this->extKey, 2);
