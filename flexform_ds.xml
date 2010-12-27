@@ -203,7 +203,7 @@
 								<type>input</type>
 								<size>16</size>
 								<max>16</max>
-								<eval>string</eval>
+								<eval>nospace</eval>
 							</config>
 						</TCEforms>
 					</imagewidth>
@@ -214,7 +214,7 @@
 								<type>input</type>
 								<size>16</size>
 								<max>16</max>
-								<eval>string</eval>
+								<eval>nospace</eval>
 							</config>
 						</TCEforms>
 					</imageheight>
@@ -222,8 +222,9 @@
 						<TCEforms>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showcaption</label>
 							<config>
-								<type>check</type>
-								<default>1</default>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<checked>1</checked>
 							</config>
 						</TCEforms>
 					</showcaption>
@@ -231,8 +232,9 @@
 						<TCEforms>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showControl</label>
 							<config>
-								<type>check</type>
-								<default>0</default>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<checked>0</checked>
 							</config>
 						</TCEforms>
 					</showControl>
@@ -240,8 +242,9 @@
 						<TCEforms>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showPager</label>
 							<config>
-								<type>check</type>
-								<default>0</default>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<checked>0</checked>
 							</config>
 						</TCEforms>
 					</showPager>
@@ -249,8 +252,9 @@
 						<TCEforms>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.random</label>
 							<config>
-								<type>check</type>
-								<default>1</default>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<checked>1</checked>
 							</config>
 						</TCEforms>
 					</random>
@@ -258,8 +262,9 @@
 						<TCEforms>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.stoponmousover</label>
 							<config>
-								<type>check</type>
-								<default>0</default>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<checked>0</checked>
 							</config>
 						</TCEforms>
 					</stoponmousover>
@@ -267,8 +272,9 @@
 						<TCEforms>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.pausedBegin</label>
 							<config>
-								<type>check</type>
-								<default>0</default>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<checked>0</checked>
 							</config>
 						</TCEforms>
 					</pausedBegin>
@@ -289,6 +295,12 @@
 								<type>select</type>
 								<size>1</size>
 								<maxitems>1</maxitems>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+								</items>
 								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getEffects</itemsProcFunc>
 							</config>
 						</TCEforms>
@@ -300,7 +312,7 @@
 								<type>select</type>
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0"></numIndex>
+										<numIndex index="0">LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts</numIndex>
 										<numIndex index="1"></numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
@@ -356,7 +368,7 @@
 								<type>select</type>
 								<items type="array">
 									<numIndex index="0" type="array">
-										<numIndex index="0"></numIndex>
+										<numIndex index="0">LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts</numIndex>
 										<numIndex index="1"></numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
@@ -417,8 +429,9 @@
 						<TCEforms>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sync</label>
 							<config>
-								<type>check</type>
-								<default>1</default>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<checked>1</checked>
 							</config>
 						</TCEforms>
 					</sync>

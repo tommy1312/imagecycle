@@ -155,14 +155,29 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			if (is_numeric($this->lConf['delayduration']) && $this->lConf['delayduration'] != 0) {
 				$this->conf['delayDuration'] = $this->lConf['delayduration'];
 			}
-			$this->conf['showcaption'] = $this->lConf['showcaption'];
-			$this->conf['showControl'] = $this->lConf['showControl'];
-			$this->conf['stopOnMousover'] = $this->lConf['stoponmousover'];
-			$this->conf['pausedBegin'] = $this->lConf['pausedBegin'];
-			$this->conf['sync'] = $this->lConf['sync'];
-			$this->conf['random'] = $this->lConf['random'];
+			// Will be overridden, if not "from TS"
+			if ($this->lConf['showcaption'] < 2) {
+				$this->conf['showcaption'] = $this->lConf['showcaption'];
+			}
+			if ($this->lConf['showControl'] < 2) {
+				$this->conf['showControl'] = $this->lConf['showControl'];
+			}
+			if ($this->lConf['showPager'] < 2) {
+				$this->conf['showPager'] = $this->lConf['showPager'];
+			}
+			if ($this->lConf['random'] < 2) {
+				$this->conf['random'] = $this->lConf['random'];
+			}
+			if ($this->lConf['stoponmousover'] < 2) {
+				$this->conf['stopOnMousover'] = $this->lConf['stoponmousover'];
+			}
+			if ($this->lConf['pausedBegin'] < 2) {
+				$this->conf['pausedBegin'] = $this->lConf['pausedBegin'];
+			}
+			if ($this->lConf['sync'] < 2) {
+				$this->conf['sync'] = $this->lConf['sync'];
+			}
 			$this->conf['options'] = $this->lConf['options'];
-			$this->conf['showPager'] = $this->lConf['showPager'];
 		} else {
 			$this->type = 'header';
 			// It's the header
