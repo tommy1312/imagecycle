@@ -45,7 +45,7 @@ plugin.tx_imagecycle_pi1 {
 	file.jQueryEasing = EXT:imagecycle/res/jquery/js/jquery.easing-1.3.js
 
 	# cat=plugin.tx_imagecycle.basic/file/030; type=file[js]; label=jQuery Cycle: Location of the jQuery Cycle
-	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all-2.88.min.js
+	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all-2.94.min.js
 
 	# cat=plugin.tx_imagecycle.basic/file/040; type=file[js]; label=JS-Template file: Location of the used template for JS
 	file.templateFileJS = EXT:imagecycle/res/tx_imagecycle_pi1.js
@@ -81,16 +81,19 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/typo/060; type=int; label=Duration of delay: The delay duration for animation begin in milliseconds
 	delayDuration = 
 
-	# cat=plugin.tx_imagecycle.basic/typo/070; type=boolean; label=Simultaneously animation: Animates in and out simultaneously
+	# cat=plugin.tx_imagecycle.basic/typo/070; type=int; label=Manual transition speed: Speed of transitions when triggered manually in milliseconds
+	fastOnEvent = 
+
+	# cat=plugin.tx_imagecycle.basic/typo/080; type=boolean; label=Simultaneously animation: Animates in and out simultaneously
 	sync = 1
 
-	# cat=plugin.tx_imagecycle.basic/typo/080; type=boolean; label=Show Control: If set, the control panel will be displayed
+	# cat=plugin.tx_imagecycle.basic/typo/090; type=boolean; label=Show Control: If set, the control panel will be displayed
 	showControl = 0
 
-	# cat=plugin.tx_imagecycle.basic/typo/090; type=boolean; label=Show Pager: If set, the pager will be displayed
+	# cat=plugin.tx_imagecycle.basic/typo/100; type=boolean; label=Show Pager: If set, the pager will be displayed
 	showPager = 0
 
-	# cat=plugin.tx_imagecycle.basic/typo/100; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
+	# cat=plugin.tx_imagecycle.basic/typo/110; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
 	options = 
 
 

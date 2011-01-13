@@ -35,7 +35,7 @@ jQuery(document).ready(function() {
 	<!-- ###PAUSED_BEGIN### -->
 	<!-- ###ONLY_ONE_IMAGE### -->
 	jQuery('####KEY###').css('width', jQuery('####KEY### img').css('width'));
-	jQuery('####KEY### span').show();
+	jQuery('####KEY### ###CAPTION_TAG###').show();
 	<!-- ###ONLY_ONE_IMAGE### -->
 	jQuery('####KEY###').parent().css('width', jQuery('####KEY###').css('width'));
 	<!-- ###PAGER### -->

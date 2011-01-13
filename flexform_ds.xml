@@ -425,6 +425,18 @@
 							</config>
 						</TCEforms>
 					</delayduration>
+					<fastOnEvent>
+						<TCEforms>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.fastOnEvent</label>
+							<config>
+								<type>input</type>
+								<size>5</size>
+								<max>5</max>
+								<checkbox>0</checkbox>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</fastOnEvent>
 					<sync>
 						<TCEforms>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sync</label>

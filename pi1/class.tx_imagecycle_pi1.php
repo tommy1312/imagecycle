@@ -155,6 +155,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			if (is_numeric($this->lConf['delayduration']) && $this->lConf['delayduration'] != 0) {
 				$this->conf['delayDuration'] = $this->lConf['delayduration'];
 			}
+			if ($this->lConf['fastOnEvent']) {
+				$this->conf['fastOnEvent'] = $this->lConf['fastOnEvent'];
+			}
 			// Will be overridden, if not "from TS"
 			if ($this->lConf['showcaption'] < 2) {
 				$this->conf['showcaption'] = $this->lConf['showcaption'];
@@ -471,6 +474,10 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		if (is_numeric($this->conf['delayDuration']) && $this->conf['delayDuration'] != 0) {
 			$options['delay'] = "delay: {$this->conf['delayDuration']}";
 		}
+		if ($this->conf['fastOnEvent'] > 0) {
+			$options['fastOnEvent'] = "fastOnEvent: ".$this->conf['fastOnEvent'];
+		}
+
 		if ($this->conf['stopOnMousover']) {
 			$options['pause'] = "pause: true";
 		}
@@ -594,7 +601,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 		// define the markers
 		$markerArray = array();
-		$markerArray["OPTIONS"] = implode(",\n		", $options);
+		$markerArray["OPTIONS"]     = implode(",\n		", $options);
+		$markerArray["CAPTION_TAG"] = $captionTag;
+
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 

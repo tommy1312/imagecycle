@@ -28,6 +28,7 @@ plugin.tx_imagecycle_pi1 {
 	transitionDuration = {$plugin.tx_imagecycle_pi1.transitionDuration}
 	displayDuration = {$plugin.tx_imagecycle_pi1.displayDuration}
 	delayDuration = {$plugin.tx_imagecycle_pi1.delayDuration}
+	fastOnEvent = {$plugin.tx_imagecycle_pi1.fastOnEvent}
 	sync = {$plugin.tx_imagecycle_pi1.sync}
 	showControl = {$plugin.tx_imagecycle_pi1.showControl}
 	showPager = {$plugin.tx_imagecycle_pi1.showPager}
