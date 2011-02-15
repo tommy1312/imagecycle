@@ -77,6 +77,7 @@ class tx_imagecycle_tsparserext
 	{
 		$confDefault = array(
 			'effects',
+			'effectsCoin',
 			'useSelectInsteadCheckbox',
 		);
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);

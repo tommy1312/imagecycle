@@ -58,7 +58,18 @@ jQuery(document).ready(function() {
 <!-- ###TEMPLATE_JS### end -->
 
 
-
 <!-- ###TEMPLATE_ACTIVATE_PAGER_JS### end -->
 jQuery('####KEY###_pager a').removeClass('activeSlide');jQuery('####KEY###_pager a[rev='+(o.currSlide)+']').addClass('activeSlide');
 <!-- ###TEMPLATE_ACTIVATE_PAGER_JS### end -->
+
+
+
+
+<!-- ###TEMPLATE_COINSLIDER_JS### begin -->
+jQuery(document).ready(function() {
+	jQuery('####KEY###').coinslider({
+		###OPTIONS###
+	});
+});
+<!-- ###TEMPLATE_COINSLIDER_JS### end -->
+

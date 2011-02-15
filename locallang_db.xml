@@ -19,6 +19,7 @@
 			<label index="tt_content.tx_imagecycle_activate">Activate</label>
 			<label index="tt_content.tx_imagecycle_duration">Duration in ms</label>
 			<label index="tt_content.list_type_pi1">Image cycle</label>
+			<label index="tt_content.list_type_pi2">Coin-Slider</label>
 			<label index="tt_content.pi_flexform.sheet_general">General</label>
 			<label index="tt_content.pi_flexform.mode">Mode</label>
 			<label index="tt_content.pi_flexform.mode.I.upload">Upload Images</label>
@@ -56,6 +57,19 @@
 			<label index="tt_content.pi_flexform.sync">Simultaneously animation</label>
 			<label index="tt_content.pi_flexform.sheet_special">Special</label>
 			<label index="tt_content.pi_flexform.options">Enter own options (see http://malsup.com/jquery/cycle/)</label>
+
+			<label index="tt_content.pi_flexform.coinEffect">Coin effect</label>
+			<label index="tt_content.pi_flexform.coinSpw">Squares per width</label>
+			<label index="tt_content.pi_flexform.coinSph">Squares per height</label>
+			<label index="tt_content.pi_flexform.coinDelay">Delay beetwen squares in ms</label>
+			<label index="tt_content.pi_flexform.coinSDelay">Delay beetwen squares in ms</label>
+			<label index="tt_content.pi_flexform.coinOpacity">Opacity of title and navigation</label>
+			<label index="tt_content.pi_flexform.coinTitleSpeed">Speed of title appereance in ms</label>
+			<label index="tt_content.pi_flexform.coinNavigation">Show navigation</label>
+			<label index="tt_content.pi_flexform.coinLinks">Show images as links</label>
+			<label index="tt_content.pi_flexform.coinHoverPause">Pause on hover</label>
+			<label index="tt_content.pi_flexform.optionsCoin">Enter own options (see http://workshop.rs/projects/coin-slider/)</label>
+
 			<label index="tt_content.pi_flexform.from_ts">From Typoscript</label>
 			<label index="tt_content.pi_flexform.no">No</label>
 			<label index="tt_content.pi_flexform.yes">Yes</label>

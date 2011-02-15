@@ -1,0 +1,84 @@
+plugin.tx_imagecycle_pi2 {
+
+	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
+	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
+	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
+	jsInFooter = {$plugin.tx_imagecycle_pi1.jsInFooter}
+	jsMinify = {$plugin.tx_imagecycle_pi1.jsMinify}
+	jsInline = {$plugin.tx_imagecycle_pi1.jsInline}
+	cssMinify = {$plugin.tx_imagecycle_pi1.cssMinify}
+
+	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
+	jQueryCoin = {$plugin.tx_imagecycle_pi2.file.jQueryCoin}
+	templateFileJS = {$plugin.tx_imagecycle_pi1.file.templateFileJS}
+
+	coinEffect = {$plugin.tx_imagecycle_pi2.coinEffect}
+	imagewidth = {$plugin.tx_imagecycle_pi2.imagewidth}
+	imageheight = {$plugin.tx_imagecycle_pi2.imageheight}
+	coinSpw = {$plugin.tx_imagecycle_pi2.coinSpw}
+	coinSph = {$plugin.tx_imagecycle_pi2.coinSph}
+	coinDelay = {$plugin.tx_imagecycle_pi2.coinDelay}
+	coinSDelay = {$plugin.tx_imagecycle_pi2.coinSDelay}
+	coinOpacity = {$plugin.tx_imagecycle_pi2.coinOpacity}
+	coinTitleSpeed = {$plugin.tx_imagecycle_pi2.coinTitleSpeed}
+	coinNavigation = {$plugin.tx_imagecycle_pi2.coinNavigation}
+	coinLinks = {$plugin.tx_imagecycle_pi2.coinLinks}
+	coinHoverPause = {$plugin.tx_imagecycle_pi2.coinHoverPause}
+
+	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
+	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
+
+	coin {
+		normal {
+			image {
+				file.import.data = register:file
+				file.width.data = register:imagewidth
+				file.height.data = register:imageheight
+				imageLinkWrap < tt_content.image.20.1.imageLinkWrap
+				imageLinkWrap {
+					stdWrap {
+						dataWrap = | <span>{register:caption}</span>
+					}
+				}
+				altText {
+					data = register:caption
+					stripHtml = 1
+				}
+				titleText < .altText
+				longdescURL < .altText
+			}
+			// If the link is not image_zoom...
+			imageWrap {
+				dataWrap = | <span>{register:caption}</span>
+			}
+			imageLink {
+				enable.data = register:href
+				typolink {
+					parameter.data = register:href
+					title.data = register:caption
+					target = {$plugin.tx_imagecycle_pi1.linkTarget}
+					extTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
+				}
+			}
+			// stdWrap around all images
+			stdWrap {
+				dataWrap = <div class="tx-imagecycle-pi1"><div id="{register:key}"> | </div></div>
+				required = 1
+			}
+		}
+		header < .normal
+		content < .normal
+	}
+	_CSS_DEFAULT_STYLE (
+.coin-slider { overflow: hidden; zoom: 1; position: relative; }
+.coin-slider a { text-decoration: none; outline: none; border: none; }
+.cs-buttons { font-size: 0px; padding: 10px; float: left; }
+.cs-buttons a { margin-left: 5px; height: 10px; width: 10px; float: left; border: 1px solid #B8C4CF; color: #B8C4CF; text-indent: -1000px; }
+.cs-active { background-color: #B8C4CF; color: #FFFFFF; }
+.cs-title { width: 100%; padding: 10px; background-color: #000000; color: #FFFFFF; }
+.cs-prev,
+.cs-prev:visited,
+.cs-next,
+.cs-next:visited { background-color: #000000; color: #FFFFFF; padding: 0px 10px; }
+	)
+}

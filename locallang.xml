@@ -8,6 +8,10 @@
 		<languageKey index="default" type="array">
 			<label index="pi1_title">Image cycle</label>
 			<label index="pi1_plus_wiz_description">Add an image cycle to your content</label>
+
+			<label index="pi2_title">Coin-Slider</label>
+			<label index="pi2_plus_wiz_description">Add a Coin-Slider to your content</label>
+
 			<label index="cms_layout.style">Display: %s</label>
 			<label index="cms_layout.not_configured">Plugin is not configured!</label>
 			<label index="cms_layout.from_ts">From Typoscript</label>

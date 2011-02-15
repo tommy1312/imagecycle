@@ -2,7 +2,10 @@
 # cat=basic/enable/10; type=string; label=Available effect: Defines all available effects (,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all)
 effects = ,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all
 
-# cat=basic/enable/20; type=boolean; label=Enable select instead of checkbox: If set, most of checkboxes will turn into selectboxes, so you can choose "from TS"
+# cat=basic/enable/20; type=string; label=Available effect for Coin-Slider: Defines all available effects for Coin-Slider (,random,swirl,rain,straight)
+effectsCoin = ,random,swirl,rain,straight
+
+# cat=basic/enable/30; type=boolean; label=Enable select instead of checkbox: If set, most of checkboxes will turn into selectboxes, so you can choose "from TS"
 useSelectInsteadCheckbox = 0
 
 

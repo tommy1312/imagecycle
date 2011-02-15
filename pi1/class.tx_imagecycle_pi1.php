@@ -437,7 +437,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 		// The template for JS
 		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle_pi1.js");
+			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle.js");
 		}
 
 		// set the key
@@ -638,7 +638,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
 				}
 				$image = $this->cObj->IMAGE($imgConf);
-				$image = $this->cObj->typolink($image, $imgConf['imageLinkWrap.']);
 				if ($item['caption'] && $this->conf['showcaption']) {
 					$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['captionWrap.']);
 				}
