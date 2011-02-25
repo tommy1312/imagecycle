@@ -1,0 +1,58 @@
+plugin.tx_imagecycle_pi3 {
+
+	# cat=plugin.tx_imagecycle.nivoslider/file/010; type=file[js]; label=jQuery Nivo-Slider for Cycle: Location of the jQuery Nivo-Slider
+	file.jQueryNivo = EXT:imagecycle/res/jquery/js/jquery.nivoslider-2.40.pack.js
+
+	# cat=plugin.tx_imagecycle.nivoslider/file/020; type=file[css]; label=CSS file: The path to the stylesheet file
+	file.cssFileNivo = EXT:imagecycle/res/css/nivoslider/style.css
+
+
+	# cat=plugin.tx_imagecycle.nivoslider/typo/010; type=options[,random,sliceDown,sliceDownLeft,sliceUp,sliceUpLeft,sliceUpDown,sliceUpDownLeft,fold,fade,slideInRight,slideInLeft]; label=Effect for Nivo-Slider: This will set the default effect for Nivo-Slider
+	nivoEffect = random
+
+	# cat=plugin.tx_imagecycle.nivoslider/typo/020; type=string; label=Width: Width of slider panel
+	imagewidth = 400c
+
+	# cat=plugin.tx_imagecycle.nivoslider/typo/030; type=string; label=Height: Height of slider panel
+	imageheight = 300c
+
+	# cat=plugin.tx_imagecycle.nivoslider/typo/040; type=int+; label=Slices: Count of slices
+	nivoSlices = 15
+
+	# cat=plugin.tx_imagecycle.nivoslider/typo/050; type=int; label=Animation speed: Speed of the animation in ms
+	nivoAnimSpeed = 500
+
+	# cat=plugin.tx_imagecycle.nivoslider/typo/060; type=int; label=Pause time: Delay in ms
+	nivoPauseTime = 3000
+
+	# cat=plugin.tx_imagecycle.nivoslider/typo/070; type=int; label=Start slide: Set starting Slide (0 index)
+	nivoStartSlide = 0
+
+
+	# cat=plugin.tx_imagecycle.nivoslider/enable/010; type=boolean; label=Show navigation: Show Next & Prev navigation
+	nivoDirectionNav = 1
+
+	# cat=plugin.tx_imagecycle.nivoslider/enable/020; type=boolean; label=Show navigation on hover: Show navigation on mouseover
+	nivoDirectionNavHide = 1
+
+	# cat=plugin.tx_imagecycle.nivoslider/enable/030; type=boolean; label=Show control: Show control (1,2,3,...)
+	nivoControlNav = 0
+
+#	nivoControlNavThumbs = 0
+#	nivoControlNavThumbsFromRel = 0
+#	nivoControlNavThumbsSearch = .jpg
+#	nivoControlNavThumbsReplace = _thumb.jpg
+
+	# cat=plugin.tx_imagecycle.nivoslider/enable/040; type=boolean; label=Use keyboard: Use left & right arrows for navigation
+	nivoKeyboardNav = 1
+
+	# cat=plugin.tx_imagecycle.nivoslider/enable/050; type=boolean; label=Pause on hover: Stop animation while hovering
+	nivoPauseOnHover = 0
+
+	# cat=plugin.tx_imagecycle.nivoslider/enable/060; type=boolean; label=Manual advance: Force manual transitions
+	nivoManualAdvance = 0
+
+	# cat=plugin.tx_imagecycle.nivoslider/enable/070; type=string; label=Caption opacity: Universal caption opacity
+	nivoCaptionOpacity = 0.8
+
+}

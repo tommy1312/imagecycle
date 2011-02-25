@@ -62,7 +62,7 @@ plugin.tx_imagecycle_pi2 {
 			}
 			// stdWrap around all images
 			stdWrap {
-				dataWrap = <div class="tx-imagecycle-pi1"><div id="{register:key}"> | </div></div>
+				dataWrap = <div class="tx-imagecycle-pi2"><div id="{register:key}"> | </div></div>
 				required = 1
 			}
 		}

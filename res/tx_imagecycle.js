@@ -73,3 +73,14 @@ jQuery(document).ready(function() {
 });
 <!-- ###TEMPLATE_COINSLIDER_JS### end -->
 
+
+
+
+<!-- ###TEMPLATE_NIVOSLIDER_JS### begin -->
+jQuery(document).ready(function() {
+	jQuery('####KEY###').nivoSlider({
+		###OPTIONS###
+	});
+});
+<!-- ###TEMPLATE_NIVOSLIDER_JS### end -->
+

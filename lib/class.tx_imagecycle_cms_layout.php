@@ -40,35 +40,27 @@ class tx_imagecycle_cms_layout
 	 */
 	function getExtensionSummary($params, &$pObj)
 	{
-		if ($params['row']['list_type'] == 'imagecycle_pi1') {
-			$result = null;
-			$data = t3lib_div::xml2array($params['row']['pi_flexform']);
-			if (is_array($data)) {
-				$type      = ($data['data']['movement']['lDEF']['type']['vDEF'] ? $data['data']['movement']['lDEF']['type']['vDEF'] : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts'));
-				$result .= sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.($type ? $type : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')).'</strong><br/>');
-				/*
-				$mode = $data['data']['general']['lDEF']['mode']['vDEF'];
-				switch ($mode) {
-					case 'upload' : {
-						$images = t3lib_div::trimExplode(',', $data['data']['general']['lDEF']['images']['vDEF'], true);
-						foreach ($images as $image) {
-							$result .= t3lib_BEfunc::getThumbNail($GLOBALS['BACK_PATH'].'thumbs.php', PATH_site.'uploads/tx_imagecycle/'.$image, '', '');
-						}
-						break;
-					}
-					case 'dam' : {
-						$result .= 'dam';
-						break;
-					}
-					case 'dam_catedit' : {
-						$result .= 'dam_catedit';
-						break;
-					}
+		$result = null;
+		$data = t3lib_div::xml2array($params['row']['pi_flexform']);
+		if (! is_array($data)) {
+			$result = $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.not_configured').'<br/>';
+		} else {
+			switch ($params['row']['list_type']) {
+				case "imagecycle_pi1" : {
+					$type   = "jQuery Cycle (" . ($data['data']['movement']['lDEF']['type']['vDEF'] ? $data['data']['movement']['lDEF']['type']['vDEF'] : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ")";
+					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.($type ? $type : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')).'</strong><br/>');
+					break;
 				}
-				$result .= '<br/>';
-				*/
-			} else {
-				$result = $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.not_configured').'<br/>';
+				case "imagecycle_pi2" : {
+					$type   = "Coin-Slider (" . ($data['data']['settings']['lDEF']['coinEffect']['vDEF'] ? $data['data']['settings']['lDEF']['coinEffect']['vDEF'] : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ")";
+					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.($type ? $type : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')).'</strong><br/>');
+					break;
+				}
+				case "imagecycle_pi3" : {
+					$type   = "Nivo-Slider (" . ($data['data']['settings']['lDEF']['nivoEffect']['vDEF'] ? $data['data']['settings']['lDEF']['nivoEffect']['vDEF'] : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ")";
+					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.($type ? $type : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')).'</strong><br/>');
+					break;
+				}
 			}
 		}
 		if (t3lib_extMgm::isLoaded("templavoila")) {

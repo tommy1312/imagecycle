@@ -1,0 +1,86 @@
+plugin.tx_imagecycle_pi3 {
+
+	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
+	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
+	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
+	jsInFooter = {$plugin.tx_imagecycle_pi1.jsInFooter}
+	jsMinify = {$plugin.tx_imagecycle_pi1.jsMinify}
+	jsInline = {$plugin.tx_imagecycle_pi1.jsInline}
+	cssMinify = {$plugin.tx_imagecycle_pi1.cssMinify}
+
+	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
+	jQueryNivo = {$plugin.tx_imagecycle_pi3.file.jQueryNivo}
+	cssFileNivo = {$plugin.tx_imagecycle_pi3.file.cssFileNivo}
+	templateFileJS = {$plugin.tx_imagecycle_pi1.file.templateFileJS}
+
+	nivoEffect = {$plugin.tx_imagecycle_pi3.nivoEffect}
+	imagewidth = {$plugin.tx_imagecycle_pi3.imagewidth}
+	imageheight = {$plugin.tx_imagecycle_pi3.imageheight}
+	nivoSlices = {$plugin.tx_imagecycle_pi3.nivoSlices}
+	nivoAnimSpeed = {$plugin.tx_imagecycle_pi3.nivoAnimSpeed}
+	nivoPauseTime = {$plugin.tx_imagecycle_pi3.nivoPauseTime}
+	nivoStartSlide = {$plugin.tx_imagecycle_pi3.nivoStartSlide}
+	nivoDirectionNav = {$plugin.tx_imagecycle_pi3.nivoDirectionNav}
+	nivoDirectionNavHide = {$plugin.tx_imagecycle_pi3.nivoDirectionNavHide}
+	nivoControlNav = {$plugin.tx_imagecycle_pi3.nivoControlNav}
+#	nivoControlNavThumbs = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbs}
+#	nivoControlNavThumbsFromRel = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbsFromRel}
+#	nivoControlNavThumbsSearch = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbsSearch}
+#	nivoControlNavThumbsReplace = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbsReplace}
+	nivoKeyboardNav = {$plugin.tx_imagecycle_pi3.nivoKeyboardNav}
+	nivoPauseOnHover = {$plugin.tx_imagecycle_pi3.nivoPauseOnHover}
+	nivoManualAdvance = {$plugin.tx_imagecycle_pi3.nivoManualAdvance}
+	nivoCaptionOpacity = {$plugin.tx_imagecycle_pi3.nivoCaptionOpacity}
+	options = {$plugin.tx_imagecycle_pi3.options}
+
+	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
+	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
+
+	nivo {
+		normal {
+			image {
+				file.import.data = register:file
+				file.width.data = register:imagewidth
+				file.height.data = register:imageheight
+				imageLinkWrap < tt_content.image.20.1.imageLinkWrap
+				imageHrefWrap {
+					enable.data = register:href
+					typolink {
+						parameter.data = register:href
+						title.data = register:caption
+						target = {$plugin.tx_imagecycle_pi1.linkTarget}
+						extTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
+					}
+				}
+				altText {
+					data = register:caption
+					stripHtml = 1
+				}
+				titleText < .altText
+				longdescURL < .altText
+			}
+			// stdWrap around all images
+			stdWrap {
+				dataWrap = <div class="tx-imagecycle-pi3"><div id="{register:key}"> | </div></div>
+				required = 1
+			}
+		}
+		header < .normal
+		content < .normal
+	}
+	_CSS_DEFAULT_STYLE (
+.nivoSlider { position:relative; }
+.nivoSlider img { position:absolute; top:0px; left:0px; }
+.nivoSlider a.nivo-imageLink { position:absolute; top:0px; left:0px; width:100%; height:100%; border:0; padding:0; margin:0; z-index:60; display:none; }
+.nivo-slice { display:block; position:absolute; z-index:50; height:100%; }
+.nivo-caption { position:absolute; left:0px; bottom:0px; background:#000; color:#fff; opacity:0.8; width:100%; z-index:89; }
+.nivo-caption p { padding:5px; margin:0; }
+.nivo-caption a { display:inline !important; }
+.nivo-html-caption { display:none; }
+.nivo-directionNav a { position:absolute; top:45%; z-index:99; cursor:pointer; }
+.nivo-prevNav { left:0px; }
+.nivo-nextNav { right:0px; }
+.nivo-controlNav a { position:relative; z-index:99; cursor:pointer; }
+.nivo-controlNav a.active { font-weight:bold; }
+	)
+}

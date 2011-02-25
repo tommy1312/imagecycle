@@ -70,6 +70,20 @@
 			<label index="tt_content.pi_flexform.coinHoverPause">Pause on hover</label>
 			<label index="tt_content.pi_flexform.optionsCoin">Enter own options (see http://workshop.rs/projects/coin-slider/)</label>
 
+			<label index="tt_content.pi_flexform.nivoEffect">Nivo effect</label>
+			<label index="tt_content.pi_flexform.nivoSlices">Count of slices</label>
+			<label index="tt_content.pi_flexform.nivoAnimSpeed">Speed of the animation in ms</label>
+			<label index="tt_content.pi_flexform.nivoPauseTime">Delay in ms</label>
+			<label index="tt_content.pi_flexform.nivoStartSlide">Set starting Slide</label>
+			<label index="tt_content.pi_flexform.nivoDirectionNav">Show navigation</label>
+			<label index="tt_content.pi_flexform.nivoDirectionNavHide">Show navigation on hover</label>
+			<label index="tt_content.pi_flexform.nivoControlNav">Show control</label>
+			<label index="tt_content.pi_flexform.nivoKeyboardNav">Use left and right arrows for navigation</label>
+			<label index="tt_content.pi_flexform.nivoPauseOnHover">Stop animation while hovering</label>
+			<label index="tt_content.pi_flexform.nivoManualAdvance">Force manual transitions</label>
+			<label index="tt_content.pi_flexform.nivoCaptionOpacity">Universal caption opacity</label>
+			<label index="tt_content.pi_flexform.optionsNivo">Enter own options (see http://nivo.dev7studios.com/#usage)</label>
+
 			<label index="tt_content.pi_flexform.from_ts">From Typoscript</label>
 			<label index="tt_content.pi_flexform.no">No</label>
 			<label index="tt_content.pi_flexform.yes">Yes</label>

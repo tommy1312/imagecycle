@@ -78,6 +78,7 @@ class tx_imagecycle_tsparserext
 		$confDefault = array(
 			'effects',
 			'effectsCoin',
+			'effectsNivo',
 			'useSelectInsteadCheckbox',
 		);
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
