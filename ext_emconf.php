@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext "imagecycle".
 #
-# Auto generated 26-02-2011 00:57
+# Auto generated 28-02-2011 22:30
 #
 # Manual updates:
 # Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Insert a slideshow into your page or template. Manage the images, captions and hrefs recursively in the pagetree and show it in a jQuery Cycle. Add media from DAM and DAM-Category. Use t3jquery for better integration with other jQuery extensions.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '1.8.0',
+	'version' => '1.8.1',
 	'dependencies' => 'cms,jftcaforms',
 	'conflicts' => '',
 	'priority' => '',
