@@ -1,0 +1,31 @@
+plugin.tx_imagecycle_pi4 {
+
+	# cat=plugin.tx_imagecycle.crossslide/file/010; type=file[js]; label=jQuery Cross-Slide for Cycle: Location of the jQuery Cross-Slide
+	file.jQueryCross = EXT:imagecycle/res/jquery/js/jquery.crossslide-0.6.2.min.js
+
+
+
+	# cat=plugin.tx_imagecycle.crossslide/typo/010; type=string; label=Width: Width of slider panel
+	imagewidth = 400c
+
+	# cat=plugin.tx_imagecycle.crossslide/typo/020; type=string; label=Height: Height of slider panel
+	imageheight = 300c
+
+
+
+	# cat=plugin.tx_imagecycle.crossslide/enable/010; type=options[,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition: Effect of transition (Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
+	crossTransition = 
+
+	# cat=plugin.tx_imagecycle.crossslide/enable/020; type=options[,In,Out,InOut]; label=Transition direction: Direction of transition (In, Out, InOut)
+	crossTransitionDir = 
+
+	# cat=plugin.tx_imagecycle.crossslide/enable/030; type=int+; label=Duration transition: The duration of the transition in milliseconds
+	crossTime = 3000
+
+	# cat=plugin.tx_imagecycle.crossslide/enable/040; type=int+; label=Duration of fade: The duration of the fade in milliseconds
+	crossFade = 1000
+
+	# cat=plugin.tx_imagecycle.crossslide/enable/050; type=string; label=Variant: If, set, the pad will stop while fade
+	crossVariant = 0
+
+}

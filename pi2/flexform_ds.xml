@@ -169,7 +169,7 @@
 												<cols>30</cols>
 												<rows>5</rows>
 											</config>
-											<defaultExtras>richtext[]</defaultExtras>
+											<defaultExtras>richtext[]:rte_transform[mode=ts_css]</defaultExtras>
 										</TCEforms>
 									</caption>
 								</el>

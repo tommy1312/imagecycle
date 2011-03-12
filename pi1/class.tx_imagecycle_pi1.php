@@ -77,7 +77,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
-
 		if ($this->cObj->data['list_type'] == $this->extKey.'_pi1') {
 			$this->type = 'normal';
 			// It's a content, al data from flexform
@@ -94,7 +93,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 										$this->lConf[$key][] = array(
 											"image"   => $el['data']['el']['image']['vDEF'],
 											"href"    => $el['data']['el']['href']['vDEF'],
-											"caption" => $el['data']['el']['caption']['vDEF'],
+											"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
 										);
 									}
 								}
@@ -206,6 +205,13 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				}
 			}
 			if ($pageID) {
+				if ($this->sys_language_uid) {
+					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
+					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+					if (trim($used_page['tx_imagecycle_effect'])) {
+						$this->conf['type'] = $row['tx_imagecycle_effect'];
+					}
+				}
 				// define the images
 				switch ($this->lConf['mode']) {
 					case "" : {}
@@ -216,11 +222,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 						$this->captions = t3lib_div::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
 						// Language overlay
 						if ($this->sys_language_uid) {
-							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
-							$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-							if (trim($used_page['tx_imagecycle_effect'])) {
-								$this->conf['type'] = $row['tx_imagecycle_effect'];
-							}
 							if (trim($row['tx_imagecycle_images']) != '') {
 								$this->images   = t3lib_div::trimExplode(',',     $row['tx_imagecycle_images']);
 								$this->hrefs    = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);

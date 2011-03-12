@@ -61,6 +61,11 @@ class tx_imagecycle_cms_layout
 					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.($type ? $type : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')).'</strong><br/>');
 					break;
 				}
+				case "imagecycle_pi4" : {
+					$type   = "Cross-Slide";
+					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.($type ? $type : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')).'</strong><br/>');
+					break;
+				}
 			}
 		}
 		if (t3lib_extMgm::isLoaded("templavoila")) {

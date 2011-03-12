@@ -1,0 +1,72 @@
+plugin.tx_imagecycle_pi4 {
+
+	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
+	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
+	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
+	jsInFooter = {$plugin.tx_imagecycle_pi1.jsInFooter}
+	jsMinify = {$plugin.tx_imagecycle_pi1.jsMinify}
+	jsInline = {$plugin.tx_imagecycle_pi1.jsInline}
+	cssMinify = {$plugin.tx_imagecycle_pi1.cssMinify}
+
+	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
+	jQueryCross = {$plugin.tx_imagecycle_pi4.file.jQueryCross}
+	templateFileJS = {$plugin.tx_imagecycle_pi1.file.templateFileJS}
+
+	imagewidth = {$plugin.tx_imagecycle_pi4.imagewidth}
+	imageheight = {$plugin.tx_imagecycle_pi4.imageheight}
+	crossTransition = {$plugin.tx_imagecycle_pi4.crossTransition}
+	crossTransitionDir = {$plugin.tx_imagecycle_pi4.crossTransitionDir}
+	crossTime = {$plugin.tx_imagecycle_pi4.crossTime}
+	crossFade = {$plugin.tx_imagecycle_pi4.crossFade}
+	crossVariant = {$plugin.tx_imagecycle_pi4.crossVariant}
+	crossFromTo (
+100% 80% 1x   | 100% 0% 1.7x
+top left      | bottom right 1.5x
+100% 80% 1.5x | 80% 0% 1.1x
+100% 50%      | 30% 50% 1.5x
+	)
+	options = {$plugin.tx_imagecycle_pi4.options}
+
+	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
+	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
+
+	cross {
+		normal {
+			image {
+				file.import.data = register:file
+				file.width.data  = register:imagewidth
+				file.height.data = register:imageheight
+			}
+			stdWrap {
+				dataWrap = <div class="tx-imagecycle-pi4"><div id="{register:key}"> | </div><div class="caption"></div></div>
+				required = 1
+			}
+		}
+		header < .normal
+		content < .normal
+	}
+
+	_CSS_DEFAULT_STYLE (
+.tx-imagecycle-pi4 .caption {
+	position: relative;
+	margin-top: -75px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 150px;
+	text-align: center;
+	padding: 5px 10px;
+	background: black;
+	color: white;
+	font-family: sans-serif;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-o-border-radius: 5px;
+	display: none;
+}
+.tx-imagecycle-pi4 .caption p {
+	margin: 0;
+}
+	)
+}

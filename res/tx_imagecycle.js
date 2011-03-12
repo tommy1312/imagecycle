@@ -84,3 +84,29 @@ jQuery(document).ready(function() {
 });
 <!-- ###TEMPLATE_NIVOSLIDER_JS### end -->
 
+
+
+
+<!-- ###TEMPLATE_CROSSSLIDER_JS### begin -->
+jQuery(document).ready(function() {
+	jQuery('####KEY###').crossSlide({
+		###OPTIONS###
+	}, ###IMAGES###, function(idx, img, idxOut, imgOut) {
+		var $caption = jQuery('.tx-imagecycle-pi4 .caption');
+		if (idxOut == undefined && img.alt) {
+			$caption.css({
+				display: 'block',
+				opacity: 0
+			});
+			$caption.html(img.alt).fadeTo('slow', 0.7);
+		} else {
+			$caption.fadeOut();
+		}
+	});
+	jQuery('####KEY###').parent().css({
+		'width': jQuery('####KEY###').width(),
+		'height': jQuery('####KEY###').height()
+	});
+});
+<!-- ###TEMPLATE_CROSSSLIDER_JS### end -->
+

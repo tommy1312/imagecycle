@@ -218,66 +218,6 @@
 							</config>
 						</TCEforms>
 					</imageheight>
-					<showcaption>
-						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showcaption</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>1</checked>
-							</config>
-						</TCEforms>
-					</showcaption>
-					<showControl>
-						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showControl</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>0</checked>
-							</config>
-						</TCEforms>
-					</showControl>
-					<showPager>
-						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showPager</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>0</checked>
-							</config>
-						</TCEforms>
-					</showPager>
-					<random>
-						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.random</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>1</checked>
-							</config>
-						</TCEforms>
-					</random>
-					<stoponmousover>
-						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.stoponmousover</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>0</checked>
-							</config>
-						</TCEforms>
-					</stoponmousover>
-					<pausedBegin>
-						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.pausedBegin</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>0</checked>
-							</config>
-						</TCEforms>
-					</pausedBegin>
 				</el>
 			</ROOT>
 		</settings>
@@ -288,26 +228,9 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-					<type>
+					<crossTransition>
 						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.type</label>
-							<config>
-								<type>select</type>
-								<size>1</size>
-								<maxitems>1</maxitems>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts</numIndex>
-										<numIndex index="1"></numIndex>
-									</numIndex>
-								</items>
-								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getEffects</itemsProcFunc>
-							</config>
-						</TCEforms>
-					</type>
-					<transition>
-						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transition</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossTransition</label>
 							<config>
 								<type>select</type>
 								<items type="array">
@@ -360,10 +283,10 @@
 								<maxitems>1</maxitems>
 							</config>
 						</TCEforms>
-					</transition>
-					<transitiondir>
+					</crossTransition>
+					<crossTransitionDir>
 						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transitiondir</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossTransitionDir</label>
 							<config>
 								<type>select</type>
 								<items type="array">
@@ -388,10 +311,10 @@
 								<maxitems>1</maxitems>
 							</config>
 						</TCEforms>
-					</transitiondir>
-					<transitionduration>
+					</crossTransitionDir>
+					<crossTime>
 						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transitionduration</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossTime</label>
 							<config>
 								<type>input</type>
 								<size>5</size>
@@ -400,10 +323,10 @@
 								<eval>int</eval>
 							</config>
 						</TCEforms>
-					</transitionduration>
-					<displayduration>
+					</crossTime>
+					<crossFade>
 						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.displayduration</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossFade</label>
 							<config>
 								<type>input</type>
 								<size>5</size>
@@ -412,41 +335,28 @@
 								<eval>int</eval>
 							</config>
 						</TCEforms>
-					</displayduration>
-					<delayduration>
+					</crossFade>
+					<crossVariant>
 						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.delayduration</label>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<max>5</max>
-								<checkbox>0</checkbox>
-								<eval>int</eval>
-							</config>
-						</TCEforms>
-					</delayduration>
-					<fastOnEvent>
-						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.fastOnEvent</label>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<max>5</max>
-								<checkbox>0</checkbox>
-								<eval>int</eval>
-							</config>
-						</TCEforms>
-					</fastOnEvent>
-					<sync>
-						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sync</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossVariant</label>
 							<config>
 								<form_type>user</form_type>
 								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>1</checked>
+								<checked>0</checked>
 							</config>
 						</TCEforms>
-					</sync>
+					</crossVariant>
+					<crossFromTo>
+						<TCEforms>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossFromTo</label>
+							<config>
+								<type>text</type>
+								<wrap>OFF</wrap>
+								<cols>48</cols>
+								<rows>10</rows>
+							</config>
+						</TCEforms>
+					</crossFromTo>
 				</el>
 			</ROOT>
 		</movement>
@@ -459,7 +369,7 @@
 				<el>
 					<options>
 						<TCEforms>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.options</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.optionsCross</label>
 							<config>
 								<type>text</type>
 								<wrap>OFF</wrap>

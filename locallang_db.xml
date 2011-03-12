@@ -20,6 +20,8 @@
 			<label index="tt_content.tx_imagecycle_duration">Duration in ms</label>
 			<label index="tt_content.list_type_pi1">Image cycle</label>
 			<label index="tt_content.list_type_pi2">Coin-Slider</label>
+			<label index="tt_content.list_type_pi3">Nivo-Slider</label>
+			<label index="tt_content.list_type_pi4">Cross-Slide</label>
 			<label index="tt_content.pi_flexform.sheet_general">General</label>
 			<label index="tt_content.pi_flexform.mode">Mode</label>
 			<label index="tt_content.pi_flexform.mode.I.upload">Upload Images</label>
@@ -83,6 +85,14 @@
 			<label index="tt_content.pi_flexform.nivoManualAdvance">Force manual transitions</label>
 			<label index="tt_content.pi_flexform.nivoCaptionOpacity">Universal caption opacity</label>
 			<label index="tt_content.pi_flexform.optionsNivo">Enter own options (see http://nivo.dev7studios.com/#usage)</label>
+
+			<label index="tt_content.pi_flexform.crossTransition">Effect of transition</label>
+			<label index="tt_content.pi_flexform.crossTransitionDir">Direction of transition</label>
+			<label index="tt_content.pi_flexform.crossTime">The duration of the transition in milliseconds</label>
+			<label index="tt_content.pi_flexform.crossFade">The duration of the fade in milliseconds</label>
+			<label index="tt_content.pi_flexform.crossVariant">Stop pad while fade</label>
+			<label index="tt_content.pi_flexform.crossFromTo">Stack of effects to use ("from | to", for example: "100% 80% 1x | 100% 0% 1.7x")</label>
+			<label index="tt_content.pi_flexform.optionsCross">Enter own options (see http://tobia.github.com/CrossSlide/)</label>
 
 			<label index="tt_content.pi_flexform.from_ts">From Typoscript</label>
 			<label index="tt_content.pi_flexform.no">No</label>

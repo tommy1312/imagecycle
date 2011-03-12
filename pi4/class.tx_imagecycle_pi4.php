@@ -36,10 +36,10 @@ require_once(t3lib_extMgm::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.ph
  * @package	TYPO3
  * @subpackage	tx_imagecycle
  */
-class tx_imagecycle_pi3 extends tx_imagecycle_pi1
+class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 {
-	public $prefixId      = 'tx_imagecycle_pi3';
-	public $scriptRelPath = 'pi3/class.tx_imagecycle_pi3.php';
+	public $prefixId      = 'tx_imagecycle_pi4';
+	public $scriptRelPath = 'pi4/class.tx_imagecycle_pi4.php';
 	public $extKey        = 'imagecycle';
 	public $pi_checkCHash = true;
 	public $images        = array();
@@ -69,12 +69,12 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		$this->pi_loadLL();
 
 		// define the key of the element
-		$this->setContentKey("imagecycle-nivo");
+		$this->setContentKey("imagecycle-cross");
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
 
-		if ($this->cObj->data['list_type'] == $this->extKey.'_pi3') {
+		if ($this->cObj->data['list_type'] == $this->extKey.'_pi4') {
 			$this->type = 'normal';
 			// It's a content, al data from flexform
 			// Set the Flexform information
@@ -103,7 +103,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 
 			// define the key of the element
-			$this->setContentKey("imagecycle-nivo_c" . $this->cObj->data['uid']);
+			$this->setContentKey("imagecycle-cross_c" . $this->cObj->data['uid']);
 
 			// define the images
 			switch ($this->lConf['mode']) {
@@ -127,48 +127,30 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 				}
 			}
 			// Override the config with flexform data
-			if ($this->lConf['nivoEffect']) {
-				$this->conf['nivoEffect'] = $this->lConf['nivoEffect'];
-			}
 			if ($this->lConf['imagewidth']) {
 				$this->conf['imagewidth'] = $this->lConf['imagewidth'];
 			}
 			if ($this->lConf['imageheight']) {
 				$this->conf['imageheight'] = $this->lConf['imageheight'];
 			}
-			if ($this->lConf['nivoSlices']) {
-				$this->conf['nivoSlices'] = $this->lConf['nivoSlices'];
+			if ($this->lConf['crossTransition']) {
+				$this->conf['crossTransition'] = $this->lConf['crossTransition'];
 			}
-			if ($this->lConf['nivoAnimSpeed']) {
-				$this->conf['nivoAnimSpeed'] = $this->lConf['nivoAnimSpeed'];
+			if ($this->lConf['crossTransitionDir']) {
+				$this->conf['crossTransitionDir'] = $this->lConf['crossTransitionDir'];
 			}
-			if ($this->lConf['nivoPauseTime']) {
-				$this->conf['nivoPauseTime'] = $this->lConf['nivoPauseTime'];
+			if ($this->lConf['crossTime']) {
+				$this->conf['crossTime'] = $this->lConf['crossTime'];
 			}
-			if ($this->lConf['nivoStartSlide']) {
-				$this->conf['nivoStartSlide'] = $this->lConf['nivoStartSlide'];
+			if ($this->lConf['crossFade']) {
+				$this->conf['crossFade'] = $this->lConf['crossFade'];
 			}
-			if ($this->lConf['nivoCaptionOpacity']) {
-				$this->conf['nivoCaptionOpacity'] = $this->lConf['nivoCaptionOpacity'];
+			if ($this->lConf['crossFromTo']) {
+				$this->conf['crossFromTo'] = $this->lConf['crossFromTo'];
 			}
 			// Will be overridden, if not "from TS"
-			if ($this->lConf['nivoDirectionNav'] < 2) {
-				$this->conf['nivoDirectionNav'] = $this->lConf['nivoDirectionNav'];
-			}
-			if ($this->lConf['nivoDirectionNavHide'] < 2) {
-				$this->conf['nivoDirectionNavHide'] = $this->lConf['nivoDirectionNavHide'];
-			}
-			if ($this->lConf['nivoControlNav'] < 2) {
-				$this->conf['nivoControlNav'] = $this->lConf['nivoControlNav'];
-			}
-			if ($this->lConf['nivoKeyboardNav'] < 2) {
-				$this->conf['nivoKeyboardNav'] = $this->lConf['nivoKeyboardNav'];
-			}
-			if ($this->lConf['nivoPauseOnHover'] < 2) {
-				$this->conf['nivoPauseOnHover'] = $this->lConf['nivoPauseOnHover'];
-			}
-			if ($this->lConf['nivoManualAdvance'] < 2) {
-				$this->conf['nivoManualAdvance'] = $this->lConf['nivoManualAdvance'];
+			if ($this->lConf['crossVariant'] < 2) {
+				$this->conf['crossVariant'] = $this->lConf['crossVariant'];
 			}
 			$this->conf['options'] = $this->lConf['options'];
 		} else {
@@ -233,13 +215,17 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 		}
 
+		$crossFromTo = t3lib_div::trimExplode(LF, $this->conf['crossFromTo']);
+
 		$data = array();
 		foreach ($this->images as $key => $image) {
+			list($from, $to) = t3lib_div::trimExplode('|', $crossFromTo[$key % count($crossFromTo)]);
 			$data[$key]['image']   = $image;
 			$data[$key]['href']    = $this->hrefs[$key];
 			$data[$key]['caption'] = $this->captions[$key];
+			$data[$key]['from']    = $from;
+			$data[$key]['to']      = $to;
 		}
-
 		return $this->parseTemplate($data);
 	}
 
@@ -262,12 +248,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 
 		// define the contentKey if not exist
 		if ($this->getContentKey() == '') {
-			$this->setContentKey("imagecycle-nivo_key");
+			$this->setContentKey("imagecycle-cross_key");
 		}
 
-		if (! $this->conf['nivoEffect']) {
-			$this->conf['nivoEffect'] = "random";
-		}
 		if (! $this->conf['imagewidth']) {
 			$this->conf['imagewidth'] = "200c";
 		}
@@ -277,40 +260,45 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 
 		// We have to build the images first to get the maximum width and height
 		$returnString = null;
-		$images = null;
+		$imagesString = null;
+		$images = array();
 		$maxWidth = 0;
 		$maxHeight = 0;
+		$factor = 1;
 		$GLOBALS['TSFE']->register['key'] = $this->getContentKey();
-		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
-		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
-		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'];
+		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'] * $factor;
+		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'] * $factor;
+		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'] * $factor;
 		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
 		$GLOBALS['TSFE']->register['IMAGE_COUNT'] = count($data);
 		if (count($data) > 0) {
 			foreach ($data as $key => $item) {
 				$image = null;
-				$imgConf = $this->conf['nivo.'][$this->type.'.']['image.'];
+				$imgConf = $this->conf['cross.'][$this->type.'.']['image.'];
 				$totalImagePath = $dir . $item['image'];
 				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
 				$GLOBALS['TSFE']->register['CURRENT_ID'] = $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] + 1;
-				if ($this->hrefs[$key]) {
-					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
-				}
 				$image = $this->cObj->IMAGE($imgConf);
 				$lastImageInfo = $GLOBALS['TSFE']->lastImageInfo;
-				if ($lastImageInfo[0] > $maxWidth) {
-					$maxWidth = $lastImageInfo[0];
+				if (intval($lastImageInfo[0] / $factor) > $maxWidth) {
+					$maxWidth = intval($lastImageInfo[0] / $factor);
 				}
-				if ($lastImageInfo[1] > $maxHeight) {
-					$maxHeight = $lastImageInfo[1];
+				if (intval($lastImageInfo[1] / $factor) > $maxHeight) {
+					$maxHeight = intval($lastImageInfo[1] / $factor);
 				}
-				$images .= $image;
+				$images[] = array(
+					'src'  => $lastImageInfo[3],
+					'alt'  => $item['caption'],
+					'from' => $item['from'],
+					'to'   => $item['to'],
+					'time' => ($this->conf['crossTime'] ? ($this->conf['crossTime'] / 1000) : 2),
+				);
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] ++;
 			}
-			// the stdWrap
-			$returnString = $this->cObj->stdWrap($images, $this->conf['nivo.'][$this->type.'.']['stdWrap.']);
+			$returnString = $this->cObj->stdWrap(' ', $this->conf['cross.'][$this->type.'.']['stdWrap.']);
+			$imagesString = str_replace("\/", "/", json_encode($images));
 		}
 
 		// The template for JS
@@ -326,35 +314,20 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		}
 
 		$this->addCSS("
-#c{$this->cObj->data['uid']} .nivoSlider {
+#{$this->getContentKey()} {
 	width: {$maxWidth}px;
 	height: {$maxHeight}px;
 }");
 
 		$options = array();
-		$options['effect'] = "effect: '{$this->conf['nivoEffect']}'";
 
-		if ($this->conf['nivoSlices'] > 0) {
-			$options['slices'] = "slices: {$this->conf['nivoSlices']}";
+		if ($this->conf['crossFade'] > 0) {
+			$options['fade'] = "fade: ".($this->conf['crossFade'] / 1000);
 		}
-		if ($this->conf['nivoAnimSpeed'] > 0) {
-			$options['animSpeed'] = "animSpeed: {$this->conf['nivoAnimSpeed']}";
+		if ($this->conf['crossTransitionDir'] && $this->conf['crossTransition']) {
+			$options['easing'] = "easing: 'ease{$this->conf['crossTransitionDir']}{$this->conf['crossTransition']}'";
 		}
-		if ($this->conf['nivoPauseTime'] > 0) {
-			$options['pauseTime'] = "pauseTime: {$this->conf['nivoPauseTime']}";
-		}
-		if ($this->conf['nivoStartSlide'] > 0) {
-			$options['startSlide'] = "startSlide: {$this->conf['nivoStartSlide']}";
-		}
-		if (strlen($this->conf['nivoCaptionOpacity']) > 0) {
-			$options['captionOpacity'] = "captionOpacity: '{$this->conf['nivoCaptionOpacity']}'";
-		}
-		$options['directionNav']     = "directionNav: ".($this->conf['nivoDirectionNav'] ? 'true' : 'false');
-		$options['directionNavHide'] = "directionNavHide: ".($this->conf['nivoDirectionNavHide'] ? 'true' : 'false');
-		$options['controlNav']       = "controlNav: ".($this->conf['nivoControlNav'] ? 'true' : 'false');
-		$options['keyboardNav']      = "keyboardNav: ".($this->conf['nivoKeyboardNav'] ? 'true' : 'false');
-		$options['pauseOnHover']     = "pauseOnHover: ".($this->conf['nivoPauseOnHover'] ? 'true' : 'false');
-		$options['manualAdvance']    = "manualAdvance: ".($this->conf['nivoManualAdvance'] ? 'true' : 'false');
+		$options['variant'] = "variant: ".($this->conf['crossVariant'] ? 'true' : 'false');
 
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
@@ -362,20 +335,21 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		}
 
 		// define the js file
-		$this->addJsFile($this->conf['jQueryNivo']);
+		$this->addJsFile($this->conf['jQueryCross']);
 
 		// define the css file
-		$this->addCssFile($this->conf['cssFileNivo']);
+		$this->addCssFile($this->conf['cssFileCross']);
 
 		// get the Template of the Javascript
-		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_NIVOSLIDER_JS###"))) {
-			$templateCode = "alert('Template TEMPLATE_NIVOSLIDER_JS is missing')";
+		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_CROSSSLIDER_JS###"))) {
+			$templateCode = "alert('Template TEMPLATE_CROSSSLIDER_JS is missing')";
 		}
 
 		// define the markers
 		$markerArray = array();
 		$markerArray["KEY"]     = $this->getContentKey();
 		$markerArray["OPTIONS"] = implode(",\n		", $options);
+		$markerArray["IMAGES"] = $imagesString;
 
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
@@ -395,8 +369,8 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi3/class.tx_imagecycle_pi3.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi3/class.tx_imagecycle_pi3.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi4/class.tx_imagecycle_pi4.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi4/class.tx_imagecycle_pi4.php']);
 }
 
 ?>
