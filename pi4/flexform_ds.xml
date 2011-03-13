@@ -239,42 +239,50 @@
 										<numIndex index="1"></numIndex>
 									</numIndex>
 									<numIndex index="1" type="array">
+										<numIndex index="0">Swing</numIndex>
+										<numIndex index="1">swing</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Linear</numIndex>
+										<numIndex index="1">linear</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
 										<numIndex index="0">Quad</numIndex>
 										<numIndex index="1">Quad</numIndex>
 									</numIndex>
-									<numIndex index="2" type="array">
+									<numIndex index="4" type="array">
 										<numIndex index="0">Cubic</numIndex>
 										<numIndex index="1">Cubic</numIndex>
 									</numIndex>
-									<numIndex index="3" type="array">
+									<numIndex index="5" type="array">
 										<numIndex index="0">Quart</numIndex>
 										<numIndex index="1">Quart</numIndex>
 									</numIndex>
-									<numIndex index="4" type="array">
+									<numIndex index="6" type="array">
 										<numIndex index="0">Quint</numIndex>
 										<numIndex index="1">Quint</numIndex>
 									</numIndex>
-									<numIndex index="5" type="array">
+									<numIndex index="7" type="array">
 										<numIndex index="0">Expo</numIndex>
 										<numIndex index="1">Expo</numIndex>
 									</numIndex>
-									<numIndex index="6" type="array">
+									<numIndex index="8" type="array">
 										<numIndex index="0">Circ</numIndex>
 										<numIndex index="1">Circ</numIndex>
 									</numIndex>
-									<numIndex index="7" type="array">
+									<numIndex index="9" type="array">
 										<numIndex index="0">Sine</numIndex>
 										<numIndex index="1">Sine</numIndex>
 									</numIndex>
-									<numIndex index="8" type="array">
+									<numIndex index="10" type="array">
 										<numIndex index="0">Back</numIndex>
 										<numIndex index="1">Back</numIndex>
 									</numIndex>
-									<numIndex index="9" type="array">
+									<numIndex index="11" type="array">
 										<numIndex index="0">Bounce</numIndex>
 										<numIndex index="1">Bounce</numIndex>
 									</numIndex>
-									<numIndex index="10" type="array">
+									<numIndex index="12" type="array">
 										<numIndex index="0">Elastic</numIndex>
 										<numIndex index="1">Elastic</numIndex>
 									</numIndex>

@@ -13,7 +13,7 @@ plugin.tx_imagecycle_pi4 {
 
 
 
-	# cat=plugin.tx_imagecycle.crossslide/enable/010; type=options[,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition: Effect of transition (Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
+	# cat=plugin.tx_imagecycle.crossslide/enable/010; type=options[,swing,linear,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition: Effect of transition (Swing, Linear, Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
 	crossTransition = 
 
 	# cat=plugin.tx_imagecycle.crossslide/enable/020; type=options[,In,Out,InOut]; label=Transition direction: Direction of transition (In, Out, InOut)

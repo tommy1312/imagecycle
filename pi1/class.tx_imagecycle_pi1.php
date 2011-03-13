@@ -463,7 +463,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		if ($this->conf['type']) {
 			$options['fx'] = "fx: '{$this->conf['type']}'";
 		}
-		if ($this->conf['transitionDir'] && $this->conf['transition']) {
+		if (in_array($this->conf['transition'], array('linear', 'swing'))) {
+			$options['easing'] = "easing: '{$this->conf['transition']}'";
+		} elseif ($this->conf['transitionDir'] && $this->conf['transition']) {
 			$options['easing'] = "easing: 'ease{$this->conf['transitionDir']}{$this->conf['transition']}'";
 		}
 		if ($this->conf['transitionDuration'] > 0) {
