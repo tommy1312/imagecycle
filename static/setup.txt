@@ -91,8 +91,30 @@ plugin.tx_imagecycle_pi1 {
 				required = 1
 			}
 		}
+
 		header < .normal
+
 		content < .normal
+
+		ttnews {
+			image = IMAGE
+			image {
+				file {
+					import = uploads/pics/
+					import.data = register:image
+					maxW = {$plugin.tt_news.singleMaxW}
+					maxH = {$plugin.tt_news.singleMaxH}
+				}
+				altText >
+				altText.data = register:imagecaption
+				titleText < .altText
+			}
+			stdWrap {
+				dataWrap = <div class="tx-imagecycle-pi1"><div id="{register:key}"> | </div></div>
+				preUserFunc = tx_imagecycle->getSlideshow
+				preUserFunc.type = ttnews
+			}
+		}
 	}
 	_CSS_DEFAULT_STYLE (
 .tx-imagecycle-pi1-images {

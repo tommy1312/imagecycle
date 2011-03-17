@@ -29,9 +29,55 @@
  */
 class tx_imagecycle
 {
-	var $cObj;
+	public $cObj;
 
-	function getSlideshow($content, $conf)
+	public function getImageForTTnews($paramArray, $conf)
+	{
+		$markerArray = $paramArray[0];
+		$lConf = $paramArray[1];
+		$pObj = &$conf['parentObj']; // make a reference to the parent-object
+		$row = $pObj->local_cObj->data;
+		if ($row['tx_imagecycle_activate']) {
+			$imageConf = 'imagecycleSingleImage.';
+		} else {
+			$imageConf = 'image.';
+		}
+		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount']:1;
+		$imageNum = t3lib_div::intInRange($imageNum, 0, 100);
+		$theImgCode = '';
+		$imgs = t3lib_div::trimExplode(',', $row['image'], 1);
+		$imgsCaptions = explode(chr(10), $row['imagecaption']);
+		reset($imgs);
+		$cc = 0;
+		while (list($key, $val) = each($imgs)) {
+			if ($cc == $imageNum) break;
+			if ($val) {
+				// register some vars
+				$GLOBALS['TSFE']->register['image']        = $val;
+				$GLOBALS['TSFE']->register['imagecaption'] = $imgsCaptions[$cc];
+				$GLOBALS['TSFE']->register['key']          = 'imagecycle_' . $pObj->local_cObj->data['uid'];
+				// define the file
+				if ($row['tx_imagecycle_activate']) {
+					$theImgCode .= $pObj->local_cObj->IMAGE($lConf[$imageConf]);
+				} else {
+					$theImgCode .= $pObj->local_cObj->IMAGE($lConf[$imageConf]).$pObj->local_cObj->stdWrap($imgsCaptions[$cc], $lConf['caption_stdWrap.']);
+				}
+			}
+			$cc ++;
+		}
+
+		$markerArray['###NEWS_IMAGE###'] = '';
+		if ($cc) {
+			if ($row['tx_imagecycle_activate']) {
+				$markerArray['###NEWS_IMAGE###'] = $pObj->local_cObj->stdWrap(trim($theImgCode), $lConf['imagecycleImageWrapIfAny.']);
+			} else {
+				$markerArray['###NEWS_IMAGE###'] = $pObj->local_cObj->wrap(trim($theImgCode), $lConf['imageWrapIfAny']);
+			}
+		}
+		return $markerArray;
+	}
+
+	public function getSlideshow($content, $conf)
 	{
 		if ($this->cObj->data['tx_imagecycle_activate']) {
 			require_once(t3lib_extMgm::extPath('imagecycle') . 'pi1/class.tx_imagecycle_pi1.php');
@@ -46,7 +92,7 @@ class tx_imagecycle
 			}
 			$obj->cObj = $this->cObj;
 			$obj->type = 'content';
-			$return_string = $obj->parseTemplate($data, 'uploads/pics/', true);
+			$return_string = $obj->parseTemplate(array(), 'uploads/pics/', true);
 		}
 		return $content;
 	}
