@@ -5,13 +5,15 @@
 includeLibs.imagecycle = EXT:imagecycle/class.tx_imagecycle.php
 plugin.tt_news {
 	imageMarkerFunc = tx_imagecycle->getImageForTTnews
+
 	displaySingle {
-		imageCount = 10
 		imagecycleSingleImage < plugin.tx_imagecycle_pi1.cycle.ttnews.image
 		imagecycleImageWrapIfAny < plugin.tx_imagecycle_pi1.cycle.ttnews.stdWrap
+		captionWrap < plugin.tx_imagecycle_pi1.cycle.ttnews.captionWrap
+		itemWrap < plugin.tx_imagecycle_pi1.cycle.ttnews.itemWrap
 	}
+
 	displayList {
-		imageCount = 10
 		imagecycleSingleImage < plugin.tx_imagecycle_pi1.cycle.ttnews.image
 		imagecycleSingleImage {
 			file {
@@ -20,9 +22,11 @@ plugin.tt_news {
 			}
 		}
 		imagecycleImageWrapIfAny < plugin.tx_imagecycle_pi1.cycle.ttnews.stdWrap
+		captionWrap < plugin.tx_imagecycle_pi1.cycle.ttnews.captionWrap
+		itemWrap < plugin.tx_imagecycle_pi1.cycle.ttnews.itemWrap
 	}
+
 	displayLatest {
-		imageCount = 10
 		imagecycleSingleImage < plugin.tx_imagecycle_pi1.cycle.ttnews.image
 		imagecycleSingleImage {
 			file {
@@ -31,6 +35,8 @@ plugin.tt_news {
 			}
 		}
 		imagecycleImageWrapIfAny < plugin.tx_imagecycle_pi1.cycle.ttnews.stdWrap
+		captionWrap < plugin.tx_imagecycle_pi1.cycle.ttnews.captionWrap
+		itemWrap < plugin.tx_imagecycle_pi1.cycle.ttnews.itemWrap
 	}
 }
 [global]

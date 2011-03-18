@@ -527,13 +527,11 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$templateActivatePagerCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_ACTIVATE_PAGER_JS###"));
 			$after .= $this->cObj->substituteMarkerArray($templateActivatePagerCode, $markerArray, '###|###', 0);
 		}
-		if (count($data) > 1) {
-			if ($before) {
-				$options['before'] = "before: function(a,n,o,f) {".$before."}";
-			}
-			if ($after) {
-				$options['after'] = "after: function(a,n,o,f) {".$after."}";
-			}
+		if ($before) {
+			$options['before'] = "before: function(a,n,o,f) {".$before."}";
+		}
+		if ($after) {
+			$options['after'] = "after: function(a,n,o,f) {".$after."}";
 		}
 
 		// overwrite all options if set

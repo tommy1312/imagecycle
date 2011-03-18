@@ -39,27 +39,34 @@ class tx_imagecycle
 		$row = $pObj->local_cObj->data;
 		if ($row['tx_imagecycle_activate']) {
 			$imageConf = 'imagecycleSingleImage.';
+			$lConf['imageCount'] = 1000;
 		} else {
 			$imageConf = 'image.';
 		}
 		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount']:1;
-		$imageNum = t3lib_div::intInRange($imageNum, 0, 100);
+		$imageNum = t3lib_div::intInRange($imageNum, 0, 1000);
 		$theImgCode = '';
 		$imgs = t3lib_div::trimExplode(',', $row['image'], 1);
 		$imgsCaptions = explode(chr(10), $row['imagecaption']);
 		reset($imgs);
 		$cc = 0;
 		while (list($key, $val) = each($imgs)) {
-			if ($cc == $imageNum) break;
+			if ($cc == $imageNum) {
+				break;
+			}
 			if ($val) {
 				// register some vars
 				$GLOBALS['TSFE']->register['image']        = $val;
 				$GLOBALS['TSFE']->register['imagecaption'] = $imgsCaptions[$cc];
+				$GLOBALS['TSFE']->register['caption']      = $imgsCaptions[$cc];
 				$GLOBALS['TSFE']->register['key']          = 'imagecycle_' . $pObj->local_cObj->data['uid'];
 				// define the file
 				if ($row['tx_imagecycle_activate']) {
-					$theImgCode .= $pObj->local_cObj->IMAGE($lConf[$imageConf]);
+					$image = $pObj->local_cObj->IMAGE($lConf[$imageConf]);
+					$caption = $pObj->local_cObj->stdWrap($image, $lConf['captionWrap.']);
+					$theImgCode .= $pObj->local_cObj->stdWrap($caption, $lConf['itemWrap.']);
 				} else {
+					$lConf[$imageConf]['file'] = 'uploads/pics/'.$val;
 					$theImgCode .= $pObj->local_cObj->IMAGE($lConf[$imageConf]).$pObj->local_cObj->stdWrap($imgsCaptions[$cc], $lConf['caption_stdWrap.']);
 				}
 			}
