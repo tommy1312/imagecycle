@@ -45,6 +45,8 @@ jQuery(document).ready(function() {
 			return false;
 		});
 	});
+	options = jQuery('####KEY###').data('cycle.opts');
+	jQuery('####KEY###_pager a[rev='+(options.currSlide)+']').addClass('activeSlide');
 	<!-- ###PAGER### -->
 	<!-- ###SLOW_CONNECTION_AFTER### -->});<!-- ###SLOW_CONNECTION_AFTER### -->
 	<!-- ###CONTROL_AFTER### -->
@@ -54,6 +56,9 @@ jQuery(document).ready(function() {
 		jQuery('####KEY###_controller').stop(true,true).fadeOut('fast');
 	});
 	<!-- ###CONTROL_AFTER### -->
+	<!-- ###SHOW_CAPTION_AT_START### -->
+	jQuery('###CAPTION_TAG###', jQuery('####KEY###')).show();
+	<!-- ###SHOW_CAPTION_AT_START### -->
 });
 <!-- ###TEMPLATE_JS### end -->
 

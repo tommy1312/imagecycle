@@ -198,6 +198,7 @@
 				<el>
 					<coinEffect>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinEffect</label>
 							<config>
 								<type>select</type>
@@ -215,6 +216,7 @@
 					</coinEffect>
 					<imagewidth>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imagewidth</label>
 							<config>
 								<type>input</type>
@@ -226,6 +228,7 @@
 					</imagewidth>
 					<imageheight>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imageheight</label>
 							<config>
 								<type>input</type>
@@ -237,6 +240,7 @@
 					</imageheight>
 					<coinSpw>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinSpw</label>
 							<config>
 								<type>input</type>
@@ -248,6 +252,7 @@
 					</coinSpw>
 					<coinSph>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinSph</label>
 							<config>
 								<type>input</type>
@@ -259,6 +264,7 @@
 					</coinSph>
 					<coinDelay>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinDelay</label>
 							<config>
 								<type>input</type>
@@ -270,6 +276,7 @@
 					</coinDelay>
 					<coinSDelay>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinSDelay</label>
 							<config>
 								<type>input</type>
@@ -281,6 +288,7 @@
 					</coinSDelay>
 					<coinTitleSpeed>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinTitleSpeed</label>
 							<config>
 								<type>input</type>
@@ -292,6 +300,7 @@
 					</coinTitleSpeed>
 					<coinOpacity>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinOpacity</label>
 							<config>
 								<form_type>user</form_type>
@@ -308,6 +317,7 @@
 					</coinOpacity>
 					<coinNavigation>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinNavigation</label>
 							<config>
 								<form_type>user</form_type>
@@ -318,6 +328,7 @@
 					</coinNavigation>
 					<coinLinks>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinLinks</label>
 							<config>
 								<form_type>user</form_type>
@@ -328,6 +339,7 @@
 					</coinLinks>
 					<coinHoverPause>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinHoverPause</label>
 							<config>
 								<form_type>user</form_type>
@@ -348,6 +360,7 @@
 				<el>
 					<options>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.optionsCoin</label>
 							<config>
 								<type>text</type>

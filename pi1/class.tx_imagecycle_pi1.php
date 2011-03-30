@@ -488,6 +488,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
 
 		$captionTag = $this->cObj->stdWrap($this->conf['cycle.'][$this->type.'.']['captionTag'], $this->conf['cycle.'][$this->type.'.']['captionTag.']);
+		$markerArray["CAPTION_TAG"] = $captionTag;
 		$before = null;
 		$after  = null;
 		// add caption
@@ -550,6 +551,14 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$templateCode = "alert('Template TEMPLATE_JS is missing')";
 		}
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
+
+		// Show the caption when sync is turned off
+		if ($this->conf['showcaption'] && ! $this->conf['captionSync']) {
+			$templateShowCaption = trim($this->cObj->getSubpart($templateCode, "###SHOW_CAPTION_AT_START###"));
+		} else {
+			$templateShowCaption = null;
+		}
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SHOW_CAPTION_AT_START###', $templateShowCaption, 0);
 
 		// define the control
 		if ($this->conf['showControl']) {

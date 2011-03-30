@@ -198,6 +198,7 @@
 				<el>
 					<imagewidth>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imagewidth</label>
 							<config>
 								<type>input</type>
@@ -209,6 +210,7 @@
 					</imagewidth>
 					<imageheight>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imageheight</label>
 							<config>
 								<type>input</type>
@@ -220,6 +222,7 @@
 					</imageheight>
 					<showcaption>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showcaption</label>
 							<config>
 								<form_type>user</form_type>
@@ -230,6 +233,7 @@
 					</showcaption>
 					<showControl>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showControl</label>
 							<config>
 								<form_type>user</form_type>
@@ -240,6 +244,7 @@
 					</showControl>
 					<showPager>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showPager</label>
 							<config>
 								<form_type>user</form_type>
@@ -250,6 +255,7 @@
 					</showPager>
 					<random>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.random</label>
 							<config>
 								<form_type>user</form_type>
@@ -260,6 +266,7 @@
 					</random>
 					<stoponmousover>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.stoponmousover</label>
 							<config>
 								<form_type>user</form_type>
@@ -270,6 +277,7 @@
 					</stoponmousover>
 					<pausedBegin>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.pausedBegin</label>
 							<config>
 								<form_type>user</form_type>
@@ -290,6 +298,7 @@
 				<el>
 					<type>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.type</label>
 							<config>
 								<type>select</type>
@@ -307,6 +316,7 @@
 					</type>
 					<transition>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transition</label>
 							<config>
 								<type>select</type>
@@ -371,6 +381,7 @@
 					</transition>
 					<transitiondir>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transitiondir</label>
 							<config>
 								<type>select</type>
@@ -399,6 +410,7 @@
 					</transitiondir>
 					<transitionduration>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transitionduration</label>
 							<config>
 								<type>input</type>
@@ -411,6 +423,7 @@
 					</transitionduration>
 					<displayduration>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.displayduration</label>
 							<config>
 								<type>input</type>
@@ -423,6 +436,7 @@
 					</displayduration>
 					<delayduration>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.delayduration</label>
 							<config>
 								<type>input</type>
@@ -435,6 +449,7 @@
 					</delayduration>
 					<fastOnEvent>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.fastOnEvent</label>
 							<config>
 								<type>input</type>
@@ -447,6 +462,7 @@
 					</fastOnEvent>
 					<sync>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sync</label>
 							<config>
 								<form_type>user</form_type>
@@ -467,6 +483,7 @@
 				<el>
 					<options>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.options</label>
 							<config>
 								<type>text</type>

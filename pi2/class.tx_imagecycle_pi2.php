@@ -347,6 +347,9 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 		if (is_numeric($this->conf['coinSDelay']) && $this->conf['coinSDelay'] != 0) {
 			$options['sDelay'] = "sDelay: {$this->conf['coinSDelay']}";
 		}
+		if (is_numeric($this->conf['coinOpacity'])) {
+			$options['opacity'] = "opacity: {$this->conf['coinOpacity']}";
+		}
 		if (is_numeric($this->conf['coinTitleSpeed']) && $this->conf['coinTitleSpeed'] != 0) {
 			$options['titleSpeed'] = "titleSpeed: {$this->conf['coinTitleSpeed']}";
 		}

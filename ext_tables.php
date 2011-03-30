@@ -160,7 +160,8 @@ $TCA['tt_content']['palettes']['tx_imagecycle'] = array(
 	'showitem' => 'tx_imagecycle_activate,tx_imagecycle_duration',
 	'canNotCollapse' => 1,
 );
-t3lib_extMgm::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:imagecycle/locallang_db.xml:tt_content.tx_imagecycle_title;tx_imagecycle', 'textpic', 'before:imagecaption');
+t3lib_extMgm::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:imagecycle/locallang_db.xml:tt_content.tx_imagecycle_title;tx_imagecycle', 'textpic,image', 'before:imagecaption');
+
 
 
 

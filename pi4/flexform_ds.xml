@@ -198,6 +198,7 @@
 				<el>
 					<imagewidth>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imagewidth</label>
 							<config>
 								<type>input</type>
@@ -209,6 +210,7 @@
 					</imagewidth>
 					<imageheight>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.imageheight</label>
 							<config>
 								<type>input</type>
@@ -230,6 +232,7 @@
 				<el>
 					<crossTransition>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossTransition</label>
 							<config>
 								<type>select</type>
@@ -294,6 +297,7 @@
 					</crossTransition>
 					<crossTransitionDir>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossTransitionDir</label>
 							<config>
 								<type>select</type>
@@ -322,6 +326,7 @@
 					</crossTransitionDir>
 					<crossTime>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossTime</label>
 							<config>
 								<type>input</type>
@@ -334,6 +339,7 @@
 					</crossTime>
 					<crossFade>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossFade</label>
 							<config>
 								<type>input</type>
@@ -346,6 +352,7 @@
 					</crossFade>
 					<crossVariant>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossVariant</label>
 							<config>
 								<form_type>user</form_type>
@@ -356,6 +363,7 @@
 					</crossVariant>
 					<crossFromTo>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.crossFromTo</label>
 							<config>
 								<type>text</type>
@@ -377,6 +385,7 @@
 				<el>
 					<options>
 						<TCEforms>
+							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.optionsCross</label>
 							<config>
 								<type>text</type>
