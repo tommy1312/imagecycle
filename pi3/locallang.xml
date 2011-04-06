@@ -7,6 +7,8 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="list">list</label>
+			<label index="prev">prev</label>
+			<label index="next">next</label>
 		</languageKey>
 	</data>
 	<orig_hash type="array">

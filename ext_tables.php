@@ -107,6 +107,9 @@ $tempColumns['tx_imagecycle_effect'] = array (
 	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_effect',
 	'config' => array (
 		'type' => 'select',
+		'items' => array(
+			array('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts', ''),
+		),
 		'itemsProcFunc' => 'tx_imagecycle_itemsProcFunc->getEffects',
 		'size' => 1,
 		'maxitems' => 1,

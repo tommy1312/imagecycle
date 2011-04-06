@@ -185,10 +185,12 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			// It's the header
 			$used_page = array();
 			$pageID    = false;
+			$effectChanged = false;
 			foreach ($GLOBALS['TSFE']->rootLine as $page) {
 				if (! $pageID) {
-					if (trim($page['tx_imagecycle_effect']) && ! $this->conf['disableRecursion']) {
+					if ($effectChanged === false && trim($page['tx_imagecycle_effect']) && ! $this->conf['disableRecursion']) {
 						$this->conf['type'] = $page['tx_imagecycle_effect'];
+						$effectChanged = true;
 					}
 					if (
 						(($page['tx_imagecycle_mode'] == 'upload' || ! $page['tx_imagecycle_mode']) && trim($page['tx_imagecycle_images']) != '') ||

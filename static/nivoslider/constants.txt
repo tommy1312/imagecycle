@@ -1,13 +1,13 @@
 plugin.tx_imagecycle_pi3 {
 
 	# cat=plugin.tx_imagecycle.nivoslider/file/010; type=file[js]; label=jQuery Nivo-Slider for Cycle: Location of the jQuery Nivo-Slider
-	file.jQueryNivo = EXT:imagecycle/res/jquery/js/jquery.nivoslider-2.40.pack.js
+	file.jQueryNivo = EXT:imagecycle/res/jquery/js/jquery.nivoslider-2.51.min.js
 
 	# cat=plugin.tx_imagecycle.nivoslider/file/020; type=file[css]; label=CSS file: The path to the stylesheet file
 	file.cssFileNivo = EXT:imagecycle/res/css/nivoslider/style.css
 
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/010; type=options[,random,sliceDown,sliceDownLeft,sliceUp,sliceUpLeft,sliceUpDown,sliceUpDownLeft,fold,fade,slideInRight,slideInLeft]; label=Effect for Nivo-Slider: This will set the default effect for Nivo-Slider
+	# cat=plugin.tx_imagecycle.nivoslider/typo/010; type=options[,random,sliceDown,sliceDownLeft,sliceUp,sliceUpLeft,sliceUpDown,sliceUpDownLeft,fold,fade,slideInRight,slideInLeft,boxRandom,boxRain,boxRainReverse,boxRainGrow,boxRainGrowReverse]; label=Effect for Nivo-Slider: This will set the default effect for Nivo-Slider
 	nivoEffect = random
 
 	# cat=plugin.tx_imagecycle.nivoslider/typo/020; type=string; label=Width: Width of slider panel

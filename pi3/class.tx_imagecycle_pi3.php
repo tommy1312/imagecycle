@@ -332,7 +332,12 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 }");
 
 		$options = array();
+
 		$options['effect'] = "effect: '{$this->conf['nivoEffect']}'";
+
+		// Set the language for prev and next
+		$options['prev'] = "prevText: '".t3lib_div::slashJS($this->pi_getLL('prev'))."'";
+		$options['next'] = "nextText: '".t3lib_div::slashJS($this->pi_getLL('next'))."'";
 
 		if ($this->conf['nivoSlices'] > 0) {
 			$options['slices'] = "slices: {$this->conf['nivoSlices']}";
