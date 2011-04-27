@@ -52,16 +52,13 @@ plugin.tx_imagecycle_pi2 {
 				dataWrap = | <span>{register:caption}</span>
 			}
 			imageLink {
-				enable.data = register:href
-				typolink {
-					parameter.data = register:href
-					title {
-						data = register:caption
-						stripHtml = 1
-					}
-					target = {$plugin.tx_imagecycle_pi1.linkTarget}
-					extTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
+				parameter.data = register:href
+				title {
+					data = register:caption
+					stripHtml = 1
 				}
+				target = {$plugin.tx_imagecycle_pi1.linkTarget}
+				extTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
 			}
 			// stdWrap around all images
 			stdWrap {

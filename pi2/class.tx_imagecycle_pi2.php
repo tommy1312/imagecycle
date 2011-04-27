@@ -76,31 +76,44 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 
 		if ($this->cObj->data['list_type'] == $this->extKey.'_pi2') {
 			$this->type = 'normal';
-			// It's a content, al data from flexform
-			// Set the Flexform information
-			$this->pi_initPIflexForm();
-			$piFlexForm = $this->cObj->data['pi_flexform'];
-			foreach ($piFlexForm['data'] as $sheet => $data) {
-				foreach ($data as $lang => $value) {
-					foreach ($value as $key => $val) {
-						if ($key == 'imagesRTE') {
-							if (count($val['el']) > 0) {
-								foreach ($val['el'] as $elKey => $el) {
-									if (is_numeric($elKey)) {
-										$this->lConf[$key][] = array(
-											"image"   => $el['data']['el']['image']['vDEF'],
-											"href"    => $el['data']['el']['href']['vDEF'],
-											"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
-										);
-									}
-								}
-							}
-						} else {
-							$this->lConf[$key] = $this->pi_getFFvalue($piFlexForm, $key, $sheet);
-						}
+
+			// It's a content, all data from flexform
+
+			$this->lConf['mode']          = $this->getFlexformData('general', 'mode');
+			$this->lConf['images']        = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['hrefs']         = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captions']      = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['damimages']     = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
+			$this->lConf['damcategories'] = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+
+			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->lConf['mode'] == 'uploadRTE'));
+			$this->lConf['imagesRTE'] = array();
+			if (isset($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
+				foreach ($imagesRTE['el'] as $elKey => $el) {
+					if (is_numeric($elKey)) {
+						$this->lConf['imagesRTE'][] = array(
+							"image"   => $el['data']['el']['image']['vDEF'],
+							"href"    => $el['data']['el']['href']['vDEF'],
+							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+						);
 					}
 				}
 			}
+
+			$this->lConf['coinEffect']     = $this->getFlexformData('settings', 'coinEffect');
+			$this->lConf['imagewidth']     = $this->getFlexformData('settings', 'imagewidth');
+			$this->lConf['imageheight']    = $this->getFlexformData('settings', 'imageheight');
+			$this->lConf['coinSpw']        = $this->getFlexformData('settings', 'coinSpw');
+			$this->lConf['coinSph']        = $this->getFlexformData('settings', 'coinSph');
+			$this->lConf['coinDelay']      = $this->getFlexformData('settings', 'coinDelay');
+			$this->lConf['coinSDelay']     = $this->getFlexformData('settings', 'coinSDelay');
+			$this->lConf['coinTitleSpeed'] = $this->getFlexformData('settings', 'coinTitleSpeed');
+			$this->lConf['coinOpacity']    = $this->getFlexformData('settings', 'coinOpacity');
+			$this->lConf['coinNavigation'] = $this->getFlexformData('settings', 'coinNavigation');
+			$this->lConf['coinLinks']      = $this->getFlexformData('settings', 'coinLinks');
+			$this->lConf['coinHoverPause'] = $this->getFlexformData('settings', 'coinHoverPause');
+
+			$this->lConf['options'] = $this->getFlexformData('special', 'options');
 
 			// define the key of the element
 			$this->setContentKey("imagecycle-coin_c" . $this->cObj->data['uid']);

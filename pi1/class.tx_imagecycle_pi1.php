@@ -77,33 +77,52 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
+
 		if ($this->cObj->data['list_type'] == $this->extKey.'_pi1') {
 			$this->type = 'normal';
-			// It's a content, al data from flexform
-			// Set the Flexform information
-			$this->pi_initPIflexForm();
-			$piFlexForm = $this->cObj->data['pi_flexform'];
-			foreach ($piFlexForm['data'] as $sheet => $data) {
-				foreach ($data as $lang => $value) {
-					foreach ($value as $key => $val) {
-						if ($key == 'imagesRTE') {
-							if (count($val['el']) > 0) {
-								foreach ($val['el'] as $elKey => $el) {
-									if (is_numeric($elKey)) {
-										$this->lConf[$key][] = array(
-											"image"   => $el['data']['el']['image']['vDEF'],
-											"href"    => $el['data']['el']['href']['vDEF'],
-											"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
-										);
-									}
-								}
-							}
-						} else {
-							$this->lConf[$key] = $this->pi_getFFvalue($piFlexForm, $key, $sheet);
-						}
+
+			// It's a content, all data from flexform
+
+			$this->lConf['mode']          = $this->getFlexformData('general', 'mode');
+			$this->lConf['images']        = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['hrefs']         = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captions']      = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['damimages']     = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
+			$this->lConf['damcategories'] = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+
+			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->lConf['mode'] == 'uploadRTE'));
+			$this->lConf['imagesRTE'] = array();
+			if (isset($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
+				foreach ($imagesRTE['el'] as $elKey => $el) {
+					if (is_numeric($elKey)) {
+						$this->lConf['imagesRTE'][] = array(
+							"image"   => $el['data']['el']['image']['vDEF'],
+							"href"    => $el['data']['el']['href']['vDEF'],
+							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+						);
 					}
 				}
 			}
+
+			$this->lConf['imagewidth']     = $this->getFlexformData('settings', 'imagewidth');
+			$this->lConf['imageheight']    = $this->getFlexformData('settings', 'imageheight');
+			$this->lConf['showcaption']    = $this->getFlexformData('settings', 'showcaption');
+			$this->lConf['showControl']    = $this->getFlexformData('settings', 'showControl');
+			$this->lConf['showPager']      = $this->getFlexformData('settings', 'showPager');
+			$this->lConf['random']         = $this->getFlexformData('settings', 'random');
+			$this->lConf['stoponmousover'] = $this->getFlexformData('settings', 'stoponmousover');
+			$this->lConf['pausedBegin']    = $this->getFlexformData('settings', 'pausedBegin');
+
+			$this->lConf['type']               = $this->getFlexformData('movement', 'type');
+			$this->lConf['transition']         = $this->getFlexformData('movement', 'transition');
+			$this->lConf['transitiondir']      = $this->getFlexformData('movement', 'transitiondir');
+			$this->lConf['transitionduration'] = $this->getFlexformData('movement', 'transitionduration');
+			$this->lConf['displayduration']    = $this->getFlexformData('movement', 'displayduration');
+			$this->lConf['delayduration']      = $this->getFlexformData('movement', 'delayduration');
+			$this->lConf['fastOnEvent']        = $this->getFlexformData('movement', 'fastOnEvent');
+			$this->lConf['sync']               = $this->getFlexformData('movement', 'sync');
+
+			$this->lConf['options'] = $this->getFlexformData('special', 'options');
 
 			// define the key of the element
 			$this->setContentKey("imagecycle_c" . $this->cObj->data['uid']);
@@ -397,7 +416,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	{
 		$damCats = t3lib_div::trimExplode(",", $dam_cat, true);
 		if (count($damCats) < 1) {
-			return;
+			return array();
 		} else {
 			// select subcategories
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
@@ -874,6 +893,42 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$_EXTKEY = $key;
 		include(t3lib_extMgm::extPath($key) . 'ext_emconf.php');
 		return $EM_CONF[$key]['version'];
+	}
+
+	/**
+	 * Extract the requested information from flexform
+	 * @param string $sheet
+	 * @param string $name
+	 * @param boolean $devlog
+	 * @return string
+	 */
+	protected function getFlexformData($sheet='', $name='', $devlog=true)
+	{
+		$this->pi_initPIflexForm();
+		$piFlexForm = $this->cObj->data['pi_flexform'];
+		if (! isset($piFlexForm['data'])) {
+			if ($devlog === true) {
+				t3lib_div::devLog("Flexform Data not set", $this->extKey, 1);
+			}
+			return null;
+		}
+		if (! isset($piFlexForm['data'][$sheet])) {
+			if ($devlog === true) {
+				t3lib_div::devLog("Flexform sheet '{$sheet}' not defined", $this->extKey, 1);
+			}
+			return null;
+		}
+		if (! isset($piFlexForm['data'][$sheet]['lDEF'][$name])) {
+			if ($devlog === true) {
+				t3lib_div::devLog("Flexform Data [{$sheet}][{$name}] does not exist", $this->extKey, 1);
+			}
+			return null;
+		}
+		if (isset($piFlexForm['data'][$sheet]['lDEF'][$name]['vDEF'])) {
+			return $this->pi_getFFvalue($piFlexForm, $name, $sheet);
+		} else {
+			return $piFlexForm['data'][$sheet]['lDEF'][$name];
+		}
 	}
 }
 
