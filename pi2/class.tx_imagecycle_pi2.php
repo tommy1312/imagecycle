@@ -310,6 +310,10 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 					$imageLink = $this->cObj->typolink($imageWrap, $this->conf['coin.'][$this->type.'.']['imageLink.']);
 				} else {
 					$imageLink = $this->cObj->IMAGE($imgConf);
+					if ($this->cObj->data['image_zoom'] != 1) {
+						// if the image_zoom is activated, the caption have to be rendered
+						$imageLink = $this->cObj->stdWrap($imageLink, $this->conf['coin.'][$this->type.'.']['imageWrap.']);
+					}
 				}
 				$lastImageInfo = $GLOBALS['TSFE']->lastImageInfo;
 				if ($lastImageInfo[0] > $maxWidth) {

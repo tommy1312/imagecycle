@@ -156,7 +156,13 @@ $tempColumns = Array (
 	),
 );
 
+
+
+t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Image-Cycle');
+
+
 // tt_content
+t3lib_extMgm::addStaticFile($_EXTKEY,'static/tt_content/', 'Image-Cycle for tt_content');
 t3lib_div::loadTCA('tt_content');
 t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
 $TCA['tt_content']['palettes']['tx_imagecycle'] = array(
@@ -164,7 +170,6 @@ $TCA['tt_content']['palettes']['tx_imagecycle'] = array(
 	'canNotCollapse' => 1,
 );
 t3lib_extMgm::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:imagecycle/locallang_db.xml:tt_content.tx_imagecycle_title;tx_imagecycle', 'textpic,image', 'before:imagecaption');
-
 
 
 
@@ -182,6 +187,12 @@ if (t3lib_extMgm::isLoaded('tt_news')) {
 
 
 
+t3lib_extMgm::addStaticFile($_EXTKEY,'static/coinslider/', 'Coin-Slider');
+t3lib_extMgm::addStaticFile($_EXTKEY,'static/nivoslider/', 'Nivo-Slider');
+t3lib_extMgm::addStaticFile($_EXTKEY,'static/crossslide/', 'Cross-Slide');
+
+
+
 $TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi1'] = 'layout,select_key,pages';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi1']     = 'pi_flexform,image_zoom';
 
@@ -193,13 +204,6 @@ $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi3']     = '
 
 $TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi4'] = 'layout,select_key,pages';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi4']     = 'pi_flexform,image_zoom';
-
-
-
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Image-Cycle');
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/coinslider', 'Coin-Slider');
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/nivoslider', 'Nivo-Slider');
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/crossslide', 'Cross-Slide');
 
 
 
