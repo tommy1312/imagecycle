@@ -1,7 +1,7 @@
 plugin.tx_imagecycle_pi2 {
 
 	# cat=plugin.tx_imagecycle.coinslider/file/010; type=file[js]; label=jQuery Coin-Slider for Cycle: Location of the jQuery Coin-Slider
-	file.jQueryCoin = EXT:imagecycle/res/jquery/js/jquery.coinslider-1.0.min.js
+	file.jQueryCoin = EXT:imagecycle/res/jquery/js/jquery.coinslider-1.0.a.min.js
 
 	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=options[random,swirl,rain,straight]; label=Coin-Slider effect: This will set the default effect for Coin-Slider
 	coinEffect = rain

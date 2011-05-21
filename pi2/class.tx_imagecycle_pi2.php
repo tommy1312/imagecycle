@@ -373,6 +373,8 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 		$options['navigation'] = "navigation: ".($this->conf['coinNavigation'] ? 'true' : 'false');
 		$options['links']      = "links: ".($this->conf['coinLinks'] ? 'true' : 'false');
 		$options['hoverPause'] = "hoverPause: ".($this->conf['coinHoverPause'] ? 'true' : 'false');
+		$options['prev']       = "prev: '".$this->pi_getLL('prev')."'";
+		$options['next']       = "next: '".$this->pi_getLL('next')."'";
 
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
