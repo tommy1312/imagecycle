@@ -143,7 +143,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 			// Override the config with flexform data
 			if ($this->lConf['nivoEffect']) {
-				$this->conf['nivoEffect'] = $this->lConf['nivoEffect'];
+				$this->conf['nivoEffect'] = implode(',', t3lib_div::trimExplode(',', $this->lConf['nivoEffect']));
 			}
 			if ($this->lConf['imagewidth']) {
 				$this->conf['imagewidth'] = $this->lConf['imagewidth'];

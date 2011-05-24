@@ -63,7 +63,7 @@ plugin.tx_imagecycle_pi1 {
 
 
 
-	# cat=plugin.tx_imagecycle.basic/typo/010; type=options[,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all]; label=Type of the movement: Values are none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all
+	# cat=plugin.tx_imagecycle.basic/typo/010; type=string; label=Type of the movement: Possible values are none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all (seperat by comma if multiple)
 	type = fade
 
 	# cat=plugin.tx_imagecycle.basic/typo/020; type=options[,swing,linear,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition: Effect of transition (Swing, Linear, Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)

@@ -47,7 +47,7 @@ class tx_imagecycle_cms_layout
 		} else {
 			switch ($params['row']['list_type']) {
 				case "imagecycle_pi1" : {
-					$type   = "jQuery Cycle (" . ($data['data']['movement']['lDEF']['type']['vDEF'] ? $data['data']['movement']['lDEF']['type']['vDEF'] : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ")";
+					$type   = "jQuery Cycle (" . ($data['data']['movement']['lDEF']['type']['vDEF'] ? implode(', ', t3lib_div::trimExplode(',', $data['data']['movement']['lDEF']['type']['vDEF'])) : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ")";
 					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.($type ? $type : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')).'</strong><br/>');
 					break;
 				}
@@ -57,7 +57,7 @@ class tx_imagecycle_cms_layout
 					break;
 				}
 				case "imagecycle_pi3" : {
-					$type   = "Nivo-Slider (" . ($data['data']['settings']['lDEF']['nivoEffect']['vDEF'] ? $data['data']['settings']['lDEF']['nivoEffect']['vDEF'] : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ")";
+					$type   = "Nivo-Slider (" . ($data['data']['settings']['lDEF']['nivoEffect']['vDEF'] ? implode(', ', t3lib_div::trimExplode(',', $data['data']['settings']['lDEF']['nivoEffect']['vDEF'])) : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ")";
 					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.($type ? $type : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')).'</strong><br/>');
 					break;
 				}

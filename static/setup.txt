@@ -69,7 +69,7 @@ plugin.tx_imagecycle_pi1 {
 					stripHtml = 1
 				}
 				titleText < .altText
-				longdescURL < .altText
+				longdescURL >
 			}
 			pager = TEXT
 			pager {

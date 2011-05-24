@@ -45,7 +45,7 @@ plugin.tx_imagecycle_pi2 {
 					stripHtml = 1
 				}
 				titleText < .altText
-				longdescURL < .altText
+				longdescURL >
 			}
 			// If the link is not image_zoom...
 			imageWrap {

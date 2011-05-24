@@ -156,7 +156,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				$this->conf['imageheight'] = $this->lConf['imageheight'];
 			}
 			if ($this->lConf['type']) {
-				$this->conf['type'] = $this->lConf['type'];
+				$this->conf['type'] = implode(',', t3lib_div::trimExplode(',', $this->lConf['type']));
 			}
 			if ($this->lConf['transition']) {
 				$this->conf['transition'] = $this->lConf['transition'];

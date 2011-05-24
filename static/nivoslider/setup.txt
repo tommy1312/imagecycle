@@ -60,7 +60,7 @@ plugin.tx_imagecycle_pi3 {
 					stripHtml = 1
 				}
 				titleText < .altText
-				longdescURL < .altText
+				longdescURL >
 			}
 			// stdWrap around all images
 			stdWrap {

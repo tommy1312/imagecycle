@@ -302,14 +302,9 @@
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.type</label>
 							<config>
 								<type>select</type>
-								<size>1</size>
-								<maxitems>1</maxitems>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts</numIndex>
-										<numIndex index="1"></numIndex>
-									</numIndex>
-								</items>
+								<size>12</size>
+								<maxitems>100</maxitems>
+								<multiple>1</multiple>
 								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getEffects</itemsProcFunc>
 							</config>
 						</TCEforms>
