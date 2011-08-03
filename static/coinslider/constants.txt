@@ -3,39 +3,49 @@ plugin.tx_imagecycle_pi2 {
 	# cat=plugin.tx_imagecycle.coinslider/file/010; type=file[js]; label=jQuery Coin-Slider for Cycle: Location of the jQuery Coin-Slider
 	file.jQueryCoin = EXT:imagecycle/res/jquery/js/jquery.coinslider-1.0.a.min.js
 
+
+
 	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=options[random,swirl,rain,straight]; label=Coin-Slider effect: This will set the default effect for Coin-Slider
 	coinEffect = rain
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=string; label=Width: Width of slider panel
+	# cat=plugin.tx_imagecycle.coinslider/enable/020; type=string; label=Width: Width of slider panel
 	imagewidth = 200c
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=string; label=Height: Height of slider panel
+	# cat=plugin.tx_imagecycle.coinslider/enable/030; type=string; label=Height: Height of slider panel
 	imageheight = 200c
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=int+; label=Squares per width: Squares per width
+	# cat=plugin.tx_imagecycle.coinslider/enable/040; type=int+; label=Squares per width: Squares per width
 	coinSpw = 5
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=int+; label=Squares per height: Squares per height
+	# cat=plugin.tx_imagecycle.coinslider/enable/050; type=int+; label=Squares per height: Squares per height
 	coinSph = 5
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=int; label=Image delay: Delay between images in ms
+	# cat=plugin.tx_imagecycle.coinslider/enable/060; type=int; label=Image delay: Delay between images in ms
 	coinDelay = 3000
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=int; label=Coin delay: Delay between squares in ms
+	# cat=plugin.tx_imagecycle.coinslider/enable/070; type=int; label=Coin delay: Delay between squares in ms
 	coinSDelay = 30
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=string; label=Opacity: Opacity of title and navigation
+	# cat=plugin.tx_imagecycle.coinslider/enable/080; type=string; label=Opacity: Opacity of title and navigation
 	coinOpacity = 0.7
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=int; label=Title speed: Speed of title appereance in ms
+	# cat=plugin.tx_imagecycle.coinslider/enable/090; type=int; label=Title speed: Speed of title appereance in ms
 	coinTitleSpeed = 500
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=boolean; label=Navigation: Show the prev, next and buttons
+	# cat=plugin.tx_imagecycle.coinslider/enable/100; type=boolean; label=Navigation: Show the prev, next and buttons
 	coinNavigation = 1
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=boolean; label=Images as links: Show images as links
+	# cat=plugin.tx_imagecycle.coinslider/enable/110; type=boolean; label=Images as links: Show images as links
 	coinLinks = 1
 
-	# cat=plugin.tx_imagecycle.coinslider/enable/010; type=boolean; label=pause on hover: Slide will stop on mouseover
+	# cat=plugin.tx_imagecycle.coinslider/enable/120; type=boolean; label=pause on hover: Slide will stop on mouseover
 	coinHoverPause = 1
+
+
+
+	# cat=plugin.tx_imagecycle.coinslider/typo/010; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
+	options = 
+
+	# cat=plugin.tx_imagecycle.coinslider/typo/020; type=boolean; label=Override all options: If set, all options will be override
+	optionsOverride = 0
 }

@@ -26,6 +26,7 @@ top left      | bottom right 1.5x
 100% 50%      | 30% 50% 1.5x
 	)
 	options = {$plugin.tx_imagecycle_pi4.options}
+	optionsOverride = {$plugin.tx_imagecycle_pi4.optionsOverride}
 
 	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
 	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}

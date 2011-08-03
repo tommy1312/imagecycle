@@ -104,6 +104,8 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$this->lConf['imagewidth']           = $this->getFlexformData('settings', 'imagewidth');
 			$this->lConf['imageheight']          = $this->getFlexformData('settings', 'imageheight');
 			$this->lConf['nivoSlices']           = $this->getFlexformData('settings', 'nivoSlices');
+			$this->lConf['nivoBoxCols']          = $this->getFlexformData('settings', 'nivoBoxCols');
+			$this->lConf['nivoBoxRows']          = $this->getFlexformData('settings', 'nivoBoxRows');
 			$this->lConf['nivoAnimSpeed']        = $this->getFlexformData('settings', 'nivoAnimSpeed');
 			$this->lConf['nivoPauseTime']        = $this->getFlexformData('settings', 'nivoPauseTime');
 			$this->lConf['nivoStartSlide']       = $this->getFlexformData('settings', 'nivoStartSlide');
@@ -115,7 +117,8 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$this->lConf['nivoManualAdvance']    = $this->getFlexformData('settings', 'nivoManualAdvance');
 			$this->lConf['nivoCaptionOpacity']   = $this->getFlexformData('settings', 'nivoCaptionOpacity');
 
-			$this->lConf['options'] = $this->getFlexformData('special', 'options');
+			$this->lConf['options']         = $this->getFlexformData('special', 'options');
+			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
 			$this->setContentKey("imagecycle-nivo_c" . $this->cObj->data['uid']);
@@ -153,6 +156,12 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 			if ($this->lConf['nivoSlices']) {
 				$this->conf['nivoSlices'] = $this->lConf['nivoSlices'];
+			}
+			if ($this->lConf['nivoBoxCols']) {
+				$this->conf['nivoBoxCols'] = $this->lConf['nivoBoxCols'];
+			}
+			if ($this->lConf['nivoBoxRows']) {
+				$this->conf['nivoBoxRows'] = $this->lConf['nivoBoxRows'];
 			}
 			if ($this->lConf['nivoAnimSpeed']) {
 				$this->conf['nivoAnimSpeed'] = $this->lConf['nivoAnimSpeed'];
@@ -357,6 +366,12 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		if ($this->conf['nivoSlices'] > 0) {
 			$options['slices'] = "slices: {$this->conf['nivoSlices']}";
 		}
+		if ($this->conf['nivoBoxCols'] > 0) {
+			$options['boxCols'] = "boxCols: {$this->conf['nivoBoxCols']}";
+		}
+		if ($this->conf['nivoBoxRows'] > 0) {
+			$options['boxRows'] = "boxRows: {$this->conf['nivoBoxRows']}";
+		}
 		if ($this->conf['nivoAnimSpeed'] > 0) {
 			$options['animSpeed'] = "animSpeed: {$this->conf['nivoAnimSpeed']}";
 		}
@@ -378,7 +393,11 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
-			$options = array($this->conf['options']);
+			if ($this->conf['optionsOverride']) {
+				$options = array($this->conf['options']);
+			} else {
+				$options['options'] = $this->conf['options'];
+			}
 		}
 
 		// define the js file

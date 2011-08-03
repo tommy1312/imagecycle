@@ -113,7 +113,8 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			$this->lConf['coinLinks']      = $this->getFlexformData('settings', 'coinLinks');
 			$this->lConf['coinHoverPause'] = $this->getFlexformData('settings', 'coinHoverPause');
 
-			$this->lConf['options'] = $this->getFlexformData('special', 'options');
+			$this->lConf['options']         = $this->getFlexformData('special', 'options');
+			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
 			$this->setContentKey("imagecycle-coin_c" . $this->cObj->data['uid']);
@@ -378,7 +379,11 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
-			$options = array($this->conf['options']);
+			if ($this->conf['optionsOverride']) {
+				$options = array($this->conf['options']);
+			} else {
+				$options['options'] = $this->conf['options'];
+			}
 		}
 
 		// define the js file

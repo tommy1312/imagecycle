@@ -19,7 +19,7 @@
 	margin: 0;
 	padding: 0;
 }
-.imagecycle-controller-hidden { 
+.imagecycle-controller-hidden {
 	opacity: 0;
 }
 .imagecycle-controller-visible {

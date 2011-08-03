@@ -33,6 +33,7 @@ plugin.tx_imagecycle_pi1 {
 	showControl = {$plugin.tx_imagecycle_pi1.showControl}
 	showPager = {$plugin.tx_imagecycle_pi1.showPager}
 	options = {$plugin.tx_imagecycle_pi1.options}
+	optionsOverride = {$plugin.tx_imagecycle_pi1.optionsOverride}
 
 	showcaption = {$plugin.tx_imagecycle_pi1.showcaption}
 	captionAnimate = {$plugin.tx_imagecycle_pi1.captionAnimate}

@@ -59,6 +59,7 @@
 			<label index="tt_content.pi_flexform.sync">Simultaneously animation</label>
 			<label index="tt_content.pi_flexform.sheet_special">Special</label>
 			<label index="tt_content.pi_flexform.options">Enter own options (see http://malsup.com/jquery/cycle/)</label>
+			<label index="tt_content.pi_flexform.optionsOverride">Override all options</label>
 
 			<label index="tt_content.pi_flexform.coinEffect">Coin effect</label>
 			<label index="tt_content.pi_flexform.coinSpw">Squares per width</label>
@@ -74,6 +75,8 @@
 
 			<label index="tt_content.pi_flexform.nivoEffect">Nivo effect</label>
 			<label index="tt_content.pi_flexform.nivoSlices">Count of slices</label>
+			<label index="tt_content.pi_flexform.nivoBoxCols">Count of box cols</label>
+			<label index="tt_content.pi_flexform.nivoBoxRows">Count of box rows</label>
 			<label index="tt_content.pi_flexform.nivoAnimSpeed">Speed of the animation in ms</label>
 			<label index="tt_content.pi_flexform.nivoPauseTime">Delay in ms</label>
 			<label index="tt_content.pi_flexform.nivoStartSlide">Set starting Slide</label>
