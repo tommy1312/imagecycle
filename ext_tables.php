@@ -77,7 +77,7 @@ $tempColumns['tx_imagecycle_images'] = array (
 		'show_thumbs' => 1,
 		'size' => 6,
 		'minitems' => 0,
-		'maxitems' => 25,
+		'maxitems' => 1000,
 	)
 );
 $tempColumns['tx_imagecycle_hrefs'] = array (

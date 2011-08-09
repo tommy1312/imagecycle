@@ -51,8 +51,8 @@ plugin.tx_imagecycle_pi3 {
 					typolink {
 						parameter.data = register:href
 						title {
-							data = register:caption
-							stripHtml = 1
+							wrap = #htmlcaption-|
+							data = register:caption_key
 						}
 						target = {$plugin.tx_imagecycle_pi1.linkTarget}
 						extTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
@@ -62,12 +62,19 @@ plugin.tx_imagecycle_pi3 {
 					data = register:caption
 					stripHtml = 1
 				}
-				titleText < .altText
+				titleText {
+					wrap = #htmlcaption-|
+					data = register:caption_key
+				}
 				longdescURL >
 			}
 			// stdWrap around all images
 			stdWrap {
 				dataWrap = <div class="tx-imagecycle-pi3"><div id="{register:key}"> | </div></div>
+				required = 1
+			}
+			captionWrap {
+				dataWrap = <div id="htmlcaption-{register:caption_key}" class="nivo-html-caption"> | </div>
 				required = 1
 			}
 		}

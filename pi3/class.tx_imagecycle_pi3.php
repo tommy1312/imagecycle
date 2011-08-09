@@ -302,6 +302,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		// We have to build the images first to get the maximum width and height
 		$returnString = null;
 		$images = null;
+		$captions = null;
 		$maxWidth = 0;
 		$maxHeight = 0;
 		$GLOBALS['TSFE']->register['key'] = $this->getContentKey();
@@ -312,6 +313,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		$GLOBALS['TSFE']->register['IMAGE_COUNT'] = count($data);
 		if (count($data) > 0) {
 			foreach ($data as $key => $item) {
+				$GLOBALS['TSFE']->register['caption_key'] = $this->getContentKey() . "-" .$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'];
 				$image = null;
 				$imgConf = $this->conf['nivo.'][$this->type.'.']['image.'];
 				$totalImagePath = $dir . $item['image'];
@@ -331,10 +333,12 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 					$maxHeight = $lastImageInfo[1];
 				}
 				$images .= $image;
+				$captions .= $this->cObj->stdWrap($item['caption'], $this->conf['nivo.'][$this->type.'.']['captionWrap.']);
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] ++;
 			}
 			// the stdWrap
 			$returnString = $this->cObj->stdWrap($images, $this->conf['nivo.'][$this->type.'.']['stdWrap.']);
+			$returnString .= $captions;
 		}
 
 		// The template for JS
