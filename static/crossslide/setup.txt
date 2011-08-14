@@ -39,7 +39,11 @@ top left      | bottom right 1.5x
 				file.height.data = register:imageheight
 			}
 			stdWrap {
-				dataWrap = <div class="tx-imagecycle-pi4"><div id="{register:key}"> | </div><div class="caption"></div></div>
+				dataWrap = <div class="tx-imagecycle-pi4"><div class="tx-imagecycle-pi4-images" id="{register:key}"> | </div><div class="caption"></div></div>
+				required = 1
+			}
+			noscriptWrap {
+				dataWrap = <noscript><div class="tx-imagecycle-pi4"><div class="tx-imagecycle-pi4-images" id="{register:key}"> | </div></div></noscript>
 				required = 1
 			}
 		}
@@ -48,6 +52,12 @@ top left      | bottom right 1.5x
 	}
 
 	_CSS_DEFAULT_STYLE (
+.tx-imagecycle-pi4-images {
+	display: none;
+}
+noscript .tx-imagecycle-pi4-images {
+	display: block;
+}
 .tx-imagecycle-pi4 .caption {
 	position: relative;
 	margin-top: -75px;

@@ -276,6 +276,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 		$maxWidth = 0;
 		$maxHeight = 0;
 		$factor = 1;
+		$no_script = null;
 		$GLOBALS['TSFE']->register['key'] = $this->getContentKey();
 		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'] * $factor;
 		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'] * $factor;
@@ -299,6 +300,10 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 				if (intval($lastImageInfo[1] / $factor) > $maxHeight) {
 					$maxHeight = intval($lastImageInfo[1] / $factor);
 				}
+				// Add the noscript wrap to the firs image
+				if ($key == 0) {
+					$no_script = $this->cObj->stdWrap($image, $this->conf['cross.'][$this->type.'.']['noscriptWrap.']);
+				}
 				$images[] = array(
 					'src'  => $lastImageInfo[3],
 					'alt'  => $item['caption'],
@@ -309,6 +314,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] ++;
 			}
 			$returnString = $this->cObj->stdWrap(' ', $this->conf['cross.'][$this->type.'.']['stdWrap.']);
+			$returnString .= $no_script;
 			$imagesString = str_replace("\/", "/", json_encode($images));
 		}
 

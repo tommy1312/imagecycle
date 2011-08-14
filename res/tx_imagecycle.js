@@ -72,7 +72,7 @@ jQuery('####KEY###_pager a').removeClass('activeSlide');jQuery('####KEY###_pager
 
 <!-- ###TEMPLATE_COINSLIDER_JS### begin -->
 jQuery(document).ready(function() {
-	jQuery('####KEY###').coinslider({
+	jQuery('####KEY###').show().coinslider({
 		###OPTIONS###
 	});
 });
@@ -83,7 +83,7 @@ jQuery(document).ready(function() {
 
 <!-- ###TEMPLATE_NIVOSLIDER_JS### begin -->
 jQuery(document).ready(function() {
-	jQuery('####KEY###').nivoSlider({
+	jQuery('####KEY###').show().nivoSlider({
 		###OPTIONS###
 	});
 });
@@ -94,7 +94,7 @@ jQuery(document).ready(function() {
 
 <!-- ###TEMPLATE_CROSSSLIDER_JS### begin -->
 jQuery(document).ready(function() {
-	jQuery('####KEY###').crossSlide({
+	jQuery('####KEY###').show().crossSlide({
 		###OPTIONS###
 	}, ###IMAGES###, function(idx, img, idxOut, imgOut) {
 		var $caption = jQuery('.tx-imagecycle-pi4 .caption');

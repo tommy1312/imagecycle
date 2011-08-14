@@ -9,6 +9,9 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/enable/030; type=boolean; label=Random: Show the images random
 	random = 0
 
+	# cat=plugin.tx_imagecycle.basic/enable/035; type=boolean; label=Set cleartype fixing: Set to true to disable extra cleartype fixing
+	cleartypeNoBg = 0
+
 	# cat=plugin.tx_imagecycle.basic/enable/040; type=boolean; label=Stop on mouseover: Stop the slideshow when mouse over
 	stopOnMousover = 0
 
@@ -45,7 +48,7 @@ plugin.tx_imagecycle_pi1 {
 	file.jQueryEasing = EXT:imagecycle/res/jquery/js/jquery.easing-1.3.js
 
 	# cat=plugin.tx_imagecycle.basic/file/030; type=file[js]; label=jQuery Cycle: Location of the jQuery Cycle
-	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all-2.9994.min.js
+	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all-2.9995.min.js
 
 	# cat=plugin.tx_imagecycle.basic/file/040; type=file[js]; label=JS-Template file: Location of the used template for JS
 	file.templateFileJS = EXT:imagecycle/res/tx_imagecycle.js
@@ -98,7 +101,6 @@ plugin.tx_imagecycle_pi1 {
 
 	# cat=plugin.tx_imagecycle.basic/typo/120; type=boolean; label=Override all options: If set, all options will be override
 	optionsOverride = 0
-
 
 
 

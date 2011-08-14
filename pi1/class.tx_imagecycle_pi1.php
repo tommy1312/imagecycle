@@ -110,6 +110,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$this->lConf['showControl']    = $this->getFlexformData('settings', 'showControl');
 			$this->lConf['showPager']      = $this->getFlexformData('settings', 'showPager');
 			$this->lConf['random']         = $this->getFlexformData('settings', 'random');
+			$this->lConf['cleartypeNoBg']  = $this->getFlexformData('settings', 'cleartypeNoBg');
 			$this->lConf['stoponmousover'] = $this->getFlexformData('settings', 'stoponmousover');
 			$this->lConf['pausedBegin']    = $this->getFlexformData('settings', 'pausedBegin');
 
@@ -189,6 +190,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			}
 			if ($this->lConf['random'] < 2) {
 				$this->conf['random'] = $this->lConf['random'];
+			}
+			if ($this->lConf['cleartypeNoBg'] < 2) {
+				$this->conf['cleartypeNoBg'] = $this->lConf['cleartypeNoBg'];
 			}
 			if ($this->lConf['stoponmousover'] < 2) {
 				$this->conf['stopOnMousover'] = $this->lConf['stoponmousover'];
@@ -508,6 +512,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		}
 		$options['sync'] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
 		$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
+		$options['cleartypeNoBg'] = "cleartypeNoBg: ".($this->conf['cleartypeNoBg'] ? 'true' : 'false');
 
 		$captionTag = $this->cObj->stdWrap($this->conf['cycle.'][$this->type.'.']['captionTag'], $this->conf['cycle.'][$this->type.'.']['captionTag.']);
 		$markerArray["CAPTION_TAG"] = $captionTag;
@@ -655,6 +660,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$return_string = null;
 		$images = null;
 		$pager = null;
+		$no_script= null;
 		$GLOBALS['TSFE']->register['key'] = $this->getContentKey();
 		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
 		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
@@ -677,6 +683,10 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				if ($item['caption'] && $this->conf['showcaption']) {
 					$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['captionWrap.']);
 				}
+				// Add the noscript wrap to the firs image
+				if ($key == 0) {
+					$no_script = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['noscriptWrap.']);
+				}
 				$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['itemWrap.']);
 				$images .= $image;
 				// create the pager
@@ -689,6 +699,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			// the stdWrap
 			$images = $this->cObj->stdWrap($images, $this->conf['cycle.'][$this->type.'.']['stdWrap.']);
 			$return_string = $this->cObj->substituteMarkerArray($images, $markerArray, '###|###', 0);
+			// add the noscript
+			$return_string .= $no_script;
 		}
 		return $return_string;
 	}
@@ -765,7 +777,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				// Add script only once
 				$hash = md5($temp_js);
 				if ($this->conf['jsInline']) {
-					$GLOBALS['TSFE']->inlineJS[$hash] = $temp_css;
+					$GLOBALS['TSFE']->inlineJS[$hash] = $temp_js;
 				} elseif (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
 					if ($this->conf['jsInFooter'] || $allJsInFooter) {
 						$pagerender->addJsFooterInlineCode($hash, $temp_js, $this->conf['jsMinify']);

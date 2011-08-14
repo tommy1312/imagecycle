@@ -65,7 +65,11 @@ plugin.tx_imagecycle_pi2 {
 			}
 			// stdWrap around all images
 			stdWrap {
-				dataWrap = <div class="tx-imagecycle-pi2"><div id="{register:key}"> | </div></div>
+				dataWrap = <div class="tx-imagecycle-pi2"><div class="tx-imagecycle-pi2-images" id="{register:key}"> | </div></div>
+				required = 1
+			}
+			noscriptWrap {
+				dataWrap = <noscript><div class="tx-imagecycle-pi2"><div class="tx-imagecycle-pi2-images" id="{register:key}"> | </div></div></noscript>
 				required = 1
 			}
 		}
@@ -73,6 +77,8 @@ plugin.tx_imagecycle_pi2 {
 		content < .normal
 	}
 	_CSS_DEFAULT_STYLE (
+.tx-imagecycle-pi2-images { display: none; }
+noscript .tx-imagecycle-pi2-images { display: block; }
 .coin-slider { overflow: hidden; zoom: 1; position: relative; }
 .coin-slider a { text-decoration: none; outline: none; border: none; }
 .cs-buttons { font-size: 0px; padding: 10px; float: left; }

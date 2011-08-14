@@ -305,6 +305,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		$captions = null;
 		$maxWidth = 0;
 		$maxHeight = 0;
+		$no_script = null;
 		$GLOBALS['TSFE']->register['key'] = $this->getContentKey();
 		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
 		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
@@ -332,6 +333,10 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 				if ($lastImageInfo[1] > $maxHeight) {
 					$maxHeight = $lastImageInfo[1];
 				}
+				// Add the noscript wrap to the firs image
+				if ($key == 0) {
+					$no_script = $this->cObj->stdWrap($image, $this->conf['nivo.'][$this->type.'.']['noscriptWrap.']);
+				}
 				$images .= $image;
 				$captions .= $this->cObj->stdWrap($item['caption'], $this->conf['nivo.'][$this->type.'.']['captionWrap.']);
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] ++;
@@ -339,6 +344,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			// the stdWrap
 			$returnString = $this->cObj->stdWrap($images, $this->conf['nivo.'][$this->type.'.']['stdWrap.']);
 			$returnString .= $captions;
+			$returnString .= $no_script;
 		}
 
 		// The template for JS

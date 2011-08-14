@@ -3,6 +3,7 @@ plugin.tx_imagecycle_pi1 {
 	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
 	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
 	random = {$plugin.tx_imagecycle_pi1.random}
+	cleartypeNoBg = {$plugin.tx_imagecycle_pi1.cleartypeNoBg}
 	stopOnMousover = {$plugin.tx_imagecycle_pi1.stopOnMousover}
 	pausedBegin = {$plugin.tx_imagecycle_pi1.pausedBegin}
 	disableRecursion = {$plugin.tx_imagecycle_pi1.disableRecursion}
@@ -94,6 +95,10 @@ plugin.tx_imagecycle_pi1 {
 				wrap = <li> | </li>
 				required = 1
 			}
+			noscriptWrap {
+				dataWrap = <noscript><ul class="tx-imagecycle-pi1-images"><li> | </li></ul></noscript>
+				required = 1
+			}
 		}
 
 		header < .normal
@@ -128,6 +133,10 @@ plugin.tx_imagecycle_pi1 {
 			captionTag = div
 			itemWrap {
 				wrap = <li> | </li>
+				required = 1
+			}
+			noscriptWrap {
+				dataWrap = <noscript><ul class="tx-imagecycle-pi1-images"><li> | </li></ul></noscript>
 				required = 1
 			}
 		}
@@ -184,6 +193,17 @@ plugin.tx_imagecycle_pi1 {
 }
 .tx-imagecycle-pi1-pager a.activeSlide {
 	background: #ea0;
+}
+/* noscript will be displayed */
+noscript .tx-imagecycle-pi1-images {
+	display: block;
+}
+noscript .tx-imagecycle-pi1-images li {
+	float: left;
+	overflow: hidden;
+}
+noscript .tx-imagecycle-pi1-images .imagecycle-caption {
+	display: block;
 }
 	)
 }

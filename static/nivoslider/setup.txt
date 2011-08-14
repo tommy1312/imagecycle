@@ -68,13 +68,16 @@ plugin.tx_imagecycle_pi3 {
 				}
 				longdescURL >
 			}
-			// stdWrap around all images
-			stdWrap {
-				dataWrap = <div class="tx-imagecycle-pi3"><div id="{register:key}"> | </div></div>
-				required = 1
-			}
 			captionWrap {
 				dataWrap = <div id="htmlcaption-{register:caption_key}" class="nivo-html-caption"> | </div>
+				required = 1
+			}
+			stdWrap {
+				dataWrap = <div class="tx-imagecycle-pi3"><div class="tx-imagecycle-pi3-images" id="{register:key}"> | </div></div>
+				required = 1
+			}
+			noscriptWrap {
+				dataWrap = <noscript><div class="tx-imagecycle-pi3"><div class="tx-imagecycle-pi3-images" id="{register:key}"> | </div></div></noscript>
 				required = 1
 			}
 		}
@@ -92,6 +95,12 @@ plugin.tx_imagecycle_pi3 {
  * 
  * March 2010
  */
+.tx-imagecycle-pi3-images {
+	display: none;
+}
+noscript .tx-imagecycle-pi3-images {
+	display: block;
+}
 /* The Nivo Slider styles */
 .nivoSlider {
 	position:relative;
