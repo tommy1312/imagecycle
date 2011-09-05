@@ -81,6 +81,7 @@
 			<label index="tt_content.pi_flexform.nivoAnimSpeed">Speed of the animation in ms</label>
 			<label index="tt_content.pi_flexform.nivoPauseTime">Delay in ms</label>
 			<label index="tt_content.pi_flexform.nivoStartSlide">Set starting Slide</label>
+			<label index="tt_content.pi_flexform.nivoTheme">Theme to use</label>
 			<label index="tt_content.pi_flexform.nivoDirectionNav">Show navigation</label>
 			<label index="tt_content.pi_flexform.nivoDirectionNavHide">Show navigation on hover</label>
 			<label index="tt_content.pi_flexform.nivoControlNav">Show control</label>

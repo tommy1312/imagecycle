@@ -1,0 +1,1 @@
+LLL:EXT:imagecycle/locallang.xml:pi3_theme_orman

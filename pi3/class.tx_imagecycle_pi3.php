@@ -101,6 +101,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 
 			$this->lConf['nivoEffect']           = $this->getFlexformData('settings', 'nivoEffect');
+			$this->lConf['nivoTheme']            = $this->getFlexformData('settings', 'nivoTheme');
 			$this->lConf['imagewidth']           = $this->getFlexformData('settings', 'imagewidth');
 			$this->lConf['imageheight']          = $this->getFlexformData('settings', 'imageheight');
 			$this->lConf['nivoSlices']           = $this->getFlexformData('settings', 'nivoSlices');
@@ -147,6 +148,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			// Override the config with flexform data
 			if ($this->lConf['nivoEffect']) {
 				$this->conf['nivoEffect'] = implode(',', t3lib_div::trimExplode(',', $this->lConf['nivoEffect']));
+			}
+			if ($this->lConf['nivoTheme']) {
+				$this->conf['nivoTheme'] = $this->lConf['nivoTheme'];
 			}
 			if ($this->lConf['imagewidth']) {
 				$this->conf['imagewidth'] = $this->lConf['imagewidth'];
@@ -299,6 +303,29 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$this->conf['imageheight'] = "200c";
 		}
 
+		// define the css file
+		$this->addCssFile($this->conf['cssFileNivo']);
+
+		// define the style
+		$themeClass = 'theme-default';
+		if ($this->conf['nivoTheme']) {
+			$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+			if (! is_dir(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder']))) {
+				// if the defined folder does not exist, define the default folder
+				t3lib_div::devLog('Path \''.$confArr['nivoThemeFolder'].'\' does not exist', 'imagecycle', 1);
+				$confArr['nivoThemeFolder'] = 'EXT:imagecycle/res/css/nivoslider/';
+			}
+			if (! is_dir(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $this->conf['nivoTheme']))) {
+				// if the skin does not exist, the default skin will be selected
+				t3lib_div::devLog('Skin \''.$this->conf['nivoTheme'].'\' does not exist', 'imagecycle', 1);
+				$this->addCssFile('EXT:imagecycle/res/css/nivoslider/default/style.css');
+			} else {
+				$this->addCssFile($confArr['nivoThemeFolder'] . $this->conf['nivoTheme'] . '/style.css');
+			}
+			$themeClass = 'theme-'.$this->conf['nivoTheme'];
+		}
+		$GLOBALS['TSFE']->register['themeclass'] = $themeClass;
+
 		// We have to build the images first to get the maximum width and height
 		$returnString = null;
 		$images = null;
@@ -412,9 +439,6 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 
 		// define the js file
 		$this->addJsFile($this->conf['jQueryNivo']);
-
-		// define the css file
-		$this->addCssFile($this->conf['cssFileNivo']);
 
 		// get the Template of the Javascript
 		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_NIVOSLIDER_JS###"))) {

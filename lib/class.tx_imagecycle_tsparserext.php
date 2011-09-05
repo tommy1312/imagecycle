@@ -35,6 +35,37 @@
 class tx_imagecycle_tsparserext
 {
 	/**
+	* Return the dropdown with all skins for constant editor
+	*
+	* @param array $params
+	* @param object $tsObj
+	*/
+	public function getThemesNivo(&$params, &$tsObj)
+	{
+		$itemsProcFunc = t3lib_div::makeInstance('tx_imagecycle_itemsProcFunc');
+		$config = $itemsProcFunc->getThemesNivo(array('items'=> array()), array());
+		$items = $config['items'];
+
+		$raname = substr(md5($params['fieldName']), 0, 10);
+		$aname = '\'' . $raname . '\'';
+		$fN = $params['fieldName'];
+
+		$p_field = '';
+		foreach ($items as $var) {
+			$label = $var[0];
+			$value = isset($var[1]) ? $var[1] : $var[0];
+			$sel = '';
+			if ($value == $params['value']) {
+				$sel = ' selected';
+			}
+			$p_field .= '<option value="' . htmlspecialchars($value) . '"' . $sel . '>' . $GLOBALS['LANG']->sL($label) . '</option>';
+		}
+		$p_field = '<select id="' . $fN . '" name="' . $fN . '" onChange="uFormUrl(' . $aname . ')">' . $p_field . '</select>';
+	
+		return $p_field;
+	}
+
+	/**
 	 * Shows the update Message
 	 *
 	 * @return	string
@@ -92,6 +123,7 @@ class tx_imagecycle_tsparserext
 		$confDefault = array(
 			'effects',
 			'effectsCoin',
+			'nivoThemeFolder',
 			'effectsNivo',
 			'useSelectInsteadCheckbox',
 		);

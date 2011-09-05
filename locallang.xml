@@ -14,6 +14,9 @@
 
 			<label index="pi3_title">Nivo-Slider</label>
 			<label index="pi3_plus_wiz_description">Add a Nivo-Slider to your content</label>
+			<label index="pi3_theme_info">Theme information</label>
+			<label index="pi3_theme_orman">Note: Images used in the slider for the Orman Theme should have the dimensions 568px x 268px</label>
+			<label index="pi3_theme_pascal">Note: Images used in the slider for the Pascal Theme should have the dimensions 630px x 235px and works best with 4 images</label>
 
 			<label index="pi4_title">Cross-Slider</label>
 			<label index="pi4_plus_wiz_description">Add a Cross-Slider to your content</label>

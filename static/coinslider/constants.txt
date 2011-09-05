@@ -43,7 +43,7 @@ plugin.tx_imagecycle_pi2 {
 
 
 
-	# cat=plugin.tx_imagecycle.coinslider/typo/010; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
+	# cat=plugin.tx_imagecycle.coinslider/typo/010; type=string; label=Own Options: Enter own options (see http://workshop.rs/projects/coin-slider/)
 	options = 
 
 	# cat=plugin.tx_imagecycle.coinslider/typo/020; type=boolean; label=Override all options: If set, all options will be override

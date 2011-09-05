@@ -37,7 +37,7 @@ class tx_imagecycle_itemsProcFunc
 	 * Get defined Effects for dropdown
 	 * @return array
 	 */
-	function getEffects($config, $item)
+	public function getEffects($config, $item)
 	{
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
 		$availableEffects = t3lib_div::trimExplode(",", $confArr['effects'], true);
@@ -72,7 +72,7 @@ class tx_imagecycle_itemsProcFunc
 	 * Get defined Effects for dropdown
 	 * @return array
 	 */
-	function getEffectsCoin($config, $item)
+	public function getEffectsCoin($config, $item)
 	{
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
 		$availableEffects = t3lib_div::trimExplode(",", $confArr['effectsCoin'], true);
@@ -107,7 +107,7 @@ class tx_imagecycle_itemsProcFunc
 	 * Get defined Effects for dropdown
 	 * @return array
 	 */
-	function getEffectsNivo($config, $item)
+	public function getEffectsNivo($config, $item)
 	{
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
 		$availableEffects = t3lib_div::trimExplode(",", $confArr['effectsNivo'], true);
@@ -139,10 +139,65 @@ class tx_imagecycle_itemsProcFunc
 	}
 
 	/**
+	* Get defined Skin for dropdown
+	* @return array
+	*/
+	public function getThemesNivo($config, $item)
+	{
+		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+		if (! is_dir(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder']))) {
+			// if the defined folder does not exist, define the default folder
+			t3lib_div::devLog('Path \''.$confArr['nivoThemeFolder'].'\' does not exist', 'imagecycle', 1);
+			$confArr['nivoThemeFolder'] = "EXT:imagecycle/res/css/nivoslider/";
+		}
+
+		// get the selected item
+		$configPi = array();
+		if (! is_array($config['row']['pi_flexform']) && $config['row']['pi_flexform'])	{
+			$configPi = t3lib_div::xml2array($config['row']['pi_flexform']);
+			if (! is_array($configPi)) {
+				$configPi = array();
+			}
+		}
+		$theme = 'default';
+		if (isset($configPi['data']['settings']['lDEF']['nivoTheme']['vDEF'])) {
+			$theme = $configPi['data']['settings']['lDEF']['nivoTheme']['vDEF'];
+		}
+
+		// 
+		$info_text = NULL;
+		if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
+			if (file_exists(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt'))) {
+				$info_text = $GLOBALS['LANG']->sL(file_get_contents(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt')));
+				$msg = t3lib_div::makeInstance('t3lib_FlashMessage', $info_text, $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:pi3_theme_info'), t3lib_FlashMessage::INFO);
+				t3lib_FlashMessageQueue::addMessage($msg);
+			}
+		}
+
+		$items = t3lib_div::get_dirs(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder']));
+		if (count($items) > 0) {
+			$optionList = array();
+			foreach ($items as $key => $item) {
+				$item = trim($item);
+				if (! preg_match('/^\./', $item)) {
+					if (file_exists(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder']) . $item . '/style.css')) {
+						$optionList[] = array(
+							$item,
+							$item,
+						);
+					}
+				}
+			}
+			$config['items'] = array_merge($config['items'], $optionList);
+		}
+		return $config;
+	}
+
+	/**
 	 * Get all modes for image selection
 	 * @return array
 	 */
-	function getModes($config, $item)
+	public function getModes($config, $item)
 	{
 		$optionList = array();
 		$optionList[] = array(

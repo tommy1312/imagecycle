@@ -14,6 +14,7 @@ plugin.tx_imagecycle_pi3 {
 	templateFileJS = {$plugin.tx_imagecycle_pi1.file.templateFileJS}
 
 	nivoEffect = {$plugin.tx_imagecycle_pi3.nivoEffect}
+	nivoTheme = {$plugin.tx_imagecycle_pi3.nivoTheme}
 	imagewidth = {$plugin.tx_imagecycle_pi3.imagewidth}
 	imageheight = {$plugin.tx_imagecycle_pi3.imageheight}
 	nivoSlices = {$plugin.tx_imagecycle_pi3.nivoSlices}
@@ -73,11 +74,11 @@ plugin.tx_imagecycle_pi3 {
 				required = 1
 			}
 			stdWrap {
-				dataWrap = <div class="tx-imagecycle-pi3"><div class="tx-imagecycle-pi3-images" id="{register:key}"> | </div></div>
+				dataWrap = <div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images" id="{register:key}"> | </div></div>
 				required = 1
 			}
 			noscriptWrap {
-				dataWrap = <noscript><div class="tx-imagecycle-pi3"><div class="tx-imagecycle-pi3-images" id="{register:key}"> | </div></div></noscript>
+				dataWrap = <noscript><div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images" id="{register:key}"> | </div></div></noscript>
 				required = 1
 			}
 		}
