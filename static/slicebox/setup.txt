@@ -1,0 +1,67 @@
+plugin.tx_imagecycle_pi5 {
+
+	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
+	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
+	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
+	jsInFooter = {$plugin.tx_imagecycle_pi1.jsInFooter}
+	jsMinify = {$plugin.tx_imagecycle_pi1.jsMinify}
+	jsInline = {$plugin.tx_imagecycle_pi1.jsInline}
+	cssMinify = {$plugin.tx_imagecycle_pi1.cssMinify}
+
+	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
+	jQueryEasing = {$plugin.tx_imagecycle_pi1.file.jQueryEasing}
+	jQuerySlice = {$plugin.tx_imagecycle_pi5.file.jQuerySlice}
+	modernizer = {$plugin.tx_imagecycle_pi5.file.modernizer}
+	cssFileSlice = {$plugin.tx_imagecycle_pi5.file.cssFileSlice}
+	templateFileJS = {$plugin.tx_imagecycle_pi1.file.templateFileJS}
+
+	imagewidth = {$plugin.tx_imagecycle_pi5.imagewidth}
+	imageheight = {$plugin.tx_imagecycle_pi5.imageheight}
+
+	sliceOrientation = {$plugin.tx_imagecycle_pi5.sliceOrientation}
+	slicePerspective = {$plugin.tx_imagecycle_pi5.slicePerspective}
+	sliceSlicesCount = {$plugin.tx_imagecycle_pi5.sliceSlicesCount}
+	sliceDisperseFactor = {$plugin.tx_imagecycle_pi5.sliceDisperseFactor}
+	sliceColorHiddenSides = {$plugin.tx_imagecycle_pi5.sliceColorHiddenSides}
+	sliceSequentialRotation = {$plugin.tx_imagecycle_pi5.sliceSequentialRotation}
+	sliceSequentialFactor = {$plugin.tx_imagecycle_pi5.sliceSequentialFactor}
+	sliceSpeed3d = {$plugin.tx_imagecycle_pi5.sliceSpeed3d}
+	sliceSlideshow = {$plugin.tx_imagecycle_pi5.sliceSlideshow}
+	sliceSlideshowTime = {$plugin.tx_imagecycle_pi5.sliceSlideshowTime}
+	sliceShowInfo = {$plugin.tx_imagecycle_pi5.sliceShowInfo}
+
+	sliceTransition = {$plugin.tx_imagecycle_pi5.sliceTransition}
+	sliceTransitionDir = {$plugin.tx_imagecycle_pi5.sliceTransitionDir}
+	sliceSpeed = {$plugin.tx_imagecycle_pi5.sliceSpeed}
+
+	options = {$plugin.tx_imagecycle_pi5.options}
+	optionsOverride = {$plugin.tx_imagecycle_pi5.optionsOverride}
+
+	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
+
+	slice {
+		normal {
+			image {
+				file.import.data = register:file
+				file.width.data = register:imagewidth
+				file.height.data = register:imageheight
+				altText {
+					data = register:caption
+					stripHtml = 1
+				}
+				titleText < .altText
+				longdescURL >
+			}
+			stdWrap {
+				dataWrap = <div class="tx-imagecycle-pi5"><div class="tx-imagecycle-pi5-images sb-slider" id="{register:key}"> | </div></div>
+				required = 1
+			}
+			noscriptWrap {
+				dataWrap = <noscript><div class="tx-imagecycle-pi5 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi5-images sb-slider" id="{register:key}"> | </div></div></noscript>
+				required = 1
+			}
+		}
+		header < .normal
+		content < .normal
+	}
+}

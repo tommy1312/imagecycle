@@ -109,8 +109,6 @@ plugin.tx_imagecycle_pi1 {
 			image = IMAGE
 			image {
 				file {
-					import = uploads/pics/
-					import.data = register:image
 					maxW = {$plugin.tt_news.singleMaxW}
 					maxH = {$plugin.tt_news.singleMaxH}
 				}

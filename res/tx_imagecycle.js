@@ -115,3 +115,14 @@ jQuery(document).ready(function() {
 });
 <!-- ###TEMPLATE_CROSSSLIDER_JS### end -->
 
+
+
+
+<!-- ###TEMPLATE_SLICEBOX_JS### begin -->
+jQuery(document).ready(function() {
+	jQuery('####KEY###').slicebox({
+		###OPTIONS###
+	});
+});
+<!-- ###TEMPLATE_SLICEBOX_JS### end -->
+

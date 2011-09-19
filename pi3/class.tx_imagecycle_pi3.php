@@ -110,6 +110,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$this->lConf['nivoAnimSpeed']        = $this->getFlexformData('settings', 'nivoAnimSpeed');
 			$this->lConf['nivoPauseTime']        = $this->getFlexformData('settings', 'nivoPauseTime');
 			$this->lConf['nivoStartSlide']       = $this->getFlexformData('settings', 'nivoStartSlide');
+			$this->lConf['nivoStartRandom']      = $this->getFlexformData('settings', 'nivoStartRandom');
 			$this->lConf['nivoDirectionNav']     = $this->getFlexformData('settings', 'nivoDirectionNav');
 			$this->lConf['nivoDirectionNavHide'] = $this->getFlexformData('settings', 'nivoDirectionNavHide');
 			$this->lConf['nivoControlNav']       = $this->getFlexformData('settings', 'nivoControlNav');
@@ -176,6 +177,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			if ($this->lConf['nivoStartSlide']) {
 				$this->conf['nivoStartSlide'] = $this->lConf['nivoStartSlide'];
 			}
+			if ($this->lConf['nivoStartRandom'] < 2) {
+				$this->conf['nivoStartRandom'] = $this->lConf['nivoStartRandom'];
+			}
 			if ($this->lConf['nivoCaptionOpacity']) {
 				$this->conf['nivoCaptionOpacity'] = $this->lConf['nivoCaptionOpacity'];
 			}
@@ -198,7 +202,12 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			if ($this->lConf['nivoManualAdvance'] < 2) {
 				$this->conf['nivoManualAdvance'] = $this->lConf['nivoManualAdvance'];
 			}
-			$this->conf['options'] = $this->lConf['options'];
+			if ($this->lConf['options']) {
+				$this->conf['options'] = $this->lConf['options'];
+			}
+			if ($this->lConf['optionsOverride'] < 2) {
+				$this->conf['optionsOverride'] = $this->lConf['optionsOverride'];
+			}
 		} else {
 			$this->type = 'header';
 			// It's the header
@@ -278,6 +287,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
+		$this->pagerenderer = t3lib_div::makeInstance('tx_imagecycle_pagerenderer');
+		$this->pagerenderer->setConf($this->conf);
+
 		// define the directory of images
 		if ($dir == '') {
 			$dir = $this->imageDir;
@@ -304,7 +316,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		}
 
 		// define the css file
-		$this->addCssFile($this->conf['cssFileNivo']);
+		$this->pagerenderer->addCssFile($this->conf['cssFileNivo']);
 
 		// define the style
 		$themeClass = 'theme-default';
@@ -318,9 +330,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			if (! is_dir(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $this->conf['nivoTheme']))) {
 				// if the skin does not exist, the default skin will be selected
 				t3lib_div::devLog('Skin \''.$this->conf['nivoTheme'].'\' does not exist', 'imagecycle', 1);
-				$this->addCssFile('EXT:imagecycle/res/css/nivoslider/default/style.css');
+				$this->pagerenderer->addCssFile('EXT:imagecycle/res/css/nivoslider/default/style.css');
 			} else {
-				$this->addCssFile($confArr['nivoThemeFolder'] . $this->conf['nivoTheme'] . '/style.css');
+				$this->pagerenderer->addCssFile($confArr['nivoThemeFolder'] . $this->conf['nivoTheme'] . '/style.css');
 			}
 			$themeClass = 'theme-'.$this->conf['nivoTheme'];
 		}
@@ -386,7 +398,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$jQueryNoConflict = "";
 		}
 
-		$this->addCSS("
+		$this->pagerenderer->addCSS("
 #c{$this->cObj->data['uid']} .nivoSlider {
 	width: {$maxWidth}px;
 	height: {$maxHeight}px;
@@ -415,7 +427,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		if ($this->conf['nivoPauseTime'] > 0) {
 			$options['pauseTime'] = "pauseTime: {$this->conf['nivoPauseTime']}";
 		}
-		if ($this->conf['nivoStartSlide'] > 0) {
+		if ($this->conf['nivoStartRandom']) {
+			$options['startSlide'] = "startSlide: Math.floor(Math.random() * jQuery('#{$this->getContentKey()} img').length)";
+		} elseif ($this->conf['nivoStartSlide'] > 0) {
 			$options['startSlide'] = "startSlide: {$this->conf['nivoStartSlide']}";
 		}
 		if (strlen($this->conf['nivoCaptionOpacity']) > 0) {
@@ -437,8 +451,15 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 		}
 
+		// checks if t3jquery is loaded
+		if (T3JQUERY === true) {
+			tx_t3jquery::addJqJS();
+		} else {
+			$this->pagerenderer->addJsFile($this->conf['jQueryLibrary'], true);
+		}
+
 		// define the js file
-		$this->addJsFile($this->conf['jQueryNivo']);
+		$this->pagerenderer->addJsFile($this->conf['jQueryNivo']);
 
 		// get the Template of the Javascript
 		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_NIVOSLIDER_JS###"))) {
@@ -453,10 +474,10 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
-		$this->addJS($jQueryNoConflict . $templateCode);
+		$this->pagerenderer->addJS($jQueryNoConflict . $templateCode);
 
 		// Add the ressources
-		$this->addResources();
+		$this->pagerenderer->addResources();
 
 		if ($onlyJS === true) {
 			return true;

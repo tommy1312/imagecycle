@@ -9,6 +9,7 @@ plugin.tx_imagecycle_pi4 {
 	cssMinify = {$plugin.tx_imagecycle_pi1.cssMinify}
 
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
+	jQueryEasing = {$plugin.tx_imagecycle_pi1.file.jQueryEasing}
 	jQueryCross = {$plugin.tx_imagecycle_pi4.file.jQueryCross}
 	templateFileJS = {$plugin.tx_imagecycle_pi1.file.templateFileJS}
 

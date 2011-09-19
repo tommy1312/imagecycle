@@ -22,6 +22,7 @@
 			<label index="tt_content.list_type_pi2">Coin-Slider</label>
 			<label index="tt_content.list_type_pi3">Nivo-Slider</label>
 			<label index="tt_content.list_type_pi4">Cross-Slide</label>
+			<label index="tt_content.list_type_pi5">Slice-Box</label>
 			<label index="tt_content.pi_flexform.sheet_general">General</label>
 			<label index="tt_content.pi_flexform.mode">Mode</label>
 			<label index="tt_content.pi_flexform.mode.I.upload">Upload Images</label>
@@ -81,6 +82,7 @@
 			<label index="tt_content.pi_flexform.nivoAnimSpeed">Speed of the animation in ms</label>
 			<label index="tt_content.pi_flexform.nivoPauseTime">Delay in ms</label>
 			<label index="tt_content.pi_flexform.nivoStartSlide">Set starting Slide</label>
+			<label index="tt_content.pi_flexform.nivoStartRandom">Start Random</label>
 			<label index="tt_content.pi_flexform.nivoTheme">Theme to use</label>
 			<label index="tt_content.pi_flexform.nivoDirectionNav">Show navigation</label>
 			<label index="tt_content.pi_flexform.nivoDirectionNavHide">Show navigation on hover</label>
@@ -98,6 +100,23 @@
 			<label index="tt_content.pi_flexform.crossVariant">Stop pad while fade</label>
 			<label index="tt_content.pi_flexform.crossFromTo">Stack of effects to use ("from | to", for example: "100% 80% 1x | 100% 0% 1.7x")</label>
 			<label index="tt_content.pi_flexform.optionsCross">Enter own options (see http://tobia.github.com/CrossSlide/)</label>
+
+			<label index="tt_content.pi_flexform.sliceColorHiddenSides">Color of the hidden sides</label>
+			<label index="tt_content.pi_flexform.sliceShowInfo">Show info automatically</label>
+			<label index="tt_content.pi_flexform.sliceOrientation">Orientation</label>
+			<label index="tt_content.pi_flexform.slicePerspective">Perspective</label>
+			<label index="tt_content.pi_flexform.sliceSlicesCount">Slices count</label>
+			<label index="tt_content.pi_flexform.sliceDisperseFactor">Disperse factor</label>
+			<label index="tt_content.pi_flexform.sliceSequentialRotation">Sequential rotation</label>
+			<label index="tt_content.pi_flexform.sliceSequentialFactor">Sequential factor</label>
+			<label index="tt_content.pi_flexform.sliceSpeed3d">3D Speed</label>
+			<label index="tt_content.pi_flexform.sliceSlideshow">Slideshow</label>
+			<label index="tt_content.pi_flexform.sliceSlideshowTime">Slideshow time</label>
+			<label index="tt_content.pi_flexform.sheet_fallback">Fallback</label>
+			<label index="tt_content.pi_flexform.sliceTransition">Fallback transition</label>
+			<label index="tt_content.pi_flexform.sliceTransitionDir">Fallback transition direction</label>
+			<label index="tt_content.pi_flexform.sliceSpeed">Fallback speed</label>
+			<label index="tt_content.pi_flexform.optionsSlice">Enter own options (see http://tympanus.net/codrops/2011/09/05/slicebox-3d-image-slider/)</label>
 
 			<label index="tt_content.pi_flexform.from_ts">From Typoscript</label>
 			<label index="tt_content.pi_flexform.no">No</label>

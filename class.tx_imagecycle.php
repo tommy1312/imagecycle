@@ -40,6 +40,8 @@ class tx_imagecycle
 		if ($row['tx_imagecycle_activate']) {
 			$imageConf = 'imagecycleSingleImage.';
 			$lConf['imageCount'] = 1000;
+			// DAM_TTNEWS - single image option - morini@gammsystem.com 
+			$lConf['imageCount'] = $lConf[$imageConf]['imageCount']?$lConf[$imageConf]['imageCount']:1000;
 		} else {
 			$imageConf = 'image.';
 		}
@@ -48,6 +50,12 @@ class tx_imagecycle
 		$theImgCode = '';
 		$imgs = t3lib_div::trimExplode(',', $row['image'], 1);
 		$imgsCaptions = explode(chr(10), $row['imagecaption']);
+
+		// DAM_TTNEWS - load image from DAM - morini@gammsystem.com
+		if (t3lib_extMgm::isLoaded('dam_ttnews')) {
+			$imgs = $this->getDamImages($pObj, $lConf);
+		}
+
 		reset($imgs);
 		$cc = 0;
 		while (list($key, $val) = each($imgs)) {
@@ -60,13 +68,20 @@ class tx_imagecycle
 				$GLOBALS['TSFE']->register['imagecaption'] = $imgsCaptions[$cc];
 				$GLOBALS['TSFE']->register['caption']      = $imgsCaptions[$cc];
 				$GLOBALS['TSFE']->register['key']          = 'imagecycle_' . $pObj->local_cObj->data['uid'];
+
+				// DAM_TTNEWS - set path for DAM images - morini@gammsystem.com
+				if (t3lib_extMgm::isLoaded('dam_ttnews')) {
+					$lConf[$imageConf]['file'] = $val;
+				} else {
+					$lConf[$imageConf]['file'] = 'uploads/pics/'.$val;
+				}
+
 				// define the file
 				if ($row['tx_imagecycle_activate']) {
 					$image = $pObj->local_cObj->IMAGE($lConf[$imageConf]);
 					$caption = $pObj->local_cObj->stdWrap($image, $lConf['captionWrap.']);
 					$theImgCode .= $pObj->local_cObj->stdWrap($caption, $lConf['itemWrap.']);
 				} else {
-					$lConf[$imageConf]['file'] = 'uploads/pics/'.$val;
 					$theImgCode .= $pObj->local_cObj->IMAGE($lConf[$imageConf]).$pObj->local_cObj->stdWrap($imgsCaptions[$cc], $lConf['caption_stdWrap.']);
 				}
 			}
@@ -86,6 +101,7 @@ class tx_imagecycle
 
 	public function getSlideshow($content, $conf)
 	{
+		$return_string = NULL;
 		if ($this->cObj->data['tx_imagecycle_activate']) {
 			require_once(t3lib_extMgm::extPath('imagecycle') . 'pi1/class.tx_imagecycle_pi1.php');
 			$obj = t3lib_div::makeInstance('tx_imagecycle_pi1');
@@ -102,6 +118,74 @@ class tx_imagecycle
 			$return_string = $obj->parseTemplate(array(), 'uploads/pics/', true);
 		}
 		return $content;
+	}
+
+	/**
+	 * DAM_TTNEWS - load images from DAM - morini@gammsystem.com
+	 */
+	private function getDamImages(&$pObj, &$lConf)
+	{
+		$row = $pObj->local_cObj->data;
+
+		$mode = $GLOBALS['TSFE']->tmpl->setup['plugin.']['dam_ttnews.']['mode'];
+
+		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount']:1;
+		$imageNum = t3lib_div::intInRange($imageNum, 0, 100);
+		$theImgCode = '';
+
+		$imgsCaptions = explode(chr(10), $row['imagecaption']);
+		$imgsAltTexts = explode(chr(10), $row['imagealttext']);
+		$imgsTitleTexts = explode(chr(10), $row['imagetitletext']);
+
+		// to get correct DAM files, set uid
+		// workspaces
+		if (isset($row['_ORIG_uid']) && ($row['_ORIG_uid'] > 0)) {
+			// draft workspace
+			$uid = $row['_ORIG_uid'];
+		} else {
+			// live workspace
+			$uid = $row['uid'];
+		}
+		// translations - i10n mode
+		if ($row['_LOCALIZED_UID']) {
+			// i10n mode = exclude   -> do nothing
+			// i10n mode = mergeIfNotBlank
+			$confArr_ttnews=unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['tt_news']);
+			if (! $confArr_ttnews['l10n_mode_imageExclude'] && $row['tx_damnews_dam_images']) {
+				$uid = $row['_LOCALIZED_UID'];
+			}
+		}
+		$cc = 0;
+		$shift = false;
+		// get DAM data
+		$infoFields = tx_dam_db::getMetaInfoFieldList(true,array('alt_text'=>'alt_text','caption'=>'caption'));
+		$damData = tx_dam_db::getReferencedFiles('tt_news', $uid, 'tx_damnews_dam_images','tx_dam_mm_ref',$infoFields);
+		$damFiles = $damData['files'];
+		$damRows = $damData['rows'];
+		// localisation of DAM data  
+		while (list($key,$val) = each($damRows)) {
+			$damRows[$key] =  $GLOBALS['TSFE']->sys_page->getRecordOverlay('tx_dam', $val, $GLOBALS['TSFE']->sys_language_uid, '');
+		}
+		// remove first img from the image array in single view if the TSvar firstImageIsPreview is set
+		if (((count($damFiles) > 1 && $pObj->config['firstImageIsPreview'])||(count($damFiles) >= 1 && $pObj->config['forceFirstImageIsPreview'])) && $pObj->theCode == 'SINGLE') {
+			array_shift($damFiles);
+			array_shift($damRows);
+			array_shift($imgsCaptions);
+			array_shift($imgsAltTexts);
+			array_shift($imgsTitleTexts);
+			$shift=true;
+		}
+		// get img array parts for single view pages
+		if ($pObj->piVars[$pObj->pObj['singleViewPointerName']]) {
+			$spage = $pObj->piVars[$pObj->config['singleViewPointerName']];
+			$astart = $imageNum*$spage;
+			$damFiles = array_slice($damFiles,$astart,$imageNum);
+			$damRows = array_slice($damRows,$astart,$imageNum);
+			$imgsCaptions = array_slice($imgsCaptions,$astart,$imageNum);
+			$imgsAltTexts = array_slice($imgsAltTexts,$astart,$imageNum);
+			$imgsTitleTexts = array_slice($imgsTitleTexts,$astart,$imageNum);
+		}
+		return $damFiles;
 	}
 }
 

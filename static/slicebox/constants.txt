@@ -1,0 +1,74 @@
+plugin.tx_imagecycle_pi5 {
+
+	# cat=plugin.tx_imagecycle.slicebox/file/010; type=file[js]; label=jQuery Nivo-Slider for Cycle: Location of the jQuery Nivo-Slider
+	file.jQuerySlice = EXT:imagecycle/res/jquery/js/jquery.slicebox-1.0a.min.js
+
+	# cat=plugin.tx_imagecycle.slicebox/file/020; type=file[js]; label=Modernizr: Location of the Modernizr
+	file.modernizer = EXT:imagecycle/res/jquery/js/modernizr.custom.13303.js
+
+	# cat=plugin.tx_imagecycle.slicebox/file/030; type=file[css]; label=CSS file: The path to the stylesheet file
+	file.cssFileSlice = EXT:imagecycle/res/css/slicebox/style.css
+
+
+
+	# cat=plugin.tx_imagecycle.slicebox/dims/010; type=string; label=Width: Width of slider panel
+	imagewidth = 400c
+
+	# cat=plugin.tx_imagecycle.slicebox/dims/020; type=string; label=Height: Height of slider panel
+	imageheight = 250c
+
+	# cat=plugin.tx_imagecycle.slicebox/dims/030; type=string; label=Color of the hidden sides: Color of the hidden sides
+	sliceColorHiddenSides = #222
+
+	# cat=plugin.tx_imagecycle.slicebox/dims/040; type=boolean; label=Show info automatically: If true the info will be shown automatically
+	sliceShowInfo = 0
+
+
+
+	# cat=plugin.tx_imagecycle.slicebox/color/010; type=options[v,h]; label=Orientation: Orientation of the slices (v)ertical or (h)orizontal.
+	sliceOrientation = v
+
+	# cat=plugin.tx_imagecycle.slicebox/color/020; type=int; label=Perspective: -webkit-perspective value
+	slicePerspective = 1200
+
+	# cat=plugin.tx_imagecycle.slicebox/color/030; type=int; label=Slices count: Needs to be an odd number between 1 and 15 (if you want the limit higher, change the _validate function)
+	sliceSlicesCount = 1
+
+	# cat=plugin.tx_imagecycle.slicebox/color/040; type=int; label=Disperse factor: Each slice will move x pixels left / top (depending on orientation). The middle slice doesn't move. The middle slice's neighbors will move disperseFactor pixels
+	sliceDisperseFactor = 0
+
+	# cat=plugin.tx_imagecycle.slicebox/color/050; type=boolean; label=Sequential rotation: The animation will start from left to right. The left most slice will be the first one to rotate
+	sliceSequentialRotation = 0
+
+	# cat=plugin.tx_imagecycle.slicebox/color/060; type=int; label=Sequential factor: If sequentialRotation is true this will be the interval between each rotation in ms
+	sliceSequentialFactor = 0
+
+	# cat=plugin.tx_imagecycle.slicebox/color/070; type=int; label=3D Speed: Animation speed of the 3D movement
+	sliceSpeed3d = 800
+
+	# cat=plugin.tx_imagecycle.slicebox/color/080; type=boolean; label=Slideshow: If true the box will be rotating automatically
+	sliceSlideshow = 0
+
+	# cat=plugin.tx_imagecycle.slicebox/color/090; type=int; label=Slideshow time: Interval for the slideshow in ms
+	sliceSlideshowTime = 2000
+
+
+
+	# cat=plugin.tx_imagecycle.slicebox/enable/010; type=options[,swing,linear,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Fallback transition: Effect of transition (Swing, Linear, Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
+	sliceTransition = Back
+
+	# cat=plugin.tx_imagecycle.slicebox/enable/020; type=options[,In,Out,InOut]; label=Fallback transition direction: Direction of transition (In, Out, InOut)
+	sliceTransitionDir = InOut
+
+	# cat=plugin.tx_imagecycle.slicebox/enable/030; type=int; label=Fallback speed: Fallback speed. You might want to set a different speed for the fallback animation...
+	sliceSpeed = 600
+
+
+
+	# cat=plugin.tx_imagecycle.slicebox/typo/030; type=string; label=Own Options: Enter own options (see ????)
+	options = 
+
+	# cat=plugin.tx_imagecycle.slicebox/typo/040; type=boolean; label=Override all options: If set, all options will be override
+	optionsOverride = 0
+
+}

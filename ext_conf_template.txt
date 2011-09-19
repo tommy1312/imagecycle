@@ -8,8 +8,8 @@ effectsCoin = ,random,swirl,rain,straight
 # cat=basic/enable/30; type=string; label=Available effect for Nivo-Slider: Defines all available effects for Nivo-Slider (,random,sliceDown,sliceDownLeft,sliceUp,sliceUpLeft,sliceUpDown,sliceUpDownLeft,fold,fade,slideInRight,slideInLeft,boxRandom,boxRain,boxRainReverse,boxRainGrow,boxRainGrowReverse)
 effectsNivo = ,random,sliceDown,sliceDownLeft,sliceUp,sliceUpLeft,sliceUpDown,sliceUpDownLeft,fold,fade,slideInRight,slideInLeft,boxRandom,boxRain,boxRainReverse,boxRainGrow,boxRainGrowReverse
 
-# cat=basic/enable/40; type=string; label=Nivo-Slider theme folder: Location of the Nivo-Slider theme folder (EXT:imagecylce/res/css/nivoslider/)
-nivoThemeFolder = EXT:imagecylce/res/css/nivoslider/
+# cat=basic/enable/40; type=string; label=Nivo-Slider theme folder: Location of the Nivo-Slider theme folder (EXT:imagecycle/res/css/nivoslider/)
+nivoThemeFolder = EXT:imagecycle/res/css/nivoslider/
 
 # cat=basic/enable/50; type=boolean; label=Enable select instead of checkbox: If set, most of checkboxes will turn into selectboxes, so you can choose "from TS"
 useSelectInsteadCheckbox = 0

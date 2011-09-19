@@ -280,8 +280,8 @@
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinSDelay</label>
 							<config>
 								<type>input</type>
-								<size>4</size>
-								<max>4</max>
+								<size>5</size>
+								<max>5</max>
 								<eval>integer</eval>
 							</config>
 						</TCEforms>
@@ -292,8 +292,8 @@
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinTitleSpeed</label>
 							<config>
 								<type>input</type>
-								<size>4</size>
-								<max>4</max>
+								<size>5</size>
+								<max>5</max>
 								<eval>integer</eval>
 							</config>
 						</TCEforms>

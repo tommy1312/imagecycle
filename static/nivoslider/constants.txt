@@ -38,10 +38,13 @@ plugin.tx_imagecycle_pi3 {
 	# cat=plugin.tx_imagecycle.nivoslider/typo/090; type=int; label=Start slide: Set starting Slide (0 index)
 	nivoStartSlide = 0
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/100; type=string; label=Own Options: Enter own options (see http://nivo.dev7studios.com/#usage)
+	# cat=plugin.tx_imagecycle.nivoslider/typo/100; type=boolean; label=Start Random: If set, the first image will be shown randomly
+	nivoStartRandom = 0
+
+	# cat=plugin.tx_imagecycle.nivoslider/typo/110; type=string; label=Own Options: Enter own options (see http://nivo.dev7studios.com/#usage)
 	options = 
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/110; type=boolean; label=Override all options: If set, all options will be override
+	# cat=plugin.tx_imagecycle.nivoslider/typo/120; type=boolean; label=Override all options: If set, all options will be override
 	optionsOverride = 0
 
 

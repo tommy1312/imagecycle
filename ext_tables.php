@@ -6,23 +6,23 @@ if (!defined ('TYPO3_MODE')) {
 
 
 // PAGE
-$tempColumns = array ();
+$tempColumns = array();
 if (t3lib_extMgm::isLoaded('dam')) {
-	$tempColumns['tx_imagecycle_mode'] = array (
+	$tempColumns['tx_imagecycle_mode'] = array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_mode',
-		'config' => array (
+		'config' => array(
 			'type' => 'select',
 			'itemsProcFunc' => 'tx_imagecycle_itemsProcFunc->getModes',
 			'size' => 1,
 			'maxitems' => 1,
 		)
 	);
-	$tempColumns['tx_imagecycle_damimages'] = array (
+	$tempColumns['tx_imagecycle_damimages'] = array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damimages',
 		'displayCond' => 'FIELD:tx_imagecycle_mode:=:dam',
-		'config' => array (
+		'config' => array(
 			'type' => 'group',
 			'form_type' => 'user',
 			'userFunc' => 'EXT:dam/lib/class.tx_dam_tcefunc.php:&tx_dam_tceFunc->getSingleField_typeMedia',
@@ -45,11 +45,11 @@ if (t3lib_extMgm::isLoaded('dam')) {
 		)
 	);
 	if (t3lib_extMgm::isLoaded("dam_catedit")) {
-		$tempColumns['tx_imagecycle_damcategories'] = array (
+		$tempColumns['tx_imagecycle_damcategories'] = array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damcategories',
 			'displayCond' => 'FIELD:tx_imagecycle_mode:=:dam_catedit',
-			'config' => array (
+			'config' => array(
 				'type' => 'select',
 				'form_type' => 'user',
 				'userFunc' => 'EXT:dam/lib/class.tx_dam_tcefunc.php:tx_dam_tceFunc->getSingleField_selectTree',
@@ -64,11 +64,11 @@ if (t3lib_extMgm::isLoaded('dam')) {
 	}
 }
 // Normal page fields
-$tempColumns['tx_imagecycle_images'] = array (
+$tempColumns['tx_imagecycle_images'] = array(
 	'exclude' => 1,
 	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_images',
 	'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
-	'config' => array (
+	'config' => array(
 		'type' => 'group',
 		'internal_type' => 'file',
 		'allowed' => 'gif,png,jpeg,jpg',
@@ -80,32 +80,32 @@ $tempColumns['tx_imagecycle_images'] = array (
 		'maxitems' => 1000,
 	)
 );
-$tempColumns['tx_imagecycle_hrefs'] = array (
+$tempColumns['tx_imagecycle_hrefs'] = array(
 	'exclude' => 1,
 	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_hrefs',
 	'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
-	'config' => array (
+	'config' => array(
 		'type' => 'text',
 		'wrap' => 'OFF',
 		'cols' => '48',
 		'rows' => '6',
 	)
 );
-$tempColumns['tx_imagecycle_captions'] = array (
+$tempColumns['tx_imagecycle_captions'] = array(
 	'exclude' => 1,
 	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_captions',
 	'displayCond' => 'FIELD:tx_imagecycle_mode:!IN:dam,dam_catedit',
-	'config' => array (
+	'config' => array(
 		'type' => 'text',
 		'wrap' => 'OFF',
 		'cols' => '48',
 		'rows' => '6',
 	)
 );
-$tempColumns['tx_imagecycle_effect'] = array (
+$tempColumns['tx_imagecycle_effect'] = array(
 	'exclude' => 1,
 	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_effect',
-	'config' => array (
+	'config' => array(
 		'type' => 'select',
 		'items' => array(
 			array('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts', ''),
@@ -115,10 +115,10 @@ $tempColumns['tx_imagecycle_effect'] = array (
 		'maxitems' => 1,
 	)
 );
-$tempColumns['tx_imagecycle_stoprecursion'] = array (
+$tempColumns['tx_imagecycle_stoprecursion'] = array(
 	'exclude' => 1,
 	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_stoprecursion',
-	'config' => array (
+	'config' => array(
 		'type' => 'check',
 	)
 );
@@ -136,18 +136,18 @@ $TCA['pages_language_overlay']['ctrl']['requestUpdate'] .= ($TCA['pages_language
 
 
 // CONTENT
-$tempColumns = Array (
-	"tx_imagecycle_activate" => Array (
+$tempColumns = array(
+	"tx_imagecycle_activate" => array(
 		"exclude" => 1,
 		"label" => "LLL:EXT:imagecycle/locallang_db.xml:tt_content.tx_imagecycle_activate",
-		"config" => Array (
+		"config" => array(
 			"type" => "check",
 		)
 	),
-	"tx_imagecycle_duration" => Array (
+	"tx_imagecycle_duration" => array(
 		"exclude" => 1,
 		"label" => "LLL:EXT:imagecycle/locallang_db.xml:tt_content.tx_imagecycle_duration",
-		"config" => Array (
+		"config" => array(
 			"type" => "input",
 			"size" => "5",
 			"trim" => "int",
@@ -187,9 +187,10 @@ if (t3lib_extMgm::isLoaded('tt_news')) {
 
 
 
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/coinslider/', 'Coin-Slider');
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/nivoslider/', 'Nivo-Slider');
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/crossslide/', 'Cross-Slide');
+t3lib_extMgm::addStaticFile($_EXTKEY, 'static/coinslider/', 'Coin-Slider');
+t3lib_extMgm::addStaticFile($_EXTKEY, 'static/nivoslider/', 'Nivo-Slider');
+t3lib_extMgm::addStaticFile($_EXTKEY, 'static/crossslide/', 'Cross-Slide');
+t3lib_extMgm::addStaticFile($_EXTKEY, 'static/slicebox/',   'Slice-Box');
 
 
 
@@ -204,6 +205,9 @@ $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi3']     = '
 
 $TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi4'] = 'layout,select_key,pages';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi4']     = 'pi_flexform,image_zoom';
+
+$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi5'] = 'layout,select_key,pages';
+$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi5']     = 'pi_flexform,image_zoom';
 
 
 
@@ -271,11 +275,20 @@ t3lib_extMgm::addPlugin(array(
 ),'list_type');
 t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi4', 'FILE:EXT:'.$_EXTKEY.'/pi4/flexform_ds.xml');
 
+// ICON pi5
+t3lib_extMgm::addPlugin(array(
+	'LLL:EXT:imagecycle/locallang_db.xml:tt_content.list_type_pi5',
+	$_EXTKEY . '_pi5',
+	t3lib_extMgm::extRelPath($_EXTKEY) . 'pi5/ce_icon.gif'
+),'list_type');
+t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi5', 'FILE:EXT:'.$_EXTKEY.'/pi5/flexform_ds.xml');
+
 if (TYPO3_MODE == 'BE') {
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi1_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi1/class.tx_imagecycle_pi1_wizicon.php';
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi2_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi2/class.tx_imagecycle_pi2_wizicon.php';
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi3_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi3/class.tx_imagecycle_pi3_wizicon.php';
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi4_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi4/class.tx_imagecycle_pi4_wizicon.php';
+	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi5_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi5/class.tx_imagecycle_pi5_wizicon.php';
 }
 
 require_once(t3lib_extMgm::extPath($_EXTKEY).'lib/class.tx_imagecycle_itemsProcFunc.php');

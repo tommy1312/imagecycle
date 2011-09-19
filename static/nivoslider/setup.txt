@@ -23,6 +23,7 @@ plugin.tx_imagecycle_pi3 {
 	nivoAnimSpeed = {$plugin.tx_imagecycle_pi3.nivoAnimSpeed}
 	nivoPauseTime = {$plugin.tx_imagecycle_pi3.nivoPauseTime}
 	nivoStartSlide = {$plugin.tx_imagecycle_pi3.nivoStartSlide}
+	nivoStartRandom = {$plugin.tx_imagecycle_pi3.nivoStartRandom}
 	nivoDirectionNav = {$plugin.tx_imagecycle_pi3.nivoDirectionNav}
 	nivoDirectionNavHide = {$plugin.tx_imagecycle_pi3.nivoDirectionNavHide}
 	nivoControlNav = {$plugin.tx_imagecycle_pi3.nivoControlNav}

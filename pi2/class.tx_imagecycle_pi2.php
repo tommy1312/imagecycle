@@ -258,6 +258,9 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
+		$this->pagerenderer = t3lib_div::makeInstance('tx_imagecycle_pagerenderer');
+		$this->pagerenderer->setConf($this->conf);
+
 		// define the directory of images
 		if ($dir == '') {
 			$dir = $this->imageDir;
@@ -354,7 +357,7 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 		$options['width']  = "width: '{$maxWidth}'";
 		$options['height'] = "height: '{$maxHeight}'";
 
-		$this->addCSS("
+		$this->pagerenderer->addCSS("
 #c{$this->cObj->data['uid']} {
 	width: {$maxWidth}px;
 }");
@@ -392,8 +395,15 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			}
 		}
 
+		// checks if t3jquery is loaded
+		if (T3JQUERY === true) {
+			tx_t3jquery::addJqJS();
+		} else {
+			$this->pagerenderer->addJsFile($this->conf['jQueryLibrary'], true);
+		}
+
 		// define the js file
-		$this->addJsFile($this->conf['jQueryCoin']);
+		$this->pagerenderer->addJsFile($this->conf['jQueryCoin']);
 
 		// get the Template of the Javascript
 		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_COINSLIDER_JS###"))) {
@@ -408,10 +418,10 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
-		$this->addJS($jQueryNoConflict . $templateCode);
+		$this->pagerenderer->addJS($jQueryNoConflict . $templateCode);
 
 		// Add the ressources
-		$this->addResources();
+		$this->pagerenderer->addResources();
 
 		if ($onlyJS === true) {
 			return true;

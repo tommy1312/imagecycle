@@ -30,16 +30,16 @@
 require_once(t3lib_extMgm::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
 
 /**
- * Plugin 'Cross-Slider' for the 'imagecycle' extension.
+ * Plugin 'Slice-Box' for the 'imagecycle' extension.
  *
  * @author	Juergen Furrer <juergen.furrer@gmail.com>
  * @package	TYPO3
  * @subpackage	tx_imagecycle
  */
-class tx_imagecycle_pi4 extends tx_imagecycle_pi1
+class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 {
-	public $prefixId      = 'tx_imagecycle_pi4';
-	public $scriptRelPath = 'pi4/class.tx_imagecycle_pi4.php';
+	public $prefixId      = 'tx_imagecycle_pi5';
+	public $scriptRelPath = 'pi5/class.tx_imagecycle_pi5.php';
 	public $extKey        = 'imagecycle';
 	public $pi_checkCHash = true;
 	public $images        = array();
@@ -69,19 +69,18 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 		$this->pi_loadLL();
 
 		// define the key of the element
-		$this->setContentKey("imagecycle-cross");
+		$this->setContentKey("imagecycle-slice");
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
 
-		if ($this->cObj->data['list_type'] == $this->extKey.'_pi4') {
+		if ($this->cObj->data['list_type'] == $this->extKey.'_pi5') {
 			$this->type = 'normal';
 
 			// It's a content, all data from flexform
 
 			$this->lConf['mode']          = $this->getFlexformData('general', 'mode');
 			$this->lConf['images']        = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['hrefs']         = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
 			$this->lConf['captions']      = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
 			$this->lConf['damimages']     = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
 			$this->lConf['damcategories'] = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
@@ -93,28 +92,36 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 					if (is_numeric($elKey)) {
 						$this->lConf['imagesRTE'][] = array(
 							"image"   => $el['data']['el']['image']['vDEF'],
-							"href"    => $el['data']['el']['href']['vDEF'],
-							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+							"caption" => $el['data']['el']['caption']['vDEF'],
 						);
 					}
 				}
 			}
 
-			$this->lConf['imagewidth']  = $this->getFlexformData('settings', 'imagewidth');
-			$this->lConf['imageheight'] = $this->getFlexformData('settings', 'imageheight');
+			$this->lConf['imagewidth']            = $this->getFlexformData('settings', 'imagewidth');
+			$this->lConf['imageheight']           = $this->getFlexformData('settings', 'imageheight');
+			$this->lConf['sliceColorHiddenSides'] = $this->getFlexformData('settings', 'sliceColorHiddenSides');
+			$this->lConf['sliceShowInfo']         = $this->getFlexformData('settings', 'sliceShowInfo');
 
-			$this->lConf['crossTransition']    = $this->getFlexformData('movement', 'crossTransition');
-			$this->lConf['crossTransitionDir'] = $this->getFlexformData('movement', 'crossTransitionDir');
-			$this->lConf['crossTime']          = $this->getFlexformData('movement', 'crossTime');
-			$this->lConf['crossFade']          = $this->getFlexformData('movement', 'crossFade');
-			$this->lConf['crossVariant']       = $this->getFlexformData('movement', 'crossVariant');
-			$this->lConf['crossFromTo']        = $this->getFlexformData('movement', 'crossFromTo');
+			$this->lConf['sliceOrientation']        = $this->getFlexformData('movement', 'sliceOrientation');
+			$this->lConf['slicePerspective']        = $this->getFlexformData('movement', 'slicePerspective');
+			$this->lConf['sliceSlicesCount']        = $this->getFlexformData('movement', 'sliceSlicesCount');
+			$this->lConf['sliceDisperseFactor']     = $this->getFlexformData('movement', 'sliceDisperseFactor');
+			$this->lConf['sliceSequentialRotation'] = $this->getFlexformData('movement', 'sliceSequentialRotation');
+			$this->lConf['sliceSequentialFactor']   = $this->getFlexformData('movement', 'sliceSequentialFactor');
+			$this->lConf['sliceSpeed3d']            = $this->getFlexformData('movement', 'sliceSpeed3d');
+			$this->lConf['sliceSlideshow']          = $this->getFlexformData('movement', 'sliceSlideshow');
+			$this->lConf['sliceSlideshowTime']      = $this->getFlexformData('movement', 'sliceSlideshowTime');
+
+			$this->lConf['sliceTransition']    = $this->getFlexformData('fallback', 'sliceTransition');
+			$this->lConf['sliceTransitionDir'] = $this->getFlexformData('fallback', 'sliceTransitionDir');
+			$this->lConf['sliceSpeed']         = $this->getFlexformData('fallback', 'sliceSpeed');
 
 			$this->lConf['options']         = $this->getFlexformData('special', 'options');
 			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
-			$this->setContentKey("imagecycle-cross_c" . $this->cObj->data['uid']);
+			$this->setContentKey("imagecycle-slice_c" . $this->cObj->data['uid']);
 
 			// define the images
 			switch ($this->lConf['mode']) {
@@ -144,25 +151,50 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			if ($this->lConf['imageheight']) {
 				$this->conf['imageheight'] = $this->lConf['imageheight'];
 			}
-			if ($this->lConf['crossTransition']) {
-				$this->conf['crossTransition'] = $this->lConf['crossTransition'];
+			if ($this->lConf['sliceColorHiddenSides'] && $this->lConf['sliceColorHiddenSides'] != 'on') {
+				$this->conf['sliceColorHiddenSides'] = $this->lConf['sliceColorHiddenSides'];
 			}
-			if ($this->lConf['crossTransitionDir']) {
-				$this->conf['crossTransitionDir'] = $this->lConf['crossTransitionDir'];
+			if ($this->lConf['sliceShowInfo'] < 2) {
+				$this->conf['sliceShowInfo'] = $this->lConf['sliceShowInfo'];
 			}
-			if ($this->lConf['crossTime']) {
-				$this->conf['crossTime'] = $this->lConf['crossTime'];
+
+			if ($this->lConf['sliceOrientation']) {
+				$this->conf['sliceOrientation'] = $this->lConf['sliceOrientation'];
 			}
-			if ($this->lConf['crossFade']) {
-				$this->conf['crossFade'] = $this->lConf['crossFade'];
+			if ($this->lConf['slicePerspective']) {
+				$this->conf['slicePerspective'] = $this->lConf['slicePerspective'];
 			}
-			if ($this->lConf['crossFromTo']) {
-				$this->conf['crossFromTo'] = $this->lConf['crossFromTo'];
+			if ($this->lConf['sliceSlicesCount']) {
+				$this->conf['sliceSlicesCount'] = $this->lConf['sliceSlicesCount'];
 			}
-			// Will be overridden, if not "from TS"
-			if ($this->lConf['crossVariant'] < 2) {
-				$this->conf['crossVariant'] = $this->lConf['crossVariant'];
+			if ($this->lConf['sliceDisperseFactor']) {
+				$this->conf['sliceDisperseFactor'] = $this->lConf['sliceDisperseFactor'];
 			}
+			if ($this->lConf['sliceSequentialRotation']) {
+				$this->conf['sliceSequentialRotation'] = $this->lConf['sliceSequentialRotation'];
+			}
+			if ($this->lConf['sliceSequentialFactor']) {
+				$this->conf['sliceSequentialFactor'] = $this->lConf['sliceSequentialFactor'];
+			}
+			if ($this->lConf['sliceSpeed3d']) {
+				$this->conf['sliceSpeed3d'] = $this->lConf['sliceSpeed3d'];
+			}
+			if ($this->lConf['sliceTransition']) {
+				$this->conf['sliceTransition'] = $this->lConf['sliceTransition'];
+			}
+			if ($this->lConf['sliceTransitionDir']) {
+				$this->conf['sliceTransitionDir'] = $this->lConf['sliceTransitionDir'];
+			}
+			if ($this->lConf['sliceSpeed']) {
+				$this->conf['sliceSpeed'] = $this->lConf['sliceSpeed'];
+			}
+			if ($this->lConf['sliceSlideshow'] < 2) {
+				$this->conf['sliceSlideshow'] = $this->lConf['sliceSlideshow'];
+			}
+			if ($this->lConf['sliceTransition']) {
+				$this->conf['sliceSlideshowTime'] = $this->lConf['sliceSlideshowTime'];
+			}
+
 			if ($this->lConf['options']) {
 				$this->conf['options'] = $this->lConf['options'];
 			}
@@ -231,11 +263,11 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			}
 		}
 
-		$crossFromTo = t3lib_div::trimExplode(LF, $this->conf['crossFromTo']);
+		$sliceFromTo = t3lib_div::trimExplode(LF, $this->conf['sliceFromTo']);
 
 		$data = array();
 		foreach ($this->images as $key => $image) {
-			list($from, $to) = t3lib_div::trimExplode('|', $crossFromTo[$key % count($crossFromTo)]);
+			list($from, $to) = t3lib_div::trimExplode('|', $sliceFromTo[$key % count($sliceFromTo)]);
 			$data[$key]['image']   = $image;
 			$data[$key]['href']    = $this->hrefs[$key];
 			$data[$key]['caption'] = $this->captions[$key];
@@ -267,7 +299,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 
 		// define the contentKey if not exist
 		if ($this->getContentKey() == '') {
-			$this->setContentKey("imagecycle-cross_key");
+			$this->setContentKey("imagecycle-slice_key");
 		}
 
 		if (! $this->conf['imagewidth']) {
@@ -277,58 +309,40 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			$this->conf['imageheight'] = "200c";
 		}
 
+		// define the css file
+		$this->pagerenderer->addCssFile($this->conf['cssFileSlice']);
+
 		// We have to build the images first to get the maximum width and height
 		$returnString = null;
-		$imagesString = null;
-		$images = array();
-		$maxWidth = 0;
-		$maxHeight = 0;
-		$factor = 1;
+		$images = null;
 		$no_script = null;
 		$GLOBALS['TSFE']->register['key'] = $this->getContentKey();
-		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'] * $factor;
-		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'] * $factor;
-		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'] * $factor;
+		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
+		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
+		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'];
 		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
 		$GLOBALS['TSFE']->register['IMAGE_COUNT'] = count($data);
 		if (count($data) > 0) {
 			foreach ($data as $key => $item) {
+				$GLOBALS['TSFE']->register['caption_key'] = $this->getContentKey() . "-" .$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'];
 				$image = null;
-				$imgConf = $this->conf['cross.'][$this->type.'.']['image.'];
+				$imgConf = $this->conf['slice.'][$this->type.'.']['image.'];
 				$totalImagePath = $dir . $item['image'];
 				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
 				$GLOBALS['TSFE']->register['CURRENT_ID'] = $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] + 1;
 				$image = $this->cObj->IMAGE($imgConf);
-				$lastImageInfo = $GLOBALS['TSFE']->lastImageInfo;
-				if (intval($lastImageInfo[0] / $factor) > $maxWidth) {
-					$maxWidth = intval($lastImageInfo[0] / $factor);
-				}
-				if (intval($lastImageInfo[1] / $factor) > $maxHeight) {
-					$maxHeight = intval($lastImageInfo[1] / $factor);
-				}
-				// Add the noscript wrap to the firs image
+				// Add the noscript wrap to the first image
 				if ($key == 0) {
-					$no_script = $this->cObj->stdWrap($image, $this->conf['cross.'][$this->type.'.']['noscriptWrap.']);
+					$no_script = $this->cObj->stdWrap($image, $this->conf['slice.'][$this->type.'.']['noscriptWrap.']);
 				}
-				$images[] = array(
-					'src'  => $lastImageInfo[3],
-					'alt'  => $item['caption'],
-					'from' => $item['from'],
-					'to'   => $item['to'],
-					'time' => ($this->conf['crossTime'] ? ($this->conf['crossTime'] / 1000) : 2),
-				);
+				$images .= $image;
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] ++;
 			}
-			$returnString = $this->cObj->stdWrap(' ', $this->conf['cross.'][$this->type.'.']['stdWrap.']);
+			// the stdWrap
+			$returnString = $this->cObj->stdWrap($images, $this->conf['slice.'][$this->type.'.']['stdWrap.']);
 			$returnString .= $no_script;
-			$imagesString = str_replace("\/", "/", json_encode($images));
-		}
-
-		// The template for JS
-		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle.js");
 		}
 
 		// define the jQuery mode and function
@@ -338,21 +352,44 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			$jQueryNoConflict = "";
 		}
 
-		$this->pagerenderer->addCSS("
-#{$this->getContentKey()} {
-	width: {$maxWidth}px;
-	height: {$maxHeight}px;
-}");
-
 		$options = array();
 
-		if ($this->conf['crossFade'] > 0) {
-			$options['fade'] = "fade: ".($this->conf['crossFade'] / 1000);
+		if ($this->conf['sliceColorHiddenSides']) {
+			$options['colorHiddenSides'] = "colorHiddenSides: '#".str_replace('#', '', $this->conf['sliceColorHiddenSides'])."'";
 		}
-		if ($this->conf['crossTransitionDir'] && $this->conf['crossTransition']) {
-			$options['easing'] = "easing: 'ease{$this->conf['crossTransitionDir']}{$this->conf['crossTransition']}'";
+		$options['showInfo'] = "showInfo: ".($this->conf['sliceShowInfo'] ? 'true' : 'false');
+
+		$options['orientation'] = "orientation: '".($this->conf['sliceOrientation'] == 'v' ? 'v' : 'h')."'";
+		if ($this->conf['slicePerspective'] > 0) {
+			$options['perspective'] = "perspective: {$this->conf['slicePerspective']}";
 		}
-		$options['variant'] = "variant: ".($this->conf['crossVariant'] ? 'true' : 'false');
+		if ($this->conf['sliceSlicesCount'] > 0) {
+			$options['slicesCount'] = "slicesCount: {$this->conf['sliceSlicesCount']}";
+		}
+		if ($this->conf['sliceDisperseFactor'] > 0) {
+			$options['disperseFactor'] = "disperseFactor: {$this->conf['sliceDisperseFactor']}";
+		}
+		$options['sequentialRotation'] = "sequentialRotation: ".($this->conf['sliceSequentialRotation'] ? 'true' : 'false');
+		if ($this->conf['sliceSequentialFactor'] > 0) {
+			$options['sequentialFactor'] = "sequentialFactor: {$this->conf['sliceSequentialFactor']}";
+		}
+		if ($this->conf['sliceSpeed3d'] > 0) {
+			$options['speed3d'] = "speed3d: {$this->conf['sliceSpeed3d']}";
+		}
+		/* FALLBACK*/
+		if (in_array($this->conf['sliceTransition'], array('linear', 'swing'))) {
+			$options['fallbackEasing'] = "fallbackEasing: '{$this->conf['sliceTransition']}'";
+		} elseif ($this->conf['sliceTransitionDir'] && $this->conf['sliceTransition']) {
+			$options['fallbackEasing'] = "fallbackEasing: 'ease{$this->conf['sliceTransitionDir']}{$this->conf['sliceTransition']}'";
+		}
+		if ($this->conf['sliceSpeed'] > 0) {
+			$options['speed'] = "speed: {$this->conf['sliceSpeed']}";
+		}
+		/* SLIDESHOW */
+		$options['slideshow'] = "slideshow: ".($this->conf['sliceSlideshow'] ? 'true' : 'false');
+		if ($this->conf['sliceSlideshowTime'] > 0) {
+			$options['slideshowTime'] = "slideshowTime: {$this->conf['sliceSlideshowTime']}";
+		}
 
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
@@ -372,21 +409,23 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 		}
 
 		// define the js file
-		$this->pagerenderer->addJsFile($this->conf['jQueryCross']);
+		$this->pagerenderer->addJsFile($this->conf['jQuerySlice']);
+		$this->pagerenderer->addJsFile($this->conf['modernizer']);
 
-		// define the css file
-		$this->pagerenderer->addCssFile($this->conf['cssFileCross']);
+		// The template for JS
+		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
+			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle.js");
+		}
 
 		// get the Template of the Javascript
-		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_CROSSSLIDER_JS###"))) {
-			$templateCode = "alert('Template TEMPLATE_CROSSSLIDER_JS is missing')";
+		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_SLICEBOX_JS###"))) {
+			$templateCode = "alert('Template TEMPLATE_SLICEBOX_JS is missing')";
 		}
 
 		// define the markers
 		$markerArray = array();
 		$markerArray["KEY"]     = $this->getContentKey();
 		$markerArray["OPTIONS"] = implode(",\n		", $options);
-		$markerArray["IMAGES"] = $imagesString;
 
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
@@ -406,8 +445,8 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi4/class.tx_imagecycle_pi4.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi4/class.tx_imagecycle_pi4.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi5/class.tx_imagecycle_pi5.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi5/class.tx_imagecycle_pi5.php']);
 }
 
 ?>
