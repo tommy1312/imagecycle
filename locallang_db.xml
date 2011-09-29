@@ -43,6 +43,8 @@
 			<label index="tt_content.pi_flexform.sheet_settings">Settings</label>
 			<label index="tt_content.pi_flexform.imagewidth">Width</label>
 			<label index="tt_content.pi_flexform.imageheight">Height</label>
+			<label index="tt_content.pi_flexform.thumbwidth">Thumb width</label>
+			<label index="tt_content.pi_flexform.thumbheight">Thumb height</label>
 			<label index="tt_content.pi_flexform.showcaption">Show caption</label>
 			<label index="tt_content.pi_flexform.showControl">Show Control</label>
 			<label index="tt_content.pi_flexform.showPager">Show Pager</label>
@@ -87,6 +89,7 @@
 			<label index="tt_content.pi_flexform.nivoDirectionNav">Show navigation</label>
 			<label index="tt_content.pi_flexform.nivoDirectionNavHide">Show navigation on hover</label>
 			<label index="tt_content.pi_flexform.nivoControlNav">Show control</label>
+			<label index="tt_content.pi_flexform.nivoControlNavThumbs">Use thumb control</label>
 			<label index="tt_content.pi_flexform.nivoKeyboardNav">Use left and right arrows for navigation</label>
 			<label index="tt_content.pi_flexform.nivoPauseOnHover">Stop animation while hovering</label>
 			<label index="tt_content.pi_flexform.nivoManualAdvance">Force manual transitions</label>

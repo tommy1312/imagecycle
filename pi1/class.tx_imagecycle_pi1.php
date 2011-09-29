@@ -348,7 +348,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				'tx_dam',
 				'tx_dam_mm_cat',
 				'tx_dam_cat',
-				" AND tx_dam_cat.uid IN (".implode(",", $damcategories).") AND tx_dam.file_mime_type='image' AND tx_dam.sys_language_uid=" . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->sys_language_uid, 'tx_dam'),
+				" AND tx_dam_cat.uid IN (".implode(",", $damcategories).") AND tx_dam.file_mime_type='image'",
 				'',
 				'tx_dam.sorting',
 				''

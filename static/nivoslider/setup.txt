@@ -17,6 +17,8 @@ plugin.tx_imagecycle_pi3 {
 	nivoTheme = {$plugin.tx_imagecycle_pi3.nivoTheme}
 	imagewidth = {$plugin.tx_imagecycle_pi3.imagewidth}
 	imageheight = {$plugin.tx_imagecycle_pi3.imageheight}
+	thumbwidth = {$plugin.tx_imagecycle_pi3.thumbwidth}
+	thumbheight = {$plugin.tx_imagecycle_pi3.thumbheight}
 	nivoSlices = {$plugin.tx_imagecycle_pi3.nivoSlices}
 	nivoBoxCols = {$plugin.tx_imagecycle_pi3.nivoBoxCols}
 	nivoBoxRows = {$plugin.tx_imagecycle_pi3.nivoBoxRows}
@@ -27,10 +29,7 @@ plugin.tx_imagecycle_pi3 {
 	nivoDirectionNav = {$plugin.tx_imagecycle_pi3.nivoDirectionNav}
 	nivoDirectionNavHide = {$plugin.tx_imagecycle_pi3.nivoDirectionNavHide}
 	nivoControlNav = {$plugin.tx_imagecycle_pi3.nivoControlNav}
-# nivoControlNavThumbs = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbs}
-# nivoControlNavThumbsFromRel = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbsFromRel}
-# nivoControlNavThumbsSearch = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbsSearch}
-# nivoControlNavThumbsReplace = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbsReplace}
+	nivoControlNavThumbs = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbs}
 	nivoKeyboardNav = {$plugin.tx_imagecycle_pi3.nivoKeyboardNav}
 	nivoPauseOnHover = {$plugin.tx_imagecycle_pi3.nivoPauseOnHover}
 	nivoManualAdvance = {$plugin.tx_imagecycle_pi3.nivoManualAdvance}
@@ -69,6 +68,8 @@ plugin.tx_imagecycle_pi3 {
 					data = register:caption_key
 				}
 				longdescURL >
+				params = rel="{register:thumbrel}"
+				params.insertData = 1
 			}
 			captionWrap {
 				dataWrap = <div id="htmlcaption-{register:caption_key}" class="nivo-html-caption"> | </div>
@@ -87,98 +88,5 @@ plugin.tx_imagecycle_pi3 {
 		content < .normal
 	}
 	_CSS_DEFAULT_STYLE (
-/*
- * jQuery Nivo Slider v2.5.1
- * http://nivo.dev7studios.com
- *
- * Copyright 2011, Gilbert Pellegrom
- * Free to use and abuse under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- * 
- * March 2010
- */
-.tx-imagecycle-pi3-images {
-	display: none;
-}
-noscript .tx-imagecycle-pi3-images {
-	display: block;
-}
-/* The Nivo Slider styles */
-.nivoSlider {
-	position:relative;
-}
-.nivoSlider img {
-	position:absolute;
-	top:0px;
-	left:0px;
-}
-/* If an image is wrapped in a link */
-.nivoSlider a.nivo-imageLink {
-	position:absolute;
-	top:0px;
-	left:0px;
-	width:100%;
-	height:100%;
-	border:0;
-	padding:0;
-	margin:0;
-	z-index:6;
-	display:none;
-}
-/* The slices and boxes in the Slider */
-.nivo-slice {
-	display:block;
-	position:absolute;
-	z-index:5;
-	height:100%;
-}
-.nivo-box {
-	display:block;
-	position:absolute;
-	z-index:5;
-}
-/* Caption styles */
-.nivo-caption {
-	position:absolute;
-	left:0px;
-	bottom:0px;
-	background:#000;
-	color:#fff;
-	opacity:0.8; /* Overridden by captionOpacity setting */
-	width:100%;
-	z-index:8;
-}
-.nivo-caption p {
-	padding:5px;
-	margin:0;
-}
-.nivo-caption a {
-	display:inline !important;
-}
-.nivo-html-caption {
-	display:none;
-}
-/* Direction nav styles (e.g. Next & Prev) */
-.nivo-directionNav a {
-	position:absolute;
-	top:45%;
-	z-index:9;
-	cursor:pointer;
-}
-.nivo-prevNav {
-	left:0px;
-}
-.nivo-nextNav {
-	right:0px;
-}
-/* Control nav styles (e.g. 1,2,3...) */
-.nivo-controlNav a {
-	position:relative;
-	z-index:9;
-	cursor:pointer;
-}
-.nivo-controlNav a.active {
-	font-weight:bold;
-}
 	)
 }

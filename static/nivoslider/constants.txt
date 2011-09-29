@@ -11,40 +11,46 @@ plugin.tx_imagecycle_pi3 {
 	# cat=plugin.tx_imagecycle.nivoslider/typo/010; type=options[,random,sliceDown,sliceDownLeft,sliceUp,sliceUpLeft,sliceUpDown,sliceUpDownLeft,fold,fade,slideInRight,slideInLeft,boxRandom,boxRain,boxRainReverse,boxRainGrow,boxRainGrowReverse]; label=Effect for Nivo-Slider: This will set the default effect for Nivo-Slider
 	nivoEffect = random
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/015; type=user[EXT:imagecycle/lib/class.tx_imagecycle_tsparserext.php:tx_imagecycle_tsparserext->getThemesNivo]; label=Used Theme: Set the default theme to use
+	# cat=plugin.tx_imagecycle.nivoslider/typo/020; type=user[EXT:imagecycle/lib/class.tx_imagecycle_tsparserext.php:tx_imagecycle_tsparserext->getThemesNivo]; label=Used Theme: Set the default theme to use
 	nivoTheme = default
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/020; type=string; label=Width: Width of slider panel
+	# cat=plugin.tx_imagecycle.nivoslider/typo/030; type=string; label=Width: Width of slider panel
 	imagewidth = 400c
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/030; type=string; label=Height: Height of slider panel
+	# cat=plugin.tx_imagecycle.nivoslider/typo/040; type=string; label=Height: Height of slider panel
 	imageheight = 300c
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/040; type=int+; label=Slices: Count of slices
+	# cat=plugin.tx_imagecycle.nivoslider/typo/050; type=string; label=Thumb width: Width of the thumbs
+	thumbwidth = 60c
+
+	# cat=plugin.tx_imagecycle.nivoslider/typo/060; type=string; label=Thumb height: Height of the thumbs
+	thumbheight = 60c
+
+	# cat=plugin.tx_imagecycle.nivoslider/typo/070; type=int+; label=Slices: Count of slices
 	nivoSlices = 15
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/050; type=int+; label=Box cols: Count of box cols
+	# cat=plugin.tx_imagecycle.nivoslider/typo/080; type=int+; label=Box cols: Count of box cols
 	nivoBoxCols = 8
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/060; type=int+; label=Box rows: Count of box rows
+	# cat=plugin.tx_imagecycle.nivoslider/typo/090; type=int+; label=Box rows: Count of box rows
 	nivoBoxRows = 4
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/070; type=int; label=Animation speed: Speed of the animation in ms
+	# cat=plugin.tx_imagecycle.nivoslider/typo/100; type=int; label=Animation speed: Speed of the animation in ms
 	nivoAnimSpeed = 500
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/080; type=int; label=Pause time: Delay in ms
+	# cat=plugin.tx_imagecycle.nivoslider/typo/110; type=int; label=Pause time: Delay in ms
 	nivoPauseTime = 3000
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/090; type=int; label=Start slide: Set starting Slide (0 index)
+	# cat=plugin.tx_imagecycle.nivoslider/typo/120; type=int; label=Start slide: Set starting Slide (0 index)
 	nivoStartSlide = 0
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/100; type=boolean; label=Start Random: If set, the first image will be shown randomly
+	# cat=plugin.tx_imagecycle.nivoslider/typo/130; type=boolean; label=Start Random: If set, the first image will be shown randomly
 	nivoStartRandom = 0
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/110; type=string; label=Own Options: Enter own options (see http://nivo.dev7studios.com/#usage)
+	# cat=plugin.tx_imagecycle.nivoslider/typo/140; type=string; label=Own Options: Enter own options (see http://nivo.dev7studios.com/#usage)
 	options = 
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/120; type=boolean; label=Override all options: If set, all options will be override
+	# cat=plugin.tx_imagecycle.nivoslider/typo/150; type=boolean; label=Override all options: If set, all options will be override
 	optionsOverride = 0
 
 
@@ -58,21 +64,19 @@ plugin.tx_imagecycle_pi3 {
 	# cat=plugin.tx_imagecycle.nivoslider/enable/030; type=boolean; label=Show control: Show control (1,2,3,...)
 	nivoControlNav = 0
 
-#	nivoControlNavThumbs = 0
-#	nivoControlNavThumbsFromRel = 0
-#	nivoControlNavThumbsSearch = .jpg
-#	nivoControlNavThumbsReplace = _thumb.jpg
+	# cat=plugin.tx_imagecycle.nivoslider/enable/040; type=boolean; label=Use thumb control: Show the thumbnail control
+	nivoControlNavThumbs = 0
 
-	# cat=plugin.tx_imagecycle.nivoslider/enable/040; type=boolean; label=Use keyboard: Use left & right arrows for navigation
+	# cat=plugin.tx_imagecycle.nivoslider/enable/050; type=boolean; label=Use keyboard: Use left & right arrows for navigation
 	nivoKeyboardNav = 1
 
-	# cat=plugin.tx_imagecycle.nivoslider/enable/050; type=boolean; label=Pause on hover: Stop animation while hovering
+	# cat=plugin.tx_imagecycle.nivoslider/enable/060; type=boolean; label=Pause on hover: Stop animation while hovering
 	nivoPauseOnHover = 0
 
-	# cat=plugin.tx_imagecycle.nivoslider/enable/060; type=boolean; label=Manual advance: Force manual transitions
+	# cat=plugin.tx_imagecycle.nivoslider/enable/070; type=boolean; label=Manual advance: Force manual transitions
 	nivoManualAdvance = 0
 
-	# cat=plugin.tx_imagecycle.nivoslider/enable/070; type=string; label=Caption opacity: Universal caption opacity
+	# cat=plugin.tx_imagecycle.nivoslider/enable/080; type=string; label=Caption opacity: Universal caption opacity
 	nivoCaptionOpacity = 0.8
 
 }

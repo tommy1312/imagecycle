@@ -104,6 +104,8 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$this->lConf['nivoTheme']            = $this->getFlexformData('settings', 'nivoTheme');
 			$this->lConf['imagewidth']           = $this->getFlexformData('settings', 'imagewidth');
 			$this->lConf['imageheight']          = $this->getFlexformData('settings', 'imageheight');
+			$this->lConf['thumbwidth']           = $this->getFlexformData('settings', 'thumbwidth');
+			$this->lConf['thumbheight']          = $this->getFlexformData('settings', 'thumbheight');
 			$this->lConf['nivoSlices']           = $this->getFlexformData('settings', 'nivoSlices');
 			$this->lConf['nivoBoxCols']          = $this->getFlexformData('settings', 'nivoBoxCols');
 			$this->lConf['nivoBoxRows']          = $this->getFlexformData('settings', 'nivoBoxRows');
@@ -114,6 +116,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$this->lConf['nivoDirectionNav']     = $this->getFlexformData('settings', 'nivoDirectionNav');
 			$this->lConf['nivoDirectionNavHide'] = $this->getFlexformData('settings', 'nivoDirectionNavHide');
 			$this->lConf['nivoControlNav']       = $this->getFlexformData('settings', 'nivoControlNav');
+			$this->lConf['nivoControlNavThumbs'] = $this->getFlexformData('settings', 'nivoControlNavThumbs');
 			$this->lConf['nivoKeyboardNav']      = $this->getFlexformData('settings', 'nivoKeyboardNav');
 			$this->lConf['nivoPauseOnHover']     = $this->getFlexformData('settings', 'nivoPauseOnHover');
 			$this->lConf['nivoManualAdvance']    = $this->getFlexformData('settings', 'nivoManualAdvance');
@@ -159,6 +162,12 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			if ($this->lConf['imageheight']) {
 				$this->conf['imageheight'] = $this->lConf['imageheight'];
 			}
+			if ($this->lConf['thumbwidth']) {
+				$this->conf['thumbwidth'] = $this->lConf['thumbwidth'];
+			}
+			if ($this->lConf['thumbheight']) {
+				$this->conf['thumbheight'] = $this->lConf['thumbheight'];
+			}
 			if ($this->lConf['nivoSlices']) {
 				$this->conf['nivoSlices'] = $this->lConf['nivoSlices'];
 			}
@@ -192,6 +201,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 			if ($this->lConf['nivoControlNav'] < 2) {
 				$this->conf['nivoControlNav'] = $this->lConf['nivoControlNav'];
+			}
+			if ($this->lConf['nivoControlNavThumbs'] < 2) {
+				$this->conf['nivoControlNavThumbs'] = $this->lConf['nivoControlNavThumbs'];
 			}
 			if ($this->lConf['nivoKeyboardNav'] < 2) {
 				$this->conf['nivoKeyboardNav'] = $this->lConf['nivoKeyboardNav'];
@@ -314,6 +326,12 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		if (! $this->conf['imageheight']) {
 			$this->conf['imageheight'] = "200c";
 		}
+		if (! $this->conf['thumbwidth']) {
+			$this->conf['thumbwidth'] = "60c";
+		}
+		if (! $this->conf['thumbheight']) {
+			$this->conf['thumbheight'] = "60c";
+		}
 
 		// define the css file
 		$this->pagerenderer->addCssFile($this->conf['cssFileNivo']);
@@ -336,6 +354,11 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 			$themeClass = 'theme-'.$this->conf['nivoTheme'];
 		}
+		// Add the controlnav-thumbs
+		if ($this->conf['nivoControlNavThumbs']) {
+			$themeClass .= ' controlnav-thumbs';
+		}
+
 		$GLOBALS['TSFE']->register['themeclass'] = $themeClass;
 
 		// We have to build the images first to get the maximum width and height
@@ -357,6 +380,16 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 				$image = null;
 				$imgConf = $this->conf['nivo.'][$this->type.'.']['image.'];
 				$totalImagePath = $dir . $item['image'];
+				// Thumb
+				if ($this->conf['nivoControlNavThumbs']) {
+					$thumbconf['file'] = $totalImagePath;
+					$thumbconf['file.']['width']  = $this->conf['thumbwidth'];
+					$thumbconf['file.']['height'] = $this->conf['thumbheight'];
+					$GLOBALS['TSFE']->register['thumbrel'] = $this->cObj->IMG_RESOURCE($thumbconf);
+				} else {
+					$GLOBALS['TSFE']->register['thumbrel'] = '';
+				}
+				// 
 				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
@@ -438,6 +471,10 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		$options['directionNav']     = "directionNav: ".($this->conf['nivoDirectionNav'] ? 'true' : 'false');
 		$options['directionNavHide'] = "directionNavHide: ".($this->conf['nivoDirectionNavHide'] ? 'true' : 'false');
 		$options['controlNav']       = "controlNav: ".($this->conf['nivoControlNav'] ? 'true' : 'false');
+		if ($this->conf['nivoControlNavThumbs']) {
+			$options['controlNavThumbs']        = "controlNavThumbs: true";
+			$options['controlNavThumbsFromRel'] = "controlNavThumbsFromRel: true";
+		}
 		$options['keyboardNav']      = "keyboardNav: ".($this->conf['nivoKeyboardNav'] ? 'true' : 'false');
 		$options['pauseOnHover']     = "pauseOnHover: ".($this->conf['nivoPauseOnHover'] ? 'true' : 'false');
 		$options['manualAdvance']    = "manualAdvance: ".($this->conf['nivoManualAdvance'] ? 'true' : 'false');

@@ -8,8 +8,13 @@
  * 
  * March 2010
  */
- 
- 
+
+.tx-imagecycle-pi3-images {
+	display: none;
+}
+noscript .tx-imagecycle-pi3-images {
+	display: block;
+}
 /* The Nivo Slider styles */
 .nivoSlider {
 	position:relative;
@@ -63,7 +68,7 @@
 	display:inline !important;
 }
 .nivo-html-caption {
-    display:none;
+	display:none;
 }
 /* Direction nav styles (e.g. Next & Prev) */
 .nivo-directionNav a {
