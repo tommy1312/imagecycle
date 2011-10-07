@@ -208,9 +208,6 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			$pageID    = false;
 			foreach ($GLOBALS['TSFE']->rootLine as $page) {
 				if (! $pageID) {
-					if (trim($page['tx_imagecycle_effect']) && ! $this->conf['disableRecursion']) {
-						$this->conf['type'] = $page['tx_imagecycle_effect'];
-					}
 					if (
 						(($page['tx_imagecycle_mode'] == 'upload' || ! $page['tx_imagecycle_mode']) && trim($page['tx_imagecycle_images']) != '') ||
 						($page['tx_imagecycle_mode'] == 'dam'         && trim($page['tx_imagecycle_damimages']) != '') ||
@@ -229,9 +226,6 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 				if ($this->sys_language_uid) {
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
 					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-					if (trim($used_page['tx_imagecycle_effect'])) {
-						$this->conf['type'] = $row['tx_imagecycle_effect'];
-					}
 				}
 				// define the images
 				switch ($this->lConf['mode']) {

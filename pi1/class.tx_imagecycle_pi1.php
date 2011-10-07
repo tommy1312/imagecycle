@@ -220,21 +220,21 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					) {
 						$used_page = $page;
 						$pageID    = $used_page['uid'];
-						$this->lConf['mode']          = $used_page['tx_imagecycle_mode'];
-						$this->lConf['damcategories'] = $used_page['tx_imagecycle_damcategories'];
+						$this->conf['mode']          = $used_page['tx_imagecycle_mode'];
+						$this->conf['damcategories'] = $used_page['tx_imagecycle_damcategories'];
 					}
 				}
 			}
 			if ($pageID) {
 				if ($this->sys_language_uid) {
-					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
+					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
 					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 					if (trim($used_page['tx_imagecycle_effect'])) {
 						$this->conf['type'] = $row['tx_imagecycle_effect'];
 					}
 				}
 				// define the images
-				switch ($this->lConf['mode']) {
+				switch ($this->conf['mode']) {
 					case "" : {}
 					case "folder" : {}
 					case "upload" : {
@@ -329,6 +329,10 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 	/**
 	 * Set the Information of the images if mode = dam
+	 * 
+	 * @param boolean $fromCategory
+	 * @param string $table
+	 * @param integer $uid
 	 * @return boolean
 	 */
 	protected function setDataDam($fromCategory=false, $table='tt_content', $uid=0)
@@ -336,10 +340,16 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		// clear the imageDir
 		$this->imageDir = '';
 		// get all fields for captions
-		$damCaptionFields = t3lib_div::trimExplode(',', $this->conf['damCaptionFields'], true);
-		$damHrefFields    = t3lib_div::trimExplode(',', $this->conf['damHrefFields'], true);
-		$fields  = (count($damCaptionFields) > 0 ? ','.implode(',tx_dam.', $damCaptionFields) : '');
-		$fields .= (count($damHrefFields) > 0    ? ','.implode(',tx_dam.', $damHrefFields)    : '');
+		$fieldsArray = array_merge(
+			t3lib_div::trimExplode(',', $this->conf['damCaptionFields'], true),
+			t3lib_div::trimExplode(',', $this->conf['damHrefFields'], true)
+		);
+		$fields = NULL;
+		if (count($fieldsArray) > 0) {
+			foreach ($fieldsArray as $field) {
+				$fields .= ',tx_dam.' . $field;
+			}
+		}
 		if ($fromCategory === true) {
 			// Get the images from dam category
 			$damcategories = $this->getDamcats($this->lConf['damcategories']);
