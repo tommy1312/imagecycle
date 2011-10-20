@@ -345,9 +345,11 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			t3lib_div::trimExplode(',', $this->conf['damHrefFields'], true)
 		);
 		$fields = NULL;
+		$damCaptionFields = array();
 		if (count($fieldsArray) > 0) {
 			foreach ($fieldsArray as $field) {
 				$fields .= ',tx_dam.' . $field;
+				$damCaptionFields[] = $field;
 			}
 		}
 		if ($fromCategory === true) {
