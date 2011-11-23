@@ -45,6 +45,17 @@ plugin.tx_imagecycle_pi1 {
 	captionSpeed = {$plugin.tx_imagecycle_pi1.captionSpeed}
 
 	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
+	damCaptionObject = TEXT
+	damCaptionObject {
+		data = register:dam_caption
+		ifEmpty {
+			data = register:dam_description
+			ifEmpty {
+				data = register:dam_title
+			}
+		}
+		
+	}
 	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
 
 	cycle {
@@ -116,6 +127,22 @@ plugin.tx_imagecycle_pi1 {
 					maxW = {$plugin.tt_news.singleMaxW}
 					maxH = {$plugin.tt_news.singleMaxH}
 				}
+				imageLinkWrap = 1
+				imageLinkWrap {
+					enable.ifEmpty.typolink {
+						parameter.field = links
+						parameter.listNum.splitChar = 10
+						parameter.listNum.stdWrap.data = register : IMAGE_NUM_CURRENT
+						returnLast = url
+					}
+					typolink {
+						parameter.field = links
+						parameter.listNum.splitChar = 10
+						parameter.listNum.stdWrap.data = register : IMAGE_NUM_CURRENT
+						target = {$styles.content.links.target}
+						extTarget = {$styles.content.links.extTarget}
+					}
+				}
 				altText >
 				altText {
 					data = register:imagecaption
@@ -126,6 +153,8 @@ plugin.tx_imagecycle_pi1 {
 			stdWrap {
 				dataWrap = <div class="tx-imagecycle-pi1"><ul id="{register:key}" class="tx-imagecycle-pi1-images"> | </ul></div>
 				preUserFunc = tx_imagecycle->getSlideshow
+				preUserFunc.instanceClass = EXT:imagecycle/pi1/class.tx_imagecycle_pi1.php
+				preUserFunc.instance = tx_imagecycle_pi1
 				preUserFunc.type = ttnews
 			}
 			captionWrap {

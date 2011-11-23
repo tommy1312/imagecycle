@@ -1,6 +1,3 @@
-#
-# tt_news images
-#
 [globalString = TYPO3_LOADED_EXT|tt_news|type=*]
 includeLibs.imagecycle = EXT:imagecycle/class.tx_imagecycle.php
 plugin.tt_news {

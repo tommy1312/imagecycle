@@ -30,6 +30,17 @@ plugin.tx_imagecycle_pi2 {
 	optionsOverride = {$plugin.tx_imagecycle_pi2.optionsOverride}
 
 	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
+	damCaptionObject = TEXT
+	damCaptionObject {
+		data = register:dam_caption
+		ifEmpty {
+			data = register:dam_description
+			ifEmpty {
+				data = register:dam_title
+			}
+		}
+		
+	}
 	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
 
 	coin {

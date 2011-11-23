@@ -39,6 +39,17 @@ plugin.tx_imagecycle_pi3 {
 	optionsOverride = {$plugin.tx_imagecycle_pi3.optionsOverride}
 
 	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
+	damCaptionObject = TEXT
+	damCaptionObject {
+		data = register:dam_caption
+		ifEmpty {
+			data = register:dam_description
+			ifEmpty {
+				data = register:dam_title
+			}
+		}
+		
+	}
 	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
 
 	nivo {
@@ -81,16 +92,71 @@ plugin.tx_imagecycle_pi3 {
 				required = 1
 			}
 			stdWrap {
-				dataWrap = <div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images" id="{register:key}"> | </div></div>
+				dataWrap = <div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider" id="{register:key}"> | </div></div>
+				required = 1
+			}
+			itemWrap {
+				wrap = |
 				required = 1
 			}
 			noscriptWrap {
-				dataWrap = <noscript><div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images" id="{register:key}"> | </div></div></noscript>
+				dataWrap = <noscript><div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider" id="{register:key}"> | </div></div></noscript>
 				required = 1
 			}
 		}
+
 		header < .normal
+
 		content < .normal
+
+		ttnews {
+			image = IMAGE
+			image {
+				file {
+					maxW = {$plugin.tt_news.singleMaxW}
+					maxH = {$plugin.tt_news.singleMaxH}
+				}
+				imageLinkWrap = 1
+				imageLinkWrap {
+					enable.ifEmpty.typolink {
+						parameter.field = links
+						parameter.listNum.splitChar = 10
+						parameter.listNum.stdWrap.data = register : IMAGE_NUM_CURRENT
+						returnLast = url
+					}
+					typolink {
+						parameter.field = links
+						parameter.listNum.splitChar = 10
+						parameter.listNum.stdWrap.data = register : IMAGE_NUM_CURRENT
+						target = {$styles.content.links.target}
+						extTarget = {$styles.content.links.extTarget}
+					}
+				}
+				altText >
+				altText {
+					data = register:caption
+					stripHtml = 1
+				}
+				titleText < .altText
+				params = rel="{register:thumbrel}"
+				params.insertData = 1
+			}
+			captionWrap {
+				dataWrap = |
+				required = 1
+			}
+			stdWrap {
+				dataWrap = <div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider" id="{register:key}"> | </div></div>
+				preUserFunc = tx_imagecycle->getSlideshow
+				preUserFunc.instanceClass = EXT:imagecycle/pi3/class.tx_imagecycle_pi3.php
+				preUserFunc.instance = tx_imagecycle_pi3
+				preUserFunc.type = ttnews
+			}
+			noscriptWrap {
+				dataWrap = <noscript><div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider" id="{register:key}"> | </div></div></noscript>
+				required = 1
+			}
+		}
 	}
 	_CSS_DEFAULT_STYLE (
 	)

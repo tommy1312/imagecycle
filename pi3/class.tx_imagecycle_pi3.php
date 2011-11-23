@@ -425,8 +425,19 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$jQueryNoConflict = "";
 		}
 
+		if ($maxWidth == 0 && $maxHeight == 0 && count($GLOBALS['TSFE']->lastImageInfo)) {
+			$lastImageInfo = $GLOBALS['TSFE']->lastImageInfo;
+			$maxWidth = $lastImageInfo[0];
+			$maxHeight = $lastImageInfo[1];
+		}
+		if ($this->cObj->currentRecord != $GLOBALS['TSFE']->currentRecord) {
+			list($table, $uid) = t3lib_div::trimExplode(':', $GLOBALS['TSFE']->currentRecord, 1);
+		} else {
+			$uid = $this->cObj->data['uid'];
+		}
+
 		$this->pagerenderer->addCSS("
-#c{$this->cObj->data['uid']} .nivoSlider {
+#c{$uid} .nivoSlider {
 	width: {$maxWidth}px;
 	height: {$maxHeight}px;
 }");

@@ -175,7 +175,8 @@ t3lib_extMgm::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:imagecycle/loc
 
 // tt_news
 if (t3lib_extMgm::isLoaded('tt_news')) {
-	t3lib_extMgm::addStaticFile($_EXTKEY, 'static/tt_news/', 'Image-Cycle for tt_news');
+	t3lib_extMgm::addStaticFile($_EXTKEY, 'static/tt_news/', 'Image-Cycle for tt_news - Cycle');
+	t3lib_extMgm::addStaticFile($_EXTKEY, 'static/tt_news/nivoslider/', 'Image-Cycle for tt_news - Nivo');
 	t3lib_div::loadTCA('tt_news');
 	t3lib_extMgm::addTCAcolumns('tt_news', $tempColumns, 1);
 	$TCA['tt_news']['palettes']['tx_imagecycle'] = array(

@@ -68,6 +68,7 @@ class tx_imagecycle
 				$GLOBALS['TSFE']->register['imagecaption'] = $imgsCaptions[$cc];
 				$GLOBALS['TSFE']->register['caption']      = $imgsCaptions[$cc];
 				$GLOBALS['TSFE']->register['key']          = 'imagecycle_' . $pObj->local_cObj->data['uid'];
+				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = $key;
 
 				// DAM_TTNEWS - set path for DAM images - morini@gammsystem.com
 				if (t3lib_extMgm::isLoaded('dam_ttnews')) {
@@ -103,19 +104,30 @@ class tx_imagecycle
 	{
 		$return_string = NULL;
 		if ($this->cObj->data['tx_imagecycle_activate']) {
-			require_once(t3lib_extMgm::extPath('imagecycle') . 'pi1/class.tx_imagecycle_pi1.php');
-			$obj = t3lib_div::makeInstance('tx_imagecycle_pi1');
+			$instanceClass = ($conf['instanceClass'] ? $conf['instanceClass'] : t3lib_extMgm::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
+			if (! file_exists($instanceClass)) {
+				// try to get the filename if file not exists
+				$instanceClass = $GLOBALS['TSFE']->tmpl->getFileName($instanceClass);
+			}
+			if (! file_exists($instanceClass)) {
+				t3lib_div::devLog('Class \''.$instanceClass.'\' not found', 'imagecycle', 1);
+				return $content;
+			}
+			require_once($instanceClass);
+			$instance = ($conf["instance"] ? $conf["instance"] : 'tx_imagecycle_pi1');
+			$obj = t3lib_div::makeInstance($instance);
 			$obj->setContentKey($obj->extKey . '_' . $this->cObj->data['uid']);
-			$obj->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_imagecycle_pi1.'];
+			$obj->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.'][$instance . '.'];
 			// overwrite the width and height of the config
 			$obj->conf['imagewidth'] = $GLOBALS['TSFE']->register['imagewidth'];
 			$obj->conf['imageheight'] = $GLOBALS['TSFE']->register['imageheight'];
 			if ($this->cObj->data['tx_imagecycle_duration'] > 0) {
 				$obj->conf['displayDuration'] = $this->cObj->data['tx_imagecycle_duration'];
+				$obj->conf['nivoPauseTime'] = $this->cObj->data['tx_imagecycle_duration'];
 			}
 			$obj->cObj = $this->cObj;
 			$obj->type = 'content';
-			$return_string = $obj->parseTemplate(array(), 'uploads/pics/', true);
+			$return_string = $obj->parseTemplate(array(), 'uploads/pics/', TRUE);
 		}
 		return $content;
 	}

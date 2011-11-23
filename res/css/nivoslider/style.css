@@ -9,12 +9,16 @@
  * March 2010
  */
 
-.tx-imagecycle-pi3-images {
+.tx-imagecycle-pi3.slider-wrapper {
 	display: none;
 }
-noscript .tx-imagecycle-pi3-images {
+noscript .tx-imagecycle-pi3.slider-wrapper {
 	display: block;
 }
+noscript .nivoSlider img {
+	display: block !important;
+}
+
 /* The Nivo Slider styles */
 .nivoSlider {
 	position:relative;

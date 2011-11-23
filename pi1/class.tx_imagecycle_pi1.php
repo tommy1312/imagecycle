@@ -406,7 +406,19 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				$caption = '';
 				unset($caption);
 				if (count($damCaptionFields) > 0) {
-					foreach ($damCaptionFields as $damCaptionField) {
+					if (isset($this->conf['damCaptionObject'])) {
+						foreach ($damCaptionFields as $damCaptionField) {
+							if (isset($row[$damCaptionField])) {
+								$GLOBALS['TSFE']->register['dam_'.$damCaptionField] = $row[$damCaptionField];
+							}
+						}
+						$caption = trim($this->cObj->cObjGetSingle($this->conf['damCaptionObject'], $this->conf['damCaptionObject.']));
+						// Unset the registered values
+						foreach ($damCaptionFields as $damCaptionField) {
+							unset($GLOBALS['TSFE']->register['dam_'.$damCaptionField]);
+						}
+					} else {
+						// the old way
 						if (! isset($caption) && trim($row[$damCaptionField])) {
 							$caption = $row[$damCaptionField];
 							break;
