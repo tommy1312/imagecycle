@@ -340,16 +340,16 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		// clear the imageDir
 		$this->imageDir = '';
 		// get all fields for captions
+		$damCaptionFields = t3lib_div::trimExplode(',', $this->conf['damCaptionFields'], true);
+		$damHrefFields    = t3lib_div::trimExplode(',', $this->conf['damHrefFields'], true);
 		$fieldsArray = array_merge(
-			t3lib_div::trimExplode(',', $this->conf['damCaptionFields'], true),
-			t3lib_div::trimExplode(',', $this->conf['damHrefFields'], true)
+			$damCaptionFields,
+			$damHrefFields
 		);
 		$fields = NULL;
-		$damCaptionFields = array();
 		if (count($fieldsArray) > 0) {
 			foreach ($fieldsArray as $field) {
 				$fields .= ',tx_dam.' . $field;
-				$damCaptionFields[] = $field;
 			}
 		}
 		if ($fromCategory === true) {

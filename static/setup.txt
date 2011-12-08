@@ -54,7 +54,6 @@ plugin.tx_imagecycle_pi1 {
 				data = register:dam_title
 			}
 		}
-		
 	}
 	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
 
