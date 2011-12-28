@@ -68,8 +68,8 @@ plugin.tx_imagecycle_pi3 {
 					typolink {
 						parameter.data = register:href
 						title {
-							wrap = #htmlcaption-|
-							data = register:caption_key
+							data = register:caption
+							stripHtml = 1
 						}
 						target = {$plugin.tx_imagecycle_pi1.linkTarget}
 						extTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
@@ -82,6 +82,11 @@ plugin.tx_imagecycle_pi3 {
 				titleText {
 					wrap = #htmlcaption-|
 					data = register:caption_key
+					data {
+						override = register:null
+						override.if.isFalse.data = register:caption
+					}
+					required = 1
 				}
 				longdescURL >
 				params = rel="{register:thumbrel}"

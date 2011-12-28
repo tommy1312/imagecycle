@@ -39,6 +39,15 @@ jQuery(document).ready(function() {
 	<!-- ###ONLY_ONE_IMAGE### -->
 	jQuery('####KEY###').parent().css('width', jQuery('####KEY###').css('width'));
 	<!-- ###PAGER### -->
+	if (jQuery('####KEY###_pager').length == 0) {
+		var cycle_images = jQuery('####KEY### li').length;
+		var cycle_pager = '<div id="###KEY###_pager" class="tx-imagecycle-pi1-pager">';
+		for (i=0; i<cycle_images; i++) {
+			cycle_pager += '<a href="#" rev="'+i+'">'+(i+1)+'</a>';
+		}
+		cycle_pager += '</div>';
+		jQuery('####KEY###').before(cycle_pager);
+	}
 	jQuery('####KEY###_pager a').each(function() {
 		jQuery(this).click(function() {
 			jQuery('####KEY###').cycle(parseInt(jQuery(this).attr('rev')));
