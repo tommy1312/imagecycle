@@ -42,6 +42,8 @@ plugin.tx_imagecycle_pi1 {
 	captionTypeHeight = {$plugin.tx_imagecycle_pi1.captionTypeHeight}
 	captionTypeWidth = {$plugin.tx_imagecycle_pi1.captionTypeWidth}
 	captionSync = {$plugin.tx_imagecycle_pi1.captionSync}
+	captionTransition = {$plugin.tx_imagecycle_pi1.captionTransition}
+	captionTransitionDir = {$plugin.tx_imagecycle_pi1.captionTransitionDir}
 	captionSpeed = {$plugin.tx_imagecycle_pi1.captionSpeed}
 
 	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}

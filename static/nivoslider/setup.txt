@@ -105,7 +105,7 @@ plugin.tx_imagecycle_pi3 {
 				required = 1
 			}
 			noscriptWrap {
-				dataWrap = <noscript><div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider" id="{register:key}"> | </div></div></noscript>
+				dataWrap = <noscript><div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider"> | </div></div></noscript>
 				required = 1
 			}
 		}

@@ -1,10 +1,10 @@
 plugin.tx_imagecycle_pi1 {
 
-	# cat=plugin.tx_imagecycle.basic/enable/010; type=options[_self,_new,_top,_parent]; label=Internal linktarget:The target where internal links will be opend
+	# cat=plugin.tx_imagecycle.basic/enable/010; type=options[_self,_blank,_new,_top,_parent]; label=Internal linktarget:The target where internal links will be opend
 	linkTarget = _self
 
-	# cat=plugin.tx_imagecycle.basic/enable/020; type=options[_self,_new,_top,_parent]; label=External linktarget:The target where external links will be opend
-	extlinkTarget = _new
+	# cat=plugin.tx_imagecycle.basic/enable/020; type=options[_self,_blank,_new,_top,_parent]; label=External linktarget:The target where external links will be opend
+	extlinkTarget = _blank
 
 	# cat=plugin.tx_imagecycle.basic/enable/030; type=boolean; label=Random: Show the images random
 	random = 0
@@ -123,10 +123,14 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.caption/typo/040; type=boolean; label=Animate Sync: If set, the caption will be displayed synchron to the image
 	captionSync = 0
 
-	# cat=plugin.tx_imagecycle.caption/typo/050; type=int; label=Speed of the animation: Set the speed of the animation in millisecounds
+	# cat=plugin.tx_imagecycle.caption/typo/050; type=options[,swing,linear,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition: Effect of transition (Swing, Linear, Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
+	captionTransition = swing
+
+	# cat=plugin.tx_imagecycle.caption/typo/060; type=options[,In,Out,InOut]; label=Transition direction: Direction of transition (In, Out, InOut)
+	captionTransitionDir = 
+
+	# cat=plugin.tx_imagecycle.caption/typo/070; type=int; label=Speed of the animation: Set the speed of the animation in millisecounds
 	captionSpeed = 200
-
-
 
 
 

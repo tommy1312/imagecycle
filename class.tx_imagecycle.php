@@ -45,15 +45,33 @@ class tx_imagecycle
 		} else {
 			$imageConf = 'image.';
 		}
-		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount']:1;
+		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount'] : 1;
 		$imageNum = t3lib_div::intInRange($imageNum, 0, 1000);
 		$theImgCode = '';
-		$imgs = t3lib_div::trimExplode(',', $row['image'], 1);
 		$imgsCaptions = explode(chr(10), $row['imagecaption']);
 
 		// DAM_TTNEWS - load image from DAM - morini@gammsystem.com
 		if (t3lib_extMgm::isLoaded('dam_ttnews')) {
 			$imgs = $this->getDamImages($pObj, $lConf);
+		} else {
+			$imgs = t3lib_div::trimExplode(',', $row['image'], 1);
+		}
+
+		// remove first img from the image array in single view if the TSvar firstImageIsPreview is set
+		if ($pObj->theCode == 'SINGLE') {
+			$iC = count($imgs);
+			if (($iC > 1 && $pObj->config['firstImageIsPreview']) || ($iC >= 1 && $pObj->config['forceFirstImageIsPreview'])) {
+				array_shift($imgs);
+				array_shift($imgsCaptions);
+				$iC--;
+			}
+			// get img array parts for single view pages
+			if ($pObj->piVars[$pObj->pObj['singleViewPointerName']]) {
+				$spage = $this->piVars[$this->config['singleViewPointerName']];
+				$astart = $imageNum * $spage;
+				$imgs = array_slice($imgs, $astart, $imageNum);
+				$imgsCaptions = array_slice($imgsCaptions, $astart, $imageNum);
+			}
 		}
 
 		reset($imgs);
@@ -178,25 +196,7 @@ class tx_imagecycle
 		while (list($key,$val) = each($damRows)) {
 			$damRows[$key] =  $GLOBALS['TSFE']->sys_page->getRecordOverlay('tx_dam', $val, $GLOBALS['TSFE']->sys_language_uid, '');
 		}
-		// remove first img from the image array in single view if the TSvar firstImageIsPreview is set
-		if (((count($damFiles) > 1 && $pObj->config['firstImageIsPreview'])||(count($damFiles) >= 1 && $pObj->config['forceFirstImageIsPreview'])) && $pObj->theCode == 'SINGLE') {
-			array_shift($damFiles);
-			array_shift($damRows);
-			array_shift($imgsCaptions);
-			array_shift($imgsAltTexts);
-			array_shift($imgsTitleTexts);
-			$shift=true;
-		}
-		// get img array parts for single view pages
-		if ($pObj->piVars[$pObj->pObj['singleViewPointerName']]) {
-			$spage = $pObj->piVars[$pObj->config['singleViewPointerName']];
-			$astart = $imageNum*$spage;
-			$damFiles = array_slice($damFiles,$astart,$imageNum);
-			$damRows = array_slice($damRows,$astart,$imageNum);
-			$imgsCaptions = array_slice($imgsCaptions,$astart,$imageNum);
-			$imgsAltTexts = array_slice($imgsAltTexts,$astart,$imageNum);
-			$imgsTitleTexts = array_slice($imgsTitleTexts,$astart,$imageNum);
-		}
+
 		return $damFiles;
 	}
 }
