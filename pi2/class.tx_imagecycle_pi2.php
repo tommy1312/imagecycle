@@ -79,12 +79,14 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 
 			// It's a content, all data from flexform
 
-			$this->lConf['mode']          = $this->getFlexformData('general', 'mode');
-			$this->lConf['images']        = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['hrefs']         = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['captions']      = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['damimages']     = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
-			$this->lConf['damcategories'] = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+			$this->lConf['mode']           = $this->getFlexformData('general', 'mode');
+			$this->lConf['images']         = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['hrefs']          = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captions']       = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captionsData']   = $this->getFlexformData('general', 'captionsData', ($this->lConf['mode'] == 'uploadData'));
+			$this->lConf['damimages']      = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
+			$this->lConf['damcategories']  = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+			$this->lConf['onlyFirstImage'] = $this->getFlexformData('general', 'onlyFirstImage');
 
 			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->lConf['mode'] == 'uploadRTE'));
 			$this->lConf['imagesRTE'] = array();
@@ -131,6 +133,10 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 					$this->setDataUploadRTE();
 					break;
 				}
+				case "uploadData" : {
+					$this->setDataUploadData();
+					break;
+				}
 				case "dam" : {
 					$this->setDataDam(false, 'tt_content', $this->cObj->data['uid']);
 					break;
@@ -149,6 +155,9 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			}
 			if ($this->lConf['imageheight']) {
 				$this->conf['imageheight'] = $this->lConf['imageheight'];
+			}
+			if ($this->lConf['onlyFirstImage'] < 2) {
+				$this->conf['onlyFirstImage'] = $this->lConf['onlyFirstImage'];
 			}
 			if ($this->lConf['coinSpw']) {
 				$this->conf['coinSpw'] = $this->lConf['coinSpw'];
@@ -235,12 +244,30 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			}
 		}
 
-
+		$count = null;
+		if ($this->conf['onlyFirstImage']) {
+			$count = (count($this->hrefs) > count($this->captions) ? count($this->hrefs) : count($this->captions));
+			if (! $count) {
+				$count = count($this->images);
+			}
+		} else {
+			$count = count($this->images);
+		}
 		$data = array();
-		foreach ($this->images as $key => $image) {
-			$data[$key]['image']   = $image;
-			$data[$key]['href']    = $this->hrefs[$key];
-			$data[$key]['caption'] = $this->captions[$key];
+		$i = 0;
+		for ($a=0; $a<$count; $a++) {
+			if ($this->conf['onlyFirstImage']) {
+				// Only use the first image
+				$image = $this->images[0];
+			} else {
+				$image = $this->images[$a];
+			}
+			if ($image) {
+				$data[$i]['image']   = $image;
+				$data[$i]['href']    = $this->hrefs[$a];
+				$data[$i]['caption'] = $this->captions[$a];
+				$i ++;
+			}
 		}
 
 		return $this->parseTemplate($data);
@@ -297,7 +324,11 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			foreach ($data as $key => $item) {
 				$image = null;
 				$imgConf = $this->conf['coin.'][$this->type.'.']['image.'];
-				$totalImagePath = $dir . $item['image'];
+				if (file_exists(t3lib_div::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+					$totalImagePath = $item['image'];
+				} else {
+					$totalImagePath = $dir . $item['image'];
+				}
 				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];

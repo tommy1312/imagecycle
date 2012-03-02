@@ -61,6 +61,35 @@ class tx_imagecycle_tceFunc
 		$tceforms = &$PA['pObj'];
 		return $tceforms->getSingleField_SW($PA['table'], $PA['field'], $PA['row'], $PA);
 	}
+
+	/**
+	 * This will render the group db for caption (uploadData)
+	 *
+	 * @param	array		$PA An array with additional configuration options.
+	 * @param	object		$fobj TCEForms object reference
+	 * @return	string		The HTML code for the TCEform field
+	 */
+	public function getAllowed($PA, &$fObj)
+	{
+		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+		unset($PA['fieldConf']['config']['form_type']);
+		unset($PA['fieldConf']['config']['userFunc']);
+		if ($confArr['allowedDbTypesForCaption']) {
+			$PA['fieldConf']['config']['allowed'] = $confArr['allowedDbTypesForCaption'];
+		} else {
+			$PA['fieldConf']['config']['allowed'] = 'tt_content,fe_users';
+			if (t3lib_extMgm::isLoaded("tt_news")) {
+				$PA['fieldConf']['config']['allowed'] .= ',tt_news';
+			}
+			if (t3lib_extMgm::isLoaded("tt_address")) {
+				$PA['fieldConf']['config']['allowed'] .= ',tt_address';
+			}
+			
+		}
+		$tceforms = &$PA['pObj'];
+
+		return $tceforms->getSingleField_SW($PA['table'], $PA['field'], $PA['row'], $PA);
+	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/lib/class.tx_imagecycle_tceFunc.php']) {

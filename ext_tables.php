@@ -14,6 +14,7 @@ if (t3lib_extMgm::isLoaded('dam')) {
 		'config' => array(
 			'type' => 'select',
 			'itemsProcFunc' => 'tx_imagecycle_itemsProcFunc->getModes',
+			'displayMode' => 'page',
 			'size' => 1,
 			'maxitems' => 1,
 		)
@@ -125,11 +126,11 @@ $tempColumns['tx_imagecycle_stoprecursion'] = array(
 
 t3lib_div::loadTCA('pages');
 t3lib_extMgm::addTCAcolumns('pages', $tempColumns, 1);
-t3lib_extMgm::addToAllTCAtypes('pages','tx_imagecycle_mode;;;;1-1-1, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
+t3lib_extMgm::addToAllTCAtypes('pages', '--div--;LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_div, tx_imagecycle_mode;;;;3-3-3, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
 
 t3lib_div::loadTCA('pages_language_overlay');
 t3lib_extMgm::addTCAcolumns('pages_language_overlay', $tempColumns, 1);
-t3lib_extMgm::addToAllTCAtypes('pages_language_overlay','tx_imagecycle_mode;;;;1-1-1, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
+t3lib_extMgm::addToAllTCAtypes('pages_language_overlay', '--div--;LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_div, tx_imagecycle_mode;;;;3-3-3, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
 
 $TCA['pages']['ctrl']['requestUpdate'] .= ($TCA['pages']['ctrl']['requestUpdate'] ? ',' : ''). 'tx_imagecycle_mode';
 $TCA['pages_language_overlay']['ctrl']['requestUpdate'] .= ($TCA['pages_language_overlay']['ctrl']['requestUpdate'] ? ',' : ''). 'tx_imagecycle_mode';

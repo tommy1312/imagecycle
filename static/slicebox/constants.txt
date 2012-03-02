@@ -17,6 +17,9 @@ plugin.tx_imagecycle_pi5 {
 	# cat=plugin.tx_imagecycle.slicebox/dims/020; type=string; label=Height: Height of slider panel
 	imageheight = 250c
 
+	# cat=plugin.tx_imagecycle.slicebox/dims/025; type=boolean; label=First image only: Use only one image, just cycle the hrefs and captions
+	onlyFirstImage = 0
+
 	# cat=plugin.tx_imagecycle.slicebox/dims/030; type=string; label=Color of the hidden sides: Color of the hidden sides
 	sliceColorHiddenSides = #222
 

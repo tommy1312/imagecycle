@@ -205,11 +205,18 @@ class tx_imagecycle_itemsProcFunc
 			"upload",
 			"EXT:imagecycle/mode_upload.gif"
 		);
-		$optionList[] = array(
-			$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.rte'),
-			"uploadRTE",
-			"EXT:imagecycle/mode_rte.gif"
-		);
+		if ($config['config']['displayMode'] != 'page') {
+			$optionList[] = array(
+					$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.rte'),
+					"uploadRTE",
+					"EXT:imagecycle/mode_rte.gif"
+			);
+			$optionList[] = array(
+					$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.data'),
+					"uploadData",
+					"EXT:imagecycle/mode_data.gif"
+			);
+		}
 		if (t3lib_extMgm::isLoaded("dam")) {
 			$optionList[] = array(
 				$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.dam'),

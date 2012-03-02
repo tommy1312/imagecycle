@@ -22,6 +22,7 @@ plugin.tx_imagecycle_pi1 {
 
 	imagewidth = {$plugin.tx_imagecycle_pi1.imagewidth}
 	imageheight = {$plugin.tx_imagecycle_pi1.imageheight}
+	onlyFirstImage = {$plugin.tx_imagecycle_pi1.onlyFirstImage}
 
 	type = {$plugin.tx_imagecycle_pi1.type}
 	transition = {$plugin.tx_imagecycle_pi1.transition}
@@ -173,6 +174,135 @@ plugin.tx_imagecycle_pi1 {
 			}
 		}
 	}
+
+	dataConf {
+		tt_content {
+			image >
+			href >
+			caption = RECORDS
+			caption {
+				source.data = register:source
+				tables = tt_content
+				dontCheckPid = 1
+				conf.tt_content = COA
+				conf.tt_content {
+					10 = TEXT
+					10 {
+						field = header
+						wrap = <strong> | </strong>
+					}
+					20 = TEXT
+					20 {
+						field = bodytext
+						wrap = <br /> |
+						cropHTML = 160|...|1
+						required = 1
+					}
+				}
+			}
+		}
+		fe_users {
+			image >
+			href >
+			caption = RECORDS
+			caption {
+				source.data = register:source
+				tables = fe_users
+				dontCheckPid = 1
+				conf.fe_users = COA
+				conf.fe_users {
+					10 = TEXT
+					10 {
+						field = username
+						wrap = <strong> | </strong>
+					}
+					20 = TEXT
+					20 {
+						field = email
+						typolink {
+							parameter.field = email
+						}
+						noTrimWrap = |<br />E-Mail: ||
+						required = 1
+					}
+				}
+			}
+		}
+		tt_address {
+			image >
+			href >
+			caption = RECORDS
+			caption {
+				source.data = register:source
+				tables = tt_address
+				dontCheckPid = 1
+				conf.tt_address = COA
+				conf.tt_address {
+					10 = TEXT
+					10 {
+						field = name
+						wrap = <strong> | </strong>
+					}
+					20 = TEXT
+					20 {
+						field = address
+						wrap = <br /> |
+						required = 1
+					}
+					30 = TEXT
+					30 {
+						field = zip
+						dataWrap = <br /> | &nbsp;{field:city}
+						required = 1
+					}
+				}
+			}
+		}
+		tt_news {
+			image >
+			href >
+			caption = RECORDS
+			caption {
+				source.data = register:source
+				tables = tt_news
+				dontCheckPid = 1
+				conf.tt_news = COA
+				conf.tt_news {
+					10 = TEXT
+					10 {
+						field = title
+						wrap = <strong>|</strong>
+					}
+					20 = TEXT
+					20 {
+						field = bodytext
+						wrap = <br />|
+						cropHTML = 160|...|1
+						required = 1
+					}
+					30 = TEXT
+					30 {
+						wrap = <br />|
+						htmlSpecialChars = 1
+						data = LLL:EXT:tt_news/pi/locallang.xml:more
+						typolink {
+							parameter = {$plugin.tt_news.singlePid}
+							useCacheHash = 1
+							additionalParams.cObject = COA
+							additionalParams.cObject {
+								10 = TEXT
+								10 {
+									field = uid
+									wrap = &tx_ttnews[tt_news]=|
+								}
+							}  
+						}
+					}
+				}
+			}
+		}
+	}
+
 	_CSS_DEFAULT_STYLE (
 .tx-imagecycle-pi1-images {
 	display: none;
@@ -211,6 +341,13 @@ plugin.tx_imagecycle_pi1 {
 	opacity: 0.8;
 	white-space: nowrap;
 	display: none;
+}
+.tx-imagecycle-pi1-images .imagecycle-caption a {
+	display: inline;
+	color: #9bd;
+}
+.tx-imagecycle-pi1-images .imagecycle-caption a:hover {
+	color: #acf;
 }
 .tx-imagecycle-pi1-pager {
 	margin: 0 0 5px 0;

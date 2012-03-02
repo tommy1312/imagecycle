@@ -11,10 +11,13 @@ plugin.tx_imagecycle_pi4 {
 	# cat=plugin.tx_imagecycle.crossslide/typo/020; type=string; label=Height: Height of slider panel
 	imageheight = 300c
 
-	# cat=plugin.tx_imagecycle.coinslider/typo/030; type=string; label=Own Options: Enter own options (see http://tobia.github.com/CrossSlide/)
+	# cat=plugin.tx_imagecycle.crossslide/typo/025; type=boolean; label=First image only: Use only one image, just cycle the hrefs and captions
+	onlyFirstImage = 0
+
+	# cat=plugin.tx_imagecycle.crossslide/typo/030; type=string; label=Own Options: Enter own options (see http://tobia.github.com/CrossSlide/)
 	options = 
 
-	# cat=plugin.tx_imagecycle.coinslider/typo/040; type=boolean; label=Override all options: If set, all options will be override
+	# cat=plugin.tx_imagecycle.crossslide/typo/040; type=boolean; label=Override all options: If set, all options will be override
 	optionsOverride = 0
 
 
