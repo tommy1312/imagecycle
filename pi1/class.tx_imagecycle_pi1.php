@@ -605,7 +605,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$options['pause'] = "pause: true";
 		}
 		$options['sync'] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
-		$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
+		if (count($data) > 1) {
+			$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
+		}
 		$options['cleartypeNoBg'] = "cleartypeNoBg: ".($this->conf['cleartypeNoBg'] ? 'true' : 'false');
 
 		$captionTag = $this->cObj->stdWrap($this->conf['cycle.'][$this->type.'.']['captionTag'], $this->conf['cycle.'][$this->type.'.']['captionTag.']);
