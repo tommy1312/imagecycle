@@ -96,15 +96,16 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				}
 			}
 
-			$this->lConf['imagewidth']     = $this->getFlexformData('settings', 'imagewidth');
-			$this->lConf['imageheight']    = $this->getFlexformData('settings', 'imageheight');
-			$this->lConf['showcaption']    = $this->getFlexformData('settings', 'showcaption');
-			$this->lConf['showControl']    = $this->getFlexformData('settings', 'showControl');
-			$this->lConf['showPager']      = $this->getFlexformData('settings', 'showPager');
-			$this->lConf['random']         = $this->getFlexformData('settings', 'random');
-			$this->lConf['cleartypeNoBg']  = $this->getFlexformData('settings', 'cleartypeNoBg');
-			$this->lConf['stoponmousover'] = $this->getFlexformData('settings', 'stoponmousover');
-			$this->lConf['pausedBegin']    = $this->getFlexformData('settings', 'pausedBegin');
+			$this->lConf['imagewidth']        = $this->getFlexformData('settings', 'imagewidth');
+			$this->lConf['imageheight']       = $this->getFlexformData('settings', 'imageheight');
+			$this->lConf['showcaption']       = $this->getFlexformData('settings', 'showcaption');
+			$this->lConf['showControl']       = $this->getFlexformData('settings', 'showControl');
+			$this->lConf['showPager']         = $this->getFlexformData('settings', 'showPager');
+			$this->lConf['random']            = $this->getFlexformData('settings', 'random');
+			$this->lConf['cleartypeNoBg']     = $this->getFlexformData('settings', 'cleartypeNoBg');
+			$this->lConf['stoponmousover']    = $this->getFlexformData('settings', 'stoponmousover');
+			$this->lConf['stopAfterOneCycle'] = $this->getFlexformData('settings', 'stopAfterOneCycle');
+			$this->lConf['pausedBegin']       = $this->getFlexformData('settings', 'pausedBegin');
 
 			$this->lConf['type']               = $this->getFlexformData('movement', 'type');
 			$this->lConf['transition']         = $this->getFlexformData('movement', 'transition');
@@ -195,6 +196,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			}
 			if ($this->lConf['stoponmousover'] < 2) {
 				$this->conf['stopOnMousover'] = $this->lConf['stoponmousover'];
+			}
+			if ($this->lConf['stopAfterOneCycle'] < 2) {
+				$this->conf['stopAfterOneCycle'] = $this->lConf['stopAfterOneCycle'];
 			}
 			if ($this->lConf['pausedBegin'] < 2) {
 				$this->conf['pausedBegin'] = $this->lConf['pausedBegin'];
@@ -610,6 +614,11 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		if ($this->conf['stopOnMousover']) {
 			$options['pause'] = "pause: true";
 		}
+		if ($this->conf['stopAfterOneCycle'] && count($data) > 0) {
+			$options['autostop']      = "autostop: true";
+			$options['autostopCount'] = "autostopCount: '".count($data)."'";
+		}
+
 		$options['sync'] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
 		if (count($data) > 1) {
 			$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
