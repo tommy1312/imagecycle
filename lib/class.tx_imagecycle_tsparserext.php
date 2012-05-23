@@ -74,7 +74,7 @@ class tx_imagecycle_tsparserext
 	{
 		$out = '';
 
-		if (t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) < 4003000) {
+		if (class_exists(t3lib_utility_VersionNumber) && t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) < 4003000) {
 			// 4.3.0 comes with flashmessages styles. For older versions we include the needed styles here
 			$cssPath = $GLOBALS['BACK_PATH'] . t3lib_extMgm::extRelPath('imagecycle');
 			$out .= '<link rel="stylesheet" type="text/css" href="' . $cssPath . 'compat/flashmessages.css" media="screen" />';
@@ -91,7 +91,7 @@ class tx_imagecycle_tsparserext
 	</div>';
 		}
 
-		if (t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) < 4005000) {
+		if (class_exists(t3lib_utility_VersionNumber) && t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) < 4005000) {
 			$url = 'index.php?&amp;id=0&amp;CMD[showExt]=imagecycle&amp;SET[singleDetails]=updateModule';
 		} else {
 			$url = 'mod.php?&id=0&M=tools_em&CMD[showExt]=imagecycle&SET[singleDetails]=updateModule';
