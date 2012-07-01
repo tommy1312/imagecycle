@@ -45,6 +45,13 @@ top left      | bottom right 1.5x
 	}
 	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
 
+	integerWidthWrap {
+		wrap = |
+	}
+	integerHeightWrap {
+		wrap = |
+	}
+
 	cross {
 		normal {
 			image {

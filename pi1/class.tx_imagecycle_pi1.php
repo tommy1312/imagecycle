@@ -430,7 +430,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		}
 		if ($fromCategory === true) {
 			// Get the images from dam category
-			$damcategories = $this->getDamcats($this->lConf['damcategories']);
+			$damcategories = $this->getDamcats($this->conf['damcategories']);
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECT_mm_query(
 				tx_dam_db::getMetaInfoFieldList() . $fields,
 				'tx_dam',
@@ -590,6 +590,15 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		if (! $this->conf['imageheight']) {
 			$this->conf['imageheight'] = ($this->conf['imageheight'] ? $this->conf['imageheight'] : "200c");
 		}
+
+		// wrap if integer
+		if (is_numeric($this->conf['imagewidth'])) {
+			$this->conf['imagewidth'] = $this->cObj->stdWrap($this->conf['imagewidth'], $this->conf['integerWidthWrap.']);
+		}
+		if (is_numeric($this->conf['imageheight'])) {
+			$this->conf['imageheight'] = $this->cObj->stdWrap($this->conf['imageheight'], $this->conf['integerHeightWrap.']);
+		}
+
 		if ($this->conf['type']) {
 			$options['fx'] = "fx: '{$this->conf['type']}'";
 		}

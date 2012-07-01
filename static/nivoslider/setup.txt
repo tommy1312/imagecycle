@@ -53,6 +53,13 @@ plugin.tx_imagecycle_pi3 {
 	}
 	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
 
+	integerWidthWrap {
+		wrap = |
+	}
+	integerHeightWrap {
+		wrap = |
+	}
+
 	nivo {
 		normal {
 			image {
