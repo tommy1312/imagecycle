@@ -54,6 +54,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 	protected $css        = array();
 	protected $imageDir   = 'uploads/tx_imagecycle/';
 	protected $templateFileJS = null;
+	protected $uid        = NULL;
 
 	/**
 	 * The main method of the PlugIn
@@ -73,6 +74,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
+
+		// set the uid of the tt_content
+		$this->uid = $this->cObj->data['_LOCALIZED_UID'] ? $this->cObj->data['_LOCALIZED_UID'] : $this->cObj->data['uid'];
 
 		if ($this->cObj->data['list_type'] == $this->extKey.'_pi3') {
 			$this->type = 'normal';
@@ -122,13 +126,14 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$this->lConf['nivoKeyboardNav']      = $this->getFlexformData('settings', 'nivoKeyboardNav');
 			$this->lConf['nivoPauseOnHover']     = $this->getFlexformData('settings', 'nivoPauseOnHover');
 			$this->lConf['nivoManualAdvance']    = $this->getFlexformData('settings', 'nivoManualAdvance');
+			$this->lConf['nivoResponsive']       = $this->getFlexformData('settings', 'nivoResponsive');
 			$this->lConf['nivoCaptionOpacity']   = $this->getFlexformData('settings', 'nivoCaptionOpacity');
 
 			$this->lConf['options']         = $this->getFlexformData('special', 'options');
 			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
-			$this->setContentKey("imagecycle-nivo_c" . $this->cObj->data['uid']);
+			$this->setContentKey("imagecycle-nivo_c" . $this->uid);
 
 			// define the images
 			switch ($this->lConf['mode']) {
@@ -147,11 +152,11 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 					break;
 				}
 				case "dam" : {
-					$this->setDataDam(false, 'tt_content', $this->cObj->data['uid']);
+					$this->setDataDam(false, 'tt_content', $this->uid);
 					break;
 				}
 				case "dam_catedit" : {
-					$this->setDataDam(true, 'tt_content', $this->cObj->data['uid']);
+					$this->setDataDam(true, 'tt_content', $this->uid);
 					break;
 				}
 			}
@@ -222,6 +227,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 			if ($this->lConf['nivoManualAdvance'] < 2) {
 				$this->conf['nivoManualAdvance'] = $this->lConf['nivoManualAdvance'];
+			}
+			if ($this->lConf['nivoResponsive'] < 2) {
+				$this->conf['nivoResponsive'] = $this->lConf['nivoResponsive'];
 			}
 			if ($this->lConf['options']) {
 				$this->conf['options'] = $this->lConf['options'];
@@ -479,14 +487,16 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		if ($this->cObj->currentRecord != $GLOBALS['TSFE']->currentRecord) {
 			list($table, $uid) = t3lib_div::trimExplode(':', $GLOBALS['TSFE']->currentRecord, 1);
 		} else {
-			$uid = $this->cObj->data['uid'];
+			$uid = $this->uid;
 		}
 
-		$this->pagerenderer->addCSS("
+		if (! $this->conf['nivoResponsive']) {
+			$this->pagerenderer->addCSS("
 .{$this->getContentKey()} {
 	width: {$maxWidth}px;
 	height: {$maxHeight}px;
 }");
+		}
 
 		$options = array();
 
@@ -525,6 +535,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		if ($this->conf['nivoControlNavThumbs']) {
 			$options['controlNavThumbs']        = "controlNavThumbs: true";
 			$options['controlNavThumbsFromRel'] = "controlNavThumbsFromRel: true";
+			
 		}
 		$options['keyboardNav']      = "keyboardNav: ".($this->conf['nivoKeyboardNav'] ? 'true' : 'false');
 		$options['pauseOnHover']     = "pauseOnHover: ".($this->conf['nivoPauseOnHover'] ? 'true' : 'false');
