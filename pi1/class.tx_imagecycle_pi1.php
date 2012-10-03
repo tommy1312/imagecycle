@@ -77,21 +77,22 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 			// It's a content, all data from flexform
 
-			$this->lConf['mode']           = $this->getFlexformData('general', 'mode');
-			$this->lConf['images']         = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['hrefs']          = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['captions']       = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['captionsData']   = $this->getFlexformData('general', 'captionsData', ($this->lConf['mode'] == 'uploadData'));
-			$this->lConf['damimages']      = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
-			$this->lConf['damcategories']  = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+			$this->conf['mode']           = $this->getFlexformData('general', 'mode');
+			$this->conf['images']         = $this->getFlexformData('general', 'images', ($this->conf['mode'] == 'upload'));
+			$this->conf['hrefs']          = $this->getFlexformData('general', 'hrefs', ($this->conf['mode'] == 'upload'));
+			$this->conf['captions']       = $this->getFlexformData('general', 'captions', ($this->conf['mode'] == 'upload'));
+			$this->conf['captionsData']   = $this->getFlexformData('general', 'captionsData', ($this->conf['mode'] == 'uploadData'));
+			$this->conf['damimages']      = $this->getFlexformData('general', 'damimages', ($this->conf['mode'] == 'dam'));
+			$this->conf['damcategories']  = $this->getFlexformData('general', 'damcategories', ($this->conf['mode'] == 'dam_catedit'));
+
 			$this->lConf['onlyFirstImage'] = $this->getFlexformData('general', 'onlyFirstImage');
 
-			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->lConf['mode'] == 'uploadRTE'));
-			$this->lConf['imagesRTE'] = array();
+			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->conf['mode'] == 'uploadRTE'));
+			$this->conf['imagesRTE'] = array();
 			if (isset($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
 				foreach ($imagesRTE['el'] as $elKey => $el) {
 					if (is_numeric($elKey)) {
-						$this->lConf['imagesRTE'][] = array(
+						$this->conf['imagesRTE'][] = array(
 							"image"   => $el['data']['el']['image']['vDEF'],
 							"href"    => $el['data']['el']['href']['vDEF'],
 							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
@@ -127,7 +128,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$this->setContentKey("imagecycle_c" . $this->uid);
 
 			// define the images
-			switch ($this->lConf['mode']) {
+			switch ($this->conf['mode']) {
 				case "" : {}
 				case "folder" : {}
 				case "upload" : {
@@ -333,16 +334,16 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 */
 	protected function setDataUpload()
 	{
-		if ($this->lConf['images']) {
+		if ($this->conf['images']) {
 			// define the images
-			$this->images = t3lib_div::trimExplode(',', $this->lConf['images']);
+			$this->images = t3lib_div::trimExplode(',', $this->conf['images']);
 			// define the hrefs
-			if ($this->lConf['hrefs']) {
-				$this->hrefs = t3lib_div::trimExplode(chr(10), $this->lConf['hrefs']);
+			if ($this->conf['hrefs']) {
+				$this->hrefs = t3lib_div::trimExplode(chr(10), $this->conf['hrefs']);
 			}
 			// define the captions
-			if ($this->lConf['captions']) {
-				$this->captions = t3lib_div::trimExplode(chr(10), $this->lConf['captions']);
+			if ($this->conf['captions']) {
+				$this->captions = t3lib_div::trimExplode(chr(10), $this->conf['captions']);
 			}
 			return true;
 		}
@@ -354,8 +355,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 */
 	protected function setDataUploadRTE()
 	{
-		if (count($this->lConf['imagesRTE']) > 0) {
-			foreach ($this->lConf['imagesRTE'] as $key => $image) {
+		if (count($this->conf['imagesRTE']) > 0) {
+			foreach ($this->conf['imagesRTE'] as $key => $image) {
 				$this->images[]   = $image['image'];
 				$this->hrefs[]    = $image['href'];
 				$this->captions[] = $image['caption'];
@@ -368,20 +369,20 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 */
 	protected function setDataUploadData()
 	{
-		if ($this->lConf['images']) {
+		if ($this->conf['images']) {
 			// define the images
 			$images = array();
-			if ($this->lConf['images']) {
-				$images = t3lib_div::trimExplode(',', $this->lConf['images']);
+			if ($this->conf['images']) {
+				$images = t3lib_div::trimExplode(',', $this->conf['images']);
 			}
 			// define the hrefs
 			$hrefs = array();
-			if ($this->lConf['hrefs']) {
-				$hrefs = t3lib_div::trimExplode(chr(10), $this->lConf['hrefs']);
+			if ($this->conf['hrefs']) {
+				$hrefs = t3lib_div::trimExplode(chr(10), $this->conf['hrefs']);
 			}
 			// define the captions
 			$this->captions = array();
-			$captions = t3lib_div::trimExplode(",", $this->lConf['captionsData']);
+			$captions = t3lib_div::trimExplode(",", $this->conf['captionsData']);
 			$count = count($images) > count($captions) ? count($images) : count($captions);
 			for ($a=0; $a < $count; $a++) {
 				$GLOBALS['TSFE']->register['source'] = $captions[$a];

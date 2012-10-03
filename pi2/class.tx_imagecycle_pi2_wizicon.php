@@ -48,12 +48,11 @@ class tx_imagecycle_pi2_wizicon
 	function proc($wizardItems)
 	{
 		$LL = $this->includeLocalLang();
-
 		$wizardItems['plugins_tx_imagecycle_pi2'] = array(
-			'icon'=>t3lib_extMgm::extRelPath('imagecycle').'pi2/ce_wiz.gif',
-			'title'=>$GLOBALS['LANG']->getLLL('pi2_title', $LL),
-			'description'=>$GLOBALS['LANG']->getLLL('pi2_plus_wiz_description', $LL),
-			'params'=>'&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=imagecycle_pi2'
+			'icon' => t3lib_extMgm::extRelPath('imagecycle').'pi2/ce_wiz.gif',
+			'title' => $GLOBALS['LANG']->getLLL('pi2_title', $LL),
+			'description' => $GLOBALS['LANG']->getLLL('pi2_plus_wiz_description', $LL),
+			'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=imagecycle_pi2'
 		);
 
 		return $wizardItems;
@@ -67,7 +66,11 @@ class tx_imagecycle_pi2_wizicon
 	function includeLocalLang()
 	{
 		$llFile = t3lib_extMgm::extPath('imagecycle').'locallang.xml';
-		$LOCAL_LANG = t3lib_div::readLLXMLfile($llFile, $GLOBALS['LANG']->lang);
+		if (class_exists(t3lib_l10n_parser_Llxml)) {
+			$LOCAL_LANG = t3lib_l10n_parser_Llxml::getParsedData($llFile, $GLOBALS['LANG']->lang);
+		} else {
+			$LOCAL_LANG = t3lib_div::readLLXMLfile($llFile, $GLOBALS['LANG']->lang);
+		}
 
 		return $LOCAL_LANG;
 	}

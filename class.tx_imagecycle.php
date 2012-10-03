@@ -51,7 +51,6 @@ class tx_imagecycle
 		} else {
 			$imageNum = t3lib_div::intInRange($imageNum, 0, 1000);
 		}
-		$imageNum = t3lib_div::intInRange($imageNum, 0, 1000);
 		$theImgCode = '';
 		$imgsCaptions = explode(chr(10), $row['imagecaption']);
 
