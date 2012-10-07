@@ -83,20 +83,21 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 
 			// It's a content, all data from flexform
 
-			$this->lConf['mode']           = $this->getFlexformData('general', 'mode');
-			$this->lConf['images']         = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['captions']       = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['captionsData']   = $this->getFlexformData('general', 'captionsData', ($this->lConf['mode'] == 'uploadData'));
-			$this->lConf['damimages']      = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
-			$this->lConf['damcategories']  = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+			$this->conf['mode']           = $this->getFlexformData('general', 'mode');
+			$this->conf['images']         = $this->getFlexformData('general', 'images', ($this->conf['mode'] == 'upload'));
+			$this->conf['captions']       = $this->getFlexformData('general', 'captions', ($this->conf['mode'] == 'upload'));
+			$this->conf['captionsData']   = $this->getFlexformData('general', 'captionsData', ($this->conf['mode'] == 'uploadData'));
+			$this->conf['damimages']      = $this->getFlexformData('general', 'damimages', ($this->conf['mode'] == 'dam'));
+			$this->conf['damcategories']  = $this->getFlexformData('general', 'damcategories', ($this->conf['mode'] == 'dam_catedit'));
+
 			$this->lConf['onlyFirstImage'] = $this->getFlexformData('general', 'onlyFirstImage');
 
-			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->lConf['mode'] == 'uploadRTE'));
-			$this->lConf['imagesRTE'] = array();
+			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->conf['mode'] == 'uploadRTE'));
+			$this->conf['imagesRTE'] = array();
 			if (isset($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
 				foreach ($imagesRTE['el'] as $elKey => $el) {
 					if (is_numeric($elKey)) {
-						$this->lConf['imagesRTE'][] = array(
+						$this->conf['imagesRTE'][] = array(
 							"image"   => $el['data']['el']['image']['vDEF'],
 							"caption" => $el['data']['el']['caption']['vDEF'],
 						);
@@ -130,7 +131,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			$this->setContentKey("imagecycle-slice_c" . $this->uid);
 
 			// define the images
-			switch ($this->lConf['mode']) {
+			switch ($this->conf['mode']) {
 				case "" : {}
 				case "folder" : {}
 				case "upload" : {
@@ -230,8 +231,8 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 					) {
 						$used_page = $page;
 						$pageID    = $used_page['uid'];
-						$this->lConf['mode']          = $used_page['tx_imagecycle_mode'];
-						$this->lConf['damcategories'] = $used_page['tx_imagecycle_damcategories'];
+						$this->conf['mode']          = $used_page['tx_imagecycle_mode'];
+						$this->conf['damcategories'] = $used_page['tx_imagecycle_damcategories'];
 					}
 				}
 			}
@@ -241,7 +242,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 				}
 				// define the images
-				switch ($this->lConf['mode']) {
+				switch ($this->conf['mode']) {
 					case "" : {}
 					case "folder" : {}
 					case "upload" : {
