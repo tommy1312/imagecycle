@@ -1,7 +1,7 @@
 plugin.tx_imagecycle_pi3 {
 
 	# cat=plugin.tx_imagecycle.nivoslider/file/010; type=file[js]; label=jQuery Nivo-Slider for Cycle: Location of the jQuery Nivo-Slider
-	file.jQueryNivo = EXT:imagecycle/res/jquery/js/jquery.nivoslider-2.7.1.min.js
+	file.jQueryNivo = EXT:imagecycle/res/jquery/js/jquery.nivoslider-3.1.min.js
 
 	# cat=plugin.tx_imagecycle.nivoslider/file/020; type=file[css]; label=CSS file: The path to the stylesheet file
 	file.cssFileNivo = EXT:imagecycle/res/css/nivoslider/style.css
@@ -24,10 +24,10 @@ plugin.tx_imagecycle_pi3 {
 	onlyFirstImage = 0
 
 	# cat=plugin.tx_imagecycle.nivoslider/typo/050; type=string; label=Thumb width: Width of the thumbs
-	thumbwidth = 60c
+	thumbwidth = 120c
 
 	# cat=plugin.tx_imagecycle.nivoslider/typo/060; type=string; label=Thumb height: Height of the thumbs
-	thumbheight = 60c
+	thumbheight = 120c
 
 	# cat=plugin.tx_imagecycle.nivoslider/typo/070; type=int+; label=Slices: Count of slices
 	nivoSlices = 15
@@ -51,7 +51,7 @@ plugin.tx_imagecycle_pi3 {
 	nivoStartRandom = 0
 
 	# cat=plugin.tx_imagecycle.nivoslider/typo/140; type=string; label=Own Options: Enter own options (see http://nivo.dev7studios.com/#usage)
-	options = 
+	options =
 
 	# cat=plugin.tx_imagecycle.nivoslider/typo/150; type=boolean; label=Override all options: If set, all options will be override
 	optionsOverride = 0

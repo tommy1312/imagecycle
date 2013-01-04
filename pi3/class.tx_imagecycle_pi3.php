@@ -261,8 +261,14 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 			if ($pageID) {
 				if ($this->sys_language_uid) {
-					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
+					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_mode', 'pages_language_overlay', 'pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid, '', '', 1);
 					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+					if (trim($used_page['tx_imagecycle_effect'])) {
+						$this->conf['type'] = $row['tx_imagecycle_effect'];
+					}
+					if (trim($used_page['tx_imagecycle_mode'])) {
+						$this->conf['mode'] = $row['tx_imagecycle_mode'];
+					}
 				}
 				// define the images
 				switch ($this->conf['mode']) {
@@ -283,11 +289,21 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 						break;
 					}
 					case "dam" : {
-						$this->setDataDam(false, 'pages', $pageID);
+						if ($this->sys_language_uid) {
+							$this->setDataDam(false, 'pages_language_overlay', $pageID);
+						}
+						if (count($this->images) < 1) {
+							$this->setDataDam(false, 'pages', $pageID);
+						}
 						break;
 					}
 					case "dam_catedit" : {
-						$this->setDataDam(true, 'pages', $pageID);
+						if ($this->sys_language_uid) {
+							$this->setDataDam(true, 'pages_language_overlay', $pageID);
+						}
+						if (count($this->images) < 1) {
+							$this->setDataDam(true, 'pages', $pageID);
+						}
 						break;
 					}
 				}
@@ -438,7 +454,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 				} else {
 					$GLOBALS['TSFE']->register['thumbrel'] = '';
 				}
-				// 
+				//
 				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
@@ -465,6 +481,8 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			// the stdWrap
 			$returnString = $this->cObj->stdWrap($images, $this->conf['nivo.'][$this->type.'.']['stdWrap.']);
 			$returnString .= $captions;
+
+			$returnString = $this->cObj->stdWrap($returnString, $this->conf['nivo.'][$this->type.'.']['outerWrap.']);
 			$returnString .= $no_script;
 		}
 
@@ -495,7 +513,6 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$this->pagerenderer->addCSS("
 .{$this->getContentKey()} {
 	width: {$maxWidth}px;
-	height: {$maxHeight}px;
 }");
 		}
 
@@ -536,7 +553,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		if ($this->conf['nivoControlNavThumbs']) {
 			$options['controlNavThumbs']        = "controlNavThumbs: true";
 			$options['controlNavThumbsFromRel'] = "controlNavThumbsFromRel: true";
-			
+
 		}
 		$options['keyboardNav']      = "keyboardNav: ".($this->conf['nivoKeyboardNav'] ? 'true' : 'false');
 		$options['pauseOnHover']     = "pauseOnHover: ".($this->conf['nivoPauseOnHover'] ? 'true' : 'false');

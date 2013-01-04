@@ -45,13 +45,13 @@ plugin.tx_imagecycle_pi1 {
 
 
 	# cat=plugin.tx_imagecycle.basic/file/010; type=file[js]; label=jQuery Library: Location of the jQuery Lib
-	file.jQueryLibrary = EXT:imagecycle/res/jquery/js/jquery-1.7.2.min.js
+	file.jQueryLibrary = EXT:imagecycle/res/jquery/js/jquery-1.8.2.min.js
 
 	# cat=plugin.tx_imagecycle.basic/file/020; type=file[js]; label=jQuery Easing: Location of the jQuery Easing
 	file.jQueryEasing = EXT:imagecycle/res/jquery/js/jquery.easing-1.3.js
 
 	# cat=plugin.tx_imagecycle.basic/file/030; type=file[js]; label=jQuery Cycle: Location of the jQuery Cycle
-	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all-2.9999.6.min.js
+	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all-2.9999.8.min.js
 
 	# cat=plugin.tx_imagecycle.basic/file/040; type=file[js]; label=JS-Template file: Location of the used template for JS
 	file.templateFileJS = EXT:imagecycle/res/tx_imagecycle.js
@@ -82,16 +82,16 @@ plugin.tx_imagecycle_pi1 {
 	transitionDir = InOut
 
 	# cat=plugin.tx_imagecycle.basic/typo/040; type=int+; label=Duration transition: The duration of the transition in milliseconds
-	transitionDuration = 
+	transitionDuration =
 
 	# cat=plugin.tx_imagecycle.basic/typo/050; type=int+; label=Duration of display: The display duration of the image in milliseconds
-	displayDuration = 
+	displayDuration =
 
 	# cat=plugin.tx_imagecycle.basic/typo/060; type=int; label=Duration of delay: The delay duration for animation begin in milliseconds
-	delayDuration = 
+	delayDuration =
 
 	# cat=plugin.tx_imagecycle.basic/typo/070; type=int; label=Manual transition speed: Speed of transitions when triggered manually in milliseconds
-	fastOnEvent = 
+	fastOnEvent =
 
 	# cat=plugin.tx_imagecycle.basic/typo/080; type=boolean; label=Simultaneously animation: Animates in and out simultaneously
 	sync = 1
@@ -103,7 +103,7 @@ plugin.tx_imagecycle_pi1 {
 	showPager = 0
 
 	# cat=plugin.tx_imagecycle.basic/typo/110; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
-	options = 
+	options =
 
 	# cat=plugin.tx_imagecycle.basic/typo/120; type=boolean; label=Override all options: If set, all options will be override
 	optionsOverride = 0
@@ -133,7 +133,7 @@ plugin.tx_imagecycle_pi1 {
 	captionTransition = swing
 
 	# cat=plugin.tx_imagecycle.caption/typo/060; type=options[,In,Out,InOut]; label=Transition direction: Direction of transition (In, Out, InOut)
-	captionTransitionDir = 
+	captionTransitionDir =
 
 	# cat=plugin.tx_imagecycle.caption/typo/070; type=int; label=Speed of the animation: Set the speed of the animation in millisecounds
 	captionSpeed = 200
