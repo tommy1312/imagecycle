@@ -6,7 +6,16 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="list">list</label>
+			<label index="next">Next</label>
+			<label index="previous">Previous</label>
+			<label index="play">Play</label>
+			<label index="pause">Pause</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="next">Vor</label>
+			<label index="previous">Zurück</label>
+			<label index="play">Abspielen</label>
+			<label index="pause">Pause</label>
 		</languageKey>
 	</data>
 </T3locallang>

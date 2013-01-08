@@ -95,13 +95,14 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 
 			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->conf['mode'] == 'uploadRTE'));
 			$this->conf['imagesRTE'] = array();
-			if (isset($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
+			if (is_array($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
 				foreach ($imagesRTE['el'] as $elKey => $el) {
 					if (is_numeric($elKey)) {
 						$this->conf['imagesRTE'][] = array(
 							"image"   => $el['data']['el']['image']['vDEF'],
 							"href"    => $el['data']['el']['href']['vDEF'],
 							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+							"hide"    => $el['data']['el']['hide']['vDEF'],
 						);
 					}
 				}
@@ -276,7 +277,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			} else {
 				$image = $this->images[$a];
 			}
-			if ($image) {
+			if ($image && ! $this->hidden[$a]) {
 				$data[$i]['image']   = $image;
 				$data[$i]['href']    = $this->hrefs[$a];
 				$data[$i]['caption'] = $this->captions[$a];
@@ -343,7 +344,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'] * $factor;
 		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
 		$GLOBALS['TSFE']->register['IMAGE_COUNT'] = count($data);
-		if (count($data) > 0) {
+		if (is_array($data) && count($data) > 0) {
 			foreach ($data as $key => $item) {
 				$image = null;
 				$imgConf = $this->conf['cross.'][$this->type.'.']['image.'];

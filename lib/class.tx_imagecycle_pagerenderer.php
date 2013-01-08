@@ -70,7 +70,7 @@ class tx_imagecycle_pagerenderer
 			$allJsInFooter = FALSE;
 		}
 		// add all defined JS files
-		if (count($this->jsFiles) > 0) {
+		if (is_array($this->jsFiles) && count($this->jsFiles) > 0) {
 			foreach ($this->jsFiles as $jsToLoad) {
 				if (T3JQUERY === TRUE) {
 					$conf = array(
@@ -103,7 +103,7 @@ class tx_imagecycle_pagerenderer
 			}
 		}
 		// add all defined JS script
-		if (count($this->js) > 0) {
+		if (is_array($this->js) && count($this->js) > 0) {
 			foreach ($this->js as $jsToPut) {
 				$temp_js .= $jsToPut;
 			}
@@ -138,7 +138,7 @@ class tx_imagecycle_pagerenderer
 			}
 		}
 		// add all defined CSS files
-		if (count($this->cssFiles) > 0) {
+		if (is_array($this->cssFiles) && count($this->cssFiles) > 0) {
 			foreach ($this->cssFiles as $cssToLoad) {
 				// Add script only once
 				$file = $this->getPath($cssToLoad);
@@ -154,7 +154,7 @@ class tx_imagecycle_pagerenderer
 			}
 		}
 		// add all defined CSS files for IE
-		if (count($this->cssFilesInc) > 0) {
+		if (is_array($this->cssFilesInc) && count($this->cssFilesInc) > 0) {
 			foreach ($this->cssFilesInc as $cssToLoad) {
 				// Add script only once
 				$file = $this->getPath($cssToLoad['file']);
@@ -167,7 +167,7 @@ class tx_imagecycle_pagerenderer
 			}
 		}
 		// add all defined CSS Script
-		if (count($this->css) > 0) {
+		if (is_array($this->css) && count($this->css) > 0) {
 			foreach ($this->css as $cssToPut) {
 				$temp_css .= $cssToPut;
 			}

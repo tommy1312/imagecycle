@@ -41,6 +41,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	public $images        = array();
 	public $hrefs         = array();
 	public $captions      = array();
+	public $hidden        = array();
 	public $type          = 'normal';
 	protected $lConf      = array();
 	protected $contentKey = null;
@@ -89,13 +90,14 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->conf['mode'] == 'uploadRTE'));
 			$this->conf['imagesRTE'] = array();
-			if (isset($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
+			if (is_array($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
 				foreach ($imagesRTE['el'] as $elKey => $el) {
 					if (is_numeric($elKey)) {
 						$this->conf['imagesRTE'][] = array(
 							"image"   => $el['data']['el']['image']['vDEF'],
 							"href"    => $el['data']['el']['href']['vDEF'],
 							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+							"hide"    => $el['data']['el']['hide']['vDEF'],
 						);
 					}
 				}
@@ -312,7 +314,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			} else {
 				$image = $this->images[$a];
 			}
-			if ($image) {
+			if ($image && ! $this->hidden[$a]) {
 				$data[$i]['image']   = $image;
 				$data[$i]['href']    = $this->hrefs[$a];
 				$data[$i]['caption'] = $this->captions[$a];
@@ -368,11 +370,12 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 */
 	protected function setDataUploadRTE()
 	{
-		if (count($this->conf['imagesRTE']) > 0) {
+		if (is_array($this->conf['imagesRTE']) && count($this->conf['imagesRTE']) > 0) {
 			foreach ($this->conf['imagesRTE'] as $key => $image) {
 				$this->images[]   = $image['image'];
 				$this->hrefs[]    = $image['href'];
 				$this->captions[] = $image['caption'];
+				$this->hidden[] = $image['hide'];
 			}
 		}
 	}
@@ -441,7 +444,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$damHrefFields
 		);
 		$fields = NULL;
-		if (count($fieldsArray) > 0) {
+		if (is_array($fieldsArray) && count($fieldsArray) > 0) {
 			foreach ($fieldsArray as $field) {
 				$fields .= ',tx_dam.' . $field;
 			}
@@ -475,7 +478,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				'tx_dam_mm_ref.sorting_foreign'
 			);
 		}
-		if (count($images['rows']) > 0) {
+		if (is_array($images['rows']) && count($images['rows']) > 0) {
 			// overlay the translation
 			$conf = array(
 				'sys_language_uid' => $this->sys_language_uid,
@@ -492,7 +495,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					// set the href
 					$href = '';
 					unset($href);
-					if (count($damHrefFields) > 0) {
+					if (is_array($damHrefFields) && count($damHrefFields) > 0) {
 						foreach ($damHrefFields as $damHrefField) {
 							if (! isset($href) && trim($row[$damHrefField])) {
 								$href = $row[$damHrefField];
@@ -504,7 +507,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					// set the caption
 					$caption = '';
 					unset($caption);
-					if (count($damCaptionFields) > 0) {
+					if (is_array($damCaptionFields) && count($damCaptionFields) > 0) {
 						if (isset($this->conf['damCaptionObject'])) {
 							foreach ($damCaptionFields as $damCaptionField) {
 								if (isset($row[$damCaptionField])) {
@@ -641,7 +644,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		if ($this->conf['stopOnMousover']) {
 			$options['pause'] = "pause: true";
 		}
-		if ($this->conf['stopAfterOneCycle'] && count($data) > 0) {
+		if ($this->conf['stopAfterOneCycle'] && is_array($data) && count($data) > 0) {
 			$options['autostop']      = "autostop: true";
 			$options['autostopCount'] = "autostopCount: '".count($data)."'";
 		}
@@ -779,7 +782,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SLOW_CONNECTION_AFTER###',  $templateSlowAfter, 0);
 
 		// If only one image is displayed, the caption will be show
-		if (count($data) == 1) {
+		if (is_array($data) && count($data) == 1) {
 			$templateOnlyOneImage = $this->cObj->getSubpart($templateCode, "###ONLY_ONE_IMAGE###");
 		} else {
 			$templateOnlyOneImage = null;
@@ -821,7 +824,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'];
 		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
 		$GLOBALS['TSFE']->register['IMAGE_COUNT'] = count($data);
-		if (count($data) > 0) {
+		if (is_array($data) && count($data) > 0) {
 			foreach ($data as $key => $item) {
 				$image = null;
 				$imgConf = $this->conf['cycle.'][$this->type.'.']['image.'];

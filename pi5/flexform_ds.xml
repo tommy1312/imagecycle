@@ -42,6 +42,18 @@
 							</config>
 						</TCEforms>
 					</images>
+					<hrefs>
+						<TCEforms>
+							<displayCond>FIELD:mode:!IN:dam,dam_catedit,uploadRTE</displayCond>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.hrefs</label>
+							<config>
+								<type>text</type>
+								<wrap>OFF</wrap>
+								<cols>48</cols>
+								<rows>6</rows>
+							</config>
+						</TCEforms>
+					</hrefs>
 					<captions>
 						<TCEforms>
 							<displayCond>FIELD:mode:!IN:dam,dam_catedit,uploadRTE,uploadData</displayCond>
@@ -145,17 +157,49 @@
 											</config>
 										</TCEforms>
 									</image>
-									<caption>
+									<href>
 										<TCEforms>
-											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.caption</label>
+											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.href</label>
 											<config>
 												<type>input</type>
 												<size>15</size>
 												<max>255</max>
 												<eval>trim</eval>
+												<wizards>
+													<_PADDING>2</_PADDING>
+													<link>
+														<type>popup</type>
+														<title>Link</title>
+														<icon>link_popup.gif</icon>
+														<script>browse_links.php?mode=wizard</script>
+														<JSopenParams>height=500,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+													</link>
+												</wizards>
 											</config>
 										</TCEforms>
+									</href>
+									<caption>
+										<TCEforms>
+											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.caption</label>
+											<config>
+												<type>text</type>
+												<cols>30</cols>
+												<rows>5</rows>
+											</config>
+											<defaultExtras>richtext[]:rte_transform[mode=ts_css]</defaultExtras>
+										</TCEforms>
 									</caption>
+									<hide>
+										<TCEforms>
+											<exclude>1</exclude>
+											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.hide</label>
+											<config>
+												<form_type>user</form_type>
+												<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+												<checked>0</checked>
+											</config>
+										</TCEforms>
+									</hide>
 								</el>
 							</data>
 						</el>
@@ -226,17 +270,6 @@
 							</config>
 						</TCEforms>
 					</sliceColorHiddenSides>
-					<sliceShowInfo>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceShowInfo</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>0</checked>
-							</config>
-						</TCEforms>
-					</sliceShowInfo>
 				</el>
 			</ROOT>
 		</settings>
@@ -265,6 +298,10 @@
 									<numIndex index="2" type="array">
 										<numIndex index="0">horizontal</numIndex>
 										<numIndex index="1">h</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">random</numIndex>
+										<numIndex index="1">r</numIndex>
 									</numIndex>
 								</items>
 								<size>1</size>
@@ -375,6 +412,43 @@
 							</config>
 						</TCEforms>
 					</sliceSlideshowTime>
+					<sliceEasing>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceEasing</label>
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">ease</numIndex>
+										<numIndex index="1">ease</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">ease-in</numIndex>
+										<numIndex index="1">ease-in</numIndex>
+									</numIndex>
+									<numIndex index="3" type="array">
+										<numIndex index="0">ease-out</numIndex>
+										<numIndex index="1">ease-out</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">ease-in-out</numIndex>
+										<numIndex index="1">ease-in-out</numIndex>
+									</numIndex>
+									<numIndex index="5" type="array">
+										<numIndex index="0">linear</numIndex>
+										<numIndex index="1">linear</numIndex>
+									</numIndex>
+								</items>
+								<size>1</size>
+								<maxitems>1</maxitems>
+							</config>
+						</TCEforms>
+					</sliceEasing>
 				</el>
 			</ROOT>
 		</movement>
@@ -385,100 +459,6 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-					<sliceTransition>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceTransition</label>
-							<config>
-								<type>select</type>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts</numIndex>
-										<numIndex index="1"></numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">Swing</numIndex>
-										<numIndex index="1">swing</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Linear</numIndex>
-										<numIndex index="1">linear</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">Quad</numIndex>
-										<numIndex index="1">Quad</numIndex>
-									</numIndex>
-									<numIndex index="4" type="array">
-										<numIndex index="0">Cubic</numIndex>
-										<numIndex index="1">Cubic</numIndex>
-									</numIndex>
-									<numIndex index="5" type="array">
-										<numIndex index="0">Quart</numIndex>
-										<numIndex index="1">Quart</numIndex>
-									</numIndex>
-									<numIndex index="6" type="array">
-										<numIndex index="0">Quint</numIndex>
-										<numIndex index="1">Quint</numIndex>
-									</numIndex>
-									<numIndex index="7" type="array">
-										<numIndex index="0">Expo</numIndex>
-										<numIndex index="1">Expo</numIndex>
-									</numIndex>
-									<numIndex index="8" type="array">
-										<numIndex index="0">Circ</numIndex>
-										<numIndex index="1">Circ</numIndex>
-									</numIndex>
-									<numIndex index="9" type="array">
-										<numIndex index="0">Sine</numIndex>
-										<numIndex index="1">Sine</numIndex>
-									</numIndex>
-									<numIndex index="10" type="array">
-										<numIndex index="0">Back</numIndex>
-										<numIndex index="1">Back</numIndex>
-									</numIndex>
-									<numIndex index="11" type="array">
-										<numIndex index="0">Bounce</numIndex>
-										<numIndex index="1">Bounce</numIndex>
-									</numIndex>
-									<numIndex index="12" type="array">
-										<numIndex index="0">Elastic</numIndex>
-										<numIndex index="1">Elastic</numIndex>
-									</numIndex>
-								</items>
-								<size>1</size>
-								<maxitems>1</maxitems>
-							</config>
-						</TCEforms>
-					</sliceTransition>
-					<sliceTransitionDir>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceTransitionDir</label>
-							<config>
-								<type>select</type>
-								<items type="array">
-									<numIndex index="0" type="array">
-										<numIndex index="0">LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts</numIndex>
-										<numIndex index="1"></numIndex>
-									</numIndex>
-									<numIndex index="1" type="array">
-										<numIndex index="0">In</numIndex>
-										<numIndex index="1">In</numIndex>
-									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">Out</numIndex>
-										<numIndex index="1">Out</numIndex>
-									</numIndex>
-									<numIndex index="3" type="array">
-										<numIndex index="0">InOut</numIndex>
-										<numIndex index="1">InOut</numIndex>
-									</numIndex>
-								</items>
-								<size>1</size>
-								<maxitems>1</maxitems>
-							</config>
-						</TCEforms>
-					</sliceTransitionDir>
 					<sliceSpeed>
 						<TCEforms>
 							<exclude>1</exclude>
