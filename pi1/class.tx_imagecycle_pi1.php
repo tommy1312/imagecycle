@@ -501,11 +501,13 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$templateActivatePagerCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_ACTIVATE_PAGER_JS###"));
 			$after .= $this->cObj->substituteMarkerArray($templateActivatePagerCode, $markerArray, '###|###', 0);
 		}
-		if ($before) {
-			$options['before'] = "before: function(a,n,o,f) {".$before."}";
-		}
-		if ($after) {
-			$options['after'] = "after: function(a,n,o,f) {".$after."}";
+		if (count($data) > 1) {
+			if ($before) {
+				$options['before'] = "before: function(a,n,o,f) {".$before."}";
+			}
+			if ($after) {
+				$options['after'] = "after: function(a,n,o,f) {".$after."}";
+			}
 		}
 
 		// overwrite all options if set
@@ -565,6 +567,14 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		}
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SLOW_CONNECTION_BEFORE###', $templateSlowBefore, 0);
 		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SLOW_CONNECTION_AFTER###',  $templateSlowAfter, 0);
+
+		// If only one image is displayed, the caption will be show
+		if (count($data) == 1) {
+			$templateOnlyOneImage = $this->cObj->getSubpart($templateCode, "###ONLY_ONE_IMAGE###");
+		} else {
+			$templateOnlyOneImage = null;
+		}
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###ONLY_ONE_IMAGE###', $templateOnlyOneImage, 0);
 
 		// define the markers
 		$markerArray = array();
