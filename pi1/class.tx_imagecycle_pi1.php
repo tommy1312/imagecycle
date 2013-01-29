@@ -212,7 +212,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$data[$key]['caption'] = ($this->conf['showcaption'] ? $this->captions[$key] : '');
 		}
 
-		return $this->pi_wrapInBaseClass($this->parseTemplate($data));
+		return $this->parseTemplate($data);
 	}
 
 	/**
@@ -557,6 +557,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
 		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'];
 		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
+		$GLOBALS['TSFE']->register['IMAGE_COUNT'] = count($data);
 		if (count($data) > 0) {
 			foreach ($data as $key => $item) {
 				$image = null;
