@@ -93,7 +93,7 @@ jQuery(document).ready(function() {
 
 
 <!-- ###TEMPLATE_NIVOSLIDER_JS### begin -->
-jQuery(document).ready(function() {
+jQuery(window).load(function() {
 	jQuery('####KEY###').parent().show();
 	jQuery('####KEY###').nivoSlider({
 		###OPTIONS###

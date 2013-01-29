@@ -98,6 +98,7 @@
 			<label index="tt_content.pi_flexform.nivoKeyboardNav">Use left and right arrows for navigation</label>
 			<label index="tt_content.pi_flexform.nivoPauseOnHover">Stop animation while hovering</label>
 			<label index="tt_content.pi_flexform.nivoManualAdvance">Force manual transitions</label>
+			<label index="tt_content.pi_flexform.nivoResponsive">Responsive</label>
 			<label index="tt_content.pi_flexform.nivoCaptionOpacity">Universal caption opacity</label>
 			<label index="tt_content.pi_flexform.optionsNivo">Enter own options (see http://nivo.dev7studios.com/#usage)</label>
 

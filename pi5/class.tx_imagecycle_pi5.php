@@ -54,6 +54,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 	protected $css        = array();
 	protected $imageDir   = 'uploads/tx_imagecycle/';
 	protected $templateFileJS = null;
+	protected $uid        = NULL;
 
 	/**
 	 * The main method of the PlugIn
@@ -73,6 +74,9 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
+
+		// set the uid of the tt_content
+		$this->uid = $this->cObj->data['_LOCALIZED_UID'] ? $this->cObj->data['_LOCALIZED_UID'] : $this->cObj->data['uid'];
 
 		if ($this->cObj->data['list_type'] == $this->extKey.'_pi5') {
 			$this->type = 'normal';
@@ -123,7 +127,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
-			$this->setContentKey("imagecycle-slice_c" . $this->cObj->data['uid']);
+			$this->setContentKey("imagecycle-slice_c" . $this->uid);
 
 			// define the images
 			switch ($this->lConf['mode']) {
@@ -142,11 +146,11 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 					break;
 				}
 				case "dam" : {
-					$this->setDataDam(false, 'tt_content', $this->cObj->data['uid']);
+					$this->setDataDam(false, 'tt_content', $this->uid);
 					break;
 				}
 				case "dam_catedit" : {
-					$this->setDataDam(true, 'tt_content', $this->cObj->data['uid']);
+					$this->setDataDam(true, 'tt_content', $this->uid);
 					break;
 				}
 			}

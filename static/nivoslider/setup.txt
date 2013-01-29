@@ -35,6 +35,7 @@ plugin.tx_imagecycle_pi3 {
 	nivoKeyboardNav = {$plugin.tx_imagecycle_pi3.nivoKeyboardNav}
 	nivoPauseOnHover = {$plugin.tx_imagecycle_pi3.nivoPauseOnHover}
 	nivoManualAdvance = {$plugin.tx_imagecycle_pi3.nivoManualAdvance}
+	nivoResponsive = {$plugin.tx_imagecycle_pi3.nivoResponsive}
 	nivoCaptionOpacity = {$plugin.tx_imagecycle_pi3.nivoCaptionOpacity}
 	options = {$plugin.tx_imagecycle_pi3.options}
 	optionsOverride = {$plugin.tx_imagecycle_pi3.optionsOverride}
@@ -97,8 +98,12 @@ plugin.tx_imagecycle_pi3 {
 					required = 1
 				}
 				longdescURL >
-				params = rel="{register:thumbrel}"
-				params.insertData = 1
+				params.cObject = TEXT
+				params.cObject {
+					data = register:thumbrel
+					wrap = rel="|"
+					required = 1
+				}
 			}
 			captionWrap {
 				dataWrap = <div id="htmlcaption-{register:caption_key}" class="nivo-html-caption"> | </div>

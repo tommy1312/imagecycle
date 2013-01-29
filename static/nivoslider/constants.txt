@@ -79,7 +79,10 @@ plugin.tx_imagecycle_pi3 {
 	# cat=plugin.tx_imagecycle.nivoslider/enable/070; type=boolean; label=Manual advance: Force manual transitions
 	nivoManualAdvance = 0
 
-	# cat=plugin.tx_imagecycle.nivoslider/enable/080; type=string; label=Caption opacity: Universal caption opacity
+	# cat=plugin.tx_imagecycle.nivoslider/enable/080; type=boolean; label=Responsive: The slider will use 100% of the with
+	nivoResponsive = 0
+
+	# cat=plugin.tx_imagecycle.nivoslider/enable/090; type=string; label=Caption opacity: Universal caption opacity
 	nivoCaptionOpacity = 0.8
 
 }

@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'description' => 'Insert a slideshow into your page or template. Manage the images, captions and hrefs recursively in the pagetree and show it in a jQuery-Cycle, Coin-Slider, Nivo-Slider or Cross-Slider. Add media from DAM and DAM-Category. Use t3jquery for better integration with other jQuery extensions.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '2.6.5',
+	'version' => '2.6.6',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -38,7 +38,7 @@ $EM_CONF[$_EXTKEY] = array (
 		array (
 			'cms' => '',
 			'php' => '5.0.0-0.0.0',
-			'typo3' => '4.3.0-4.99.999',
+			'typo3' => '4.3.0-0.0.0',
 			'jftcaforms' => '0.2.1-',
 		),
 		'conflicts' => 
