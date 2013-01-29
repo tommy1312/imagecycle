@@ -85,6 +85,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 
 			$this->conf['mode']           = $this->getFlexformData('general', 'mode');
 			$this->conf['images']         = $this->getFlexformData('general', 'images', ($this->conf['mode'] == 'upload'));
+			$this->conf['hrefs']          = $this->getFlexformData('general', 'hrefs', ($this->conf['mode'] == 'upload'));
 			$this->conf['captions']       = $this->getFlexformData('general', 'captions', ($this->conf['mode'] == 'upload'));
 			$this->conf['captionsData']   = $this->getFlexformData('general', 'captionsData', ($this->conf['mode'] == 'uploadData'));
 			$this->conf['damimages']      = $this->getFlexformData('general', 'damimages', ($this->conf['mode'] == 'dam'));
@@ -94,12 +95,14 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 
 			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->conf['mode'] == 'uploadRTE'));
 			$this->conf['imagesRTE'] = array();
-			if (isset($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
+			if (is_array($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
 				foreach ($imagesRTE['el'] as $elKey => $el) {
 					if (is_numeric($elKey)) {
 						$this->conf['imagesRTE'][] = array(
 							"image"   => $el['data']['el']['image']['vDEF'],
-							"caption" => $el['data']['el']['caption']['vDEF'],
+							"href"    => $el['data']['el']['href']['vDEF'],
+							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+							"hide"    => $el['data']['el']['hide']['vDEF'],
 						);
 					}
 				}
@@ -108,7 +111,6 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			$this->lConf['imagewidth']            = $this->getFlexformData('settings', 'imagewidth');
 			$this->lConf['imageheight']           = $this->getFlexformData('settings', 'imageheight');
 			$this->lConf['sliceColorHiddenSides'] = $this->getFlexformData('settings', 'sliceColorHiddenSides');
-			$this->lConf['sliceShowInfo']         = $this->getFlexformData('settings', 'sliceShowInfo');
 
 			$this->lConf['sliceOrientation']        = $this->getFlexformData('movement', 'sliceOrientation');
 			$this->lConf['slicePerspective']        = $this->getFlexformData('movement', 'slicePerspective');
@@ -119,9 +121,8 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			$this->lConf['sliceSpeed3d']            = $this->getFlexformData('movement', 'sliceSpeed3d');
 			$this->lConf['sliceSlideshow']          = $this->getFlexformData('movement', 'sliceSlideshow');
 			$this->lConf['sliceSlideshowTime']      = $this->getFlexformData('movement', 'sliceSlideshowTime');
+			$this->lConf['sliceEasing']             = $this->getFlexformData('movement', 'sliceEasing');
 
-			$this->lConf['sliceTransition']    = $this->getFlexformData('fallback', 'sliceTransition');
-			$this->lConf['sliceTransitionDir'] = $this->getFlexformData('fallback', 'sliceTransitionDir');
 			$this->lConf['sliceSpeed']         = $this->getFlexformData('fallback', 'sliceSpeed');
 
 			$this->lConf['options']         = $this->getFlexformData('special', 'options');
@@ -168,9 +169,6 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			if ($this->lConf['sliceColorHiddenSides'] && $this->lConf['sliceColorHiddenSides'] != 'on') {
 				$this->conf['sliceColorHiddenSides'] = $this->lConf['sliceColorHiddenSides'];
 			}
-			if ($this->lConf['sliceShowInfo'] < 2) {
-				$this->conf['sliceShowInfo'] = $this->lConf['sliceShowInfo'];
-			}
 
 			if ($this->lConf['sliceOrientation']) {
 				$this->conf['sliceOrientation'] = $this->lConf['sliceOrientation'];
@@ -193,11 +191,8 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			if ($this->lConf['sliceSpeed3d']) {
 				$this->conf['sliceSpeed3d'] = $this->lConf['sliceSpeed3d'];
 			}
-			if ($this->lConf['sliceTransition']) {
-				$this->conf['sliceTransition'] = $this->lConf['sliceTransition'];
-			}
-			if ($this->lConf['sliceTransitionDir']) {
-				$this->conf['sliceTransitionDir'] = $this->lConf['sliceTransitionDir'];
+			if ($this->lConf['sliceEasing']) {
+				$this->conf['sliceEasing'] = $this->lConf['sliceEasing'];
 			}
 			if ($this->lConf['sliceSpeed']) {
 				$this->conf['sliceSpeed'] = $this->lConf['sliceSpeed'];
@@ -205,7 +200,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			if ($this->lConf['sliceSlideshow'] < 2) {
 				$this->conf['sliceSlideshow'] = $this->lConf['sliceSlideshow'];
 			}
-			if ($this->lConf['sliceTransition']) {
+			if ($this->lConf['sliceSlideshowTime']) {
 				$this->conf['sliceSlideshowTime'] = $this->lConf['sliceSlideshowTime'];
 			}
 
@@ -305,7 +300,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			} else {
 				$image = $this->images[$a];
 			}
-			if ($image) {
+			if ($image && ! $this->hidden[$a]) {
 				$data[$i]['image']   = $image;
 				$data[$i]['href']    = $this->hrefs[$a];
 				$data[$i]['caption'] = $this->captions[$a];
@@ -369,7 +364,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'];
 		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
 		$GLOBALS['TSFE']->register['IMAGE_COUNT'] = count($data);
-		if (count($data) > 0) {
+		if (is_array($data) && count($data) > 0) {
 			foreach ($data as $key => $item) {
 				$GLOBALS['TSFE']->register['caption_key'] = $this->getContentKey() . "-" .$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'];
 				$image = null;
@@ -383,6 +378,9 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
 				$GLOBALS['TSFE']->register['CURRENT_ID'] = $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] + 1;
+				if ($this->hrefs[$key]) {
+					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
+				}
 				$image = $this->cObj->IMAGE($imgConf);
 				// Add the noscript wrap to the first image
 				if ($key == 0) {
@@ -408,14 +406,15 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 		if ($this->conf['sliceColorHiddenSides']) {
 			$options['colorHiddenSides'] = "colorHiddenSides: '#".str_replace('#', '', $this->conf['sliceColorHiddenSides'])."'";
 		}
-		$options['showInfo'] = "showInfo: ".($this->conf['sliceShowInfo'] ? 'true' : 'false');
 
-		$options['orientation'] = "orientation: '".($this->conf['sliceOrientation'] == 'v' ? 'v' : 'h')."'";
+		if (in_array($this->conf['sliceOrientation'], array('v', 'h', 'r'))) {
+			$options['orientation'] = "orientation: '".$this->conf['sliceOrientation']."'";
+		}
 		if ($this->conf['slicePerspective'] > 0) {
 			$options['perspective'] = "perspective: {$this->conf['slicePerspective']}";
 		}
 		if ($this->conf['sliceSlicesCount'] > 0) {
-			$options['slicesCount'] = "slicesCount: {$this->conf['sliceSlicesCount']}";
+			$options['cuboidsCount'] = "cuboidsCount: {$this->conf['sliceSlicesCount']}";
 		}
 		if ($this->conf['sliceDisperseFactor'] > 0) {
 			$options['disperseFactor'] = "disperseFactor: {$this->conf['sliceDisperseFactor']}";
@@ -425,23 +424,20 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			$options['sequentialFactor'] = "sequentialFactor: {$this->conf['sliceSequentialFactor']}";
 		}
 		if ($this->conf['sliceSpeed3d'] > 0) {
-			$options['speed3d'] = "speed3d: {$this->conf['sliceSpeed3d']}";
+			$options['speed'] = "speed: {$this->conf['sliceSpeed3d']}";
 		}
 		/* FALLBACK*/
-		if (in_array($this->conf['sliceTransition'], array('linear', 'swing'))) {
-			$options['fallbackEasing'] = "fallbackEasing: '{$this->conf['sliceTransition']}'";
-		} elseif ($this->conf['sliceTransitionDir'] && $this->conf['sliceTransition']) {
-			$options['fallbackEasing'] = "fallbackEasing: 'ease{$this->conf['sliceTransitionDir']}{$this->conf['sliceTransition']}'";
+		if ($this->conf['sliceEasing']) {
+			$options['easing'] = "easing: '{$this->conf['sliceEasing']}'";
 		}
 		if ($this->conf['sliceSpeed'] > 0) {
-			$options['speed'] = "speed: {$this->conf['sliceSpeed']}";
+			$options['fallbackFadeSpeed'] = "fallbackFadeSpeed: {$this->conf['sliceSpeed']}";
 		}
 		/* SLIDESHOW */
-		$options['slideshow'] = "slideshow: ".($this->conf['sliceSlideshow'] ? 'true' : 'false');
+		$options['slideshow'] = "autoplay: ".($this->conf['sliceSlideshow'] ? 'true' : 'false');
 		if ($this->conf['sliceSlideshowTime'] > 0) {
-			$options['slideshowTime'] = "slideshowTime: {$this->conf['sliceSlideshowTime']}";
+			$options['slideshowTime'] = "interval: {$this->conf['sliceSlideshowTime']}";
 		}
-
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
 			if ($this->conf['optionsOverride']) {
@@ -476,7 +472,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 		// define the markers
 		$markerArray = array();
 		$markerArray["KEY"]     = $this->getContentKey();
-		$markerArray["OPTIONS"] = implode(",\n		", $options);
+		$markerArray["OPTIONS"] = implode(",\n				", $options);
 
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);

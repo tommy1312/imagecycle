@@ -132,9 +132,50 @@ jQuery(document).ready(function() {
 
 <!-- ###TEMPLATE_SLICEBOX_JS### begin -->
 jQuery(document).ready(function() {
-	jQuery('####KEY###').slicebox({
-		###OPTIONS###
-	});
+	jQuery('####KEY### img').removeAttr("height").removeAttr("width");
+	var Page = (function() {
+		var $navArrows = jQuery('####KEY###').parent().find('.sb-nav-arrows').hide(),
+			$navOptions = jQuery('####KEY###').parent().find('.sb-nav-options').hide(),
+			$shadow = jQuery('####KEY###').parent().find('.sb-shadow').hide(),
+			slicebox = jQuery('####KEY###').slicebox({
+				###OPTIONS###,
+				onReady: function() {
+					$navArrows.show();
+					$navOptions.show();
+					$shadow.show();
+				}
+			}),
+			init = function() {
+				initEvents();
+			},
+			initEvents = function() {
+				// add navigation events
+				$navArrows.children(':first').on('click', function() {
+					slicebox.next();
+					$(this).blur();
+					return false;
+				});
+				$navArrows.children(':last').on('click', function() {
+					slicebox.previous();
+					$(this).blur();
+					return false;
+				});
+				jQuery('#navPlay').on('click', function() {
+					slicebox.play();
+					$(this).blur();
+					return false;
+				});
+				jQuery('#navPause').on('click', function() {
+					slicebox.pause();
+					$(this).blur();
+					return false;
+				});
+			};
+			return { init : init };
+	})();
+	Page.init();
 });
+
+
 <!-- ###TEMPLATE_SLICEBOX_JS### end -->
 

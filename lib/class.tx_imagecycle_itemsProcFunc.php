@@ -47,7 +47,7 @@ class tx_imagecycle_itemsProcFunc
 		$pageTS = t3lib_BEfunc::getPagesTSconfig($config['row']['pid']);
 		$imagecycleEffects = t3lib_div::trimExplode(",", $pageTS['mod.']['imagecycle.']['effects'], true);
 		$optionList = array();
-		if (count($imagecycleEffects) > 0) {
+		if (is_array($imagecycleEffects) && count($imagecycleEffects) > 0) {
 			foreach ($availableEffects as $key => $availableEffect) {
 				if (in_array(trim($availableEffect), $imagecycleEffects)) {
 					$optionList[] = array(
@@ -82,7 +82,7 @@ class tx_imagecycle_itemsProcFunc
 		$pageTS = t3lib_BEfunc::getPagesTSconfig($config['row']['pid']);
 		$imagecycleEffects = t3lib_div::trimExplode(",", $pageTS['mod.']['imagecycle.']['effectsCoin'], true);
 		$optionList = array();
-		if (count($imagecycleEffects) > 0) {
+		if (is_array($imagecycleEffects) && count($imagecycleEffects) > 0) {
 			foreach ($availableEffects as $key => $availableEffect) {
 				if (in_array(trim($availableEffect), $imagecycleEffects)) {
 					$optionList[] = array(
@@ -117,7 +117,7 @@ class tx_imagecycle_itemsProcFunc
 		$pageTS = t3lib_BEfunc::getPagesTSconfig($config['row']['pid']);
 		$imagecycleEffects = t3lib_div::trimExplode(",", $pageTS['mod.']['imagecycle.']['effectsNivo'], true);
 		$optionList = array();
-		if (count($imagecycleEffects) > 0) {
+		if (is_array($imagecycleEffects) && count($imagecycleEffects) > 0) {
 			foreach ($availableEffects as $key => $availableEffect) {
 				if (in_array(trim($availableEffect), $imagecycleEffects)) {
 					$optionList[] = array(
@@ -175,7 +175,7 @@ class tx_imagecycle_itemsProcFunc
 		}
 
 		$items = t3lib_div::get_dirs(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder']));
-		if (count($items) > 0) {
+		if (is_array($items) && count($items) > 0) {
 			$optionList = array();
 			foreach ($items as $key => $item) {
 				$item = trim($item);

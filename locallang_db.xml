@@ -39,6 +39,7 @@
 			<label index="tt_content.pi_flexform.image">Slide Image</label>
 			<label index="tt_content.pi_flexform.href">Image link</label>
 			<label index="tt_content.pi_flexform.caption">Image Caption</label>
+			<label index="tt_content.pi_flexform.hide">Hide</label>
 			<label index="tt_content.pi_flexform.captionsData">Image Caption</label>
 			<label index="tt_content.pi_flexform.images">Slide Images</label>
 			<label index="tt_content.pi_flexform.hrefs">Image links</label>
@@ -121,9 +122,8 @@
 			<label index="tt_content.pi_flexform.sliceSpeed3d">3D Speed</label>
 			<label index="tt_content.pi_flexform.sliceSlideshow">Slideshow</label>
 			<label index="tt_content.pi_flexform.sliceSlideshowTime">Slideshow time</label>
+			<label index="tt_content.pi_flexform.sliceEasing">Easing</label>
 			<label index="tt_content.pi_flexform.sheet_fallback">Fallback</label>
-			<label index="tt_content.pi_flexform.sliceTransition">Fallback transition</label>
-			<label index="tt_content.pi_flexform.sliceTransitionDir">Fallback transition direction</label>
 			<label index="tt_content.pi_flexform.sliceSpeed">Fallback speed</label>
 			<label index="tt_content.pi_flexform.optionsSlice">Enter own options (see http://tympanus.net/codrops/2011/09/05/slicebox-3d-image-slider/)</label>
 

@@ -1,10 +1,10 @@
 plugin.tx_imagecycle_pi5 {
 
 	# cat=plugin.tx_imagecycle.slicebox/file/010; type=file[js]; label=jQuery Nivo-Slider for Cycle: Location of the jQuery Nivo-Slider
-	file.jQuerySlice = EXT:imagecycle/res/jquery/js/jquery.slicebox-1.0b.min.js
+	file.jQuerySlice = EXT:imagecycle/res/jquery/js/jquery.slicebox-1.1.0.min.js
 
 	# cat=plugin.tx_imagecycle.slicebox/file/020; type=file[js]; label=Modernizr: Location of the Modernizr
-	file.modernizer = EXT:imagecycle/res/jquery/js/modernizr.custom.28481.js
+	file.modernizer = EXT:imagecycle/res/jquery/js/modernizr.custom.46884.js
 
 	# cat=plugin.tx_imagecycle.slicebox/file/030; type=file[css]; label=CSS file: The path to the stylesheet file
 	file.cssFileSlice = EXT:imagecycle/res/css/slicebox/style.css
@@ -23,12 +23,9 @@ plugin.tx_imagecycle_pi5 {
 	# cat=plugin.tx_imagecycle.slicebox/dims/030; type=string; label=Color of the hidden sides: Color of the hidden sides
 	sliceColorHiddenSides = #222
 
-	# cat=plugin.tx_imagecycle.slicebox/dims/040; type=boolean; label=Show info automatically: If true the info will be shown automatically
-	sliceShowInfo = 0
 
 
-
-	# cat=plugin.tx_imagecycle.slicebox/color/010; type=options[v,h]; label=Orientation: Orientation of the slices (v)ertical or (h)orizontal.
+	# cat=plugin.tx_imagecycle.slicebox/color/010; type=options[v,h, r]; label=Orientation: Orientation of the slices (v)ertical, (h)orizontal or (r)andom.
 	sliceOrientation = v
 
 	# cat=plugin.tx_imagecycle.slicebox/color/020; type=int; label=Perspective: -webkit-perspective value
@@ -55,13 +52,11 @@ plugin.tx_imagecycle_pi5 {
 	# cat=plugin.tx_imagecycle.slicebox/color/090; type=int; label=Slideshow time: Interval for the slideshow in ms
 	sliceSlideshowTime = 2000
 
+	# cat=plugin.tx_imagecycle.slicebox/color/100; type=string; label=Fallback transition: Effect of transition (ease, ease-in, ease-out, ease-in-out, linear or any other CSS3-Transition like "cubic-bezier(1, -0.53, 0.405, 1.425)")
+	sliceEasing = ease
 
 
-	# cat=plugin.tx_imagecycle.slicebox/enable/010; type=options[,swing,linear,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Fallback transition: Effect of transition (Swing, Linear, Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
-	sliceTransition = Back
 
-	# cat=plugin.tx_imagecycle.slicebox/enable/020; type=options[,In,Out,InOut]; label=Fallback transition direction: Direction of transition (In, Out, InOut)
-	sliceTransitionDir = InOut
 
 	# cat=plugin.tx_imagecycle.slicebox/enable/030; type=int; label=Fallback speed: Fallback speed. You might want to set a different speed for the fallback animation...
 	sliceSpeed = 600

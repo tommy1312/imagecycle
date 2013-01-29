@@ -30,10 +30,8 @@ plugin.tx_imagecycle_pi5 {
 	sliceSpeed3d = {$plugin.tx_imagecycle_pi5.sliceSpeed3d}
 	sliceSlideshow = {$plugin.tx_imagecycle_pi5.sliceSlideshow}
 	sliceSlideshowTime = {$plugin.tx_imagecycle_pi5.sliceSlideshowTime}
-	sliceShowInfo = {$plugin.tx_imagecycle_pi5.sliceShowInfo}
+	sliceEasing = {$plugin.tx_imagecycle_pi5.sliceEasing}
 
-	sliceTransition = {$plugin.tx_imagecycle_pi5.sliceTransition}
-	sliceTransitionDir = {$plugin.tx_imagecycle_pi5.sliceTransitionDir}
 	sliceSpeed = {$plugin.tx_imagecycle_pi5.sliceSpeed}
 
 	options = {$plugin.tx_imagecycle_pi5.options}
@@ -54,19 +52,66 @@ plugin.tx_imagecycle_pi5 {
 				file.import.data = register:file
 				file.width.data = register:imagewidth
 				file.height.data = register:imageheight
+				imageLinkWrap < tt_content.image.20.1.imageLinkWrap
+				imageLinkWrap = 1
+				imageLinkWrap {
+					enable.data = register:href
+				}
+				imageHrefWrap {
+					enable.data = register:href
+					typolink {
+						parameter.data = register:href
+						title {
+							data = register:caption
+							stripHtml = 1
+						}
+						target = {$plugin.tx_imagecycle_pi1.linkTarget}
+						extTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
+					}
+				}
 				altText {
 					data = register:caption
 					stripHtml = 1
 				}
 				titleText < .altText
 				longdescURL >
+				stdWrap {
+					outerWrap = <li> | </li>
+					append = TEXT
+					append.data = register:caption
+					append.wrap = <div class="sb-description"> | </div>
+					append.required = 1
+				}
+			}
+			captionWrap {
+				dataWrap = <div class="sb-description"> | </div>
+				required = 1
 			}
 			stdWrap {
-				dataWrap = <div class="tx-imagecycle-pi5"><div class="tx-imagecycle-pi5-images sb-slider" id="{register:key}"> | </div></div>
+				dataWrap (
+<div class="tx-imagecycle-pi5">
+	<ul class="tx-imagecycle-pi5-images sb-slider" id="{register:key}"> | </ul>
+	<div class="sb-shadow"></div>
+	<div class="sb-nav-arrows">
+		<a href="#">{LLL:EXT:imagecycle/pi5/locallang.xml:next}</a>
+		<a href="#">{LLL:EXT:imagecycle/pi5/locallang.xml:previous}</a>
+	</div>
+	<div class="sb-nav-options">
+		<span id="navPlay">{LLL:EXT:imagecycle/pi5/locallang.xml:play}</span>
+		<span id="navPause">{LLL:EXT:imagecycle/pi5/locallang.xml:pause}</span>
+	</div>
+</div>
+)
 				required = 1
 			}
 			noscriptWrap {
-				dataWrap = <noscript><div class="tx-imagecycle-pi5 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi5-images sb-slider"> | </div></div></noscript>
+				dataWrap (
+<noscript>
+	<div class="tx-imagecycle-pi5 slider-wrapper {register:themeclass}">
+		<div class="tx-imagecycle-pi5-images sb-slider"> | </div>
+	</div>
+</noscript>
+)
 				required = 1
 			}
 		}

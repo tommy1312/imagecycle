@@ -189,6 +189,17 @@
 											<defaultExtras>richtext[]:rte_transform[mode=ts_css]</defaultExtras>
 										</TCEforms>
 									</caption>
+									<hide>
+										<TCEforms>
+											<exclude>1</exclude>
+											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.hide</label>
+											<config>
+												<form_type>user</form_type>
+												<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+												<checked>0</checked>
+											</config>
+										</TCEforms>
+									</hide>
 								</el>
 							</data>
 						</el>
