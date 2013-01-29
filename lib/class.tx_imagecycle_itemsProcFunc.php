@@ -166,7 +166,7 @@ class tx_imagecycle_itemsProcFunc
 
 		// 
 		$info_text = NULL;
-		if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
+		if (t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) >= 4003000) {
 			if (file_exists(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt'))) {
 				$info_text = $GLOBALS['LANG']->sL(file_get_contents(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt')));
 				$msg = t3lib_div::makeInstance('t3lib_FlashMessage', $info_text, $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:pi3_theme_info'), t3lib_FlashMessage::INFO);

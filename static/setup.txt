@@ -5,6 +5,7 @@ plugin.tx_imagecycle_pi1 {
 	random = {$plugin.tx_imagecycle_pi1.random}
 	cleartypeNoBg = {$plugin.tx_imagecycle_pi1.cleartypeNoBg}
 	stopOnMousover = {$plugin.tx_imagecycle_pi1.stopOnMousover}
+	stopAfterOneCycle = {$plugin.tx_imagecycle_pi1.stopAfterOneCycle}
 	pausedBegin = {$plugin.tx_imagecycle_pi1.pausedBegin}
 	disableRecursion = {$plugin.tx_imagecycle_pi1.disableRecursion}
 	jQueryNoConflict = {$plugin.tx_imagecycle_pi1.jQueryNoConflict}
