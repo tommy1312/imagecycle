@@ -1,16 +1,16 @@
 # TYPO3 Extension "imagecycle"
 Insert a slideshow into your page or template. Manage the images, captions and hrefs recursively in the pagetree and show it in a jQuery-Cycle, Coin-Slider, Nivo-Slider or Cross-Slider. Add media from DAM and DAM-Category. Use t3jquery for better integration with other jQuery extensions.
 
-## Version 1.4.9
+## Version 1.5.0
 
 
 
 
 <table>
-	<tr><td>Version</td><td>1.4.9 stable</td></tr>
-	<tr><td>Release date</td><td>03. October 2010</td></tr>
+	<tr><td>Version</td><td>1.5.0 stable</td></tr>
+	<tr><td>Release date</td><td>18. October 2010</td></tr>
 	<tr><td>Author</td><td>Juergen Furrer</td></tr>
-	<tr><td>Comment</td><td>Remove double class tx-imagecycle-pi1 / Add new register IMAGE_COUNT</td></tr>
+	<tr><td>Comment</td><td>Extends character count for imagewith and imageheight (10114) / Add new mode with HTML-editor / Add jQuery 1.4.3</td></tr>
 </table>
 
 ## !! Attention !!
