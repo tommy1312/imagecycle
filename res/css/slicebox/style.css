@@ -23,6 +23,7 @@
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
 	border-radius:3px 3px 3px 3px;
+	z-index: 2;
 }
 .sb-nav span.sb-nav-next {
 	left:auto;
