@@ -61,6 +61,13 @@ plugin.tx_imagecycle_pi1 {
 	}
 	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
 
+	integerWidthWrap {
+		wrap = |
+	}
+	integerHeightWrap {
+		wrap = |
+	}
+
 	cycle {
 		normal {
 			image {

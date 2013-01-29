@@ -300,6 +300,14 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			$this->conf['imageheight'] = "200c";
 		}
 
+		// wrap if integer
+		if (is_numeric($this->conf['imagewidth'])) {
+			$this->conf['imagewidth'] = $this->cObj->stdWrap($this->conf['imagewidth'], $this->conf['integerWidthWrap.']);
+		}
+		if (is_numeric($this->conf['imageheight'])) {
+			$this->conf['imageheight'] = $this->cObj->stdWrap($this->conf['imageheight'], $this->conf['integerHeightWrap.']);
+		}
+
 		// We have to build the images first to get the maximum width and height
 		$returnString = null;
 		$imagesString = null;

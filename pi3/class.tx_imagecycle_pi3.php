@@ -355,6 +355,20 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$this->conf['thumbheight'] = "60c";
 		}
 
+		// wrap if integer
+		if (is_numeric($this->conf['imagewidth'])) {
+			$this->conf['imagewidth'] = $this->cObj->stdWrap($this->conf['imagewidth'], $this->conf['integerWidthWrap.']);
+		}
+		if (is_numeric($this->conf['imageheight'])) {
+			$this->conf['imageheight'] = $this->cObj->stdWrap($this->conf['imageheight'], $this->conf['integerHeightWrap.']);
+		}
+		if (is_numeric($this->conf['thumbwidth'])) {
+			$this->conf['thumbwidth'] = $this->cObj->stdWrap($this->conf['thumbwidth'], $this->conf['integerWidthWrap.']);
+		}
+		if (is_numeric($this->conf['thumbheight'])) {
+			$this->conf['thumbheight'] = $this->cObj->stdWrap($this->conf['thumbheight'], $this->conf['integerHeightWrap.']);
+		}
+
 		// define the css file
 		$this->pagerenderer->addCssFile($this->conf['cssFileNivo']);
 

@@ -37,7 +37,9 @@ jQuery(document).ready(function() {
 	jQuery('####KEY###').css('width', jQuery('####KEY### img').css('width'));
 	jQuery('####KEY### ###CAPTION_TAG###').show();
 	<!-- ###ONLY_ONE_IMAGE### -->
-	jQuery('####KEY###').parent().css('width', jQuery('####KEY###').css('width'));
+	if (jQuery('####KEY###').width() > 0) {
+		jQuery('####KEY###').parent().css('width', jQuery('####KEY###').width());
+	}
 	<!-- ###PAGER### -->
 	if (jQuery('####KEY###_pager').length == 0) {
 		var cycle_images = jQuery('####KEY### li').length;

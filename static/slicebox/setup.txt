@@ -41,6 +41,13 @@ plugin.tx_imagecycle_pi5 {
 
 	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
 
+	integerWidthWrap {
+		wrap = |
+	}
+	integerHeightWrap {
+		wrap = |
+	}
+
 	slice {
 		normal {
 			image {
