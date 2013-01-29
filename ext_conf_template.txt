@@ -1,0 +1,3 @@
+
+# cat=basic; type=string; label=Allowed effect: Defines all allowed effects
+effects = ,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all
