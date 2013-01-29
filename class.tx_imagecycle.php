@@ -46,6 +46,11 @@ class tx_imagecycle
 			$imageConf = 'image.';
 		}
 		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount'] : 1;
+		if (class_exists(t3lib_utility_VersionNumber) && t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) >= 4006000) {
+			$imageNum = t3lib_utility_Math::forceIntegerInRange($imageNum, 0, 1000);
+		} else {
+			$imageNum = t3lib_div::intInRange($imageNum, 0, 1000);
+		}
 		$imageNum = t3lib_div::intInRange($imageNum, 0, 1000);
 		$theImgCode = '';
 		$imgsCaptions = explode(chr(10), $row['imagecaption']);
@@ -160,7 +165,11 @@ class tx_imagecycle
 		$mode = $GLOBALS['TSFE']->tmpl->setup['plugin.']['dam_ttnews.']['mode'];
 
 		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount']:1;
-		$imageNum = t3lib_div::intInRange($imageNum, 0, 100);
+		if (class_exists(t3lib_utility_VersionNumber) && t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) >= 4006000) {
+			$imageNum = t3lib_utility_Math::forceIntegerInRange($imageNum, 0, 100);
+		} else {
+			$imageNum = t3lib_div::intInRange($imageNum, 0, 100);
+		}
 		$theImgCode = '';
 
 		$imgsCaptions = explode(chr(10), $row['imagecaption']);
