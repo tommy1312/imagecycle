@@ -42,18 +42,6 @@
 							</config>
 						</TCEforms>
 					</images>
-					<hrefs>
-						<TCEforms>
-							<displayCond>FIELD:mode:!IN:dam,dam_catedit,uploadRTE</displayCond>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.hrefs</label>
-							<config>
-								<type>text</type>
-								<wrap>OFF</wrap>
-								<cols>48</cols>
-								<rows>6</rows>
-							</config>
-						</TCEforms>
-					</hrefs>
 					<captions>
 						<TCEforms>
 							<displayCond>FIELD:mode:!IN:dam,dam_catedit,uploadRTE,uploadData</displayCond>
@@ -157,36 +145,15 @@
 											</config>
 										</TCEforms>
 									</image>
-									<href>
+									<caption>
 										<TCEforms>
-											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.href</label>
+											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.caption</label>
 											<config>
 												<type>input</type>
 												<size>15</size>
 												<max>255</max>
 												<eval>trim</eval>
-												<wizards>
-													<_PADDING>2</_PADDING>
-													<link>
-														<type>popup</type>
-														<title>Link</title>
-														<icon>link_popup.gif</icon>
-														<script>browse_links.php?mode=wizard</script>
-														<JSopenParams>height=500,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
-													</link>
-												</wizards>
 											</config>
-										</TCEforms>
-									</href>
-									<caption>
-										<TCEforms>
-											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.caption</label>
-											<config>
-												<type>text</type>
-												<cols>30</cols>
-												<rows>5</rows>
-											</config>
-											<defaultExtras>richtext[]:rte_transform[mode=ts_css]</defaultExtras>
 										</TCEforms>
 									</caption>
 								</el>
@@ -248,83 +215,28 @@
 							</config>
 						</TCEforms>
 					</imageheight>
-					<showcaption>
+					<sliceColorHiddenSides>
 						<TCEforms>
 							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showcaption</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceColorHiddenSides</label>
 							<config>
 								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>1</checked>
+								<userFunc><![CDATA[EXT:jftcaforms/lib/class.tx_jftcaforms_tceFunc.php:&tx_jftcaforms_tceFunc->getColorPicker]]></userFunc>
+								<emptyValue>1</emptyValue>
 							</config>
 						</TCEforms>
-					</showcaption>
-					<showControl>
+					</sliceColorHiddenSides>
+					<sliceShowInfo>
 						<TCEforms>
 							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showControl</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>0</checked>
-							</config>
-						</TCEforms>
-					</showControl>
-					<showPager>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.showPager</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceShowInfo</label>
 							<config>
 								<form_type>user</form_type>
 								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
 								<checked>0</checked>
 							</config>
 						</TCEforms>
-					</showPager>
-					<random>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.random</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>1</checked>
-							</config>
-						</TCEforms>
-					</random>
-					<cleartypeNoBg>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.cleartypeNoBg</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>0</checked>
-							</config>
-						</TCEforms>
-					</cleartypeNoBg>
-					<stoponmousover>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.stoponmousover</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>0</checked>
-							</config>
-						</TCEforms>
-					</stoponmousover>
-					<pausedBegin>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.pausedBegin</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>0</checked>
-							</config>
-						</TCEforms>
-					</pausedBegin>
+					</sliceShowInfo>
 				</el>
 			</ROOT>
 		</settings>
@@ -335,23 +247,148 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-					<type>
+					<sliceOrientation>
 						<TCEforms>
 							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.type</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceOrientation</label>
 							<config>
 								<type>select</type>
-								<size>12</size>
-								<maxitems>100</maxitems>
-								<multiple>1</multiple>
-								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getEffects</itemsProcFunc>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">vertical</numIndex>
+										<numIndex index="1">v</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">horizontal</numIndex>
+										<numIndex index="1">h</numIndex>
+									</numIndex>
+								</items>
+								<size>1</size>
+								<maxitems>1</maxitems>
 							</config>
 						</TCEforms>
-					</type>
-					<transition>
+					</sliceOrientation>
+					<slicePerspective>
 						<TCEforms>
 							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transition</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.slicePerspective</label>
+							<config>
+								<type>input</type>
+								<size>6</size>
+								<max>6</max>
+								<checkbox>0</checkbox>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</slicePerspective>
+					<sliceSlicesCount>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceSlicesCount</label>
+							<config>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:jftcaforms/lib/class.tx_jftcaforms_tceFunc.php:&tx_jftcaforms_tceFunc->getExtSlider]]></userFunc>
+								<width>200</width>
+								<range>
+									<lower>1</lower>
+									<upper>15</upper>
+								</range>
+								<emptyValue>1</emptyValue>
+							</config>
+						</TCEforms>
+					</sliceSlicesCount>
+					<sliceDisperseFactor>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceDisperseFactor</label>
+							<config>
+								<type>input</type>
+								<size>2</size>
+								<max>2</max>
+								<checkbox>0</checkbox>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</sliceDisperseFactor>
+					<sliceSequentialRotation>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceSequentialRotation</label>
+							<config>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<checked>0</checked>
+							</config>
+						</TCEforms>
+					</sliceSequentialRotation>
+					<sliceSequentialFactor>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceSequentialFactor</label>
+							<config>
+								<type>input</type>
+								<size>6</size>
+								<max>6</max>
+								<checkbox>0</checkbox>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</sliceSequentialFactor>
+					<sliceSpeed3d>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceSpeed3d</label>
+							<config>
+								<type>input</type>
+								<size>6</size>
+								<max>6</max>
+								<checkbox>0</checkbox>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</sliceSpeed3d>
+					<sliceSlideshow>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceSlideshow</label>
+							<config>
+								<form_type>user</form_type>
+								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<checked>0</checked>
+							</config>
+						</TCEforms>
+					</sliceSlideshow>
+					<sliceSlideshowTime>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceSlideshowTime</label>
+							<config>
+								<type>input</type>
+								<size>6</size>
+								<max>6</max>
+								<checkbox>0</checkbox>
+								<eval>int</eval>
+							</config>
+						</TCEforms>
+					</sliceSlideshowTime>
+				</el>
+			</ROOT>
+		</movement>
+		<fallback>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sheet_fallback</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<sliceTransition>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceTransition</label>
 							<config>
 								<type>select</type>
 								<items type="array">
@@ -412,11 +449,11 @@
 								<maxitems>1</maxitems>
 							</config>
 						</TCEforms>
-					</transition>
-					<transitiondir>
+					</sliceTransition>
+					<sliceTransitionDir>
 						<TCEforms>
 							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transitiondir</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceTransitionDir</label>
 							<config>
 								<type>select</type>
 								<items type="array">
@@ -441,73 +478,23 @@
 								<maxitems>1</maxitems>
 							</config>
 						</TCEforms>
-					</transitiondir>
-					<transitionduration>
+					</sliceTransitionDir>
+					<sliceSpeed>
 						<TCEforms>
 							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.transitionduration</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceSpeed</label>
 							<config>
 								<type>input</type>
-								<size>5</size>
-								<max>5</max>
+								<size>6</size>
+								<max>6</max>
 								<checkbox>0</checkbox>
 								<eval>int</eval>
 							</config>
 						</TCEforms>
-					</transitionduration>
-					<displayduration>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.displayduration</label>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<max>5</max>
-								<checkbox>0</checkbox>
-								<eval>int</eval>
-							</config>
-						</TCEforms>
-					</displayduration>
-					<delayduration>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.delayduration</label>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<max>5</max>
-								<checkbox>0</checkbox>
-								<eval>int</eval>
-							</config>
-						</TCEforms>
-					</delayduration>
-					<fastOnEvent>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.fastOnEvent</label>
-							<config>
-								<type>input</type>
-								<size>5</size>
-								<max>5</max>
-								<checkbox>0</checkbox>
-								<eval>int</eval>
-							</config>
-						</TCEforms>
-					</fastOnEvent>
-					<sync>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sync</label>
-							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
-								<checked>1</checked>
-							</config>
-						</TCEforms>
-					</sync>
+					</sliceSpeed>
 				</el>
 			</ROOT>
-		</movement>
+		</fallback>
 		<special>
 			<ROOT>
 				<TCEforms>
@@ -518,7 +505,7 @@
 					<options>
 						<TCEforms>
 							<exclude>1</exclude>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.options</label>
+							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.optionsSlice</label>
 							<config>
 								<type>text</type>
 								<wrap>OFF</wrap>

@@ -30,16 +30,16 @@
 require_once(t3lib_extMgm::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
 
 /**
- * Plugin 'Coin-Slider' for the 'imagecycle' extension.
+ * Plugin 'Slice-Box' for the 'imagecycle' extension.
  *
  * @author	Juergen Furrer <juergen.furrer@gmail.com>
  * @package	TYPO3
  * @subpackage	tx_imagecycle
  */
-class tx_imagecycle_pi2 extends tx_imagecycle_pi1
+class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 {
-	public $prefixId      = 'tx_imagecycle_pi2';
-	public $scriptRelPath = 'pi2/class.tx_imagecycle_pi2.php';
+	public $prefixId      = 'tx_imagecycle_pi5';
+	public $scriptRelPath = 'pi5/class.tx_imagecycle_pi5.php';
 	public $extKey        = 'imagecycle';
 	public $pi_checkCHash = true;
 	public $images        = array();
@@ -69,19 +69,18 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 		$this->pi_loadLL();
 
 		// define the key of the element
-		$this->setContentKey("imagecycle-coin");
+		$this->setContentKey("imagecycle-slice");
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
 
-		if ($this->cObj->data['list_type'] == $this->extKey.'_pi2') {
+		if ($this->cObj->data['list_type'] == $this->extKey.'_pi5') {
 			$this->type = 'normal';
 
 			// It's a content, all data from flexform
 
 			$this->lConf['mode']           = $this->getFlexformData('general', 'mode');
 			$this->lConf['images']         = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['hrefs']          = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
 			$this->lConf['captions']       = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
 			$this->lConf['captionsData']   = $this->getFlexformData('general', 'captionsData', ($this->lConf['mode'] == 'uploadData'));
 			$this->lConf['damimages']      = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
@@ -95,31 +94,36 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 					if (is_numeric($elKey)) {
 						$this->lConf['imagesRTE'][] = array(
 							"image"   => $el['data']['el']['image']['vDEF'],
-							"href"    => $el['data']['el']['href']['vDEF'],
-							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+							"caption" => $el['data']['el']['caption']['vDEF'],
 						);
 					}
 				}
 			}
 
-			$this->lConf['coinEffect']     = $this->getFlexformData('settings', 'coinEffect');
-			$this->lConf['imagewidth']     = $this->getFlexformData('settings', 'imagewidth');
-			$this->lConf['imageheight']    = $this->getFlexformData('settings', 'imageheight');
-			$this->lConf['coinSpw']        = $this->getFlexformData('settings', 'coinSpw');
-			$this->lConf['coinSph']        = $this->getFlexformData('settings', 'coinSph');
-			$this->lConf['coinDelay']      = $this->getFlexformData('settings', 'coinDelay');
-			$this->lConf['coinSDelay']     = $this->getFlexformData('settings', 'coinSDelay');
-			$this->lConf['coinTitleSpeed'] = $this->getFlexformData('settings', 'coinTitleSpeed');
-			$this->lConf['coinOpacity']    = $this->getFlexformData('settings', 'coinOpacity');
-			$this->lConf['coinNavigation'] = $this->getFlexformData('settings', 'coinNavigation');
-			$this->lConf['coinLinks']      = $this->getFlexformData('settings', 'coinLinks');
-			$this->lConf['coinHoverPause'] = $this->getFlexformData('settings', 'coinHoverPause');
+			$this->lConf['imagewidth']            = $this->getFlexformData('settings', 'imagewidth');
+			$this->lConf['imageheight']           = $this->getFlexformData('settings', 'imageheight');
+			$this->lConf['sliceColorHiddenSides'] = $this->getFlexformData('settings', 'sliceColorHiddenSides');
+			$this->lConf['sliceShowInfo']         = $this->getFlexformData('settings', 'sliceShowInfo');
+
+			$this->lConf['sliceOrientation']        = $this->getFlexformData('movement', 'sliceOrientation');
+			$this->lConf['slicePerspective']        = $this->getFlexformData('movement', 'slicePerspective');
+			$this->lConf['sliceSlicesCount']        = $this->getFlexformData('movement', 'sliceSlicesCount');
+			$this->lConf['sliceDisperseFactor']     = $this->getFlexformData('movement', 'sliceDisperseFactor');
+			$this->lConf['sliceSequentialRotation'] = $this->getFlexformData('movement', 'sliceSequentialRotation');
+			$this->lConf['sliceSequentialFactor']   = $this->getFlexformData('movement', 'sliceSequentialFactor');
+			$this->lConf['sliceSpeed3d']            = $this->getFlexformData('movement', 'sliceSpeed3d');
+			$this->lConf['sliceSlideshow']          = $this->getFlexformData('movement', 'sliceSlideshow');
+			$this->lConf['sliceSlideshowTime']      = $this->getFlexformData('movement', 'sliceSlideshowTime');
+
+			$this->lConf['sliceTransition']    = $this->getFlexformData('fallback', 'sliceTransition');
+			$this->lConf['sliceTransitionDir'] = $this->getFlexformData('fallback', 'sliceTransitionDir');
+			$this->lConf['sliceSpeed']         = $this->getFlexformData('fallback', 'sliceSpeed');
 
 			$this->lConf['options']         = $this->getFlexformData('special', 'options');
 			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
-			$this->setContentKey("imagecycle-coin_c" . $this->cObj->data['uid']);
+			$this->setContentKey("imagecycle-slice_c" . $this->cObj->data['uid']);
 
 			// define the images
 			switch ($this->lConf['mode']) {
@@ -147,9 +151,6 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 				}
 			}
 			// Override the config with flexform data
-			if ($this->lConf['coinEffect']) {
-				$this->conf['coinEffect'] = $this->lConf['coinEffect'];
-			}
 			if ($this->lConf['imagewidth']) {
 				$this->conf['imagewidth'] = $this->lConf['imagewidth'];
 			}
@@ -159,35 +160,56 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			if ($this->lConf['onlyFirstImage'] < 2) {
 				$this->conf['onlyFirstImage'] = $this->lConf['onlyFirstImage'];
 			}
-			if ($this->lConf['coinSpw']) {
-				$this->conf['coinSpw'] = $this->lConf['coinSpw'];
+			if ($this->lConf['sliceColorHiddenSides'] && $this->lConf['sliceColorHiddenSides'] != 'on') {
+				$this->conf['sliceColorHiddenSides'] = $this->lConf['sliceColorHiddenSides'];
 			}
-			if ($this->lConf['coinSph']) {
-				$this->conf['coinSph'] = $this->lConf['coinSph'];
+			if ($this->lConf['sliceShowInfo'] < 2) {
+				$this->conf['sliceShowInfo'] = $this->lConf['sliceShowInfo'];
 			}
-			if (is_numeric($this->lConf['coinDelay']) && $this->lConf['coinDelay'] != 0) {
-				$this->conf['coinDelay'] = $this->lConf['coinDelay'];
+
+			if ($this->lConf['sliceOrientation']) {
+				$this->conf['sliceOrientation'] = $this->lConf['sliceOrientation'];
 			}
-			if (is_numeric($this->lConf['coinSDelay']) && $this->lConf['coinSDelay'] != 0) {
-				$this->conf['coinSDelay'] = $this->lConf['coinSDelay'];
+			if ($this->lConf['slicePerspective']) {
+				$this->conf['slicePerspective'] = $this->lConf['slicePerspective'];
 			}
-			if ($this->lConf['coinOpacity']) {
-				$this->conf['coinOpacity'] = $this->lConf['coinOpacity'];
+			if ($this->lConf['sliceSlicesCount']) {
+				$this->conf['sliceSlicesCount'] = $this->lConf['sliceSlicesCount'];
 			}
-			if (is_numeric($this->lConf['coinTitleSpeed']) && $this->lConf['coinTitleSpeed'] != 0) {
-				$this->conf['coinTitleSpeed'] = $this->lConf['coinTitleSpeed'];
+			if ($this->lConf['sliceDisperseFactor']) {
+				$this->conf['sliceDisperseFactor'] = $this->lConf['sliceDisperseFactor'];
 			}
-			// Will be overridden, if not "from TS"
-			if ($this->lConf['coinNavigation'] < 2) {
-				$this->conf['coinNavigation'] = $this->lConf['coinNavigation'];
+			if ($this->lConf['sliceSequentialRotation']) {
+				$this->conf['sliceSequentialRotation'] = $this->lConf['sliceSequentialRotation'];
 			}
-			if ($this->lConf['coinLinks'] < 2) {
-				$this->conf['coinLinks'] = $this->lConf['coinLinks'];
+			if ($this->lConf['sliceSequentialFactor']) {
+				$this->conf['sliceSequentialFactor'] = $this->lConf['sliceSequentialFactor'];
 			}
-			if ($this->lConf['coinHoverPause'] < 2) {
-				$this->conf['coinHoverPause'] = $this->lConf['coinHoverPause'];
+			if ($this->lConf['sliceSpeed3d']) {
+				$this->conf['sliceSpeed3d'] = $this->lConf['sliceSpeed3d'];
 			}
-			$this->conf['options'] = $this->lConf['options'];
+			if ($this->lConf['sliceTransition']) {
+				$this->conf['sliceTransition'] = $this->lConf['sliceTransition'];
+			}
+			if ($this->lConf['sliceTransitionDir']) {
+				$this->conf['sliceTransitionDir'] = $this->lConf['sliceTransitionDir'];
+			}
+			if ($this->lConf['sliceSpeed']) {
+				$this->conf['sliceSpeed'] = $this->lConf['sliceSpeed'];
+			}
+			if ($this->lConf['sliceSlideshow'] < 2) {
+				$this->conf['sliceSlideshow'] = $this->lConf['sliceSlideshow'];
+			}
+			if ($this->lConf['sliceTransition']) {
+				$this->conf['sliceSlideshowTime'] = $this->lConf['sliceSlideshowTime'];
+			}
+
+			if ($this->lConf['options']) {
+				$this->conf['options'] = $this->lConf['options'];
+			}
+			if ($this->lConf['optionsOverride'] < 2) {
+				$this->conf['optionsOverride'] = $this->lConf['optionsOverride'];
+			}
 		} else {
 			$this->type = 'header';
 			// It's the header
@@ -295,12 +317,9 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 
 		// define the contentKey if not exist
 		if ($this->getContentKey() == '') {
-			$this->setContentKey("imagecycle-coin_key");
+			$this->setContentKey("imagecycle-slice_key");
 		}
 
-		if (! $this->conf['coinEffect']) {
-			$this->conf['coinEffect'] = "random";
-		}
 		if (! $this->conf['imagewidth']) {
 			$this->conf['imagewidth'] = "200c";
 		}
@@ -308,11 +327,12 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			$this->conf['imageheight'] = "200c";
 		}
 
+		// define the css file
+		$this->pagerenderer->addCssFile($this->conf['cssFileSlice']);
+
 		// We have to build the images first to get the maximum width and height
 		$returnString = null;
 		$images = null;
-		$maxWidth = 0;
-		$maxHeight = 0;
 		$no_script = null;
 		$GLOBALS['TSFE']->register['key'] = $this->getContentKey();
 		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
@@ -322,8 +342,9 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 		$GLOBALS['TSFE']->register['IMAGE_COUNT'] = count($data);
 		if (count($data) > 0) {
 			foreach ($data as $key => $item) {
+				$GLOBALS['TSFE']->register['caption_key'] = $this->getContentKey() . "-" .$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'];
 				$image = null;
-				$imgConf = $this->conf['coin.'][$this->type.'.']['image.'];
+				$imgConf = $this->conf['slice.'][$this->type.'.']['image.'];
 				if (file_exists(t3lib_div::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
 					$totalImagePath = $item['image'];
 				} else {
@@ -333,41 +354,17 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
 				$GLOBALS['TSFE']->register['CURRENT_ID'] = $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] + 1;
-				if ($this->hrefs[$key]) {
-					// this is not nice, the imageLinkWrap would be my 1st choice
-					unset($imgConf['imageLinkWrap.']);
-					$image = $this->cObj->IMAGE($imgConf);
-					$imageWrap = $this->cObj->stdWrap($image, $this->conf['coin.'][$this->type.'.']['imageWrap.']);
-					$imageLink = $this->cObj->typolink($imageWrap, $this->conf['coin.'][$this->type.'.']['imageLink.']);
-				} else {
-					$imageLink = $this->cObj->IMAGE($imgConf);
-					if ($this->cObj->data['image_zoom'] != 1) {
-						// if the image_zoom is activated, the caption have to be rendered
-						$imageLink = $this->cObj->stdWrap($imageLink, $this->conf['coin.'][$this->type.'.']['imageWrap.']);
-					}
-				}
-				$lastImageInfo = $GLOBALS['TSFE']->lastImageInfo;
-				if ($lastImageInfo[0] > $maxWidth) {
-					$maxWidth = $lastImageInfo[0];
-				}
-				if ($lastImageInfo[1] > $maxHeight) {
-					$maxHeight = $lastImageInfo[1];
-				}
-				// Add the noscript wrap to the firs image
+				$image = $this->cObj->IMAGE($imgConf);
+				// Add the noscript wrap to the first image
 				if ($key == 0) {
-					$no_script = $this->cObj->stdWrap($imageLink, $this->conf['coin.'][$this->type.'.']['noscriptWrap.']);
+					$no_script = $this->cObj->stdWrap($image, $this->conf['slice.'][$this->type.'.']['noscriptWrap.']);
 				}
-				$images .= $imageLink;
+				$images .= $image;
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] ++;
 			}
 			// the stdWrap
-			$returnString = $this->cObj->stdWrap($images, $this->conf['coin.'][$this->type.'.']['stdWrap.']);
+			$returnString = $this->cObj->stdWrap($images, $this->conf['slice.'][$this->type.'.']['stdWrap.']);
 			$returnString .= $no_script;
-		}
-
-		// The template for JS
-		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle.js");
 		}
 
 		// define the jQuery mode and function
@@ -379,38 +376,42 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 
 		$options = array();
 
-		$options['effect'] = "effect: '{$this->conf['coinEffect']}'";
-		$options['width']  = "width: '{$maxWidth}'";
-		$options['height'] = "height: '{$maxHeight}'";
+		if ($this->conf['sliceColorHiddenSides']) {
+			$options['colorHiddenSides'] = "colorHiddenSides: '#".str_replace('#', '', $this->conf['sliceColorHiddenSides'])."'";
+		}
+		$options['showInfo'] = "showInfo: ".($this->conf['sliceShowInfo'] ? 'true' : 'false');
 
-		$this->pagerenderer->addCSS("
-#c{$this->cObj->data['uid']} {
-	width: {$maxWidth}px;
-}");
-
-		if ($this->conf['coinSpw'] > 0) {
-			$options['spw'] = "spw: '{$this->conf['coinSpw']}'";
+		$options['orientation'] = "orientation: '".($this->conf['sliceOrientation'] == 'v' ? 'v' : 'h')."'";
+		if ($this->conf['slicePerspective'] > 0) {
+			$options['perspective'] = "perspective: {$this->conf['slicePerspective']}";
 		}
-		if ($this->conf['coinSph'] > 0) {
-			$options['sph'] = "sph: '{$this->conf['coinSph']}'";
+		if ($this->conf['sliceSlicesCount'] > 0) {
+			$options['slicesCount'] = "slicesCount: {$this->conf['sliceSlicesCount']}";
 		}
-		if (is_numeric($this->conf['coinDelay']) && $this->conf['coinDelay'] != 0) {
-			$options['delay'] = "delay: {$this->conf['coinDelay']}";
+		if ($this->conf['sliceDisperseFactor'] > 0) {
+			$options['disperseFactor'] = "disperseFactor: {$this->conf['sliceDisperseFactor']}";
 		}
-		if (is_numeric($this->conf['coinSDelay']) && $this->conf['coinSDelay'] != 0) {
-			$options['sDelay'] = "sDelay: {$this->conf['coinSDelay']}";
+		$options['sequentialRotation'] = "sequentialRotation: ".($this->conf['sliceSequentialRotation'] ? 'true' : 'false');
+		if ($this->conf['sliceSequentialFactor'] > 0) {
+			$options['sequentialFactor'] = "sequentialFactor: {$this->conf['sliceSequentialFactor']}";
 		}
-		if (is_numeric($this->conf['coinOpacity'])) {
-			$options['opacity'] = "opacity: {$this->conf['coinOpacity']}";
+		if ($this->conf['sliceSpeed3d'] > 0) {
+			$options['speed3d'] = "speed3d: {$this->conf['sliceSpeed3d']}";
 		}
-		if (is_numeric($this->conf['coinTitleSpeed']) && $this->conf['coinTitleSpeed'] != 0) {
-			$options['titleSpeed'] = "titleSpeed: {$this->conf['coinTitleSpeed']}";
+		/* FALLBACK*/
+		if (in_array($this->conf['sliceTransition'], array('linear', 'swing'))) {
+			$options['fallbackEasing'] = "fallbackEasing: '{$this->conf['sliceTransition']}'";
+		} elseif ($this->conf['sliceTransitionDir'] && $this->conf['sliceTransition']) {
+			$options['fallbackEasing'] = "fallbackEasing: 'ease{$this->conf['sliceTransitionDir']}{$this->conf['sliceTransition']}'";
 		}
-		$options['navigation'] = "navigation: ".($this->conf['coinNavigation'] ? 'true' : 'false');
-		$options['links']      = "links: ".($this->conf['coinLinks'] ? 'true' : 'false');
-		$options['hoverPause'] = "hoverPause: ".($this->conf['coinHoverPause'] ? 'true' : 'false');
-		$options['prev']       = "prev: '".$this->pi_getLL('prev')."'";
-		$options['next']       = "next: '".$this->pi_getLL('next')."'";
+		if ($this->conf['sliceSpeed'] > 0) {
+			$options['speed'] = "speed: {$this->conf['sliceSpeed']}";
+		}
+		/* SLIDESHOW */
+		$options['slideshow'] = "slideshow: ".($this->conf['sliceSlideshow'] ? 'true' : 'false');
+		if ($this->conf['sliceSlideshowTime'] > 0) {
+			$options['slideshowTime'] = "slideshowTime: {$this->conf['sliceSlideshowTime']}";
+		}
 
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
@@ -426,14 +427,21 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			tx_t3jquery::addJqJS();
 		} else {
 			$this->pagerenderer->addJsFile($this->conf['jQueryLibrary'], true);
+			$this->pagerenderer->addJsFile($this->conf['jQueryEasing']);
 		}
 
 		// define the js file
-		$this->pagerenderer->addJsFile($this->conf['jQueryCoin']);
+		$this->pagerenderer->addJsFile($this->conf['jQuerySlice']);
+		$this->pagerenderer->addJsFile($this->conf['modernizer']);
+
+		// The template for JS
+		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
+			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle.js");
+		}
 
 		// get the Template of the Javascript
-		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_COINSLIDER_JS###"))) {
-			$templateCode = "alert('Template TEMPLATE_COINSLIDER_JS is missing')";
+		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_SLICEBOX_JS###"))) {
+			$templateCode = "alert('Template TEMPLATE_SLICEBOX_JS is missing')";
 		}
 
 		// define the markers
@@ -459,8 +467,8 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi2/class.tx_imagecycle_pi2.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi2/class.tx_imagecycle_pi2.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi5/class.tx_imagecycle_pi5.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi5/class.tx_imagecycle_pi5.php']);
 }
 
 ?>

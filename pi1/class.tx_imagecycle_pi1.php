@@ -21,17 +21,9 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-/**
- * [CLASS/FUNCTION INDEX of SCRIPT]
- *
- * Hint: use extdeveval to insert/update function index above.
- */
 
 require_once(PATH_tslib.'class.tslib_pibase.php');
-
-if (t3lib_extMgm::isLoaded('t3jquery')) {
-	require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
-}
+require_once(t3lib_extMgm::extPath('imagecycle').'lib/class.tx_imagecycle_pagerenderer.php');
 
 /**
  * Plugin 'Image Cycle' for the 'imagecycle' extension.
@@ -52,12 +44,10 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	public $type          = 'normal';
 	protected $lConf      = array();
 	protected $contentKey = null;
-	protected $jsFiles    = array();
-	protected $js         = array();
-	protected $cssFiles   = array();
-	protected $css        = array();
+	protected $piFlexForm = array();
 	protected $imageDir   = 'uploads/tx_imagecycle/';
 	protected $templateFileJS = null;
+	protected $pagerenderer = NULL;
 
 	/**
 	 * The main method of the PlugIn
@@ -83,12 +73,14 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 			// It's a content, all data from flexform
 
-			$this->lConf['mode']          = $this->getFlexformData('general', 'mode');
-			$this->lConf['images']        = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['hrefs']         = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['captions']      = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['damimages']     = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
-			$this->lConf['damcategories'] = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+			$this->lConf['mode']           = $this->getFlexformData('general', 'mode');
+			$this->lConf['images']         = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['hrefs']          = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captions']       = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captionsData']   = $this->getFlexformData('general', 'captionsData', ($this->lConf['mode'] == 'uploadData'));
+			$this->lConf['damimages']      = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
+			$this->lConf['damcategories']  = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+			$this->lConf['onlyFirstImage'] = $this->getFlexformData('general', 'onlyFirstImage');
 
 			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->lConf['mode'] == 'uploadRTE'));
 			$this->lConf['imagesRTE'] = array();
@@ -141,6 +133,10 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					$this->setDataUploadRTE();
 					break;
 				}
+				case "uploadData" : {
+					$this->setDataUploadData();
+					break;
+				}
 				case "dam" : {
 					$this->setDataDam(false, 'tt_content', $this->cObj->data['uid']);
 					break;
@@ -156,6 +152,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			}
 			if ($this->lConf['imageheight']) {
 				$this->conf['imageheight'] = $this->lConf['imageheight'];
+			}
+			if ($this->lConf['onlyFirstImage'] < 2) {
+				$this->conf['onlyFirstImage'] = $this->lConf['onlyFirstImage'];
 			}
 			if ($this->lConf['type']) {
 				$this->conf['type'] = implode(',', t3lib_div::trimExplode(',', $this->lConf['type']));
@@ -203,7 +202,12 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			if ($this->lConf['sync'] < 2) {
 				$this->conf['sync'] = $this->lConf['sync'];
 			}
-			$this->conf['options'] = $this->lConf['options'];
+			if ($this->lConf['options']) {
+				$this->conf['options'] = $this->lConf['options'];
+			}
+			if ($this->lConf['optionsOverride'] < 2) {
+				$this->conf['optionsOverride'] = $this->lConf['optionsOverride'];
+			}
 		} else {
 			$this->type = 'header';
 			// It's the header
@@ -225,21 +229,21 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					) {
 						$used_page = $page;
 						$pageID    = $used_page['uid'];
-						$this->lConf['mode']          = $used_page['tx_imagecycle_mode'];
-						$this->lConf['damcategories'] = $used_page['tx_imagecycle_damcategories'];
+						$this->conf['mode']          = $used_page['tx_imagecycle_mode'];
+						$this->conf['damcategories'] = $used_page['tx_imagecycle_damcategories'];
 					}
 				}
 			}
 			if ($pageID) {
 				if ($this->sys_language_uid) {
-					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
+					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
 					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 					if (trim($used_page['tx_imagecycle_effect'])) {
 						$this->conf['type'] = $row['tx_imagecycle_effect'];
 					}
 				}
 				// define the images
-				switch ($this->lConf['mode']) {
+				switch ($this->conf['mode']) {
 					case "" : {}
 					case "folder" : {}
 					case "upload" : {
@@ -268,11 +272,30 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			}
 		}
 
+		$count = null;
+		if ($this->conf['onlyFirstImage']) {
+			$count = (count($this->hrefs) > count($this->captions) ? count($this->hrefs) : count($this->captions));
+			if (! $count) {
+				$count = count($this->images);
+			}
+		} else {
+			$count = count($this->images);
+		}
 		$data = array();
-		foreach ($this->images as $key => $image) {
-			$data[$key]['image']   = $image;
-			$data[$key]['href']    = $this->hrefs[$key];
-			$data[$key]['caption'] = $this->captions[$key];
+		$i = 0;
+		for ($a=0; $a<$count; $a++) {
+			if ($this->conf['onlyFirstImage']) {
+				// Only use the first image
+				$image = $this->images[0];
+			} else {
+				$image = $this->images[$a];
+			}
+			if ($image) {
+				$data[$i]['image']   = $image;
+				$data[$i]['href']    = $this->hrefs[$a];
+				$data[$i]['caption'] = $this->captions[$a];
+				$i ++;
+			}
 		}
 
 		return $this->parseTemplate($data);
@@ -333,7 +356,55 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	}
 
 	/**
+	 * Set the information of the images if mode = uploadData
+	 */
+	protected function setDataUploadData()
+	{
+		if ($this->lConf['images']) {
+			// define the images
+			$images = array();
+			if ($this->lConf['images']) {
+				$images = t3lib_div::trimExplode(',', $this->lConf['images']);
+			}
+			// define the hrefs
+			$hrefs = array();
+			if ($this->lConf['hrefs']) {
+				$hrefs = t3lib_div::trimExplode(chr(10), $this->lConf['hrefs']);
+			}
+			// define the captions
+			$this->captions = array();
+			$captions = t3lib_div::trimExplode(",", $this->lConf['captionsData']);
+			$count = count($images) > count($captions) ? count($images) : count($captions);
+			for ($a=0; $a < $count; $a++) {
+				$GLOBALS['TSFE']->register['source'] = $captions[$a];
+				// get the used table
+				$table = substr($captions[$a], 0, strrpos($captions[$a], "_"));
+				$dataConfTable = $this->conf['dataConf.'][$table.'.'];
+				$cObjImage = $this->cObj->cObjGetSingle($dataConfTable['image'], $dataConfTable['image.']);
+				if ($cObjImage) {
+					$this->images[] = $cObjImage;
+				} else {
+					$this->images[] = $images[$a];
+				}
+				$cObjHref = $this->cObj->cObjGetSingle($dataConfTable['href'], $dataConfTable['href.']);
+				if ($cObjHref) {
+					$this->hrefs[] = $cObjHref;
+				} else {
+					$this->hrefs[] = $hrefs[$a];
+				}
+				$this->captions[] = $this->cObj->cObjGetSingle($dataConfTable['caption'], $dataConfTable['caption.']);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Set the Information of the images if mode = dam
+	 * 
+	 * @param boolean $fromCategory
+	 * @param string $table
+	 * @param integer $uid
 	 * @return boolean
 	 */
 	protected function setDataDam($fromCategory=false, $table='tt_content', $uid=0)
@@ -343,8 +414,16 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		// get all fields for captions
 		$damCaptionFields = t3lib_div::trimExplode(',', $this->conf['damCaptionFields'], true);
 		$damHrefFields    = t3lib_div::trimExplode(',', $this->conf['damHrefFields'], true);
-		$fields  = (count($damCaptionFields) > 0 ? ','.implode(',tx_dam.', $damCaptionFields) : '');
-		$fields .= (count($damHrefFields) > 0    ? ','.implode(',tx_dam.', $damHrefFields)    : '');
+		$fieldsArray = array_merge(
+			$damCaptionFields,
+			$damHrefFields
+		);
+		$fields = NULL;
+		if (count($fieldsArray) > 0) {
+			foreach ($fieldsArray as $field) {
+				$fields .= ',tx_dam.' . $field;
+			}
+		}
 		if ($fromCategory === true) {
 			// Get the images from dam category
 			$damcategories = $this->getDamcats($this->lConf['damcategories']);
@@ -353,7 +432,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				'tx_dam',
 				'tx_dam_mm_cat',
 				'tx_dam_cat',
-				" AND tx_dam_cat.uid IN (".implode(",", $damcategories).") AND tx_dam.file_mime_type='image' AND tx_dam.sys_language_uid=" . $GLOBALS['TYPO3_DB']->fullQuoteStr($this->sys_language_uid, 'tx_dam'),
+				" AND tx_dam_cat.uid IN (".implode(",", $damcategories).") AND tx_dam.file_mime_type='image'",
 				'',
 				'tx_dam.sorting',
 				''
@@ -399,7 +478,19 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				$caption = '';
 				unset($caption);
 				if (count($damCaptionFields) > 0) {
-					foreach ($damCaptionFields as $damCaptionField) {
+					if (isset($this->conf['damCaptionObject'])) {
+						foreach ($damCaptionFields as $damCaptionField) {
+							if (isset($row[$damCaptionField])) {
+								$GLOBALS['TSFE']->register['dam_'.$damCaptionField] = $row[$damCaptionField];
+							}
+						}
+						$caption = trim($this->cObj->cObjGetSingle($this->conf['damCaptionObject'], $this->conf['damCaptionObject.']));
+						// Unset the registered values
+						foreach ($damCaptionFields as $damCaptionField) {
+							unset($GLOBALS['TSFE']->register['dam_'.$damCaptionField]);
+						}
+					} else {
+						// the old way
 						if (! isset($caption) && trim($row[$damCaptionField])) {
 							$caption = $row[$damCaptionField];
 							break;
@@ -447,6 +538,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
+		$this->pagerenderer = t3lib_div::makeInstance('tx_imagecycle_pagerenderer');
+		$this->pagerenderer->setConf($this->conf);
+
 		// define the directory of images
 		if ($dir == '') {
 			$dir = $this->imageDir;
@@ -511,13 +605,15 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$options['pause'] = "pause: true";
 		}
 		$options['sync'] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
-		$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
+		if (count($data) > 1) {
+			$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
+		}
 		$options['cleartypeNoBg'] = "cleartypeNoBg: ".($this->conf['cleartypeNoBg'] ? 'true' : 'false');
 
 		$captionTag = $this->cObj->stdWrap($this->conf['cycle.'][$this->type.'.']['captionTag'], $this->conf['cycle.'][$this->type.'.']['captionTag.']);
 		$markerArray["CAPTION_TAG"] = $captionTag;
-		$before = null;
-		$after  = null;
+		$before = NULL;
+		$after  = NULL;
 		// add caption
 		if ($this->conf['showcaption']) {
 			// define the animation for the caption
@@ -542,12 +638,20 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				if (! is_numeric($this->conf['captionSpeed'])) {
 					$this->conf['captionSpeed'] = 200;
 				}
+
+				$easing = NULL;
+				if (in_array($this->conf['captionTransition'], array('linear', 'swing'))) {
+					$easing = ",'{$this->conf['captionTransition']}'";
+				} elseif ($this->conf['captionTransitionDir'] && $this->conf['captionTransition']) {
+					$easing = ",'ease{$this->conf['captionTransitionDir']}{$this->conf['captionTransition']}'";
+				}
+
 				$before .= "jQuery('{$captionTag}', this).css('display', 'none');";
-				$after  .= "jQuery('{$captionTag}', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
+				$after  .= "jQuery('{$captionTag}', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']}{$easing});";
 			}
 			if ($this->conf['captionSync']) {
 				$before = $before . $after;
-				$after = null;
+				$after = NULL;
 			}
 		}
 		// 
@@ -572,10 +676,10 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		}
 
 		// define the js file
-		$this->addJsFile($this->conf['jQueryCycle']);
+		$this->pagerenderer->addJsFile($this->conf['jQueryCycle']);
 
 		// define the css file
-		$this->addCssFile($this->conf['cssFile']);
+		$this->pagerenderer->addCssFile($this->conf['cssFile']);
 
 		// get the Template of the Javascript
 		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_JS###"))) {
@@ -648,10 +752,18 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
-		$this->addJS($jQueryNoConflict . $templateCode);
+		$this->pagerenderer->addJS($jQueryNoConflict . $templateCode);
+
+		// checks if t3jquery is loaded
+		if (T3JQUERY === true) {
+			tx_t3jquery::addJqJS();
+		} else {
+			$this->pagerenderer->addJsFile($this->conf['jQueryLibrary'], true);
+			$this->pagerenderer->addJsFile($this->conf['jQueryEasing']);
+		}
 
 		// Add the ressources
-		$this->addResources();
+		$this->pagerenderer->addResources();
 
 		if ($onlyJS === true) {
 			return true;
@@ -671,7 +783,11 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			foreach ($data as $key => $item) {
 				$image = null;
 				$imgConf = $this->conf['cycle.'][$this->type.'.']['image.'];
-				$totalImagePath = $dir . $item['image'];
+				if (file_exists(t3lib_div::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+					$totalImagePath = $item['image'];
+				} else {
+					$totalImagePath = $dir . $item['image'];
+				}
 				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
@@ -703,213 +819,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$return_string .= $no_script;
 		}
 		return $return_string;
-	}
-
-	/**
-	 * Include all defined resources (JS / CSS)
-	 *
-	 * @return void
-	 */
-	protected function addResources()
-	{
-		// checks if t3jquery is loaded
-		if (T3JQUERY === true) {
-			tx_t3jquery::addJqJS();
-		} else {
-			$this->addJsFile($this->conf['jQueryLibrary'], true);
-			$this->addJsFile($this->conf['jQueryEasing']);
-		}
-		if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
-			$pagerender = $GLOBALS['TSFE']->getPageRenderer();
-		}
-		// Fix moveJsFromHeaderToFooter (add all scripts to the footer)
-		if ($GLOBALS['TSFE']->config['config']['moveJsFromHeaderToFooter']) {
-			$allJsInFooter = true;
-		} else {
-			$allJsInFooter = false;
-		}
-		// add all defined JS files
-		if (count($this->jsFiles) > 0) {
-			foreach ($this->jsFiles as $jsToLoad) {
-				if (T3JQUERY === true) {
-					$conf = array(
-						'jsfile' => $jsToLoad,
-						'tofooter' => ($this->conf['jsInFooter'] || $allJsInFooter),
-						'jsminify' => $this->conf['jsMinify'],
-					);
-					tx_t3jquery::addJS('', $conf);
-				} else {
-					$file = $this->getPath($jsToLoad);
-					if ($file) {
-						if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
-							if ($this->conf['jsInFooter'] || $allJsInFooter) {
-								$pagerender->addJsFooterFile($file, 'text/javascript', $this->conf['jsMinify']);
-							} else {
-								$pagerender->addJsFile($file, 'text/javascript', $this->conf['jsMinify']);
-							}
-						} else {
-							$temp_file = '<script type="text/javascript" src="'.$file.'"></script>';
-							if ($this->conf['jsInFooter'] || $allJsInFooter) {
-								$GLOBALS['TSFE']->additionalFooterData['jsFile_'.$this->extKey.'_'.$file] = $temp_file;
-							} else {
-								$GLOBALS['TSFE']->additionalHeaderData['jsFile_'.$this->extKey.'_'.$file] = $temp_file;
-							}
-						}
-					} else {
-						t3lib_div::devLog("'{$jsToLoad}' does not exists!", $this->extKey, 2);
-					}
-				}
-			}
-		}
-		// add all defined JS script
-		if (count($this->js) > 0) {
-			foreach ($this->js as $jsToPut) {
-				$temp_js .= $jsToPut;
-			}
-			$conf = array();
-			$conf['jsdata'] = $temp_js;
-			if (T3JQUERY === true && t3lib_div::int_from_ver($this->getExtensionVersion('t3jquery')) >= 1002000) {
-				$conf['tofooter'] = ($this->conf['jsInFooter'] || $allJsInFooter);
-				$conf['jsminify'] = $this->conf['jsMinify'];
-				$conf['jsinline'] = $this->conf['jsInline'];
-				tx_t3jquery::addJS('', $conf);
-			} else {
-				// Add script only once
-				$hash = md5($temp_js);
-				if ($this->conf['jsInline']) {
-					$GLOBALS['TSFE']->inlineJS[$hash] = $temp_js;
-				} elseif (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
-					if ($this->conf['jsInFooter'] || $allJsInFooter) {
-						$pagerender->addJsFooterInlineCode($hash, $temp_js, $this->conf['jsMinify']);
-					} else {
-						$pagerender->addJsInlineCode($hash, $temp_js, $this->conf['jsMinify']);
-					}
-				} else {
-					if ($this->conf['jsMinify']) {
-						$temp_js = t3lib_div::minifyJavaScript($temp_js);
-					}
-					if ($this->conf['jsInFooter'] || $allJsInFooter) {
-						$GLOBALS['TSFE']->additionalFooterData['js_'.$this->extKey.'_'.$hash] = t3lib_div::wrapJS($temp_js, true);
-					} else {
-						$GLOBALS['TSFE']->additionalHeaderData['js_'.$this->extKey.'_'.$hash] = t3lib_div::wrapJS($temp_js, true);
-					}
-				}
-			}
-		}
-		// add all defined CSS files
-		if (count($this->cssFiles) > 0) {
-			foreach ($this->cssFiles as $cssToLoad) {
-				// Add script only once
-				$file = $this->getPath($cssToLoad);
-				if ($file) {
-					if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
-						$pagerender->addCssFile($file, 'stylesheet', 'all', '', $this->conf['cssMinify']);
-					} else {
-						$GLOBALS['TSFE']->additionalHeaderData['cssFile_'.$this->extKey.'_'.$file] = '<link rel="stylesheet" type="text/css" href="'.$file.'" media="all" />'.chr(10);
-					}
-				} else {
-					t3lib_div::devLog("'{$cssToLoad}' does not exists!", $this->extKey, 2);
-				}
-			}
-		}
-		// add all defined CSS Script
-		if (count($this->css) > 0) {
-			foreach ($this->css as $cssToPut) {
-				$temp_css .= $cssToPut;
-			}
-			$hash = md5($temp_css);
-			if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
-				$pagerender->addCssInlineBlock($hash, $temp_css, $this->conf['cssMinify']);
-			} else {
-				// addCssInlineBlock
-				$GLOBALS['TSFE']->additionalCSS['css_'.$this->extKey.'_'.$hash] .= $temp_css;
-			}
-		}
-	}
-
-	/**
-	 * Return the webbased path
-	 * 
-	 * @param string $path
-	 * return string
-	 */
-	protected function getPath($path="")
-	{
-		return $GLOBALS['TSFE']->tmpl->getFileName($path);
-	}
-
-	/**
-	 * Add additional JS file
-	 * 
-	 * @param string $script
-	 * @param boolean $first
-	 * @return void
-	 */
-	protected function addJsFile($script="", $first=false)
-	{
-		$script = t3lib_div::fixWindowsFilePath($script);
-		if ($this->getPath($script) && ! in_array($script, $this->jsFiles)) {
-			if ($first === true) {
-				$this->jsFiles = array_merge(array($script), $this->jsFiles);
-			} else {
-				$this->jsFiles[] = $script;
-			}
-		}
-	}
-
-	/**
-	 * Add JS to header
-	 * 
-	 * @param string $script
-	 * @return void
-	 */
-	protected function addJS($script="")
-	{
-		if (! in_array($script, $this->js)) {
-			$this->js[] = $script;
-		}
-	}
-
-	/**
-	 * Add additional CSS file
-	 * 
-	 * @param string $script
-	 * @return void
-	 */
-	protected function addCssFile($script="")
-	{
-		$script = t3lib_div::fixWindowsFilePath($script);
-		if ($this->getPath($script) && ! in_array($script, $this->cssFiles)) {
-			$this->cssFiles[] = $script;
-		}
-	}
-
-	/**
-	 * Add CSS to header
-	 * 
-	 * @param string $script
-	 * @return void
-	 */
-	protected function addCSS($script="")
-	{
-		if (! in_array($script, $this->css)) {
-			$this->css[] = $script;
-		}
-	}
-
-	/**
-	 * Returns the version of an extension (in 4.4 its possible to this with t3lib_extMgm::getExtensionVersion)
-	 * @param string $key
-	 * @return string
-	 */
-	protected function getExtensionVersion($key)
-	{
-		if (! t3lib_extMgm::isLoaded($key)) {
-			return '';
-		}
-		$_EXTKEY = $key;
-		include(t3lib_extMgm::extPath($key) . 'ext_emconf.php');
-		return $EM_CONF[$key]['version'];
 	}
 
 	/**

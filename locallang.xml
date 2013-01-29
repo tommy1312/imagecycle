@@ -21,6 +21,9 @@
 			<label index="pi4_title">Cross-Slider</label>
 			<label index="pi4_plus_wiz_description">Add a Cross-Slider to your content</label>
 
+			<label index="pi5_title">Slice-Box</label>
+			<label index="pi5_plus_wiz_description">Add a Slice-Box to your content</label>
+
 			<label index="cms_layout.style">Display: %s</label>
 			<label index="cms_layout.not_configured">Plugin is not configured!</label>
 			<label index="cms_layout.from_ts">From Typoscript</label>

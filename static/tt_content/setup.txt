@@ -41,11 +41,9 @@ tt_content.textpic.20 {
 	key.field = tx_imagecycle_activate
 	default < tt_content.image.20.default
 	default {
-		text {
-			10 < lib.tt_content_textpic_20.1.text
-			20 < tt_content.text.20
-			wrap = <div class="csc-textpic-text"> | </div>
-		}
+		text.10 < lib.tt_content_textpic_20.1.text
+		text.20 < tt_content.text.20
+		text.wrap = <div class="csc-textpic-text"> | </div>
 	}
 	1 < tt_content.image.20.1
 	1 {

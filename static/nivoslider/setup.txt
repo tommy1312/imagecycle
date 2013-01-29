@@ -7,6 +7,7 @@ plugin.tx_imagecycle_pi3 {
 	jsMinify = {$plugin.tx_imagecycle_pi1.jsMinify}
 	jsInline = {$plugin.tx_imagecycle_pi1.jsInline}
 	cssMinify = {$plugin.tx_imagecycle_pi1.cssMinify}
+	disableRecursion = {$plugin.tx_imagecycle_pi1.disableRecursion}
 
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
 	jQueryNivo = {$plugin.tx_imagecycle_pi3.file.jQueryNivo}
@@ -17,19 +18,20 @@ plugin.tx_imagecycle_pi3 {
 	nivoTheme = {$plugin.tx_imagecycle_pi3.nivoTheme}
 	imagewidth = {$plugin.tx_imagecycle_pi3.imagewidth}
 	imageheight = {$plugin.tx_imagecycle_pi3.imageheight}
+	onlyFirstImage = {$plugin.tx_imagecycle_pi3.onlyFirstImage}
+	thumbwidth = {$plugin.tx_imagecycle_pi3.thumbwidth}
+	thumbheight = {$plugin.tx_imagecycle_pi3.thumbheight}
 	nivoSlices = {$plugin.tx_imagecycle_pi3.nivoSlices}
 	nivoBoxCols = {$plugin.tx_imagecycle_pi3.nivoBoxCols}
 	nivoBoxRows = {$plugin.tx_imagecycle_pi3.nivoBoxRows}
 	nivoAnimSpeed = {$plugin.tx_imagecycle_pi3.nivoAnimSpeed}
 	nivoPauseTime = {$plugin.tx_imagecycle_pi3.nivoPauseTime}
 	nivoStartSlide = {$plugin.tx_imagecycle_pi3.nivoStartSlide}
+	nivoStartRandom = {$plugin.tx_imagecycle_pi3.nivoStartRandom}
 	nivoDirectionNav = {$plugin.tx_imagecycle_pi3.nivoDirectionNav}
 	nivoDirectionNavHide = {$plugin.tx_imagecycle_pi3.nivoDirectionNavHide}
 	nivoControlNav = {$plugin.tx_imagecycle_pi3.nivoControlNav}
-# nivoControlNavThumbs = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbs}
-# nivoControlNavThumbsFromRel = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbsFromRel}
-# nivoControlNavThumbsSearch = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbsSearch}
-# nivoControlNavThumbsReplace = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbsReplace}
+	nivoControlNavThumbs = {$plugin.tx_imagecycle_pi3.nivoControlNavThumbs}
 	nivoKeyboardNav = {$plugin.tx_imagecycle_pi3.nivoKeyboardNav}
 	nivoPauseOnHover = {$plugin.tx_imagecycle_pi3.nivoPauseOnHover}
 	nivoManualAdvance = {$plugin.tx_imagecycle_pi3.nivoManualAdvance}
@@ -38,6 +40,17 @@ plugin.tx_imagecycle_pi3 {
 	optionsOverride = {$plugin.tx_imagecycle_pi3.optionsOverride}
 
 	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
+	damCaptionObject = TEXT
+	damCaptionObject {
+		data = register:dam_caption
+		ifEmpty {
+			data = register:dam_description
+			ifEmpty {
+				data = register:dam_title
+			}
+		}
+		
+	}
 	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
 
 	nivo {
@@ -47,13 +60,17 @@ plugin.tx_imagecycle_pi3 {
 				file.width.data = register:imagewidth
 				file.height.data = register:imageheight
 				imageLinkWrap < tt_content.image.20.1.imageLinkWrap
+				imageLinkWrap = 1
+				imageLinkWrap {
+					enable.data = register:href
+				}
 				imageHrefWrap {
 					enable.data = register:href
 					typolink {
 						parameter.data = register:href
 						title {
-							wrap = #htmlcaption-|
-							data = register:caption_key
+							data = register:caption
+							stripHtml = 1
 						}
 						target = {$plugin.tx_imagecycle_pi1.linkTarget}
 						extTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
@@ -66,118 +83,216 @@ plugin.tx_imagecycle_pi3 {
 				titleText {
 					wrap = #htmlcaption-|
 					data = register:caption_key
+					data {
+						override = register:null
+						override.if.isFalse.data = register:caption
+					}
+					required = 1
 				}
 				longdescURL >
+				params = rel="{register:thumbrel}"
+				params.insertData = 1
 			}
 			captionWrap {
 				dataWrap = <div id="htmlcaption-{register:caption_key}" class="nivo-html-caption"> | </div>
 				required = 1
 			}
 			stdWrap {
-				dataWrap = <div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images" id="{register:key}"> | </div></div>
+				dataWrap = <div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider {register:key}" id="{register:key}"> | </div></div>
+				required = 1
+			}
+			itemWrap {
+				wrap = |
 				required = 1
 			}
 			noscriptWrap {
-				dataWrap = <noscript><div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images" id="{register:key}"> | </div></div></noscript>
+				dataWrap = <noscript><div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider {register:key}"> | </div></div></noscript>
 				required = 1
 			}
 		}
+
 		header < .normal
+
 		content < .normal
+
+		ttnews {
+			image = IMAGE
+			image {
+				file {
+					maxW = {$plugin.tt_news.singleMaxW}
+					maxH = {$plugin.tt_news.singleMaxH}
+				}
+				imageLinkWrap = 1
+				imageLinkWrap {
+					enable.ifEmpty.typolink {
+						parameter.field = links
+						parameter.listNum.splitChar = 10
+						parameter.listNum.stdWrap.data = register : IMAGE_NUM_CURRENT
+						returnLast = url
+					}
+					typolink {
+						parameter.field = links
+						parameter.listNum.splitChar = 10
+						parameter.listNum.stdWrap.data = register : IMAGE_NUM_CURRENT
+						target = {$styles.content.links.target}
+						extTarget = {$styles.content.links.extTarget}
+					}
+				}
+				altText >
+				altText {
+					data = register:caption
+					stripHtml = 1
+				}
+				titleText < .altText
+				params = rel="{register:thumbrel}"
+				params.insertData = 1
+			}
+			captionWrap {
+				dataWrap = |
+				required = 1
+			}
+			stdWrap {
+				dataWrap = <div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider" id="{register:key}"> | </div></div>
+				preUserFunc = tx_imagecycle->getSlideshow
+				preUserFunc.instanceClass = EXT:imagecycle/pi3/class.tx_imagecycle_pi3.php
+				preUserFunc.instance = tx_imagecycle_pi3
+				preUserFunc.type = ttnews
+			}
+			noscriptWrap {
+				dataWrap = <noscript><div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider" id="{register:key}"> | </div></div></noscript>
+				required = 1
+			}
+		}
 	}
+
+	dataConf {
+		tt_content {
+			image >
+			href >
+			caption = RECORDS
+			caption {
+				source.data = register:source
+				tables = tt_content
+				dontCheckPid = 1
+				conf.tt_content = COA
+				conf.tt_content {
+					10 = TEXT
+					10 {
+						field = header
+						wrap = <strong> | </strong>
+					}
+					20 = TEXT
+					20 {
+						field = bodytext
+						wrap = <br /> |
+						cropHTML = 160|...|1
+						required = 1
+					}
+				}
+			}
+		}
+		fe_users {
+			image >
+			href >
+			caption = RECORDS
+			caption {
+				source.data = register:source
+				tables = fe_users
+				dontCheckPid = 1
+				conf.fe_users = COA
+				conf.fe_users {
+					10 = TEXT
+					10 {
+						field = username
+						wrap = <strong> | </strong>
+					}
+					20 = TEXT
+					20 {
+						field = email
+						typolink {
+							parameter.field = email
+						}
+						noTrimWrap = |<br />E-Mail: ||
+						required = 1
+					}
+				}
+			}
+		}
+		tt_address {
+			image >
+			href >
+			caption = RECORDS
+			caption {
+				source.data = register:source
+				tables = tt_address
+				dontCheckPid = 1
+				conf.tt_address = COA
+				conf.tt_address {
+					10 = TEXT
+					10 {
+						field = name
+						wrap = <strong> | </strong>
+					}
+					20 = TEXT
+					20 {
+						field = address
+						wrap = <br /> |
+						required = 1
+					}
+					30 = TEXT
+					30 {
+						field = zip
+						dataWrap = <br /> | &nbsp;{field:city}
+						required = 1
+					}
+				}
+			}
+		}
+		tt_news {
+			image >
+			href >
+			caption = RECORDS
+			caption {
+				source.data = register:source
+				tables = tt_news
+				dontCheckPid = 1
+				conf.tt_news = COA
+				conf.tt_news {
+					10 = TEXT
+					10 {
+						field = title
+						wrap = <strong>|</strong>
+					}
+					20 = TEXT
+					20 {
+						field = bodytext
+						wrap = <br />|
+						cropHTML = 160|...|1
+						required = 1
+					}
+					30 = TEXT
+					30 {
+						wrap = <br />|
+						htmlSpecialChars = 1
+						data = LLL:EXT:tt_news/pi/locallang.xml:more
+						typolink {
+							parameter = {$plugin.tt_news.singlePid}
+							useCacheHash = 1
+							additionalParams.cObject = COA
+							additionalParams.cObject {
+								10 = TEXT
+								10 {
+									field = uid
+									wrap = &tx_ttnews[tt_news]=|
+								}
+							}  
+						}
+					}
+				}
+			}
+		}
+	}
+
 	_CSS_DEFAULT_STYLE (
-/*
- * jQuery Nivo Slider v2.5.1
- * http://nivo.dev7studios.com
- *
- * Copyright 2011, Gilbert Pellegrom
- * Free to use and abuse under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- * 
- * March 2010
- */
-.tx-imagecycle-pi3-images {
-	display: none;
-}
-noscript .tx-imagecycle-pi3-images {
-	display: block;
-}
-/* The Nivo Slider styles */
-.nivoSlider {
-	position:relative;
-}
-.nivoSlider img {
-	position:absolute;
-	top:0px;
-	left:0px;
-}
-/* If an image is wrapped in a link */
-.nivoSlider a.nivo-imageLink {
-	position:absolute;
-	top:0px;
-	left:0px;
-	width:100%;
-	height:100%;
-	border:0;
-	padding:0;
-	margin:0;
-	z-index:6;
-	display:none;
-}
-/* The slices and boxes in the Slider */
-.nivo-slice {
-	display:block;
-	position:absolute;
-	z-index:5;
-	height:100%;
-}
-.nivo-box {
-	display:block;
-	position:absolute;
-	z-index:5;
-}
-/* Caption styles */
-.nivo-caption {
-	position:absolute;
-	left:0px;
-	bottom:0px;
-	background:#000;
-	color:#fff;
-	opacity:0.8; /* Overridden by captionOpacity setting */
-	width:100%;
-	z-index:8;
-}
-.nivo-caption p {
-	padding:5px;
-	margin:0;
-}
-.nivo-caption a {
-	display:inline !important;
-}
-.nivo-html-caption {
-	display:none;
-}
-/* Direction nav styles (e.g. Next & Prev) */
-.nivo-directionNav a {
-	position:absolute;
-	top:45%;
-	z-index:9;
-	cursor:pointer;
-}
-.nivo-prevNav {
-	left:0px;
-}
-.nivo-nextNav {
-	right:0px;
-}
-/* Control nav styles (e.g. 1,2,3...) */
-.nivo-controlNav a {
-	position:relative;
-	z-index:9;
-	cursor:pointer;
-}
-.nivo-controlNav a.active {
-	font-weight:bold;
-}
 	)
 }

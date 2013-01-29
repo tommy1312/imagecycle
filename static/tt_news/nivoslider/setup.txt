@@ -1,0 +1,40 @@
+[globalString = TYPO3_LOADED_EXT|tt_news|type=*]
+includeLibs.imagecycle = EXT:imagecycle/class.tx_imagecycle.php
+plugin.tt_news {
+	imageMarkerFunc = tx_imagecycle->getImageForTTnews
+
+	displaySingle {
+		imagecycleSingleImage < plugin.tx_imagecycle_pi3.nivo.ttnews.image
+		imagecycleImageWrapIfAny < plugin.tx_imagecycle_pi3.nivo.ttnews.stdWrap
+		captionWrap < plugin.tx_imagecycle_pi3.nivo.ttnews.captionWrap
+		itemWrap < plugin.tx_imagecycle_pi3.nivo.ttnews.itemWrap
+	}
+
+	displayList {
+		imagecycleSingleImage < plugin.tx_imagecycle_pi3.nivo.ttnews.image
+		imagecycleSingleImage {
+			file {
+				maxW = {$plugin.tt_news.listMaxW}
+				maxH = {$plugin.tt_news.listMaxH}
+			}
+		}
+		imagecycleImageWrapIfAny < plugin.tx_imagecycle_pi3.nivo.ttnews.stdWrap
+		captionWrap < plugin.tx_imagecycle_pi3.nivo.ttnews.captionWrap
+		itemWrap < plugin.tx_imagecycle_pi3.nivo.ttnews.itemWrap
+	}
+
+	displayLatest {
+		imagecycleSingleImage < plugin.tx_imagecycle_pi3.nivo.ttnews.image
+		imagecycleSingleImage {
+			file {
+				maxW = {$plugin.tt_news.latestMaxW}
+				maxH = {$plugin.tt_news.latestMaxH}
+			}
+		}
+		imagecycleImageWrapIfAny < plugin.tx_imagecycle_pi3.nivo.ttnews.stdWrap
+		captionWrap < plugin.tx_imagecycle_pi3.nivo.ttnews.captionWrap
+		itemWrap < plugin.tx_imagecycle_pi3.nivo.ttnews.itemWrap
+	}
+}
+[global]
+

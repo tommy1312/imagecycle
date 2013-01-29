@@ -30,7 +30,7 @@
 require_once(t3lib_extMgm::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
 
 /**
- * Plugin 'Coin-Slider' for the 'imagecycle' extension.
+ * Plugin 'Cross-Slider' for the 'imagecycle' extension.
  *
  * @author	Juergen Furrer <juergen.furrer@gmail.com>
  * @package	TYPO3
@@ -79,12 +79,14 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 
 			// It's a content, all data from flexform
 
-			$this->lConf['mode']          = $this->getFlexformData('general', 'mode');
-			$this->lConf['images']        = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['hrefs']         = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['captions']      = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['damimages']     = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
-			$this->lConf['damcategories'] = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+			$this->lConf['mode']           = $this->getFlexformData('general', 'mode');
+			$this->lConf['images']         = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['hrefs']          = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captions']       = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captionsData']   = $this->getFlexformData('general', 'captionsData', ($this->lConf['mode'] == 'uploadData'));
+			$this->lConf['damimages']      = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
+			$this->lConf['damcategories']  = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+			$this->lConf['onlyFirstImage'] = $this->getFlexformData('general', 'onlyFirstImage');
 
 			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->lConf['mode'] == 'uploadRTE'));
 			$this->lConf['imagesRTE'] = array();
@@ -128,6 +130,10 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 					$this->setDataUploadRTE();
 					break;
 				}
+				case "uploadData" : {
+					$this->setDataUploadData();
+					break;
+				}
 				case "dam" : {
 					$this->setDataDam(false, 'tt_content', $this->cObj->data['uid']);
 					break;
@@ -143,6 +149,9 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			}
 			if ($this->lConf['imageheight']) {
 				$this->conf['imageheight'] = $this->lConf['imageheight'];
+			}
+			if ($this->lConf['onlyFirstImage'] < 2) {
+				$this->conf['onlyFirstImage'] = $this->lConf['onlyFirstImage'];
 			}
 			if ($this->lConf['crossTransition']) {
 				$this->conf['crossTransition'] = $this->lConf['crossTransition'];
@@ -163,7 +172,12 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			if ($this->lConf['crossVariant'] < 2) {
 				$this->conf['crossVariant'] = $this->lConf['crossVariant'];
 			}
-			$this->conf['options'] = $this->lConf['options'];
+			if ($this->lConf['options']) {
+				$this->conf['options'] = $this->lConf['options'];
+			}
+			if ($this->lConf['optionsOverride'] < 2) {
+				$this->conf['optionsOverride'] = $this->lConf['optionsOverride'];
+			}
 		} else {
 			$this->type = 'header';
 			// It's the header
@@ -171,9 +185,6 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			$pageID    = false;
 			foreach ($GLOBALS['TSFE']->rootLine as $page) {
 				if (! $pageID) {
-					if (trim($page['tx_imagecycle_effect']) && ! $this->conf['disableRecursion']) {
-						$this->conf['type'] = $page['tx_imagecycle_effect'];
-					}
 					if (
 						(($page['tx_imagecycle_mode'] == 'upload' || ! $page['tx_imagecycle_mode']) && trim($page['tx_imagecycle_images']) != '') ||
 						($page['tx_imagecycle_mode'] == 'dam'         && trim($page['tx_imagecycle_damimages']) != '') ||
@@ -192,9 +203,6 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 				if ($this->sys_language_uid) {
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
 					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-					if (trim($used_page['tx_imagecycle_effect'])) {
-						$this->conf['type'] = $row['tx_imagecycle_effect'];
-					}
 				}
 				// define the images
 				switch ($this->lConf['mode']) {
@@ -228,15 +236,35 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 
 		$crossFromTo = t3lib_div::trimExplode(LF, $this->conf['crossFromTo']);
 
-		$data = array();
-		foreach ($this->images as $key => $image) {
-			list($from, $to) = t3lib_div::trimExplode('|', $crossFromTo[$key % count($crossFromTo)]);
-			$data[$key]['image']   = $image;
-			$data[$key]['href']    = $this->hrefs[$key];
-			$data[$key]['caption'] = $this->captions[$key];
-			$data[$key]['from']    = $from;
-			$data[$key]['to']      = $to;
+		$count = null;
+		if ($this->conf['onlyFirstImage']) {
+			$count = (count($this->hrefs) > count($this->captions) ? count($this->hrefs) : count($this->captions));
+			if (! $count) {
+				$count = count($this->images);
+			}
+		} else {
+			$count = count($this->images);
 		}
+		$data = array();
+		$i = 0;
+		for ($a=0; $a<$count; $a++) {
+			list($from, $to) = t3lib_div::trimExplode('|', $crossFromTo[$i % count($crossFromTo)]);
+			if ($this->conf['onlyFirstImage']) {
+				// Only use the first image
+				$image = $this->images[0];
+			} else {
+				$image = $this->images[$a];
+			}
+			if ($image) {
+				$data[$i]['image']   = $image;
+				$data[$i]['href']    = $this->hrefs[$a];
+				$data[$i]['caption'] = $this->captions[$a];
+				$data[$i]['from']  = $from;
+				$data[$i]['to']    = $to;
+				$i ++;
+			}
+		}
+
 		return $this->parseTemplate($data);
 	}
 
@@ -247,6 +275,9 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
+		$this->pagerenderer = t3lib_div::makeInstance('tx_imagecycle_pagerenderer');
+		$this->pagerenderer->setConf($this->conf);
+
 		// define the directory of images
 		if ($dir == '') {
 			$dir = $this->imageDir;
@@ -287,7 +318,11 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			foreach ($data as $key => $item) {
 				$image = null;
 				$imgConf = $this->conf['cross.'][$this->type.'.']['image.'];
-				$totalImagePath = $dir . $item['image'];
+				if (file_exists(t3lib_div::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+					$totalImagePath = $item['image'];
+				} else {
+					$totalImagePath = $dir . $item['image'];
+				}
 				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
@@ -330,7 +365,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			$jQueryNoConflict = "";
 		}
 
-		$this->addCSS("
+		$this->pagerenderer->addCSS("
 #{$this->getContentKey()} {
 	width: {$maxWidth}px;
 	height: {$maxHeight}px;
@@ -355,11 +390,19 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			}
 		}
 
+		// checks if t3jquery is loaded
+		if (T3JQUERY === true) {
+			tx_t3jquery::addJqJS();
+		} else {
+			$this->pagerenderer->addJsFile($this->conf['jQueryLibrary'], true);
+			$this->pagerenderer->addJsFile($this->conf['jQueryEasing']);
+		}
+
 		// define the js file
-		$this->addJsFile($this->conf['jQueryCross']);
+		$this->pagerenderer->addJsFile($this->conf['jQueryCross']);
 
 		// define the css file
-		$this->addCssFile($this->conf['cssFileCross']);
+		$this->pagerenderer->addCssFile($this->conf['cssFileCross']);
 
 		// get the Template of the Javascript
 		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_CROSSSLIDER_JS###"))) {
@@ -375,10 +418,10 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
-		$this->addJS($jQueryNoConflict . $templateCode);
+		$this->pagerenderer->addJS($jQueryNoConflict . $templateCode);
 
 		// Add the ressources
-		$this->addResources();
+		$this->pagerenderer->addResources();
 
 		if ($onlyJS === true) {
 			return true;

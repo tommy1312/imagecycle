@@ -79,12 +79,14 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 
 			// It's a content, all data from flexform
 
-			$this->lConf['mode']          = $this->getFlexformData('general', 'mode');
-			$this->lConf['images']        = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['hrefs']         = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['captions']      = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
-			$this->lConf['damimages']     = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
-			$this->lConf['damcategories'] = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+			$this->lConf['mode']           = $this->getFlexformData('general', 'mode');
+			$this->lConf['images']         = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['hrefs']          = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captions']       = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captionsData']   = $this->getFlexformData('general', 'captionsData', ($this->lConf['mode'] == 'uploadData'));
+			$this->lConf['damimages']      = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
+			$this->lConf['damcategories']  = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+			$this->lConf['onlyFirstImage'] = $this->getFlexformData('general', 'onlyFirstImage');
 
 			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->lConf['mode'] == 'uploadRTE'));
 			$this->lConf['imagesRTE'] = array();
@@ -104,15 +106,19 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$this->lConf['nivoTheme']            = $this->getFlexformData('settings', 'nivoTheme');
 			$this->lConf['imagewidth']           = $this->getFlexformData('settings', 'imagewidth');
 			$this->lConf['imageheight']          = $this->getFlexformData('settings', 'imageheight');
+			$this->lConf['thumbwidth']           = $this->getFlexformData('settings', 'thumbwidth');
+			$this->lConf['thumbheight']          = $this->getFlexformData('settings', 'thumbheight');
 			$this->lConf['nivoSlices']           = $this->getFlexformData('settings', 'nivoSlices');
 			$this->lConf['nivoBoxCols']          = $this->getFlexformData('settings', 'nivoBoxCols');
 			$this->lConf['nivoBoxRows']          = $this->getFlexformData('settings', 'nivoBoxRows');
 			$this->lConf['nivoAnimSpeed']        = $this->getFlexformData('settings', 'nivoAnimSpeed');
 			$this->lConf['nivoPauseTime']        = $this->getFlexformData('settings', 'nivoPauseTime');
 			$this->lConf['nivoStartSlide']       = $this->getFlexformData('settings', 'nivoStartSlide');
+			$this->lConf['nivoStartRandom']      = $this->getFlexformData('settings', 'nivoStartRandom');
 			$this->lConf['nivoDirectionNav']     = $this->getFlexformData('settings', 'nivoDirectionNav');
 			$this->lConf['nivoDirectionNavHide'] = $this->getFlexformData('settings', 'nivoDirectionNavHide');
 			$this->lConf['nivoControlNav']       = $this->getFlexformData('settings', 'nivoControlNav');
+			$this->lConf['nivoControlNavThumbs'] = $this->getFlexformData('settings', 'nivoControlNavThumbs');
 			$this->lConf['nivoKeyboardNav']      = $this->getFlexformData('settings', 'nivoKeyboardNav');
 			$this->lConf['nivoPauseOnHover']     = $this->getFlexformData('settings', 'nivoPauseOnHover');
 			$this->lConf['nivoManualAdvance']    = $this->getFlexformData('settings', 'nivoManualAdvance');
@@ -134,6 +140,10 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 				}
 				case "uploadRTE" : {
 					$this->setDataUploadRTE();
+					break;
+				}
+				case "uploadData" : {
+					$this->setDataUploadData();
 					break;
 				}
 				case "dam" : {
@@ -158,6 +168,15 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			if ($this->lConf['imageheight']) {
 				$this->conf['imageheight'] = $this->lConf['imageheight'];
 			}
+			if ($this->lConf['onlyFirstImage'] < 2) {
+				$this->conf['onlyFirstImage'] = $this->lConf['onlyFirstImage'];
+			}
+			if ($this->lConf['thumbwidth']) {
+				$this->conf['thumbwidth'] = $this->lConf['thumbwidth'];
+			}
+			if ($this->lConf['thumbheight']) {
+				$this->conf['thumbheight'] = $this->lConf['thumbheight'];
+			}
 			if ($this->lConf['nivoSlices']) {
 				$this->conf['nivoSlices'] = $this->lConf['nivoSlices'];
 			}
@@ -176,7 +195,10 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			if ($this->lConf['nivoStartSlide']) {
 				$this->conf['nivoStartSlide'] = $this->lConf['nivoStartSlide'];
 			}
-			if ($this->lConf['nivoCaptionOpacity']) {
+			if ($this->lConf['nivoStartRandom'] < 2) {
+				$this->conf['nivoStartRandom'] = $this->lConf['nivoStartRandom'];
+			}
+			if ($this->lConf['nivoCaptionOpacity'] && $this->lConf['nivoCaptionOpacity'] != 'on') {
 				$this->conf['nivoCaptionOpacity'] = $this->lConf['nivoCaptionOpacity'];
 			}
 			// Will be overridden, if not "from TS"
@@ -189,6 +211,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			if ($this->lConf['nivoControlNav'] < 2) {
 				$this->conf['nivoControlNav'] = $this->lConf['nivoControlNav'];
 			}
+			if ($this->lConf['nivoControlNavThumbs'] < 2) {
+				$this->conf['nivoControlNavThumbs'] = $this->lConf['nivoControlNavThumbs'];
+			}
 			if ($this->lConf['nivoKeyboardNav'] < 2) {
 				$this->conf['nivoKeyboardNav'] = $this->lConf['nivoKeyboardNav'];
 			}
@@ -198,7 +223,12 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			if ($this->lConf['nivoManualAdvance'] < 2) {
 				$this->conf['nivoManualAdvance'] = $this->lConf['nivoManualAdvance'];
 			}
-			$this->conf['options'] = $this->lConf['options'];
+			if ($this->lConf['options']) {
+				$this->conf['options'] = $this->lConf['options'];
+			}
+			if ($this->lConf['optionsOverride'] < 2) {
+				$this->conf['optionsOverride'] = $this->lConf['optionsOverride'];
+			}
 		} else {
 			$this->type = 'header';
 			// It's the header
@@ -206,9 +236,6 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$pageID    = false;
 			foreach ($GLOBALS['TSFE']->rootLine as $page) {
 				if (! $pageID) {
-					if (trim($page['tx_imagecycle_effect']) && ! $this->conf['disableRecursion']) {
-						$this->conf['type'] = $page['tx_imagecycle_effect'];
-					}
 					if (
 						(($page['tx_imagecycle_mode'] == 'upload' || ! $page['tx_imagecycle_mode']) && trim($page['tx_imagecycle_images']) != '') ||
 						($page['tx_imagecycle_mode'] == 'dam'         && trim($page['tx_imagecycle_damimages']) != '') ||
@@ -227,9 +254,6 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 				if ($this->sys_language_uid) {
 					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
 					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-					if (trim($used_page['tx_imagecycle_effect'])) {
-						$this->conf['type'] = $row['tx_imagecycle_effect'];
-					}
 				}
 				// define the images
 				switch ($this->lConf['mode']) {
@@ -261,11 +285,30 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 		}
 
+		$count = null;
+		if ($this->conf['onlyFirstImage']) {
+			$count = (count($this->hrefs) > count($this->captions) ? count($this->hrefs) : count($this->captions));
+			if (! $count) {
+				$count = count($this->images);
+			}
+		} else {
+			$count = count($this->images);
+		}
 		$data = array();
-		foreach ($this->images as $key => $image) {
-			$data[$key]['image']   = $image;
-			$data[$key]['href']    = $this->hrefs[$key];
-			$data[$key]['caption'] = $this->captions[$key];
+		$i = 0;
+		for ($a=0; $a<$count; $a++) {
+			if ($this->conf['onlyFirstImage']) {
+				// Only use the first image
+				$image = $this->images[0];
+			} else {
+				$image = $this->images[$a];
+			}
+			if ($image) {
+				$data[$i]['image']   = $image;
+				$data[$i]['href']    = $this->hrefs[$a];
+				$data[$i]['caption'] = $this->captions[$a];
+				$i ++;
+			}
 		}
 
 		return $this->parseTemplate($data);
@@ -278,6 +321,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
+		$this->pagerenderer = t3lib_div::makeInstance('tx_imagecycle_pagerenderer');
+		$this->pagerenderer->setConf($this->conf);
+
 		// define the directory of images
 		if ($dir == '') {
 			$dir = $this->imageDir;
@@ -302,9 +348,15 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		if (! $this->conf['imageheight']) {
 			$this->conf['imageheight'] = "200c";
 		}
+		if (! $this->conf['thumbwidth']) {
+			$this->conf['thumbwidth'] = "60c";
+		}
+		if (! $this->conf['thumbheight']) {
+			$this->conf['thumbheight'] = "60c";
+		}
 
 		// define the css file
-		$this->addCssFile($this->conf['cssFileNivo']);
+		$this->pagerenderer->addCssFile($this->conf['cssFileNivo']);
 
 		// define the style
 		$themeClass = 'theme-default';
@@ -318,12 +370,17 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			if (! is_dir(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $this->conf['nivoTheme']))) {
 				// if the skin does not exist, the default skin will be selected
 				t3lib_div::devLog('Skin \''.$this->conf['nivoTheme'].'\' does not exist', 'imagecycle', 1);
-				$this->addCssFile('EXT:imagecycle/res/css/nivoslider/default/style.css');
+				$this->pagerenderer->addCssFile('EXT:imagecycle/res/css/nivoslider/default/style.css');
 			} else {
-				$this->addCssFile($confArr['nivoThemeFolder'] . $this->conf['nivoTheme'] . '/style.css');
+				$this->pagerenderer->addCssFile($confArr['nivoThemeFolder'] . $this->conf['nivoTheme'] . '/style.css');
 			}
 			$themeClass = 'theme-'.$this->conf['nivoTheme'];
 		}
+		// Add the controlnav-thumbs
+		if ($this->conf['nivoControlNavThumbs']) {
+			$themeClass .= ' controlnav-thumbs';
+		}
+
 		$GLOBALS['TSFE']->register['themeclass'] = $themeClass;
 
 		// We have to build the images first to get the maximum width and height
@@ -344,7 +401,21 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 				$GLOBALS['TSFE']->register['caption_key'] = $this->getContentKey() . "-" .$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'];
 				$image = null;
 				$imgConf = $this->conf['nivo.'][$this->type.'.']['image.'];
-				$totalImagePath = $dir . $item['image'];
+				if (file_exists(t3lib_div::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+					$totalImagePath = $item['image'];
+				} else {
+					$totalImagePath = $dir . $item['image'];
+				}
+				// Thumb
+				if ($this->conf['nivoControlNavThumbs']) {
+					$thumbconf['file'] = $totalImagePath;
+					$thumbconf['file.']['width']  = $this->conf['thumbwidth'];
+					$thumbconf['file.']['height'] = $this->conf['thumbheight'];
+					$GLOBALS['TSFE']->register['thumbrel'] = $this->cObj->IMG_RESOURCE($thumbconf);
+				} else {
+					$GLOBALS['TSFE']->register['thumbrel'] = '';
+				}
+				// 
 				$GLOBALS['TSFE']->register['file']    = $totalImagePath;
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
@@ -386,8 +457,19 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$jQueryNoConflict = "";
 		}
 
-		$this->addCSS("
-#c{$this->cObj->data['uid']} .nivoSlider {
+		if ($maxWidth == 0 && $maxHeight == 0 && count($GLOBALS['TSFE']->lastImageInfo)) {
+			$lastImageInfo = $GLOBALS['TSFE']->lastImageInfo;
+			$maxWidth = $lastImageInfo[0];
+			$maxHeight = $lastImageInfo[1];
+		}
+		if ($this->cObj->currentRecord != $GLOBALS['TSFE']->currentRecord) {
+			list($table, $uid) = t3lib_div::trimExplode(':', $GLOBALS['TSFE']->currentRecord, 1);
+		} else {
+			$uid = $this->cObj->data['uid'];
+		}
+
+		$this->pagerenderer->addCSS("
+.{$this->getContentKey()} {
 	width: {$maxWidth}px;
 	height: {$maxHeight}px;
 }");
@@ -415,7 +497,9 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		if ($this->conf['nivoPauseTime'] > 0) {
 			$options['pauseTime'] = "pauseTime: {$this->conf['nivoPauseTime']}";
 		}
-		if ($this->conf['nivoStartSlide'] > 0) {
+		if ($this->conf['nivoStartRandom']) {
+			$options['startSlide'] = "startSlide: Math.floor(Math.random() * jQuery('#{$this->getContentKey()} img').length)";
+		} elseif ($this->conf['nivoStartSlide'] > 0) {
 			$options['startSlide'] = "startSlide: {$this->conf['nivoStartSlide']}";
 		}
 		if (strlen($this->conf['nivoCaptionOpacity']) > 0) {
@@ -424,6 +508,10 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		$options['directionNav']     = "directionNav: ".($this->conf['nivoDirectionNav'] ? 'true' : 'false');
 		$options['directionNavHide'] = "directionNavHide: ".($this->conf['nivoDirectionNavHide'] ? 'true' : 'false');
 		$options['controlNav']       = "controlNav: ".($this->conf['nivoControlNav'] ? 'true' : 'false');
+		if ($this->conf['nivoControlNavThumbs']) {
+			$options['controlNavThumbs']        = "controlNavThumbs: true";
+			$options['controlNavThumbsFromRel'] = "controlNavThumbsFromRel: true";
+		}
 		$options['keyboardNav']      = "keyboardNav: ".($this->conf['nivoKeyboardNav'] ? 'true' : 'false');
 		$options['pauseOnHover']     = "pauseOnHover: ".($this->conf['nivoPauseOnHover'] ? 'true' : 'false');
 		$options['manualAdvance']    = "manualAdvance: ".($this->conf['nivoManualAdvance'] ? 'true' : 'false');
@@ -437,8 +525,15 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 		}
 
+		// checks if t3jquery is loaded
+		if (T3JQUERY === true) {
+			tx_t3jquery::addJqJS();
+		} else {
+			$this->pagerenderer->addJsFile($this->conf['jQueryLibrary'], true);
+		}
+
 		// define the js file
-		$this->addJsFile($this->conf['jQueryNivo']);
+		$this->pagerenderer->addJsFile($this->conf['jQueryNivo']);
 
 		// get the Template of the Javascript
 		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_NIVOSLIDER_JS###"))) {
@@ -453,10 +548,10 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
-		$this->addJS($jQueryNoConflict . $templateCode);
+		$this->pagerenderer->addJS($jQueryNoConflict . $templateCode);
 
 		// Add the ressources
-		$this->addResources();
+		$this->pagerenderer->addResources();
 
 		if ($onlyJS === true) {
 			return true;

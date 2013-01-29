@@ -11,9 +11,9 @@ Author URI: http://dev7studios.com
 .theme-default .nivoSlider {
 	position:relative;
 	background:#fff url(loading.gif) no-repeat 50% 50%;
-    -webkit-box-shadow: 0px 1px 5px 0px #4a4a4a;
-    -moz-box-shadow: 0px 1px 5px 0px #4a4a4a;
-    box-shadow: 0px 1px 5px 0px #4a4a4a;
+	-webkit-box-shadow: 0px 1px 5px 0px #4a4a4a;
+	-moz-box-shadow: 0px 1px 5px 0px #4a4a4a;
+	box-shadow: 0px 1px 5px 0px #4a4a4a;
 }
 .theme-default .nivoSlider img {
 	position:absolute;
@@ -30,7 +30,7 @@ Author URI: http://dev7studios.com
 	position:absolute;
 	left:50%;
 	bottom:-42px;
-    margin-left:-40px; /* Tweak this to center bullets */
+	margin-left:-40px; /* Tweak this to center bullets */
 }
 .theme-default .nivo-controlNav a {
 	display:block;
@@ -63,12 +63,41 @@ Author URI: http://dev7studios.com
 }
 
 .theme-default .nivo-caption {
-    font-family: Helvetica, Arial, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
 }
 .theme-default .nivo-caption a {
-    color:#fff;
-    border-bottom:1px dotted #fff;
+	color:#fff;
+	border-bottom:1px dotted #fff;
 }
 .theme-default .nivo-caption a:hover {
-    color:#fff;
+	color:#fff;
+}
+
+/* Thumb navigation */
+.controlnav-thumbs .nivoSlider {
+	margin-bottom:100px; /* Tweak this to push content down */
+}
+.controlnav-thumbs .nivo-controlNav {
+	position:absolute;
+	left:0px;
+	bottom:-80px; /* Tweak this to push thumbnails down */
+	margin:0;
+}
+.controlnav-thumbs .nivo-controlNav a {
+	display:inline;
+	background:none;
+	text-indent:0px;
+	border:0;
+	margin-right:10px;
+	float:none;
+}
+.controlnav-thumbs .nivo-controlNav a.active img {
+	-webkit-box-shadow: 0px 1px 5px 0px #4a4a4a;
+	-moz-box-shadow: 0px 1px 5px 0px #4a4a4a;
+	box-shadow: 0px 1px 5px 0px #4a4a4a;
+}
+.controlnav-thumbs .nivo-controlNav img {
+	display:inline;
+	position:relative;
+	margin-right:10px;
 }

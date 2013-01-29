@@ -1,4 +1,4 @@
-plugin.tx_imagecycle_pi2 {
+plugin.tx_imagecycle_pi5 {
 
 	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
 	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
@@ -10,54 +10,43 @@ plugin.tx_imagecycle_pi2 {
 	disableRecursion = {$plugin.tx_imagecycle_pi1.disableRecursion}
 
 	jQueryLibrary = {$plugin.tx_imagecycle_pi1.file.jQueryLibrary}
-	jQueryCoin = {$plugin.tx_imagecycle_pi2.file.jQueryCoin}
+	jQueryEasing = {$plugin.tx_imagecycle_pi1.file.jQueryEasing}
+	jQuerySlice = {$plugin.tx_imagecycle_pi5.file.jQuerySlice}
+	modernizer = {$plugin.tx_imagecycle_pi5.file.modernizer}
+	cssFileSlice = {$plugin.tx_imagecycle_pi5.file.cssFileSlice}
 	templateFileJS = {$plugin.tx_imagecycle_pi1.file.templateFileJS}
 
-	coinEffect = {$plugin.tx_imagecycle_pi2.coinEffect}
-	imagewidth = {$plugin.tx_imagecycle_pi2.imagewidth}
-	imageheight = {$plugin.tx_imagecycle_pi2.imageheight}
-	onlyFirstImage = {$plugin.tx_imagecycle_pi2.onlyFirstImage}
-	coinSpw = {$plugin.tx_imagecycle_pi2.coinSpw}
-	coinSph = {$plugin.tx_imagecycle_pi2.coinSph}
-	coinDelay = {$plugin.tx_imagecycle_pi2.coinDelay}
-	coinSDelay = {$plugin.tx_imagecycle_pi2.coinSDelay}
-	coinOpacity = {$plugin.tx_imagecycle_pi2.coinOpacity}
-	coinTitleSpeed = {$plugin.tx_imagecycle_pi2.coinTitleSpeed}
-	coinNavigation = {$plugin.tx_imagecycle_pi2.coinNavigation}
-	coinLinks = {$plugin.tx_imagecycle_pi2.coinLinks}
-	coinHoverPause = {$plugin.tx_imagecycle_pi2.coinHoverPause}
+	imagewidth = {$plugin.tx_imagecycle_pi5.imagewidth}
+	imageheight = {$plugin.tx_imagecycle_pi5.imageheight}
+	onlyFirstImage = {$plugin.tx_imagecycle_pi5.onlyFirstImage}
 
-	options = {$plugin.tx_imagecycle_pi2.options}
-	optionsOverride = {$plugin.tx_imagecycle_pi2.optionsOverride}
+	sliceOrientation = {$plugin.tx_imagecycle_pi5.sliceOrientation}
+	slicePerspective = {$plugin.tx_imagecycle_pi5.slicePerspective}
+	sliceSlicesCount = {$plugin.tx_imagecycle_pi5.sliceSlicesCount}
+	sliceDisperseFactor = {$plugin.tx_imagecycle_pi5.sliceDisperseFactor}
+	sliceColorHiddenSides = {$plugin.tx_imagecycle_pi5.sliceColorHiddenSides}
+	sliceSequentialRotation = {$plugin.tx_imagecycle_pi5.sliceSequentialRotation}
+	sliceSequentialFactor = {$plugin.tx_imagecycle_pi5.sliceSequentialFactor}
+	sliceSpeed3d = {$plugin.tx_imagecycle_pi5.sliceSpeed3d}
+	sliceSlideshow = {$plugin.tx_imagecycle_pi5.sliceSlideshow}
+	sliceSlideshowTime = {$plugin.tx_imagecycle_pi5.sliceSlideshowTime}
+	sliceShowInfo = {$plugin.tx_imagecycle_pi5.sliceShowInfo}
+
+	sliceTransition = {$plugin.tx_imagecycle_pi5.sliceTransition}
+	sliceTransitionDir = {$plugin.tx_imagecycle_pi5.sliceTransitionDir}
+	sliceSpeed = {$plugin.tx_imagecycle_pi5.sliceSpeed}
+
+	options = {$plugin.tx_imagecycle_pi5.options}
+	optionsOverride = {$plugin.tx_imagecycle_pi5.optionsOverride}
 
 	damCaptionFields = {$plugin.tx_imagecycle_pi1.damCaptionFields}
-	damCaptionObject = TEXT
-	damCaptionObject {
-		data = register:dam_caption
-		ifEmpty {
-			data = register:dam_description
-			ifEmpty {
-				data = register:dam_title
-			}
-		}
-		
-	}
-	damHrefFields = {$plugin.tx_imagecycle_pi1.damHrefFields}
 
-	coin {
+	slice {
 		normal {
 			image {
 				file.import.data = register:file
 				file.width.data = register:imagewidth
 				file.height.data = register:imageheight
-				imageLinkWrap < tt_content.image.20.1.imageLinkWrap
-				imageLinkWrap = 1
-				imageLinkWrap {
-					enable.data = register:href
-					stdWrap {
-						dataWrap = | <span>{register:caption}</span>
-					}
-				}
 				altText {
 					data = register:caption
 					stripHtml = 1
@@ -65,26 +54,12 @@ plugin.tx_imagecycle_pi2 {
 				titleText < .altText
 				longdescURL >
 			}
-			// If the link is not image_zoom...
-			imageWrap {
-				dataWrap = | <span>{register:caption}</span>
-			}
-			imageLink {
-				parameter.data = register:href
-				title {
-					data = register:caption
-					stripHtml = 1
-				}
-				target = {$plugin.tx_imagecycle_pi1.linkTarget}
-				extTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
-			}
-			// stdWrap around all images
 			stdWrap {
-				dataWrap = <div class="tx-imagecycle-pi2"><div class="tx-imagecycle-pi2-images" id="{register:key}"> | </div></div>
+				dataWrap = <div class="tx-imagecycle-pi5"><div class="tx-imagecycle-pi5-images sb-slider" id="{register:key}"> | </div></div>
 				required = 1
 			}
 			noscriptWrap {
-				dataWrap = <noscript><div class="tx-imagecycle-pi2"><div class="tx-imagecycle-pi2-images" id="{register:key}"> | </div></div></noscript>
+				dataWrap = <noscript><div class="tx-imagecycle-pi5 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi5-images sb-slider" id="{register:key}"> | </div></div></noscript>
 				required = 1
 			}
 		}
@@ -221,17 +196,5 @@ plugin.tx_imagecycle_pi2 {
 	}
 
 	_CSS_DEFAULT_STYLE (
-.tx-imagecycle-pi2-images { display: none; }
-noscript .tx-imagecycle-pi2-images { display: block; }
-.coin-slider { overflow: hidden; zoom: 1; position: relative; }
-.coin-slider a { text-decoration: none; outline: none; border: none; }
-.cs-buttons { font-size: 0px; padding: 10px; float: left; }
-.cs-buttons a { margin-left: 5px; height: 10px; width: 10px; float: left; border: 1px solid #B8C4CF; color: #B8C4CF; text-indent: -1000px; }
-.cs-active { background-color: #B8C4CF; color: #FFFFFF; }
-.cs-title { width: 100%; padding: 10px; background-color: #000000; color: #FFFFFF; }
-.cs-prev,
-.cs-prev:visited,
-.cs-next,
-.cs-next:visited { background-color: #000000; color: #FFFFFF; padding: 0px 10px; }
 	)
 }

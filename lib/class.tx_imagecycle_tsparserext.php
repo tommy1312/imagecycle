@@ -126,6 +126,7 @@ class tx_imagecycle_tsparserext
 			'nivoThemeFolder',
 			'effectsNivo',
 			'useSelectInsteadCheckbox',
+			'allowedDbTypesForCaption',
 		);
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
 		foreach ($confDefault as $val) {
