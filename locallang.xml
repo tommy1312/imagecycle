@@ -30,40 +30,32 @@
 
 			<label index="extmng.classInnerHeader">Warning!</label>
 			<label index="extmng.classInner">You have to use the "Update"-Button below to ensure proper working for all functions in this extension.</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="pi1_title">Image cycle</label>
+			<label index="pi1_plus_wiz_description">Image Cycle hinzufügen</label>
 
+			<label index="pi2_title">Coin-Slider</label>
+			<label index="pi2_plus_wiz_description">Coin-Slider hinzufügen</label>
 
-			<label index="extmng.updatermsgHeader">Important!</label>
-			<label index="extmng.updatermsg">imagecycle comes with a new updater-script which fix pages with "none"-effects selected. You have to run this script if you are updating from older installation.</label>
-			<label index="extmng.updatermsgLink">[Click here to open the updater]</label>
+			<label index="pi3_title">Nivo-Slider</label>
+			<label index="pi3_plus_wiz_description">Nivo-Slider hinzufügen</label>
+			<label index="pi3_theme_info">Theme Information</label>
+			<label index="pi3_theme_orman">Notiz: Das Orman Theme funktioniert am besten mit der Auflösung 568px x 268px</label>
+			<label index="pi3_theme_pascal">Notiz: Das Pascal Theme funktioniert am besten mit der Auflösung 630px x 235px und 4 Bilder</label>
 
-			<label index="extmng.classInnerHeader">Warning!</label>
-			<label index="extmng.classInner">You have to use the "Update"-Button below to ensure proper working for all functions in this extension.</label>
+			<label index="pi4_title">Cross-Slider</label>
+			<label index="pi4_plus_wiz_description">Cross-Slider hinzufügen</label>
 
-			<label index="updater.back">[&lt;- back]</label>
-			<label index="updater.reload">[reload this page]</label>
+			<label index="pi5_title">Slice-Box</label>
+			<label index="pi5_plus_wiz_description">Slice-Box hinzufügen</label>
 
-			<label index="updater.warningHeader">Important! Please Read!</label>
-			<label index="updater.nothingtodo">Nothing to do</label>
-			<label index="updater.actions">Actions:</label>
-			<label index="updater.updateresults">Update results:</label>
-			<label index="updater.warningMsg">
-				The updater manipulates your database and due to the huge amount of configuration variants it is 
-				possible that it &lt;br&gt;might not produce the expected results.&lt;br&gt;
-				So backup your database (at least the table tt_content) or do a t3d export of your site 
-				&lt;strong&gt;BEFORE&lt;/strong&gt; &lt;br&gt;
-				you click on any of the "DO IT" Buttons.
-			</label>
+			<label index="cms_layout.style">Anzeige: %s</label>
+			<label index="cms_layout.not_configured">Plugin ist nicht Konfiguriert!</label>
+			<label index="cms_layout.from_ts">Vom Typoscript</label>
 
-			<label index="updater.lbl_searchPageEffectNone">Search "none"-effect in page</label>
-			<label index="updater.msg_searchPageEffectNone">Search for pages where the imagecycle-effect "none" is selected:</label>
-			<label index="updater.foundMsg_searchPageEffectNone">Found ###COUNT### pages.</label>
-			<label index="updater.question_searchPageEffectNone">Should the updater fix this settings?</label>
-			<label index="updater.questionInfo_searchPageEffectNone">(If you click "DO IT" the effect will be moved from "none" to empty (inherited from parent))</label>
-
+			<label index="extmng.classInnerHeader">Warnung!</label>
+			<label index="extmng.classInner">Sie müssen den "Update"-Knopf drücken um das korrekte Funktionieren der Erweiterung zu gewährleisten.</label>
 		</languageKey>
 	</data>
-	<orig_hash type="array">
-	</orig_hash>
-	<orig_text type="array">
-	</orig_text>
 </T3locallang>

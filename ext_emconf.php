@@ -3,7 +3,7 @@
 /***************************************************************
  * Extension Manager/Repository config file for ext "imagecycle".
  *
- * Auto generated 29-01-2013 16:08
+ * Auto generated 29-01-2013 16:09
  *
  * Manual updates:
  * Only the data in the array - everything else is removed by next
@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'description' => 'Insert a slideshow into your page or template. Manage the images, captions and hrefs recursively in the pagetree and show it in a jQuery-Cycle, Coin-Slider, Nivo-Slider or Cross-Slider. Add media from DAM and DAM-Category. Use t3jquery for better integration with other jQuery extensions.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '2.6.10',
+	'version' => '2.7.0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',

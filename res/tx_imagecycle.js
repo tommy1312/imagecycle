@@ -94,7 +94,7 @@ jQuery(document).ready(function() {
 
 <!-- ###TEMPLATE_NIVOSLIDER_JS### begin -->
 jQuery(window).load(function() {
-	jQuery('####KEY###').parent().show();
+	jQuery('####KEY### img').removeAttr("height").removeAttr("width");
 	jQuery('####KEY###').nivoSlider({
 		###OPTIONS###
 	});
