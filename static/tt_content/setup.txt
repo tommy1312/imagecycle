@@ -1,0 +1,56 @@
+includeLibs.imagecycle = EXT:imagecycle/class.tx_imagecycle.php
+lib.tt_content_image_20 < tt_content.image.20
+lib.tt_content_textpic_20.1.text = COA
+lib.tt_content_textpic_20.1.text {
+	if.value = 24
+	if.isGreaterThan.field = imageorient
+	10 =< lib.stdheader
+	10.stdWrap.dataWrap = <div class="csc-textpicHeader csc-textpicHeader-{field:imageorient}">|</div>
+}
+lib.imagecycle < tt_content.image.20
+lib.imagecycle {
+	imgMax = 1000
+	rendering.ul {
+		imageStdWrap.dataWrap = <div class="csc-textpic-imagewrap tx-imagecycle-pi1" style="width:{register:rowwidth}px;"><ul id="imagecycle_{field:uid}" class="tx-imagecycle-pi1-images" style="display:none;overflow:hidden;"> | </ul></div>
+		imageStdWrapNoWidth.dataWrap < .imageStdWrap.dataWrap
+		imageRowStdWrap.dataWrap = |
+		imageLastRowStdWrap.dataWrap = |
+		noRowsStdWrap.wrap = |
+		imgTagStdWrap.wrap = |
+		oneImageStdWrap.dataWrap = <li class="csc-textpic-image###CLASSES###"> | </li>|
+		editIconsStdWrap.wrap = <div> | </div>
+		caption {
+			required = 1
+			wrap = <div class="imagecycle-caption"> | </div>
+		}
+	}
+	captionSplit = 1
+	renderMethod = ul
+	stdWrap.preUserFunc = tx_imagecycle->getSlideshow
+}
+tt_content.image.20 >
+tt_content.image.20 = CASE
+tt_content.image.20 {
+	key.field = tx_imagecycle_activate
+	default < lib.tt_content_image_20
+	1 < lib.imagecycle
+}
+tt_content.textpic.20 >
+tt_content.textpic.20 = CASE
+tt_content.textpic.20 {
+	key.field = tx_imagecycle_activate
+	default < tt_content.image.20.default
+	default {
+		text {
+			10 < lib.tt_content_textpic_20.1.text
+			20 < tt_content.text.20
+			wrap = <div class="csc-textpic-text"> | </div>
+		}
+	}
+	1 < tt_content.image.20.1
+	1 {
+		text.10 < lib.tt_content_textpic_20.1.text
+		text.20 < tt_content.text.20
+		text.wrap = <div class="csc-textpic-text"> | </div>
+	}
+}

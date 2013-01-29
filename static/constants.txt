@@ -9,6 +9,9 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/enable/030; type=boolean; label=Random: Show the images random
 	random = 0
 
+	# cat=plugin.tx_imagecycle.basic/enable/035; type=boolean; label=Set cleartype fixing: Set to true to disable extra cleartype fixing
+	cleartypeNoBg = 0
+
 	# cat=plugin.tx_imagecycle.basic/enable/040; type=boolean; label=Stop on mouseover: Stop the slideshow when mouse over
 	stopOnMousover = 0
 
@@ -39,18 +42,18 @@ plugin.tx_imagecycle_pi1 {
 
 
 	# cat=plugin.tx_imagecycle.basic/file/010; type=file[js]; label=jQuery Library: Location of the jQuery Lib
-	file.jQueryLibrary = EXT:imagecycle/res/jquery/js/jquery-1.4.3.min.js
+	file.jQueryLibrary = EXT:imagecycle/res/jquery/js/jquery-1.6.2.min.js
 
 	# cat=plugin.tx_imagecycle.basic/file/020; type=file[js]; label=jQuery Easing: Location of the jQuery Easing
 	file.jQueryEasing = EXT:imagecycle/res/jquery/js/jquery.easing-1.3.js
 
 	# cat=plugin.tx_imagecycle.basic/file/030; type=file[js]; label=jQuery Cycle: Location of the jQuery Cycle
-	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all-2.88.min.js
+	file.jQueryCycle = EXT:imagecycle/res/jquery/js/jquery.cycle.all-2.9995.min.js
 
 	# cat=plugin.tx_imagecycle.basic/file/040; type=file[js]; label=JS-Template file: Location of the used template for JS
-	file.templateFileJS = EXT:imagecycle/res/tx_imagecycle_pi1.js
+	file.templateFileJS = EXT:imagecycle/res/tx_imagecycle.js
 
-	# cat=plugin.tx_imagecycle.basic/file/050; type=file[css]; label=CSS file: The Path to the stylesheet file
+	# cat=plugin.tx_imagecycle.basic/file/050; type=file[css]; label=CSS file: The path to the stylesheet file
 	file.cssFile = EXT:imagecycle/res/css/style.css
 
 
@@ -63,10 +66,10 @@ plugin.tx_imagecycle_pi1 {
 
 
 
-	# cat=plugin.tx_imagecycle.basic/typo/010; type=options[,none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all]; label=Type of the movement: Values are none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all
+	# cat=plugin.tx_imagecycle.basic/typo/010; type=string; label=Type of the movement: Possible values are none,blindX,blindY,blindZ,cover,curtainX,curtainY,fade,fadeZoom,growX,growY,scrollUp,scrollDown,scrollLeft,scrollRight,scrollHorz,scrollVert,shuffle,slideX,slideY,toss,turnUp,turnDown,turnLeft,turnRight,uncover,wipe,zoom,all (seperat by comma if multiple)
 	type = fade
 
-	# cat=plugin.tx_imagecycle.basic/typo/020; type=options[,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition: Effect of transition (Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
+	# cat=plugin.tx_imagecycle.basic/typo/020; type=options[,swing,linear,Quad,Cubic,Quart,Quint,Expo,Circ,Sine,Back,Bounce,Elastic]; label=Transition: Effect of transition (Swing, Linear, Quad, Cubic, Quart, Quint, Expo, Circ, Sine, Back, Bounce, Elastic)
 	transition = Back
 
 	# cat=plugin.tx_imagecycle.basic/typo/030; type=options[,In,Out,InOut]; label=Transition direction: Direction of transition (In, Out, InOut)
@@ -81,19 +84,23 @@ plugin.tx_imagecycle_pi1 {
 	# cat=plugin.tx_imagecycle.basic/typo/060; type=int; label=Duration of delay: The delay duration for animation begin in milliseconds
 	delayDuration = 
 
-	# cat=plugin.tx_imagecycle.basic/typo/070; type=boolean; label=Simultaneously animation: Animates in and out simultaneously
+	# cat=plugin.tx_imagecycle.basic/typo/070; type=int; label=Manual transition speed: Speed of transitions when triggered manually in milliseconds
+	fastOnEvent = 
+
+	# cat=plugin.tx_imagecycle.basic/typo/080; type=boolean; label=Simultaneously animation: Animates in and out simultaneously
 	sync = 1
 
-	# cat=plugin.tx_imagecycle.basic/typo/080; type=boolean; label=Show Control: If set, the control panel will be displayed
+	# cat=plugin.tx_imagecycle.basic/typo/090; type=boolean; label=Show Control: If set, the control panel will be displayed
 	showControl = 0
 
-	# cat=plugin.tx_imagecycle.basic/typo/090; type=boolean; label=Show Pager: If set, the pager will be displayed
+	# cat=plugin.tx_imagecycle.basic/typo/100; type=boolean; label=Show Pager: If set, the pager will be displayed
 	showPager = 0
 
-	# cat=plugin.tx_imagecycle.basic/typo/100; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
+	# cat=plugin.tx_imagecycle.basic/typo/110; type=string; label=Own Options: Enter own options (see http://malsup.com/jquery/cycle/)
 	options = 
 
-
+	# cat=plugin.tx_imagecycle.basic/typo/120; type=boolean; label=Override all options: If set, all options will be override
+	optionsOverride = 0
 
 
 

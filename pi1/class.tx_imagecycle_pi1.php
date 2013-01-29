@@ -80,31 +80,51 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 		if ($this->cObj->data['list_type'] == $this->extKey.'_pi1') {
 			$this->type = 'normal';
-			// It's a content, al data from flexform
-			// Set the Flexform information
-			$this->pi_initPIflexForm();
-			$piFlexForm = $this->cObj->data['pi_flexform'];
-			foreach ($piFlexForm['data'] as $sheet => $data) {
-				foreach ($data as $lang => $value) {
-					foreach ($value as $key => $val) {
-						if ($key == 'imagesRTE') {
-							if (count($val['el']) > 0) {
-								foreach ($val['el'] as $elKey => $el) {
-									if (is_numeric($elKey)) {
-										$this->lConf[$key][] = array(
-											"image"   => $el['data']['el']['image']['vDEF'],
-											"href"    => $el['data']['el']['href']['vDEF'],
-											"caption" => $el['data']['el']['caption']['vDEF'],
-										);
-									}
-								}
-							}
-						} else {
-							$this->lConf[$key] = $this->pi_getFFvalue($piFlexForm, $key, $sheet);
-						}
+
+			// It's a content, all data from flexform
+
+			$this->lConf['mode']          = $this->getFlexformData('general', 'mode');
+			$this->lConf['images']        = $this->getFlexformData('general', 'images', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['hrefs']         = $this->getFlexformData('general', 'hrefs', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['captions']      = $this->getFlexformData('general', 'captions', ($this->lConf['mode'] == 'upload'));
+			$this->lConf['damimages']     = $this->getFlexformData('general', 'damimages', ($this->lConf['mode'] == 'dam'));
+			$this->lConf['damcategories'] = $this->getFlexformData('general', 'damcategories', ($this->lConf['mode'] == 'dam_catedit'));
+
+			$imagesRTE = $this->getFlexformData('general', 'imagesRTE', ($this->lConf['mode'] == 'uploadRTE'));
+			$this->lConf['imagesRTE'] = array();
+			if (isset($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
+				foreach ($imagesRTE['el'] as $elKey => $el) {
+					if (is_numeric($elKey)) {
+						$this->lConf['imagesRTE'][] = array(
+							"image"   => $el['data']['el']['image']['vDEF'],
+							"href"    => $el['data']['el']['href']['vDEF'],
+							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+						);
 					}
 				}
 			}
+
+			$this->lConf['imagewidth']     = $this->getFlexformData('settings', 'imagewidth');
+			$this->lConf['imageheight']    = $this->getFlexformData('settings', 'imageheight');
+			$this->lConf['showcaption']    = $this->getFlexformData('settings', 'showcaption');
+			$this->lConf['showControl']    = $this->getFlexformData('settings', 'showControl');
+			$this->lConf['showPager']      = $this->getFlexformData('settings', 'showPager');
+			$this->lConf['random']         = $this->getFlexformData('settings', 'random');
+			$this->lConf['cleartypeNoBg']  = $this->getFlexformData('settings', 'cleartypeNoBg');
+			$this->lConf['stoponmousover'] = $this->getFlexformData('settings', 'stoponmousover');
+			$this->lConf['pausedBegin']    = $this->getFlexformData('settings', 'pausedBegin');
+
+			$this->lConf['type']               = $this->getFlexformData('movement', 'type');
+			$this->lConf['transition']         = $this->getFlexformData('movement', 'transition');
+			$this->lConf['transitiondir']      = $this->getFlexformData('movement', 'transitiondir');
+			$this->lConf['transitionduration'] = $this->getFlexformData('movement', 'transitionduration');
+			$this->lConf['displayduration']    = $this->getFlexformData('movement', 'displayduration');
+			$this->lConf['delayduration']      = $this->getFlexformData('movement', 'delayduration');
+			$this->lConf['fastOnEvent']        = $this->getFlexformData('movement', 'fastOnEvent');
+			$this->lConf['sync']               = $this->getFlexformData('movement', 'sync');
+
+			$this->lConf['options']         = $this->getFlexformData('special', 'options');
+			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
 			$this->setContentKey("imagecycle_c" . $this->cObj->data['uid']);
@@ -138,7 +158,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				$this->conf['imageheight'] = $this->lConf['imageheight'];
 			}
 			if ($this->lConf['type']) {
-				$this->conf['type'] = $this->lConf['type'];
+				$this->conf['type'] = implode(',', t3lib_div::trimExplode(',', $this->lConf['type']));
 			}
 			if ($this->lConf['transition']) {
 				$this->conf['transition'] = $this->lConf['transition'];
@@ -155,23 +175,46 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			if (is_numeric($this->lConf['delayduration']) && $this->lConf['delayduration'] != 0) {
 				$this->conf['delayDuration'] = $this->lConf['delayduration'];
 			}
-			$this->conf['showcaption'] = $this->lConf['showcaption'];
-			$this->conf['showControl'] = $this->lConf['showControl'];
-			$this->conf['stopOnMousover'] = $this->lConf['stoponmousover'];
-			$this->conf['pausedBegin'] = $this->lConf['pausedBegin'];
-			$this->conf['sync'] = $this->lConf['sync'];
-			$this->conf['random'] = $this->lConf['random'];
+			if ($this->lConf['fastOnEvent']) {
+				$this->conf['fastOnEvent'] = $this->lConf['fastOnEvent'];
+			}
+			// Will be overridden, if not "from TS"
+			if ($this->lConf['showcaption'] < 2) {
+				$this->conf['showcaption'] = $this->lConf['showcaption'];
+			}
+			if ($this->lConf['showControl'] < 2) {
+				$this->conf['showControl'] = $this->lConf['showControl'];
+			}
+			if ($this->lConf['showPager'] < 2) {
+				$this->conf['showPager'] = $this->lConf['showPager'];
+			}
+			if ($this->lConf['random'] < 2) {
+				$this->conf['random'] = $this->lConf['random'];
+			}
+			if ($this->lConf['cleartypeNoBg'] < 2) {
+				$this->conf['cleartypeNoBg'] = $this->lConf['cleartypeNoBg'];
+			}
+			if ($this->lConf['stoponmousover'] < 2) {
+				$this->conf['stopOnMousover'] = $this->lConf['stoponmousover'];
+			}
+			if ($this->lConf['pausedBegin'] < 2) {
+				$this->conf['pausedBegin'] = $this->lConf['pausedBegin'];
+			}
+			if ($this->lConf['sync'] < 2) {
+				$this->conf['sync'] = $this->lConf['sync'];
+			}
 			$this->conf['options'] = $this->lConf['options'];
-			$this->conf['showPager'] = $this->lConf['showPager'];
 		} else {
 			$this->type = 'header';
 			// It's the header
 			$used_page = array();
 			$pageID    = false;
+			$effectChanged = false;
 			foreach ($GLOBALS['TSFE']->rootLine as $page) {
 				if (! $pageID) {
-					if (trim($page['tx_imagecycle_effect']) && ! $this->conf['disableRecursion']) {
+					if ($effectChanged === false && trim($page['tx_imagecycle_effect']) && ! $this->conf['disableRecursion']) {
 						$this->conf['type'] = $page['tx_imagecycle_effect'];
+						$effectChanged = true;
 					}
 					if (
 						(($page['tx_imagecycle_mode'] == 'upload' || ! $page['tx_imagecycle_mode']) && trim($page['tx_imagecycle_images']) != '') ||
@@ -188,6 +231,13 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				}
 			}
 			if ($pageID) {
+				if ($this->sys_language_uid) {
+					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
+					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+					if (trim($used_page['tx_imagecycle_effect'])) {
+						$this->conf['type'] = $row['tx_imagecycle_effect'];
+					}
+				}
 				// define the images
 				switch ($this->lConf['mode']) {
 					case "" : {}
@@ -198,11 +248,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 						$this->captions = t3lib_div::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
 						// Language overlay
 						if ($this->sys_language_uid) {
-							$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions','pages_language_overlay','pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid,'','',1);
-							$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
-							if (trim($used_page['tx_imagecycle_effect'])) {
-								$this->conf['type'] = $row['tx_imagecycle_effect'];
-							}
 							if (trim($row['tx_imagecycle_images']) != '') {
 								$this->images   = t3lib_div::trimExplode(',',     $row['tx_imagecycle_images']);
 								$this->hrefs    = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
@@ -227,7 +272,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		foreach ($this->images as $key => $image) {
 			$data[$key]['image']   = $image;
 			$data[$key]['href']    = $this->hrefs[$key];
-			$data[$key]['caption'] = ($this->conf['showcaption'] ? $this->captions[$key] : '');
+			$data[$key]['caption'] = $this->captions[$key];
 		}
 
 		return $this->parseTemplate($data);
@@ -376,7 +421,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	{
 		$damCats = t3lib_div::trimExplode(",", $dam_cat, true);
 		if (count($damCats) < 1) {
-			return;
+			return array();
 		} else {
 			// select subcategories
 			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
@@ -419,7 +464,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 		// The template for JS
 		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle_pi1.js");
+			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle.js");
 		}
 
 		// set the key
@@ -444,7 +489,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		if ($this->conf['type']) {
 			$options['fx'] = "fx: '{$this->conf['type']}'";
 		}
-		if ($this->conf['transitionDir'] && $this->conf['transition']) {
+		if (in_array($this->conf['transition'], array('linear', 'swing'))) {
+			$options['easing'] = "easing: '{$this->conf['transition']}'";
+		} elseif ($this->conf['transitionDir'] && $this->conf['transition']) {
 			$options['easing'] = "easing: 'ease{$this->conf['transitionDir']}{$this->conf['transition']}'";
 		}
 		if ($this->conf['transitionDuration'] > 0) {
@@ -456,12 +503,19 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		if (is_numeric($this->conf['delayDuration']) && $this->conf['delayDuration'] != 0) {
 			$options['delay'] = "delay: {$this->conf['delayDuration']}";
 		}
+		if ($this->conf['fastOnEvent'] > 0) {
+			$options['fastOnEvent'] = "fastOnEvent: ".$this->conf['fastOnEvent'];
+		}
+
 		if ($this->conf['stopOnMousover']) {
 			$options['pause'] = "pause: true";
 		}
 		$options['sync'] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
 		$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
+		$options['cleartypeNoBg'] = "cleartypeNoBg: ".($this->conf['cleartypeNoBg'] ? 'true' : 'false');
 
+		$captionTag = $this->cObj->stdWrap($this->conf['cycle.'][$this->type.'.']['captionTag'], $this->conf['cycle.'][$this->type.'.']['captionTag.']);
+		$markerArray["CAPTION_TAG"] = $captionTag;
 		$before = null;
 		$after  = null;
 		// add caption
@@ -469,8 +523,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			// define the animation for the caption
 			$fx = array();
 			if (! $this->conf['captionAnimate']) {
-				$before .= "jQuery('span', this).css('display', 'none');";
-				$after  .= "jQuery('span', this).css('display', 'block');";
+				$before .= "jQuery('{$captionTag}', this).css('display', 'none');";
+				$after  .= "jQuery('{$captionTag}', this).css('display', 'block');";
 			} else {
 				if ($this->conf['captionTypeOpacity']) {
 					$fx[] = "opacity: 'show'";
@@ -488,8 +542,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				if (! is_numeric($this->conf['captionSpeed'])) {
 					$this->conf['captionSpeed'] = 200;
 				}
-				$before .= "jQuery('span', this).css('display', 'none');";
-				$after  .= "jQuery('span', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
+				$before .= "jQuery('{$captionTag}', this).css('display', 'none');";
+				$after  .= "jQuery('{$captionTag}', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']});";
 			}
 			if ($this->conf['captionSync']) {
 				$before = $before . $after;
@@ -501,18 +555,20 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$templateActivatePagerCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_ACTIVATE_PAGER_JS###"));
 			$after .= $this->cObj->substituteMarkerArray($templateActivatePagerCode, $markerArray, '###|###', 0);
 		}
-		if (count($data) > 1) {
-			if ($before) {
-				$options['before'] = "before: function(a,n,o,f) {".$before."}";
-			}
-			if ($after) {
-				$options['after'] = "after: function(a,n,o,f) {".$after."}";
-			}
+		if ($before) {
+			$options['before'] = "before: function(a,n,o,f) {".$before."}";
+		}
+		if ($after) {
+			$options['after'] = "after: function(a,n,o,f) {".$after."}";
 		}
 
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
-			$options = array($this->conf['options']);
+			if ($this->conf['optionsOverride']) {
+				$options = array($this->conf['options']);
+			} else {
+				$options['options'] = $this->conf['options'];
+			}
 		}
 
 		// define the js file
@@ -526,6 +582,14 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			$templateCode = "alert('Template TEMPLATE_JS is missing')";
 		}
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
+
+		// Show the caption when sync is turned off
+		if ($this->conf['showcaption'] && ! $this->conf['captionSync']) {
+			$templateShowCaption = trim($this->cObj->getSubpart($templateCode, "###SHOW_CAPTION_AT_START###"));
+		} else {
+			$templateShowCaption = null;
+		}
+		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SHOW_CAPTION_AT_START###', $templateShowCaption, 0);
 
 		// define the control
 		if ($this->conf['showControl']) {
@@ -578,7 +642,9 @@ class tx_imagecycle_pi1 extends tslib_pibase
 
 		// define the markers
 		$markerArray = array();
-		$markerArray["OPTIONS"] = implode(",\n		", $options);
+		$markerArray["OPTIONS"]     = implode(",\n		", $options);
+		$markerArray["CAPTION_TAG"] = $captionTag;
+
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
@@ -594,6 +660,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$return_string = null;
 		$images = null;
 		$pager = null;
+		$no_script= null;
 		$GLOBALS['TSFE']->register['key'] = $this->getContentKey();
 		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
 		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
@@ -613,9 +680,12 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
 				}
 				$image = $this->cObj->IMAGE($imgConf);
-				$image = $this->cObj->typolink($image, $imgConf['imageLinkWrap.']);
 				if ($item['caption'] && $this->conf['showcaption']) {
 					$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['captionWrap.']);
+				}
+				// Add the noscript wrap to the firs image
+				if ($key == 0) {
+					$no_script = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['noscriptWrap.']);
 				}
 				$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['itemWrap.']);
 				$images .= $image;
@@ -629,6 +699,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			// the stdWrap
 			$images = $this->cObj->stdWrap($images, $this->conf['cycle.'][$this->type.'.']['stdWrap.']);
 			$return_string = $this->cObj->substituteMarkerArray($images, $markerArray, '###|###', 0);
+			// add the noscript
+			$return_string .= $no_script;
 		}
 		return $return_string;
 	}
@@ -670,14 +742,14 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					$file = $this->getPath($jsToLoad);
 					if ($file) {
 						if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
-							if ($allJsInFooter) {
+							if ($this->conf['jsInFooter'] || $allJsInFooter) {
 								$pagerender->addJsFooterFile($file, 'text/javascript', $this->conf['jsMinify']);
 							} else {
 								$pagerender->addJsFile($file, 'text/javascript', $this->conf['jsMinify']);
 							}
 						} else {
 							$temp_file = '<script type="text/javascript" src="'.$file.'"></script>';
-							if ($allJsInFooter) {
+							if ($this->conf['jsInFooter'] || $allJsInFooter) {
 								$GLOBALS['TSFE']->additionalFooterData['jsFile_'.$this->extKey.'_'.$file] = $temp_file;
 							} else {
 								$GLOBALS['TSFE']->additionalHeaderData['jsFile_'.$this->extKey.'_'.$file] = $temp_file;
@@ -705,7 +777,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				// Add script only once
 				$hash = md5($temp_js);
 				if ($this->conf['jsInline']) {
-					$GLOBALS['TSFE']->inlineJS[$hash] = $temp_css;
+					$GLOBALS['TSFE']->inlineJS[$hash] = $temp_js;
 				} elseif (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
 					if ($this->conf['jsInFooter'] || $allJsInFooter) {
 						$pagerender->addJsFooterInlineCode($hash, $temp_js, $this->conf['jsMinify']);
@@ -733,7 +805,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					if (t3lib_div::int_from_ver(TYPO3_version) >= 4003000) {
 						$pagerender->addCssFile($file, 'stylesheet', 'all', '', $this->conf['cssMinify']);
 					} else {
-						$GLOBALS['TSFE']->additionalHeaderData['cssFile_'.$this->extKey.'_'.$file] = '<link rel="stylesheet" type="text/css" href="'.$file.'" medai="all" />'.chr(10);
+						$GLOBALS['TSFE']->additionalHeaderData['cssFile_'.$this->extKey.'_'.$file] = '<link rel="stylesheet" type="text/css" href="'.$file.'" media="all" />'.chr(10);
 					}
 				} else {
 					t3lib_div::devLog("'{$cssToLoad}' does not exists!", $this->extKey, 2);
@@ -838,6 +910,54 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$_EXTKEY = $key;
 		include(t3lib_extMgm::extPath($key) . 'ext_emconf.php');
 		return $EM_CONF[$key]['version'];
+	}
+
+	/**
+	 * Set the piFlexform data
+	 * 
+	 * @return void
+	 */
+	protected function setFlexFormData()
+	{
+		if (! count($this->piFlexForm)) {
+			$this->pi_initPIflexForm();
+			$this->piFlexForm = $this->cObj->data['pi_flexform'];
+		}
+	}
+
+	/**
+	 * Extract the requested information from flexform
+	 * @param string $sheet
+	 * @param string $name
+	 * @param boolean $devlog
+	 * @return string
+	 */
+	protected function getFlexformData($sheet='', $name='', $devlog=true)
+	{
+		$this->setFlexFormData();
+		if (! isset($this->piFlexForm['data'])) {
+			if ($devlog === true) {
+				t3lib_div::devLog("Flexform Data not set", $this->extKey, 1);
+			}
+			return null;
+		}
+		if (! isset($this->piFlexForm['data'][$sheet])) {
+			if ($devlog === true) {
+				t3lib_div::devLog("Flexform sheet '{$sheet}' not defined", $this->extKey, 1);
+			}
+			return null;
+		}
+		if (! isset($this->piFlexForm['data'][$sheet]['lDEF'][$name])) {
+			if ($devlog === true) {
+				t3lib_div::devLog("Flexform Data [{$sheet}][{$name}] does not exist", $this->extKey, 1);
+			}
+			return null;
+		}
+		if (isset($this->piFlexForm['data'][$sheet]['lDEF'][$name]['vDEF'])) {
+			return $this->pi_getFFvalue($this->piFlexForm, $name, $sheet);
+		} else {
+			return $this->piFlexForm['data'][$sheet]['lDEF'][$name];
+		}
 	}
 }
 

@@ -41,6 +41,16 @@ CREATE TABLE tt_content (
 
 
 #
+# Table structure for table 'tt_news'
+#
+CREATE TABLE tt_news (
+	tx_imagecycle_activate tinyint(3) DEFAULT '0' NOT NULL,
+	tx_imagecycle_duration int(11) DEFAULT '0' NOT NULL
+);
+
+
+
+#
 # Table structure for table 'tx_dam'
 #
 CREATE TABLE tx_dam (
