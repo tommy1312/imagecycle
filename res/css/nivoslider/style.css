@@ -119,3 +119,9 @@ noscript .nivoSlider img {
 .nivo-controlNav a.active {
 	font-weight:bold;
 }
+
+
+.nivoSlider a,
+.nivoSlider img {
+	display: block !important;
+}
