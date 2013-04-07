@@ -64,7 +64,9 @@ class tx_imagecycle_itemsProcFunc
 				);
 			}
 		}
-		$config['items'] = array_merge($config['items'], $optionList);
+		if (isset($config['items']) && is_array($config['items'])) {
+			$config['items'] = array_merge($config['items'], $optionList);
+		}
 		return $config;
 	}
 
@@ -99,7 +101,9 @@ class tx_imagecycle_itemsProcFunc
 				);
 			}
 		}
-		$config['items'] = array_merge($config['items'], $optionList);
+		if (isset($config['items']) && is_array($config['items'])) {
+			$config['items'] = array_merge($config['items'], $optionList);
+		}
 		return $config;
 	}
 
@@ -134,7 +138,9 @@ class tx_imagecycle_itemsProcFunc
 				);
 			}
 		}
-		$config['items'] = array_merge($config['items'], $optionList);
+		if (isset($config['items']) && is_array($config['items'])) {
+			$config['items'] = array_merge($config['items'], $optionList);
+		}
 		return $config;
 	}
 
@@ -188,7 +194,9 @@ class tx_imagecycle_itemsProcFunc
 					}
 				}
 			}
-			$config['items'] = array_merge($config['items'], $optionList);
+			if (isset($config['items']) && is_array($config['items'])) {
+				$config['items'] = array_merge($config['items'], $optionList);
+			}
 		}
 		return $config;
 	}
@@ -207,14 +215,14 @@ class tx_imagecycle_itemsProcFunc
 		);
 		if ($config['config']['displayMode'] != 'page') {
 			$optionList[] = array(
-					$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.rte'),
-					"uploadRTE",
-					"EXT:imagecycle/mode_rte.gif"
+				$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.rte'),
+				"uploadRTE",
+				"EXT:imagecycle/mode_rte.gif"
 			);
 			$optionList[] = array(
-					$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.data'),
-					"uploadData",
-					"EXT:imagecycle/mode_data.gif"
+				$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.data'),
+				"uploadData",
+				"EXT:imagecycle/mode_data.gif"
 			);
 		}
 		if (t3lib_extMgm::isLoaded("dam")) {
@@ -231,7 +239,9 @@ class tx_imagecycle_itemsProcFunc
 				);
 			}
 		}
-		$config['items'] = array_merge($config['items'], $optionList);
+		if (isset($config['items']) && is_array($config['items'])) {
+			$config['items'] = array_merge($config['items'], $optionList);
+		}
 		return $config;
 	}
 }

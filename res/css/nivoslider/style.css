@@ -14,9 +14,6 @@
 noscript .tx-imagecycle-pi3.slider-wrapper {
 	display: block;
 }
-noscript .nivoSlider img {
-	display: block !important;
-}
 */
 /* The Nivo Slider styles */
 .nivoSlider {
@@ -93,7 +90,7 @@ noscript .nivoSlider img {
 	display:inline !important;
 }
 .nivo-html-caption {
-    display:none;
+	display:none;
 }
 /* Direction nav styles (e.g. Next & Prev) */
 .nivo-directionNav a {
@@ -118,10 +115,4 @@ noscript .nivoSlider img {
 }
 .nivo-controlNav a.active {
 	font-weight:bold;
-}
-
-
-.nivoSlider a,
-.nivoSlider img {
-	display: block !important;
 }

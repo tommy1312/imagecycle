@@ -339,9 +339,9 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 		$factor = 1;
 		$no_script = null;
 		$GLOBALS['TSFE']->register['key'] = $this->getContentKey();
-		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'] * $factor;
-		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'] * $factor;
-		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'] * $factor;
+		$GLOBALS['TSFE']->register['imagewidth']  = $this->conf['imagewidth'];
+		$GLOBALS['TSFE']->register['imageheight'] = $this->conf['imageheight'];
+		$GLOBALS['TSFE']->register['showcaption'] = $this->conf['showcaption'];
 		$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = 0;
 		$GLOBALS['TSFE']->register['IMAGE_COUNT'] = count($data);
 		if (is_array($data) && count($data) > 0) {
