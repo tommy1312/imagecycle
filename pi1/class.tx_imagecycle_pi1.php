@@ -459,7 +459,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				'tx_dam_cat',
 				" AND tx_dam_cat.uid IN (".implode(",", $damcategories).")",
 				'',
-				'tx_dam.sorting',
+				'tx_dam_mm_cat.sorting_foreign',
 				''
 			);
 			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
@@ -845,7 +845,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['captionWrap.']);
 				}
 				// Add the noscript wrap to the firs image
-				if ($key == 0) {
+				if ($key == 0 && $this->conf['cycle.'][$this->type.'.']['noscriptWrap.']) {
 					$no_script = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['noscriptWrap.']);
 				}
 				$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['itemWrap.']);
