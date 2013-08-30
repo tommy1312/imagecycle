@@ -93,6 +93,9 @@ jQuery(document).ready(function() {
 
 
 <!-- ###TEMPLATE_NIVOSLIDER_JS### begin -->
+jQuery(document).ready(function() {
+	jQuery('.tx-imagecycle-pi3').show();
+});
 jQuery(window).load(function() {
 	jQuery('####KEY### img').removeAttr("height").removeAttr("width");
 	jQuery('####KEY###').nivoSlider({
