@@ -7,21 +7,21 @@ if (!defined ('TYPO3_MODE')) {
 
 // PAGE
 $tempColumns = array();
+$tempColumns['tx_imagecycle_mode'] = array(
+	'exclude' => 1,
+	'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_mode',
+	'config' => array(
+		'type' => 'select',
+		'items' => array (
+			array('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.recursiv', 'recursiv'),
+		),
+		'itemsProcFunc' => 'tx_imagecycle_itemsProcFunc->getModes',
+		'displayMode' => 'page',
+		'size' => 1,
+		'maxitems' => 1,
+	)
+);
 if (t3lib_extMgm::isLoaded('dam')) {
-	$tempColumns['tx_imagecycle_mode'] = array(
-		'exclude' => 1,
-		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_mode',
-		'config' => array(
-			'type' => 'select',
-			'items' => array (
-				array('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.recursiv', 'recursiv'),
-			),
-			'itemsProcFunc' => 'tx_imagecycle_itemsProcFunc->getModes',
-			'displayMode' => 'page',
-			'size' => 1,
-			'maxitems' => 1,
-		)
-	);
 	$tempColumns['tx_imagecycle_damimages'] = array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damimages',
