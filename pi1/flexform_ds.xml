@@ -83,53 +83,6 @@
 						</TCEforms>
 					</captionsData>
 
-					<damimages>
-						<TCEforms>
-							<displayCond>FIELD:mode:=:dam</displayCond>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.damimages</label>
-							<config>
-								<type>group</type>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:dam/lib/class.tx_dam_tcefunc.php:&tx_dam_tceFunc->getSingleField_typeMedia]]></userFunc>
-								<userProcessClass><![CDATA[EXT:mmforeign/class.tx_mmforeign_tce.php:tx_mmforeign_tce]]></userProcessClass>
-								<internal_type>db</internal_type>
-								<allowed>tx_dam</allowed>
-								<allowed_types>gif,jpg,jpeg,png</allowed_types>
-								<prepend_tname>1</prepend_tname>
-								<MM>tx_dam_mm_ref</MM>
-								<MM_foreign_select>1</MM_foreign_select>
-								<MM_opposite_field>1</MM_opposite_field>
-								<MM_match_fields>
-									<ident>imagecycle</ident>
-								</MM_match_fields>
-								<show_thumbs>1</show_thumbs>
-								<size>10</size>
-								<maxitems>1000</maxitems>
-								<minitems>0</minitems>
-								<autoSizeMax>30</autoSizeMax>
-							</config>
-						</TCEforms>
-					</damimages>
-
-					<damcategories>
-						<TCEforms>
-							<displayCond>FIELD:mode:=:dam_catedit</displayCond>
-							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.damcategories</label>
-							<config>
-								<type>select</type>
-								<form_type>user</form_type>
-								<userFunc>EXT:dam/lib/class.tx_dam_tcefunc.php:tx_dam_tceFunc->getSingleField_selectTree</userFunc>
-								<treeViewClass>EXT:dam/components/class.tx_dam_selectionCategory.php:tx_dam_selectionCategory</treeViewClass>
-								<foreign_table>tx_dam_cat</foreign_table>
-								<size>5</size>
-								<autoSizeMax>25</autoSizeMax>
-								<minitems>0</minitems>
-								<maxitems>99</maxitems>
-								<default></default>
-							</config>
-						</TCEforms>
-					</damcategories>
-
 					<imagesRTE>
 						<tx_templavoila>
 							<title>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.uploadRTE</title>

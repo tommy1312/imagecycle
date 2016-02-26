@@ -147,14 +147,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					$this->setDataUploadData();
 					break;
 				}
-				case "dam" : {
-					$this->setDataDam(false, 'tt_content', $this->uid);
-					break;
-				}
-				case "dam_catedit" : {
-					$this->setDataDam(true, 'tt_content', $this->uid);
-					break;
-				}
 			}
 			// Override the config with flexform data
 			if ($this->lConf['imagewidth']) {
@@ -275,24 +267,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 								$this->hrefs    = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
 								$this->captions = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_captions']);
 							}
-						}
-						break;
-					}
-					case "dam" : {
-						if ($this->sys_language_uid) {
-							$this->setDataDam(false, 'pages_language_overlay', $pageID);
-						}
-						if (count($this->images) < 1) {
-							$this->setDataDam(false, 'pages', $pageID);
-						}
-						break;
-					}
-					case "dam_catedit" : {
-						if ($this->sys_language_uid) {
-							$this->setDataDam(true, 'pages_language_overlay', $pageID);
-						}
-						if (count($this->images) < 1) {
-							$this->setDataDam(true, 'pages', $pageID);
 						}
 						break;
 					}
@@ -426,144 +400,6 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * Set the Information of the images if mode = dam
-	 * 
-	 * @param boolean $fromCategory
-	 * @param string $table
-	 * @param integer $uid
-	 * @return boolean
-	 */
-	protected function setDataDam($fromCategory=false, $table='tt_content', $uid=0)
-	{
-		// clear the imageDir
-		$this->imageDir = '';
-		// get all fields for captions
-		$damCaptionFields = GeneralUtility::trimExplode(',', $this->conf['damCaptionFields'], true);
-		$damHrefFields    = GeneralUtility::trimExplode(',', $this->conf['damHrefFields'], true);
-		$fieldsArray = array_merge(
-			$damCaptionFields,
-			$damHrefFields
-		);
-		$fields = NULL;
-		if (is_array($fieldsArray) && count($fieldsArray) > 0) {
-			foreach ($fieldsArray as $field) {
-				$fields .= ',tx_dam.' . $field;
-			}
-		}
-		if ($fromCategory === true) {
-			// Get the images from dam category
-			$damcategories = $this->getDamcats($this->conf['damcategories']);
-			$res = $GLOBALS['TYPO3_DB']->exec_SELECT_mm_query(
-				tx_dam_db::getMetaInfoFieldList() . $fields,
-				'tx_dam',
-				'tx_dam_mm_cat',
-				'tx_dam_cat',
-				" AND tx_dam_cat.uid IN (".implode(",", $damcategories).")",
-				'',
-				'tx_dam_mm_cat.sorting_foreign',
-				''
-			);
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-				$images['rows'][] = $row;
-			}
-		} else {
-			// Get the images from dam
-			$images = tx_dam_db::getReferencedFiles(
-				$table,
-				$uid,
-				'imagecycle',
-				'tx_dam_mm_ref',
-				tx_dam_db::getMetaInfoFieldList() . $fields,
-				'',
-				'',
-				'tx_dam_mm_ref.sorting_foreign'
-			);
-		}
-		if (is_array($images['rows']) && count($images['rows']) > 0) {
-			// overlay the translation
-			$conf = array(
-				'sys_language_uid' => $this->sys_language_uid,
-				'lovl_mode' => ''
-			);
-			// add image
-			foreach ($images['rows'] as $key => $row) {
-				$row = tx_dam_db::getRecordOverlay('tx_dam', $row, $conf);
-				$absFileName = GeneralUtility::getFileAbsFileName($row['file_path'] . $row['file_name']);
-				$size = @getimagesize($absFileName);
-				if (preg_match("/^image\//i", $size['mime'])) {
-					// set the data
-					$this->images[] = $row['file_path'] . $row['file_name'];$
-					// set the href
-					$href = '';
-					unset($href);
-					if (is_array($damHrefFields) && count($damHrefFields) > 0) {
-						foreach ($damHrefFields as $damHrefField) {
-							if (! isset($href) && trim($row[$damHrefField])) {
-								$href = $row[$damHrefField];
-								break;
-							}
-						}
-					}
-					$this->hrefs[] = $href;
-					// set the caption
-					$caption = '';
-					unset($caption);
-					if (is_array($damCaptionFields) && count($damCaptionFields) > 0) {
-						if (isset($this->conf['damCaptionObject'])) {
-							foreach ($damCaptionFields as $damCaptionField) {
-								if (isset($row[$damCaptionField])) {
-									$GLOBALS['TSFE']->register['dam_'.$damCaptionField] = $row[$damCaptionField];
-								}
-							}
-							$caption = trim($this->cObj->cObjGetSingle($this->conf['damCaptionObject'], $this->conf['damCaptionObject.']));
-							// Unset the registered values
-							foreach ($damCaptionFields as $damCaptionField) {
-								unset($GLOBALS['TSFE']->register['dam_'.$damCaptionField]);
-							}
-						} else {
-							// the old way
-							if (! isset($caption) && trim($row[$damCaptionField])) {
-								$caption = $row[$damCaptionField];
-								break;
-							}
-						}
-					}
-					$this->captions[] = $caption;
-				}
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * return all DAM categories including subcategories
-	 *
-	 * @return	array
-	 */
-	protected function getDamcats($dam_cat='')
-	{
-		$damCats = GeneralUtility::trimExplode(",", $dam_cat, true);
-		if (count($damCats) < 1) {
-			return array();
-		} else {
-			// select subcategories
-			$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-				'uid, parent_id',
-				'tx_dam_cat',
-				'parent_id IN ('.implode(",", $damCats).') '.$this->cObj->enableFields('tx_dam_cat'),
-				'',
-				'parent_id',
-				''
-			);
-			$subcats = array();
-			while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-				$damCats[] = $row['uid'];
-			}
-		}
-		return $damCats;
 	}
 
 	/**

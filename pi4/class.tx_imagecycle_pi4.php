@@ -144,14 +144,6 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 					$this->setDataUploadData();
 					break;
 				}
-				case "dam" : {
-					$this->setDataDam(false, 'tt_content', $this->uid);
-					break;
-				}
-				case "dam_catedit" : {
-					$this->setDataDam(true, 'tt_content', $this->uid);
-					break;
-				}
 			}
 			// Override the config with flexform data
 			if ($this->lConf['imagewidth']) {
@@ -237,24 +229,6 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 								$this->hrefs    = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
 								$this->captions = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_captions']);
 							}
-						}
-						break;
-					}
-					case "dam" : {
-						if ($this->sys_language_uid) {
-							$this->setDataDam(false, 'pages_language_overlay', $pageID);
-						}
-						if (count($this->images) < 1) {
-							$this->setDataDam(false, 'pages', $pageID);
-						}
-						break;
-					}
-					case "dam_catedit" : {
-						if ($this->sys_language_uid) {
-							$this->setDataDam(true, 'pages_language_overlay', $pageID);
-						}
-						if (count($this->images) < 1) {
-							$this->setDataDam(true, 'pages', $pageID);
 						}
 						break;
 					}

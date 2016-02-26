@@ -53,13 +53,7 @@ class tx_imagecycle
 		$imageNum = MathUtility::forceIntegerInRange($imageNum, 0, 1000);
 		$theImgCode = '';
 		$imgsCaptions = explode(chr(10), $row['imagecaption']);
-
-		// DAM_TTNEWS - load image from DAM - morini@gammsystem.com
-		if (ExtensionManagementUtility::isLoaded('dam_ttnews')) {
-			$imgs = $this->getDamImages($pObj, $lConf);
-		} else {
-			$imgs = GeneralUtility::trimExplode(',', $row['image'], 1);
-		}
+		$imgs = GeneralUtility::trimExplode(',', $row['image'], 1);
 
 		// remove first img from the image array in single view if the TSvar firstImageIsPreview is set
 		if ($pObj->theCode == 'SINGLE') {
@@ -92,12 +86,7 @@ class tx_imagecycle
 				$GLOBALS['TSFE']->register['key']          = 'imagecycle_' . $pObj->local_cObj->data['uid'];
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = $key;
 
-				// DAM_TTNEWS - set path for DAM images - morini@gammsystem.com
-				if (ExtensionManagementUtility::isLoaded('dam_ttnews')) {
-					$lConf[$imageConf]['file'] = $val;
-				} else {
-					$lConf[$imageConf]['file'] = 'uploads/pics/'.$val;
-				}
+				$lConf[$imageConf]['file'] = 'uploads/pics/'.$val;
 
 				// define the file
 				if ($row['tx_imagecycle_activate']) {
@@ -152,55 +141,5 @@ class tx_imagecycle
 			$return_string = $obj->parseTemplate(array(), 'uploads/pics/', TRUE);
 		}
 		return $content;
-	}
-
-	/**
-	 * DAM_TTNEWS - load images from DAM - morini@gammsystem.com
-	 */
-	private function getDamImages(&$pObj, &$lConf)
-	{
-		$row = $pObj->local_cObj->data;
-
-		$mode = $GLOBALS['TSFE']->tmpl->setup['plugin.']['dam_ttnews.']['mode'];
-
-		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount']:1;
-		$imageNum = MathUtility::forceIntegerInRange($imageNum, 0, 100);
-		$theImgCode = '';
-
-		$imgsCaptions = explode(chr(10), $row['imagecaption']);
-		$imgsAltTexts = explode(chr(10), $row['imagealttext']);
-		$imgsTitleTexts = explode(chr(10), $row['imagetitletext']);
-
-		// to get correct DAM files, set uid
-		// workspaces
-		if (isset($row['_ORIG_uid']) && ($row['_ORIG_uid'] > 0)) {
-			// draft workspace
-			$uid = $row['_ORIG_uid'];
-		} else {
-			// live workspace
-			$uid = $row['uid'];
-		}
-		// translations - i10n mode
-		if ($row['_LOCALIZED_UID']) {
-			// i10n mode = exclude   -> do nothing
-			// i10n mode = mergeIfNotBlank
-			$confArr_ttnews=unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['tt_news']);
-			if (! $confArr_ttnews['l10n_mode_imageExclude'] && $row['tx_damnews_dam_images']) {
-				$uid = $row['_LOCALIZED_UID'];
-			}
-		}
-		$cc = 0;
-		$shift = false;
-		// get DAM data
-		$infoFields = tx_dam_db::getMetaInfoFieldList(true,array('alt_text'=>'alt_text','caption'=>'caption'));
-		$damData = tx_dam_db::getReferencedFiles('tt_news', $uid, 'tx_damnews_dam_images','tx_dam_mm_ref',$infoFields);
-		$damFiles = $damData['files'];
-		$damRows = $damData['rows'];
-		// localisation of DAM data  
-		while (list($key,$val) = each($damRows)) {
-			$damRows[$key] =  $GLOBALS['TSFE']->sys_page->getRecordOverlay('tx_dam', $val, $GLOBALS['TSFE']->sys_language_uid, '');
-		}
-
-		return $damFiles;
 	}
 }

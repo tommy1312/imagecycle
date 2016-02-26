@@ -228,20 +228,6 @@ class tx_imagecycle_itemsProcFunc
 				"EXT:imagecycle/mode_data.gif"
 			);
 		}
-		if (ExtensionManagementUtility::isLoaded("dam")) {
-			$optionList[] = array(
-				$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.dam'),
-				"dam",
-				"EXT:imagecycle/mode_dam.gif"
-			);
-			if (ExtensionManagementUtility::isLoaded("dam_catedit")) {
-				$optionList[] = array(
-					$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.dam_catedit'),
-					"dam_catedit",
-					"EXT:imagecycle/mode_damcat.gif"
-				);
-			}
-		}
 		if (isset($config['items']) && is_array($config['items'])) {
 			$config['items'] = array_merge($config['items'], $optionList);
 		}

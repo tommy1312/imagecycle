@@ -17,52 +17,6 @@ $tempColumns['tx_imagecycle_mode'] = array(
 		'maxitems' => 1,
 	)
 );
-if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('dam')) {
-	$tempColumns['tx_imagecycle_damimages'] = array(
-		'exclude' => 1,
-		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damimages',
-		'displayCond' => 'FIELD:tx_imagecycle_mode:=:dam',
-		'config' => array(
-			'type' => 'group',
-			'form_type' => 'user',
-			'userFunc' => 'EXT:dam/lib/class.tx_dam_tcefunc.php:&tx_dam_tceFunc->getSingleField_typeMedia',
-			'userProcessClass' => 'EXT:mmforeign/class.tx_mmforeign_tce.php:tx_mmforeign_tce',
-			'internal_type' => 'db',
-			'allowed' => 'tx_dam',
-			'allowed_types' => 'gif,jpg,jpeg,png',
-			'prepend_tname' => 1,
-			'MM' => 'tx_dam_mm_ref',
-			'MM_foreign_select' => 1,
-			'MM_opposite_field' => 1,
-			'MM_match_fields' => array(
-				'ident' => 'imagecycle',
-			),
-			'show_thumbs' => true,
-			'size' => 10,
-			'autoSizeMax' => 30,
-			'minitems' => 0,
-			'maxitems' => 1000,
-		)
-	);
-	if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded("dam_catedit")) {
-		$tempColumns['tx_imagecycle_damcategories'] = array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damcategories',
-			'displayCond' => 'FIELD:tx_imagecycle_mode:=:dam_catedit',
-			'config' => array(
-				'type' => 'select',
-				'form_type' => 'user',
-				'userFunc' => 'EXT:dam/lib/class.tx_dam_tcefunc.php:tx_dam_tceFunc->getSingleField_selectTree',
-				'treeViewClass' => 'EXT:dam/components/class.tx_dam_selectionCategory.php:tx_dam_selectionCategory',
-				'foreign_table' => 'tx_dam_cat',
-				'size' => 5,
-				'autoSizeMax' => 25,
-				'minitems' => 0,
-				'maxitems' => 99,
-			)
-		);
-	}
-}
 // Normal page fields
 $tempColumns['tx_imagecycle_images'] = array(
 	'exclude' => 1,
@@ -206,39 +160,6 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['imagecycle_p
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['imagecycle_pi5'] = 'layout,select_key,pages';
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['imagecycle_pi5']     = 'pi_flexform,image_zoom';
-
-
-
-// Load fields for DAM
-if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded("dam")) {
-	// DAM
-	$tempColumns = array(
-		'tx_jfdam_link' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:imagecycle/locallang_db.xml:tx_dam.tx_jfdam_link',
-			'config' => array(
-				'type' => 'input',
-				'size' => '30',
-				'wizards' => array(
-					'_PADDING' => 2,
-					'link' => array(
-						'type' => 'popup',
-						'title' => 'Link',
-						'icon' => 'link_popup.gif',
-						'script' => 'browse_links.php?mode=wizard',
-						'JSopenParams' => 'height=600,width=500,status=0,menubar=0,scrollbars=1'
-					)
-				)
-			)
-		),
-	);
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tx_dam', $tempColumns, 1);
-	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tx_dam', '--div--;LLL:EXT:dam/locallang_db.xml:tx_dam_item.div_custom, tx_jfdam_link;;;;1-1-1');
-	// add fields to index preset fields
-	$GLOBALS['TCA']['tx_dam']['txdamInterface']['index_fieldList'] .= ',tx_jfdam_link';
-}
-
-
 
 // ICON pi1
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(array(
