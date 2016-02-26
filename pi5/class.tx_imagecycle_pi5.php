@@ -454,7 +454,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 		}
 
 		// checks if t3jquery is loaded
-		if (T3JQUERY === true) {
+		if (defined('T3JQUERY') && T3JQUERY === true) {
 			tx_t3jquery::addJqJS();
 		} else {
 			$this->pagerenderer->addJsFile($this->conf['jQueryLibrary'], true);
