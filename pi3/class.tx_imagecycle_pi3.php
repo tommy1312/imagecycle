@@ -606,11 +606,3 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		return $returnString;
 	}
 }
-
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi3/class.tx_imagecycle_pi3.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi3/class.tx_imagecycle_pi3.php']);
-}
-
-?>

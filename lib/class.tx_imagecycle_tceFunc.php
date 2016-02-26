@@ -91,8 +91,3 @@ class tx_imagecycle_tceFunc
 		return $tceforms->getSingleField_SW($PA['table'], $PA['field'], $PA['row'], $PA);
 	}
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/lib/class.tx_imagecycle_tceFunc.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/lib/class.tx_imagecycle_tceFunc.php']);
-}
-?>

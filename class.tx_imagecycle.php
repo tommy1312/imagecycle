@@ -208,10 +208,3 @@ class tx_imagecycle
 		return $damFiles;
 	}
 }
-
-
-// XCLASS inclusion code
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/class.tx_imagecycle.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/class.tx_imagecycle.php']);
-}
-?>

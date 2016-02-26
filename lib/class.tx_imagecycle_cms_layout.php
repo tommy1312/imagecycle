@@ -75,10 +75,3 @@ class tx_imagecycle_cms_layout
 		return $result;
 	}
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/lib/class.tx_imagecycle_cms_layout.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/lib/class.tx_imagecycle_cms_layout.php']);
-}
-
-?>

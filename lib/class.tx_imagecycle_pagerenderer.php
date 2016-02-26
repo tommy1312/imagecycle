@@ -274,10 +274,3 @@ class tx_imagecycle_pagerenderer
 		return $EM_CONF[$key]['version'];
 	}
 }
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/lib/class.tx_imagecycle_pagerenderer.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/lib/class.tx_imagecycle_pagerenderer.php']);
-}
-
-?>

@@ -80,11 +80,3 @@ class tx_imagecycle_pi5_wizicon
 		return $LOCAL_LANG;
 	}
 }
-
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi5/class.tx_imagecycle_pi5_wizicon.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/imagecycle/pi5/class.tx_imagecycle_pi5_wizicon.php']);
-}
-
-?>
