@@ -1,9 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-	die ('Access denied.');
-}
-
-
+defined('TYPO3_MODE') or die();
 
 // PAGE
 $tempColumns = array();
@@ -21,7 +17,7 @@ $tempColumns['tx_imagecycle_mode'] = array(
 		'maxitems' => 1,
 	)
 );
-if (t3lib_extMgm::isLoaded('dam')) {
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('dam')) {
 	$tempColumns['tx_imagecycle_damimages'] = array(
 		'exclude' => 1,
 		'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damimages',
@@ -48,7 +44,7 @@ if (t3lib_extMgm::isLoaded('dam')) {
 			'maxitems' => 1000,
 		)
 	);
-	if (t3lib_extMgm::isLoaded("dam_catedit")) {
+	if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded("dam_catedit")) {
 		$tempColumns['tx_imagecycle_damcategories'] = array(
 			'exclude' => 1,
 			'label' => 'LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_damcategories',
@@ -128,16 +124,14 @@ $tempColumns['tx_imagecycle_stoprecursion'] = array(
 	)
 );
 
-t3lib_div::loadTCA('pages');
-t3lib_extMgm::addTCAcolumns('pages', $tempColumns, 1);
-t3lib_extMgm::addToAllTCAtypes('pages', '--div--;LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_div, tx_imagecycle_mode;;;;3-3-3, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages', $tempColumns, 1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('pages', '--div--;LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_div, tx_imagecycle_mode;;;;3-3-3, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
 
-t3lib_div::loadTCA('pages_language_overlay');
-t3lib_extMgm::addTCAcolumns('pages_language_overlay', $tempColumns, 1);
-t3lib_extMgm::addToAllTCAtypes('pages_language_overlay', '--div--;LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_div, tx_imagecycle_mode;;;;3-3-3, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages_language_overlay', $tempColumns, 1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('pages_language_overlay', '--div--;LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_div, tx_imagecycle_mode;;;;3-3-3, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
 
-$TCA['pages']['ctrl']['requestUpdate'] .= ($TCA['pages']['ctrl']['requestUpdate'] ? ',' : ''). 'tx_imagecycle_mode';
-$TCA['pages_language_overlay']['ctrl']['requestUpdate'] .= ($TCA['pages_language_overlay']['ctrl']['requestUpdate'] ? ',' : ''). 'tx_imagecycle_mode';
+$GLOBALS['TCA']['pages']['ctrl']['requestUpdate'] .= ($GLOBALS['TCA']['pages']['ctrl']['requestUpdate'] ? ',' : ''). 'tx_imagecycle_mode';
+$GLOBALS['TCA']['pages_language_overlay']['ctrl']['requestUpdate'] .= ($GLOBALS['TCA']['pages_language_overlay']['ctrl']['requestUpdate'] ? ',' : ''). 'tx_imagecycle_mode';
 
 
 // CONTENT
@@ -163,62 +157,60 @@ $tempColumns = array(
 
 
 
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Image-Cycle');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/', 'Image-Cycle');
 
 
 // tt_content
-t3lib_extMgm::addStaticFile($_EXTKEY,'static/tt_content/', 'Image-Cycle for tt_content');
-t3lib_div::loadTCA('tt_content');
-t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
-$TCA['tt_content']['palettes']['tx_imagecycle'] = array(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/tt_content/', 'Image-Cycle for tt_content');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', $tempColumns, 1);
+$GLOBALS['TCA']['tt_content']['palettes']['tx_imagecycle'] = array(
 	'showitem' => 'tx_imagecycle_activate,tx_imagecycle_duration',
 	'canNotCollapse' => 1,
 );
-t3lib_extMgm::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:imagecycle/locallang_db.xml:tt_content.tx_imagecycle_title;tx_imagecycle', 'textpic,image', 'before:imagecaption');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:imagecycle/locallang_db.xml:tt_content.tx_imagecycle_title;tx_imagecycle', 'textpic,image', 'before:imagecaption');
 
 
 
 // tt_news
-if (t3lib_extMgm::isLoaded('tt_news')) {
-	t3lib_extMgm::addStaticFile($_EXTKEY, 'static/tt_news/', 'Image-Cycle for tt_news - Cycle');
-	t3lib_extMgm::addStaticFile($_EXTKEY, 'static/tt_news/nivoslider/', 'Image-Cycle for tt_news - Nivo');
-	t3lib_div::loadTCA('tt_news');
-	t3lib_extMgm::addTCAcolumns('tt_news', $tempColumns, 1);
-	$TCA['tt_news']['palettes']['tx_imagecycle'] = array(
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('tt_news')) {
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/tt_news/', 'Image-Cycle for tt_news - Cycle');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/tt_news/nivoslider/', 'Image-Cycle for tt_news - Nivo');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_news', $tempColumns, 1);
+	$GLOBALS['TCA']['tt_news']['palettes']['tx_imagecycle'] = array(
 		'showitem' => 'tx_imagecycle_activate,tx_imagecycle_duration',
 		'canNotCollapse' => 1,
 	);
-	t3lib_extMgm::addToAllTCAtypes('tt_news', '--palette--;LLL:EXT:imagecycle/locallang_db.xml:tt_content.tx_imagecycle_title;tx_imagecycle', '', 'after:image');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tt_news', '--palette--;LLL:EXT:imagecycle/locallang_db.xml:tt_content.tx_imagecycle_title;tx_imagecycle', '', 'after:image');
 }
 
 
 
-t3lib_extMgm::addStaticFile($_EXTKEY, 'static/coinslider/', 'Coin-Slider');
-t3lib_extMgm::addStaticFile($_EXTKEY, 'static/nivoslider/', 'Nivo-Slider');
-t3lib_extMgm::addStaticFile($_EXTKEY, 'static/crossslide/', 'Cross-Slide');
-t3lib_extMgm::addStaticFile($_EXTKEY, 'static/slicebox/',   'Slice-Box');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/coinslider/', 'Coin-Slider');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/nivoslider/', 'Nivo-Slider');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/crossslide/', 'Cross-Slide');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/slicebox/',   'Slice-Box');
 
 
 
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi1'] = 'layout,select_key,pages';
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi1']     = 'pi_flexform,image_zoom';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['imagecycle_pi1'] = 'layout,select_key,pages';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['imagecycle_pi1']     = 'pi_flexform,image_zoom';
 
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi2'] = 'layout,select_key,pages';
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi2']     = 'pi_flexform,image_zoom';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['imagecycle_pi2'] = 'layout,select_key,pages';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['imagecycle_pi2']     = 'pi_flexform,image_zoom';
 
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi3'] = 'layout,select_key,pages';
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi3']     = 'pi_flexform,image_zoom';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['imagecycle_pi3'] = 'layout,select_key,pages';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['imagecycle_pi3']     = 'pi_flexform,image_zoom';
 
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi4'] = 'layout,select_key,pages';
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi4']     = 'pi_flexform,image_zoom';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['imagecycle_pi4'] = 'layout,select_key,pages';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['imagecycle_pi4']     = 'pi_flexform,image_zoom';
 
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi5'] = 'layout,select_key,pages';
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi5']     = 'pi_flexform,image_zoom';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['imagecycle_pi5'] = 'layout,select_key,pages';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['imagecycle_pi5']     = 'pi_flexform,image_zoom';
 
 
 
 // Load fields for DAM
-if (t3lib_extMgm::isLoaded("dam")) {
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded("dam")) {
 	// DAM
 	$tempColumns = array(
 		'tx_jfdam_link' => array(
@@ -240,64 +232,62 @@ if (t3lib_extMgm::isLoaded("dam")) {
 			)
 		),
 	);
-	t3lib_div::loadTCA('tx_dam');
-	t3lib_extMgm::addTCAcolumns('tx_dam', $tempColumns, 1);
-	t3lib_extMgm::addToAllTCAtypes('tx_dam', '--div--;LLL:EXT:dam/locallang_db.xml:tx_dam_item.div_custom, tx_jfdam_link;;;;1-1-1');
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tx_dam', $tempColumns, 1);
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tx_dam', '--div--;LLL:EXT:dam/locallang_db.xml:tx_dam_item.div_custom, tx_jfdam_link;;;;1-1-1');
 	// add fields to index preset fields
-	$TCA['tx_dam']['txdamInterface']['index_fieldList'] .= ',tx_jfdam_link';
+	$GLOBALS['TCA']['tx_dam']['txdamInterface']['index_fieldList'] .= ',tx_jfdam_link';
 }
 
 
 
 // ICON pi1
-t3lib_extMgm::addPlugin(array(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(array(
 	'LLL:EXT:imagecycle/locallang_db.xml:tt_content.list_type_pi1',
-	$_EXTKEY . '_pi1',
-	t3lib_extMgm::extRelPath($_EXTKEY) . 'pi1/ce_icon.gif'
+	'imagecycle_pi1',
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('imagecycle') . 'pi1/ce_icon.gif'
 ),'list_type');
-t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi1', 'FILE:EXT:'.$_EXTKEY.'/pi1/flexform_ds.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('imagecycle_pi1', 'FILE:EXT:imagecycle/pi1/flexform_ds.xml');
 
 // ICON pi2
-t3lib_extMgm::addPlugin(array(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(array(
 	'LLL:EXT:imagecycle/locallang_db.xml:tt_content.list_type_pi2',
-	$_EXTKEY . '_pi2',
-	t3lib_extMgm::extRelPath($_EXTKEY) . 'pi2/ce_icon.gif'
+	'imagecycle_pi2',
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('imagecycle') . 'pi2/ce_icon.gif'
 ),'list_type');
-t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi2', 'FILE:EXT:'.$_EXTKEY.'/pi2/flexform_ds.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('imagecycle'.'_pi2', 'FILE:EXT:imagecycle/pi2/flexform_ds.xml');
 
 // ICON pi3
-t3lib_extMgm::addPlugin(array(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(array(
 	'LLL:EXT:imagecycle/locallang_db.xml:tt_content.list_type_pi3',
-	$_EXTKEY . '_pi3',
-	t3lib_extMgm::extRelPath($_EXTKEY) . 'pi3/ce_icon.gif'
+	'imagecycle_pi3',
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('imagecycle') . 'pi3/ce_icon.gif'
 ),'list_type');
-t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi3', 'FILE:EXT:'.$_EXTKEY.'/pi3/flexform_ds.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('imagecycle_pi3', 'FILE:EXT:imagecycle/pi3/flexform_ds.xml');
 
 // ICON pi4
-t3lib_extMgm::addPlugin(array(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(array(
 	'LLL:EXT:imagecycle/locallang_db.xml:tt_content.list_type_pi4',
-	$_EXTKEY . '_pi4',
-	t3lib_extMgm::extRelPath($_EXTKEY) . 'pi4/ce_icon.gif'
+	'imagecycle_pi4',
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('imagecycle') . 'pi4/ce_icon.gif'
 ),'list_type');
-t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi4', 'FILE:EXT:'.$_EXTKEY.'/pi4/flexform_ds.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('imagecycle_pi4', 'FILE:EXT:imagecycle/pi4/flexform_ds.xml');
 
 // ICON pi5
-t3lib_extMgm::addPlugin(array(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(array(
 	'LLL:EXT:imagecycle/locallang_db.xml:tt_content.list_type_pi5',
-	$_EXTKEY . '_pi5',
-	t3lib_extMgm::extRelPath($_EXTKEY) . 'pi5/ce_icon.gif'
+	'imagecycle_pi5',
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('imagecycle') . 'pi5/ce_icon.gif'
 ),'list_type');
-t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi5', 'FILE:EXT:'.$_EXTKEY.'/pi5/flexform_ds.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue('imagecycle_pi5', 'FILE:EXT:imagecycle/pi5/flexform_ds.xml');
 
 if (TYPO3_MODE == 'BE') {
-	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi1_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi1/class.tx_imagecycle_pi1_wizicon.php';
-	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi2_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi2/class.tx_imagecycle_pi2_wizicon.php';
-	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi3_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi3/class.tx_imagecycle_pi3_wizicon.php';
-	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi4_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi4/class.tx_imagecycle_pi4_wizicon.php';
-	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi5_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi5/class.tx_imagecycle_pi5_wizicon.php';
+	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi1_wizicon'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1_wizicon.php';
+	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi2_wizicon'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('imagecycle').'pi2/class.tx_imagecycle_pi2_wizicon.php';
+	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi3_wizicon'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('imagecycle').'pi3/class.tx_imagecycle_pi3_wizicon.php';
+	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi4_wizicon'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('imagecycle').'pi4/class.tx_imagecycle_pi4_wizicon.php';
+	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_imagecycle_pi5_wizicon'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('imagecycle').'pi5/class.tx_imagecycle_pi5_wizicon.php';
 }
 
-require_once(t3lib_extMgm::extPath($_EXTKEY).'lib/class.tx_imagecycle_itemsProcFunc.php');
-require_once(t3lib_extMgm::extPath($_EXTKEY).'lib/class.tx_imagecycle_TCAform.php');
-
+require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('imagecycle').'lib/class.tx_imagecycle_itemsProcFunc.php');
+require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('imagecycle').'lib/class.tx_imagecycle_TCAform.php');
 ?>
