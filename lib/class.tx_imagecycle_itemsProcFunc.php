@@ -171,12 +171,10 @@ class tx_imagecycle_itemsProcFunc
 
 		// 
 		$info_text = NULL;
-		if (class_exists(t3lib_utility_VersionNumber) && t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) >= 4003000) {
-			if (file_exists(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt'))) {
-				$info_text = $GLOBALS['LANG']->sL(file_get_contents(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt')));
-				$msg = t3lib_div::makeInstance('t3lib_FlashMessage', $info_text, $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:pi3_theme_info'), t3lib_FlashMessage::INFO);
-				t3lib_FlashMessageQueue::addMessage($msg);
-			}
+		if (file_exists(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt'))) {
+			$info_text = $GLOBALS['LANG']->sL(file_get_contents(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt')));
+			$msg = t3lib_div::makeInstance('t3lib_FlashMessage', $info_text, $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:pi3_theme_info'), t3lib_FlashMessage::INFO);
+			t3lib_FlashMessageQueue::addMessage($msg);
 		}
 
 		$items = t3lib_div::get_dirs(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder']));

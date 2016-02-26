@@ -38,16 +38,12 @@ class tx_imagecycle_TCAform
 	 */
 	function hideRTE($PA, $fobj)
 	{
-		if (class_exists(t3lib_utility_VersionNumber) && t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) >= 4004000) {
-			$classes = array (
-				'.t3-form-field-label-flexsection',
-				'.t3-form-field-toggle-flexsection',
-				'.t3-form-field-container-flexsection',
-				'.t3-form-field-add-flexsection',
-			);
-			return t3lib_div::wrapJS("$$('".implode(',', $classes)."').each(function(n){n.hide();});");
-		} elseif (class_exists(t3lib_utility_VersionNumber) && t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) >= 4003000) {
-			return t3lib_div::wrapJS("$$('div.bgColor2').each(function(n){n.next(0).hide();n.next(1).hide();n.next(2).hide();n.hide();})");
-		}
+		$classes = array (
+			'.t3-form-field-label-flexsection',
+			'.t3-form-field-toggle-flexsection',
+			'.t3-form-field-container-flexsection',
+			'.t3-form-field-add-flexsection',
+		);
+		return t3lib_div::wrapJS("$$('".implode(',', $classes)."').each(function(n){n.hide();});");
 	}
 }
