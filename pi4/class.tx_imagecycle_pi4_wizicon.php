@@ -21,14 +21,16 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
+use TYPO3\CMS\Core\Localization\Parser\LocallangXmlParser;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
  * Hint: use extdeveval to insert/update function index above.
  */
-
-
-
 
 /**
  * Class that adds the wizard icon.
@@ -50,7 +52,7 @@ class tx_imagecycle_pi4_wizicon
 		$LL = $this->includeLocalLang();
 
 		$wizardItems['plugins_tx_imagecycle_pi4'] = array(
-			'icon' => t3lib_extMgm::extRelPath('imagecycle').'pi4/ce_wiz.gif',
+			'icon' => ExtensionManagementUtility::extRelPath('imagecycle').'pi4/ce_wiz.gif',
 			'title' => $GLOBALS['LANG']->getLLL('pi4_title', $LL),
 			'description' => $GLOBALS['LANG']->getLLL('pi4_plus_wiz_description', $LL),
 			'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=imagecycle_pi4'
@@ -66,9 +68,9 @@ class tx_imagecycle_pi4_wizicon
 	 */
 	function includeLocalLang()
 	{
-		$llFile = t3lib_extMgm::extPath('imagecycle').'locallang.xml';
-		/** @var $llxmlParser t3lib_l10n_parser_Llxml */
-		$llxmlParser = t3lib_div::makeInstance('t3lib_l10n_parser_Llxml');
+		$llFile = ExtensionManagementUtility::extPath('imagecycle').'locallang.xml';
+		/** @var $llxmlParser LocallangXmlParser */
+		$llxmlParser = GeneralUtility::makeInstance(LocallangXmlParser::class);
 		$LOCAL_LANG = $llxmlParser->getParsedData($llFile, $GLOBALS['LANG']->lang);
 		return $LOCAL_LANG;
 	}

@@ -22,6 +22,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * 'tceFunc' for the 'imagecycle' extension.
@@ -78,10 +79,10 @@ class tx_imagecycle_tceFunc
 			$PA['fieldConf']['config']['allowed'] = $confArr['allowedDbTypesForCaption'];
 		} else {
 			$PA['fieldConf']['config']['allowed'] = 'tt_content,fe_users';
-			if (t3lib_extMgm::isLoaded("tt_news")) {
+			if (ExtensionManagementUtility::isLoaded("tt_news")) {
 				$PA['fieldConf']['config']['allowed'] .= ',tt_news';
 			}
-			if (t3lib_extMgm::isLoaded("tt_address")) {
+			if (ExtensionManagementUtility::isLoaded("tt_address")) {
 				$PA['fieldConf']['config']['allowed'] .= ',tt_address';
 			}
 			

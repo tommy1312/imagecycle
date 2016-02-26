@@ -25,8 +25,12 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-if (t3lib_extMgm::isLoaded('t3jquery')) {
-	require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+
+if (ExtensionManagementUtility::isLoaded('t3jquery')) {
+	require_once(ExtensionManagementUtility::extPath('t3jquery').'class.tx_t3jquery.php');
 }
 
 /**
@@ -86,7 +90,7 @@ class tx_imagecycle_pagerenderer
 							$pagerender->addJsFile($file, 'text/javascript', $this->conf['jsMinify']);
 						}
 					} else {
-						t3lib_div::devLog("'{$jsToLoad}' does not exists!", $this->extKey, 2);
+						GeneralUtility::devLog("'{$jsToLoad}' does not exists!", $this->extKey, 2);
 					}
 				}
 			}
@@ -98,7 +102,7 @@ class tx_imagecycle_pagerenderer
 			}
 			$conf = array();
 			$conf['jsdata'] = $temp_js;
-			if (T3JQUERY === TRUE && class_exists(t3lib_utility_VersionNumber) && t3lib_utility_VersionNumber::convertVersionNumberToInteger($this->getExtensionVersion('t3jquery')) >= 1002000) {
+			if (T3JQUERY === TRUE && VersionNumberUtility::convertVersionNumberToInteger($this->getExtensionVersion('t3jquery')) >= 1002000) {
 				$conf['tofooter'] = ($this->conf['jsInFooter'] || $allJsInFooter);
 				$conf['jsminify'] = $this->conf['jsMinify'];
 				$conf['jsinline'] = $this->conf['jsInline'];
@@ -125,7 +129,7 @@ class tx_imagecycle_pagerenderer
 				if ($file) {
 					$pagerender->addCssFile($file, 'stylesheet', 'all', '', $this->conf['cssMinify']);
 				} else {
-					t3lib_div::devLog("'{$cssToLoad}' does not exists!", $this->extKey, 2);
+					GeneralUtility::devLog("'{$cssToLoad}' does not exists!", $this->extKey, 2);
 				}
 			}
 		}
@@ -138,7 +142,7 @@ class tx_imagecycle_pagerenderer
 					// Theres no possibility to add conditions for IE by pagerenderer, so this will be added in additionalHeaderData
 					$GLOBALS['TSFE']->additionalHeaderData['cssFile_'.$this->extKey.'_'.$file] = '<!--[if '.$cssToLoad['rule'].']><link rel="stylesheet" type="text/css" href="'.$file.'" media="all" /><![endif]-->'.chr(10);
 				} else {
-					t3lib_div::devLog("'{$cssToLoad['file']}' does not exists!", $this->extKey, 2);
+					GeneralUtility::devLog("'{$cssToLoad['file']}' does not exists!", $this->extKey, 2);
 				}
 			}
 		}
@@ -232,16 +236,17 @@ class tx_imagecycle_pagerenderer
 	}
 
 	/**
-	 * Returns the version of an extension (in 4.4 its possible to this with t3lib_extMgm::getExtensionVersion)
+	 * Returns the version of an extension
 	 * @param string $key
 	 * @return string
 	 */
 	public function getExtensionVersion($key) {
-		if (! t3lib_extMgm::isLoaded($key)) {
+		if (! ExtensionManagementUtility::isLoaded($key)) {
 			return '';
 		}
+		$EM_CONF = [];
 		$_EXTKEY = $key;
-		include(t3lib_extMgm::extPath($key) . 'ext_emconf.php');
+		include(ExtensionManagementUtility::extPath($key) . 'ext_emconf.php');
 		return $EM_CONF[$key]['version'];
 	}
 }

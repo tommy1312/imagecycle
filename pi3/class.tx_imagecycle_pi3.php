@@ -21,13 +21,17 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
  * Hint: use extdeveval to insert/update function index above.
  */
 
-require_once(t3lib_extMgm::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
+require_once(ExtensionManagementUtility::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
 
 /**
  * Plugin 'Coin-Slider' for the 'imagecycle' extension.
@@ -164,7 +168,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			}
 			// Override the config with flexform data
 			if ($this->lConf['nivoEffect']) {
-				$this->conf['nivoEffect'] = implode(',', t3lib_div::trimExplode(',', $this->lConf['nivoEffect']));
+				$this->conf['nivoEffect'] = implode(',', GeneralUtility::trimExplode(',', $this->lConf['nivoEffect']));
 			}
 			if ($this->lConf['nivoTheme']) {
 				$this->conf['nivoTheme'] = $this->lConf['nivoTheme'];
@@ -278,15 +282,15 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 					case "" : {}
 					case "folder" : {}
 					case "upload" : {
-						$this->images   = t3lib_div::trimExplode(',',     $used_page['tx_imagecycle_images']);
-						$this->hrefs    = t3lib_div::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
-						$this->captions = t3lib_div::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
+						$this->images   = GeneralUtility::trimExplode(',',     $used_page['tx_imagecycle_images']);
+						$this->hrefs    = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
+						$this->captions = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
 						// Language overlay
 						if ($this->sys_language_uid) {
 							if (trim($row['tx_imagecycle_images']) != '') {
-								$this->images   = t3lib_div::trimExplode(',',     $row['tx_imagecycle_images']);
-								$this->hrefs    = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
-								$this->captions = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_captions']);
+								$this->images   = GeneralUtility::trimExplode(',',     $row['tx_imagecycle_images']);
+								$this->hrefs    = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
+								$this->captions = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_captions']);
 							}
 						}
 						break;
@@ -349,7 +353,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
-		$this->pagerenderer = t3lib_div::makeInstance('tx_imagecycle_pagerenderer');
+		$this->pagerenderer = GeneralUtility::makeInstance('tx_imagecycle_pagerenderer');
 		$this->pagerenderer->setConf($this->conf);
 
 		// define the directory of images
@@ -404,14 +408,14 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		$themeClass = 'theme-default';
 		if ($this->conf['nivoTheme']) {
 			$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
-			if (! is_dir(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder']))) {
+			if (! is_dir(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder']))) {
 				// if the defined folder does not exist, define the default folder
-				t3lib_div::devLog('Path \''.$confArr['nivoThemeFolder'].'\' does not exist', 'imagecycle', 1);
+				GeneralUtility::devLog('Path \''.$confArr['nivoThemeFolder'].'\' does not exist', 'imagecycle', 1);
 				$confArr['nivoThemeFolder'] = 'EXT:imagecycle/res/css/nivoslider/';
 			}
-			if (! is_dir(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $this->conf['nivoTheme']))) {
+			if (! is_dir(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder'] . $this->conf['nivoTheme']))) {
 				// if the skin does not exist, the default skin will be selected
-				t3lib_div::devLog('Skin \''.$this->conf['nivoTheme'].'\' does not exist', 'imagecycle', 1);
+				GeneralUtility::devLog('Skin \''.$this->conf['nivoTheme'].'\' does not exist', 'imagecycle', 1);
 				$this->pagerenderer->addCssFile('EXT:imagecycle/res/css/nivoslider/default/style.css');
 			} else {
 				$this->pagerenderer->addCssFile($confArr['nivoThemeFolder'] . $this->conf['nivoTheme'] . '/style.css');
@@ -443,7 +447,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 				$GLOBALS['TSFE']->register['caption_key'] = $this->getContentKey() . "-" .$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'];
 				$image = null;
 				$imgConf = $this->conf['nivo.'][$this->type.'.']['image.'];
-				if (file_exists(t3lib_div::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+				if (file_exists(GeneralUtility::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
 					$totalImagePath = $item['image'];
 				} else {
 					$totalImagePath = $dir . $item['image'];
@@ -507,7 +511,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$maxHeight = $lastImageInfo[1];
 		}
 		if ($this->cObj->currentRecord != $GLOBALS['TSFE']->currentRecord) {
-			list($table, $uid) = t3lib_div::trimExplode(':', $GLOBALS['TSFE']->currentRecord, 1);
+			list($table, $uid) = GeneralUtility::trimExplode(':', $GLOBALS['TSFE']->currentRecord, 1);
 		} else {
 			$uid = $this->uid;
 		}
@@ -524,8 +528,8 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		$options['effect'] = "effect: '{$this->conf['nivoEffect']}'";
 
 		// Set the language for prev and next
-		$options['prev'] = "prevText: '".t3lib_div::slashJS($this->pi_getLL('prev'))."'";
-		$options['next'] = "nextText: '".t3lib_div::slashJS($this->pi_getLL('next'))."'";
+		$options['prev'] = "prevText: '". GeneralUtility::slashJS($this->pi_getLL('prev'))."'";
+		$options['next'] = "nextText: '". GeneralUtility::slashJS($this->pi_getLL('next'))."'";
 
 		if ($this->conf['nivoSlices'] > 0) {
 			$options['slices'] = "slices: {$this->conf['nivoSlices']}";

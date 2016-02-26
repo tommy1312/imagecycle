@@ -22,6 +22,10 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
+
 /**
  * @author	Juergen Furrer <juergen.furrer@gmail.com>
  * @package	TYPO3
@@ -46,15 +50,15 @@ class tx_imagecycle
 			$imageConf = 'image.';
 		}
 		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount'] : 1;
-		$imageNum = t3lib_utility_Math::forceIntegerInRange($imageNum, 0, 1000);
+		$imageNum = MathUtility::forceIntegerInRange($imageNum, 0, 1000);
 		$theImgCode = '';
 		$imgsCaptions = explode(chr(10), $row['imagecaption']);
 
 		// DAM_TTNEWS - load image from DAM - morini@gammsystem.com
-		if (t3lib_extMgm::isLoaded('dam_ttnews')) {
+		if (ExtensionManagementUtility::isLoaded('dam_ttnews')) {
 			$imgs = $this->getDamImages($pObj, $lConf);
 		} else {
-			$imgs = t3lib_div::trimExplode(',', $row['image'], 1);
+			$imgs = GeneralUtility::trimExplode(',', $row['image'], 1);
 		}
 
 		// remove first img from the image array in single view if the TSvar firstImageIsPreview is set
@@ -89,7 +93,7 @@ class tx_imagecycle
 				$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = $key;
 
 				// DAM_TTNEWS - set path for DAM images - morini@gammsystem.com
-				if (t3lib_extMgm::isLoaded('dam_ttnews')) {
+				if (ExtensionManagementUtility::isLoaded('dam_ttnews')) {
 					$lConf[$imageConf]['file'] = $val;
 				} else {
 					$lConf[$imageConf]['file'] = 'uploads/pics/'.$val;
@@ -122,18 +126,18 @@ class tx_imagecycle
 	{
 		$return_string = NULL;
 		if ($this->cObj->data['tx_imagecycle_activate']) {
-			$instanceClass = ($conf['instanceClass'] ? $conf['instanceClass'] : t3lib_extMgm::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
+			$instanceClass = ($conf['instanceClass'] ? $conf['instanceClass'] : ExtensionManagementUtility::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
 			if (! file_exists($instanceClass)) {
 				// try to get the filename if file not exists
 				$instanceClass = $GLOBALS['TSFE']->tmpl->getFileName($instanceClass);
 			}
 			if (! file_exists($instanceClass)) {
-				t3lib_div::devLog('Class \''.$instanceClass.'\' not found', 'imagecycle', 1);
+				GeneralUtility::devLog('Class \''.$instanceClass.'\' not found', 'imagecycle', 1);
 				return $content;
 			}
 			require_once($instanceClass);
 			$instance = ($conf["instance"] ? $conf["instance"] : 'tx_imagecycle_pi1');
-			$obj = t3lib_div::makeInstance($instance);
+			$obj = GeneralUtility::makeInstance($instance);
 			$obj->setContentKey($obj->extKey . '_' . $this->cObj->data['uid']);
 			$obj->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.'][$instance . '.'];
 			// overwrite the width and height of the config
@@ -160,7 +164,7 @@ class tx_imagecycle
 		$mode = $GLOBALS['TSFE']->tmpl->setup['plugin.']['dam_ttnews.']['mode'];
 
 		$imageNum = isset($lConf['imageCount']) ? $lConf['imageCount']:1;
-		$imageNum = t3lib_utility_Math::forceIntegerInRange($imageNum, 0, 100);
+		$imageNum = MathUtility::forceIntegerInRange($imageNum, 0, 100);
 		$theImgCode = '';
 
 		$imgsCaptions = explode(chr(10), $row['imagecaption']);

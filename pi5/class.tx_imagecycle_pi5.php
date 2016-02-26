@@ -21,13 +21,17 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
  * Hint: use extdeveval to insert/update function index above.
  */
 
-require_once(t3lib_extMgm::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
+require_once(ExtensionManagementUtility::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
 
 /**
  * Plugin 'Slice-Box' for the 'imagecycle' extension.
@@ -249,15 +253,15 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 					case "" : {}
 					case "folder" : {}
 					case "upload" : {
-						$this->images   = t3lib_div::trimExplode(',',     $used_page['tx_imagecycle_images']);
-						$this->hrefs    = t3lib_div::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
-						$this->captions = t3lib_div::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
+						$this->images   = GeneralUtility::trimExplode(',',     $used_page['tx_imagecycle_images']);
+						$this->hrefs    = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
+						$this->captions = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
 						// Language overlay
 						if ($this->sys_language_uid) {
 							if (trim($row['tx_imagecycle_images']) != '') {
-								$this->images   = t3lib_div::trimExplode(',',     $row['tx_imagecycle_images']);
-								$this->hrefs    = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
-								$this->captions = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_captions']);
+								$this->images   = GeneralUtility::trimExplode(',',     $row['tx_imagecycle_images']);
+								$this->hrefs    = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
+								$this->captions = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_captions']);
 							}
 						}
 						break;
@@ -320,7 +324,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
-		$this->pagerenderer = t3lib_div::makeInstance('tx_imagecycle_pagerenderer');
+		$this->pagerenderer = GeneralUtility::makeInstance('tx_imagecycle_pagerenderer');
 		$this->pagerenderer->setConf($this->conf);
 
 		// define the directory of images
@@ -371,7 +375,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 				$GLOBALS['TSFE']->register['caption_key'] = $this->getContentKey() . "-" .$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'];
 				$image = null;
 				$imgConf = $this->conf['slice.'][$this->type.'.']['image.'];
-				if (file_exists(t3lib_div::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+				if (file_exists(GeneralUtility::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
 					$totalImagePath = $item['image'];
 				} else {
 					$totalImagePath = $dir . $item['image'];

@@ -22,6 +22,11 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * 'itemsProcFunc' for the 'imagecycle' extension.
@@ -39,12 +44,12 @@ class tx_imagecycle_itemsProcFunc
 	public function getEffects($config, $item)
 	{
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
-		$availableEffects = t3lib_div::trimExplode(",", $confArr['effects'], true);
+		$availableEffects = GeneralUtility::trimExplode(",", $confArr['effects'], true);
 		if (count($availableEffects) < 1) {
 			$availableEffects = array('none','blindX','blindY','blindZ','cover','curtainX','curtainY','fade','fadeout','fadeZoom','growX','growY','scrollUp','scrollDown','scrollLeft','scrollRight','scrollHorz','scrollVert','shuffle','slideX','slideY','toss','turnUp','turnDown','turnLeft','turnRight','uncover','wipe','zoom','all');
 		}
-		$pageTS = t3lib_BEfunc::getPagesTSconfig($config['row']['pid']);
-		$imagecycleEffects = t3lib_div::trimExplode(",", $pageTS['mod.']['imagecycle.']['effects'], true);
+		$pageTS = BackendUtility::getPagesTSconfig($config['row']['pid']);
+		$imagecycleEffects = GeneralUtility::trimExplode(",", $pageTS['mod.']['imagecycle.']['effects'], true);
 		$optionList = array();
 		if (is_array($imagecycleEffects) && count($imagecycleEffects) > 0) {
 			foreach ($availableEffects as $key => $availableEffect) {
@@ -76,12 +81,12 @@ class tx_imagecycle_itemsProcFunc
 	public function getEffectsCoin($config, $item)
 	{
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
-		$availableEffects = t3lib_div::trimExplode(",", $confArr['effectsCoin'], true);
+		$availableEffects = GeneralUtility::trimExplode(",", $confArr['effectsCoin'], true);
 		if (count($availableEffects) < 1) {
 			$availableEffects = array('random','swirl','rain','straight');
 		}
-		$pageTS = t3lib_BEfunc::getPagesTSconfig($config['row']['pid']);
-		$imagecycleEffects = t3lib_div::trimExplode(",", $pageTS['mod.']['imagecycle.']['effectsCoin'], true);
+		$pageTS = BackendUtility::getPagesTSconfig($config['row']['pid']);
+		$imagecycleEffects = GeneralUtility::trimExplode(",", $pageTS['mod.']['imagecycle.']['effectsCoin'], true);
 		$optionList = array();
 		if (is_array($imagecycleEffects) && count($imagecycleEffects) > 0) {
 			foreach ($availableEffects as $key => $availableEffect) {
@@ -113,12 +118,12 @@ class tx_imagecycle_itemsProcFunc
 	public function getEffectsNivo($config, $item)
 	{
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
-		$availableEffects = t3lib_div::trimExplode(",", $confArr['effectsNivo'], true);
+		$availableEffects = GeneralUtility::trimExplode(",", $confArr['effectsNivo'], true);
 		if (count($availableEffects) < 1) {
 			$availableEffects = array('random','sliceDown','sliceDownLeft','sliceUp','sliceUpLeft','sliceUpDown','sliceUpDownLeft','fold','fade','slideInRight','slideInLeft', 'boxRandom', 'boxRain', 'boxRainReverse', 'boxRainGrow', 'boxRainGrowReverse');
 		}
-		$pageTS = t3lib_BEfunc::getPagesTSconfig($config['row']['pid']);
-		$imagecycleEffects = t3lib_div::trimExplode(",", $pageTS['mod.']['imagecycle.']['effectsNivo'], true);
+		$pageTS = BackendUtility::getPagesTSconfig($config['row']['pid']);
+		$imagecycleEffects = GeneralUtility::trimExplode(",", $pageTS['mod.']['imagecycle.']['effectsNivo'], true);
 		$optionList = array();
 		if (is_array($imagecycleEffects) && count($imagecycleEffects) > 0) {
 			foreach ($availableEffects as $key => $availableEffect) {
@@ -150,16 +155,16 @@ class tx_imagecycle_itemsProcFunc
 	public function getThemesNivo($config, $item)
 	{
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
-		if (! is_dir(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder']))) {
+		if (! is_dir(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder']))) {
 			// if the defined folder does not exist, define the default folder
-			t3lib_div::devLog('Path \''.$confArr['nivoThemeFolder'].'\' does not exist', 'imagecycle', 1);
+			GeneralUtility::devLog('Path \''.$confArr['nivoThemeFolder'].'\' does not exist', 'imagecycle', 1);
 			$confArr['nivoThemeFolder'] = "EXT:imagecycle/res/css/nivoslider/";
 		}
 
 		// get the selected item
 		$configPi = array();
 		if (! is_array($config['row']['pi_flexform']) && $config['row']['pi_flexform'])	{
-			$configPi = t3lib_div::xml2array($config['row']['pi_flexform']);
+			$configPi = GeneralUtility::xml2array($config['row']['pi_flexform']);
 			if (! is_array($configPi)) {
 				$configPi = array();
 			}
@@ -171,19 +176,20 @@ class tx_imagecycle_itemsProcFunc
 
 		// 
 		$info_text = NULL;
-		if (file_exists(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt'))) {
-			$info_text = $GLOBALS['LANG']->sL(file_get_contents(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt')));
-			$msg = t3lib_div::makeInstance('t3lib_FlashMessage', $info_text, $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:pi3_theme_info'), t3lib_FlashMessage::INFO);
-			t3lib_FlashMessageQueue::addMessage($msg);
+		if (file_exists(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt'))) {
+			$info_text = $GLOBALS['LANG']->sL(file_get_contents(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder'] . $theme . '/readme.txt')));
+			$queue = GeneralUtility::makeInstance(FlashMessageQueue::class);
+			$message = GeneralUtility::makeInstance(FlashMessage::class, $info_text, $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:pi3_theme_info'), FlashMessage::INFO);
+			$queue->addMessage($message);
 		}
 
-		$items = t3lib_div::get_dirs(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder']));
+		$items = GeneralUtility::get_dirs(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder']));
 		if (is_array($items) && count($items) > 0) {
 			$optionList = array();
 			foreach ($items as $key => $item) {
 				$item = trim($item);
 				if (! preg_match('/^\./', $item)) {
-					if (file_exists(t3lib_div::getFileAbsFileName($confArr['nivoThemeFolder']) . $item . '/style.css')) {
+					if (file_exists(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder']) . $item . '/style.css')) {
 						$optionList[] = array(
 							$item,
 							$item,
@@ -222,13 +228,13 @@ class tx_imagecycle_itemsProcFunc
 				"EXT:imagecycle/mode_data.gif"
 			);
 		}
-		if (t3lib_extMgm::isLoaded("dam")) {
+		if (ExtensionManagementUtility::isLoaded("dam")) {
 			$optionList[] = array(
 				$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.dam'),
 				"dam",
 				"EXT:imagecycle/mode_dam.gif"
 			);
-			if (t3lib_extMgm::isLoaded("dam_catedit")) {
+			if (ExtensionManagementUtility::isLoaded("dam_catedit")) {
 				$optionList[] = array(
 					$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.dam_catedit'),
 					"dam_catedit",

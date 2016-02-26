@@ -25,6 +25,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class that renders fields for the extensionmanager configuration
@@ -43,7 +44,7 @@ class tx_imagecycle_tsparserext
 	*/
 	public function getThemesNivo(&$params, &$tsObj)
 	{
-		$itemsProcFunc = t3lib_div::makeInstance('tx_imagecycle_itemsProcFunc');
+		$itemsProcFunc = GeneralUtility::makeInstance('tx_imagecycle_itemsProcFunc');
 		$config = $itemsProcFunc->getThemesNivo(array('items'=> array()), array());
 		$items = $config['items'];
 

@@ -22,6 +22,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * 'itemsProcFunc' for the 'imagecycle' extension.
@@ -44,6 +45,6 @@ class tx_imagecycle_TCAform
 			'.t3-form-field-container-flexsection',
 			'.t3-form-field-add-flexsection',
 		);
-		return t3lib_div::wrapJS("$$('".implode(',', $classes)."').each(function(n){n.hide();});");
+		return GeneralUtility::wrapJS("$$('".implode(',', $classes)."').each(function(n){n.hide();});");
 	}
 }

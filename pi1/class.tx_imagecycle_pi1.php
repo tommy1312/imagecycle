@@ -22,7 +22,10 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('imagecycle').'lib/class.tx_imagecycle_pagerenderer.php');
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+require_once(ExtensionManagementUtility::extPath('imagecycle').'lib/class.tx_imagecycle_pagerenderer.php');
 
 /**
  * Plugin 'Image Cycle' for the 'imagecycle' extension.
@@ -164,7 +167,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 				$this->conf['onlyFirstImage'] = $this->lConf['onlyFirstImage'];
 			}
 			if ($this->lConf['type']) {
-				$this->conf['type'] = implode(',', t3lib_div::trimExplode(',', $this->lConf['type']));
+				$this->conf['type'] = implode(',', GeneralUtility::trimExplode(',', $this->lConf['type']));
 			}
 			if ($this->lConf['transition']) {
 				$this->conf['transition'] = $this->lConf['transition'];
@@ -262,15 +265,15 @@ class tx_imagecycle_pi1 extends tslib_pibase
 					case "" : {}
 					case "folder" : {}
 					case "upload" : {
-						$this->images   = t3lib_div::trimExplode(',',     $used_page['tx_imagecycle_images']);
-						$this->hrefs    = t3lib_div::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
-						$this->captions = t3lib_div::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
+						$this->images   = GeneralUtility::trimExplode(',',     $used_page['tx_imagecycle_images']);
+						$this->hrefs    = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
+						$this->captions = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
 						// Language overlay
 						if ($this->sys_language_uid) {
 							if (trim($row['tx_imagecycle_images']) != '') {
-								$this->images   = t3lib_div::trimExplode(',',     $row['tx_imagecycle_images']);
-								$this->hrefs    = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
-								$this->captions = t3lib_div::trimExplode(chr(10), $row['tx_imagecycle_captions']);
+								$this->images   = GeneralUtility::trimExplode(',',     $row['tx_imagecycle_images']);
+								$this->hrefs    = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
+								$this->captions = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_captions']);
 							}
 						}
 						break;
@@ -352,14 +355,14 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	{
 		if ($this->conf['images']) {
 			// define the images
-			$this->images = t3lib_div::trimExplode(',', $this->conf['images']);
+			$this->images = GeneralUtility::trimExplode(',', $this->conf['images']);
 			// define the hrefs
 			if ($this->conf['hrefs']) {
-				$this->hrefs = t3lib_div::trimExplode(chr(10), $this->conf['hrefs']);
+				$this->hrefs = GeneralUtility::trimExplode(chr(10), $this->conf['hrefs']);
 			}
 			// define the captions
 			if ($this->conf['captions']) {
-				$this->captions = t3lib_div::trimExplode(chr(10), $this->conf['captions']);
+				$this->captions = GeneralUtility::trimExplode(chr(10), $this->conf['captions']);
 			}
 			return true;
 		}
@@ -390,16 +393,16 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			// define the images
 			$images = array();
 			if ($this->conf['images']) {
-				$images = t3lib_div::trimExplode(',', $this->conf['images']);
+				$images = GeneralUtility::trimExplode(',', $this->conf['images']);
 			}
 			// define the hrefs
 			$hrefs = array();
 			if ($this->conf['hrefs']) {
-				$hrefs = t3lib_div::trimExplode(chr(10), $this->conf['hrefs']);
+				$hrefs = GeneralUtility::trimExplode(chr(10), $this->conf['hrefs']);
 			}
 			// define the captions
 			$this->captions = array();
-			$captions = t3lib_div::trimExplode(",", $this->conf['captionsData']);
+			$captions = GeneralUtility::trimExplode(",", $this->conf['captionsData']);
 			$count = count($images) > count($captions) ? count($images) : count($captions);
 			for ($a=0; $a < $count; $a++) {
 				$GLOBALS['TSFE']->register['source'] = $captions[$a];
@@ -438,8 +441,8 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		// clear the imageDir
 		$this->imageDir = '';
 		// get all fields for captions
-		$damCaptionFields = t3lib_div::trimExplode(',', $this->conf['damCaptionFields'], true);
-		$damHrefFields    = t3lib_div::trimExplode(',', $this->conf['damHrefFields'], true);
+		$damCaptionFields = GeneralUtility::trimExplode(',', $this->conf['damCaptionFields'], true);
+		$damHrefFields    = GeneralUtility::trimExplode(',', $this->conf['damHrefFields'], true);
 		$fieldsArray = array_merge(
 			$damCaptionFields,
 			$damHrefFields
@@ -488,7 +491,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			// add image
 			foreach ($images['rows'] as $key => $row) {
 				$row = tx_dam_db::getRecordOverlay('tx_dam', $row, $conf);
-				$absFileName = t3lib_div::getFileAbsFileName($row['file_path'] . $row['file_name']);
+				$absFileName = GeneralUtility::getFileAbsFileName($row['file_path'] . $row['file_name']);
 				$size = @getimagesize($absFileName);
 				if (preg_match("/^image\//i", $size['mime'])) {
 					// set the data
@@ -542,7 +545,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 */
 	protected function getDamcats($dam_cat='')
 	{
-		$damCats = t3lib_div::trimExplode(",", $dam_cat, true);
+		$damCats = GeneralUtility::trimExplode(",", $dam_cat, true);
 		if (count($damCats) < 1) {
 			return array();
 		} else {
@@ -570,7 +573,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
-		$this->pagerenderer = t3lib_div::makeInstance('tx_imagecycle_pagerenderer');
+		$this->pagerenderer = GeneralUtility::makeInstance('tx_imagecycle_pagerenderer');
 		$this->pagerenderer->setConf($this->conf);
 
 		// define the directory of images
@@ -829,7 +832,7 @@ class tx_imagecycle_pi1 extends tslib_pibase
 			foreach ($data as $key => $item) {
 				$image = null;
 				$imgConf = $this->conf['cycle.'][$this->type.'.']['image.'];
-				if (file_exists(t3lib_div::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+				if (file_exists(GeneralUtility::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
 					$totalImagePath = $item['image'];
 				} else {
 					$totalImagePath = $dir . $item['image'];
@@ -892,19 +895,19 @@ class tx_imagecycle_pi1 extends tslib_pibase
 		$this->setFlexFormData();
 		if (! isset($this->piFlexForm['data'])) {
 			if ($devlog === true) {
-				t3lib_div::devLog("Flexform Data not set", $this->extKey, 1);
+				GeneralUtility::devLog("Flexform Data not set", $this->extKey, 1);
 			}
 			return null;
 		}
 		if (! isset($this->piFlexForm['data'][$sheet])) {
 			if ($devlog === true) {
-				t3lib_div::devLog("Flexform sheet '{$sheet}' not defined", $this->extKey, 1);
+				GeneralUtility::devLog("Flexform sheet '{$sheet}' not defined", $this->extKey, 1);
 			}
 			return null;
 		}
 		if (! isset($this->piFlexForm['data'][$sheet]['lDEF'][$name])) {
 			if ($devlog === true) {
-				t3lib_div::devLog("Flexform Data [{$sheet}][{$name}] does not exist", $this->extKey, 1);
+				GeneralUtility::devLog("Flexform Data [{$sheet}][{$name}] does not exist", $this->extKey, 1);
 			}
 			return null;
 		}
