@@ -20,6 +20,7 @@
 								<maxitems>1</maxitems>
 								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getModes</itemsProcFunc>
 								<displayMode>flex</displayMode>
+								<renderType>selectSingle</renderType>
 							</config>
 						</TCEforms>
 					</mode>
@@ -124,7 +125,12 @@
 														<type>popup</type>
 														<title>Link</title>
 														<icon>link_popup.gif</icon>
-														<script>browse_links.php?mode=wizard</script>
+														<module type="array">
+															<name>wizard_element_browser</name>
+															<urlParameters type="array">
+																<mode>wizard</mode>
+															</urlParameters>
+														</module>
 														<JSopenParams>height=500,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
 													</link>
 												</wizards>
@@ -284,6 +290,7 @@
 								</items>
 								<size>1</size>
 								<maxitems>1</maxitems>
+								<renderType>selectSingle</renderType>
 							</config>
 						</TCEforms>
 					</crossTransition>
@@ -313,6 +320,7 @@
 								</items>
 								<size>1</size>
 								<maxitems>1</maxitems>
+								<renderType>selectSingle</renderType>
 							</config>
 						</TCEforms>
 					</crossTransitionDir>

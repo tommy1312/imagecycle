@@ -20,6 +20,7 @@
 								<maxitems>1</maxitems>
 								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getModes</itemsProcFunc>
 								<displayMode>flex</displayMode>
+								<renderType>selectSingle</renderType>
 							</config>
 						</TCEforms>
 					</mode>
@@ -124,7 +125,12 @@
 														<type>popup</type>
 														<title>Link</title>
 														<icon>link_popup.gif</icon>
-														<script>browse_links.php?mode=wizard</script>
+														<module type="array">
+															<name>wizard_element_browser</name>
+															<urlParameters type="array">
+																<mode>wizard</mode>
+															</urlParameters>
+														</module>
 														<JSopenParams>height=500,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
 													</link>
 												</wizards>
@@ -198,6 +204,7 @@
 								<maxitems>100</maxitems>
 								<multiple>1</multiple>
 								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getEffectsNivo</itemsProcFunc>
+								<renderType>selectMultipleSideBySide</renderType>
 							</config>
 						</TCEforms>
 					</nivoEffect>
@@ -217,6 +224,7 @@
 									</numIndex>
 								</items>
 								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getThemesNivo</itemsProcFunc>
+								<renderType>selectSingle</renderType>
 							</config>
 						</TCEforms>
 					</nivoTheme>
