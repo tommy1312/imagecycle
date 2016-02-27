@@ -72,9 +72,7 @@
 							<displayCond>FIELD:mode:IN:uploadData</displayCond>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.captionsData</label>
 							<config>
-								<type>group</type>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getAllowed]]></userFunc>
+								<type>imagecycle-allowedGroup</type>
 								<internal_type>db</internal_type>
 								<allowed>*</allowed>
 								<size>12</size>
@@ -153,8 +151,7 @@
 											<exclude>1</exclude>
 											<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.hide</label>
 											<config>
-												<form_type>user</form_type>
-												<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+												<type>imagecycle-selectOrCheckbox</type>
 												<checked>0</checked>
 											</config>
 										</TCEforms>
@@ -168,8 +165,7 @@
 							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.onlyFirstImage</label>
 							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<type>imagecycle-selectOrCheckbox</type>
 								<checked>0</checked>
 							</config>
 						</TCEforms>
@@ -319,8 +315,7 @@
 							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinNavigation</label>
 							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<type>imagecycle-selectOrCheckbox</type>
 								<checked>0</checked>
 							</config>
 						</TCEforms>
@@ -330,8 +325,7 @@
 							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinLinks</label>
 							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<type>imagecycle-selectOrCheckbox</type>
 								<checked>0</checked>
 							</config>
 						</TCEforms>
@@ -341,8 +335,7 @@
 							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinHoverPause</label>
 							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:imagecycle/lib/class.tx_imagecycle_tceFunc.php:&tx_imagecycle_tceFunc->getCheckbox]]></userFunc>
+								<type>imagecycle-selectOrCheckbox</type>
 								<checked>1</checked>
 							</config>
 						</TCEforms>
