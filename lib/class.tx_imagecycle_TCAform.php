@@ -34,17 +34,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class tx_imagecycle_TCAform
 {
 	/**
-	 * The uploadRTE section will be hidden
+	 * Removes the FlexForm toggle/add-section component.
+	 *
 	 * @return array
 	 */
-	function hideRTE($PA, $fobj)
+	function hideRTE()
 	{
-		$classes = array (
-			'.t3-form-field-label-flexsection',
-			'.t3-form-field-toggle-flexsection',
-			'.t3-form-field-container-flexsection',
-			'.t3-form-field-add-flexsection',
+		return GeneralUtility::wrapJS(
+			'TYPO3.jQuery(".t3-form-field-container.t3-form-flex").parents(".panel.panel-tab").remove();'
 		);
-		return GeneralUtility::wrapJS("$$('".implode(',', $classes)."').each(function(n){n.hide();});");
 	}
 }
