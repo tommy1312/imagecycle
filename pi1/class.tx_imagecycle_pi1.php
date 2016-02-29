@@ -24,6 +24,7 @@
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Plugin\AbstractPlugin;
 
 require_once(ExtensionManagementUtility::extPath('imagecycle').'lib/class.tx_imagecycle_pagerenderer.php');
 
@@ -34,7 +35,7 @@ require_once(ExtensionManagementUtility::extPath('imagecycle').'lib/class.tx_ima
  * @package	TYPO3
  * @subpackage	tx_imagecycle
  */
-class tx_imagecycle_pi1 extends tslib_pibase
+class tx_imagecycle_pi1 extends AbstractPlugin
 {
 	public $prefixId      = 'tx_imagecycle_pi1';
 	public $scriptRelPath = 'pi1/class.tx_imagecycle_pi1.php';
