@@ -25,6 +25,7 @@
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * @author	Juergen Furrer <juergen.furrer@gmail.com>
@@ -33,6 +34,9 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class tx_imagecycle
 {
+	/**
+	 * @var ContentObjectRenderer
+	 */
 	public $cObj;
 
 	public function getImageForTTnews($paramArray, $conf)
@@ -126,6 +130,7 @@ class tx_imagecycle
 			}
 			require_once($instanceClass);
 			$instance = ($conf["instance"] ? $conf["instance"] : 'tx_imagecycle_pi1');
+			/** @var tx_imagecycle_pi1 $obj */
 			$obj = GeneralUtility::makeInstance($instance);
 			$obj->setContentKey($obj->extKey . '_' . $this->cObj->data['uid']);
 			$obj->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.'][$instance . '.'];
