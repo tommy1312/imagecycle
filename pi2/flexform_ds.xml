@@ -298,15 +298,20 @@
 							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.coinOpacity</label>
 							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:jftcaforms/lib/class.tx_jftcaforms_tceFunc.php:&tx_jftcaforms_tceFunc->getExtSlider]]></userFunc>
-								<width>300</width>
+								<type>input</type>
+								<eval>double2</eval>
+								<default>1.00</default>
 								<range>
-									<lower>0</lower>
-									<upper>1</upper>
+									<lower>0.00</lower>
+									<upper>1.00</upper>
 								</range>
-								<decimalPrecision>2</decimalPrecision>
-								<emptyValue>1</emptyValue>
+								<wizards>
+									<slider>
+										<type>slider</type>
+										<step>0.01</step>
+										<width>300</width>
+									</slider>
+								</wizards>
 							</config>
 						</TCEforms>
 					</coinOpacity>

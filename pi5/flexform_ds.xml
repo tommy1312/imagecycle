@@ -165,7 +165,7 @@
 							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.onlyFirstImage</label>
 							<config>
-								<type>imagecycle-selectOrCheckboxr</type>
+								<type>imagecycle-selectOrCheckbox</type>
 								<checked>0</checked>
 							</config>
 						</TCEforms>
@@ -219,9 +219,22 @@
 							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceColorHiddenSides</label>
 							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:jftcaforms/lib/class.tx_jftcaforms_tceFunc.php:&tx_jftcaforms_tceFunc->getColorPicker]]></userFunc>
-								<emptyValue>1</emptyValue>
+								<type>input</type>
+								<size>10</size>
+								<wizards>
+									<_PADDING>2</_PADDING>
+									<color>
+										<type>colorbox</type>
+										<title>Color</title>
+										<dim>16x16</dim>
+										<script>wizard_colorpicker.php</script>
+										<tableStyle>border:solid 1px black;</tableStyle>
+										<JSopenParams>height=500,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+										<module type="array">
+											<name>wizard_colorpicker</name>
+										</module>
+									</color>
+								</wizards>
 							</config>
 						</TCEforms>
 					</sliceColorHiddenSides>
@@ -283,14 +296,20 @@
 							<exclude>1</exclude>
 							<label>LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.sliceSlicesCount</label>
 							<config>
-								<form_type>user</form_type>
-								<userFunc><![CDATA[EXT:jftcaforms/lib/class.tx_jftcaforms_tceFunc.php:&tx_jftcaforms_tceFunc->getExtSlider]]></userFunc>
-								<width>200</width>
+								<type>input</type>
+								<eval>double2</eval>
+								<default>1.00</default>
 								<range>
-									<lower>1</lower>
-									<upper>15</upper>
+									<lower>0.00</lower>
+									<upper>1.00</upper>
 								</range>
-								<emptyValue>1</emptyValue>
+								<wizards>
+									<slider>
+										<type>slider</type>
+										<step>0.01</step>
+										<width>300</width>
+									</slider>
+								</wizards>
 							</config>
 						</TCEforms>
 					</sliceSlicesCount>
