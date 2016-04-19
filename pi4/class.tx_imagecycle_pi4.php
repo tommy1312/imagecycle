@@ -337,7 +337,11 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 				$GLOBALS['TSFE']->register['href']    = $item['href'];
 				$GLOBALS['TSFE']->register['caption'] = $item['caption'];
 				$GLOBALS['TSFE']->register['CURRENT_ID'] = $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] + 1;
+
+				$this->applyCurrentResource($totalImagePath);
 				$image = $this->cObj->IMAGE($imgConf);
+				$this->resetCurrentResource();
+
 				$lastImageInfo = $GLOBALS['TSFE']->lastImageInfo;
 				if (intval($lastImageInfo[0] / $factor) > $maxWidth) {
 					$maxWidth = intval($lastImageInfo[0] / $factor);

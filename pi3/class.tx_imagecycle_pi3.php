@@ -443,7 +443,11 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 				if ($this->hrefs[$key]) {
 					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
 				}
+
+				$this->applyCurrentResource($totalImagePath);
 				$image = $this->cObj->IMAGE($imgConf);
+				$this->resetCurrentResource();
+
 				$lastImageInfo = $GLOBALS['TSFE']->lastImageInfo;
 				if ($lastImageInfo[0] > $maxWidth) {
 					$maxWidth = $lastImageInfo[0];

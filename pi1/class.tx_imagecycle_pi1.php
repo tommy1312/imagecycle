@@ -22,6 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Resource\Folder;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Plugin\AbstractPlugin;
@@ -681,7 +684,11 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 				if ($this->hrefs[$key]) {
 					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
 				}
+
+				$this->applyCurrentResource($totalImagePath);
 				$image = $this->cObj->IMAGE($imgConf);
+				$this->resetCurrentResource();
+
 				if ($item['caption'] && $this->conf['showcaption']) {
 					$image = $this->cObj->stdWrap($image, $this->conf['cycle.'][$this->type.'.']['captionWrap.']);
 				}
@@ -753,5 +760,31 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		} else {
 			return $this->piFlexForm['data'][$sheet]['lDEF'][$name];
 		}
+	}
+
+	/**
+	 * @param string $filePath
+	 * @return File|Folder
+	 */
+	protected function applyCurrentResource($filePath)
+	{
+		$resource = $this->getResourceFactory()->retrieveFileOrFolderObject($filePath);
+		$this->cObj->setCurrentFile($resource);
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function resetCurrentResource()
+	{
+		$this->cObj->setCurrentFile(null);
+	}
+
+	/**
+	 * @return ResourceFactory
+	 */
+	protected function getResourceFactory()
+	{
+		return ResourceFactory::getInstance();
 	}
 }

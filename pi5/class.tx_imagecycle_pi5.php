@@ -361,7 +361,11 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 				if ($this->hrefs[$key]) {
 					$imgConf['imageLinkWrap.'] = $imgConf['imageHrefWrap.'];
 				}
+
+				$this->applyCurrentResource($totalImagePath);
 				$image = $this->cObj->IMAGE($imgConf);
+				$this->resetCurrentResource();
+
 				// Add the noscript wrap to the first image
 				if ($key == 0) {
 					$no_script = $this->cObj->stdWrap($image, $this->conf['slice.'][$this->type.'.']['noscriptWrap.']);
