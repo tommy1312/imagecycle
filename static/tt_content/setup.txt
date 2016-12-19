@@ -1,4 +1,3 @@
-includeLibs.imagecycle = EXT:imagecycle/class.tx_imagecycle.php
 lib.tt_content_image_20 < tt_content.image.20
 lib.tt_content_textpic_20.1.text = COA
 lib.tt_content_textpic_20.1.text {
@@ -26,7 +25,7 @@ lib.imagecycle {
 	}
 	captionSplit = 1
 	renderMethod = ul
-	stdWrap.preUserFunc = tx_imagecycle->getSlideshow
+	stdWrap.preUserFunc = TYPO3Extension\Imagecycle\Miscellaneous\TtNewsUserFunctions->getSlideshow
 	cols >
 }
 tt_content.image.20 >

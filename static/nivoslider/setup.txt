@@ -169,7 +169,7 @@ plugin.tx_imagecycle_pi3 {
 			}
 			stdWrap {
 				dataWrap = <div class="tx-imagecycle-pi3 slider-wrapper {register:themeclass}"><div class="tx-imagecycle-pi3-images nivoSlider" id="{register:key}"> | </div></div>
-				preUserFunc = tx_imagecycle->getSlideshow
+				preUserFunc = TYPO3Extension\ImageCycle\Miscellaneous\TtNewsUserFunctions->getSlideshow
 				preUserFunc.instanceClass = EXT:imagecycle/pi3/class.tx_imagecycle_pi3.php
 				preUserFunc.instance = tx_imagecycle_pi3
 				preUserFunc.type = ttnews

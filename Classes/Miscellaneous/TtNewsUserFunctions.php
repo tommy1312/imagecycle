@@ -24,14 +24,16 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-namespace TYPO3Extension\Imagecycle\TtNews;
+namespace TYPO3Extension\Imagecycle\Miscellaneous;
 
 
+use tx_imagecycle_pi1;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
-class Funcs {
+class TtNewsUserFunctions {
 	/**
 	 * @var ContentObjectRenderer
 	 */
@@ -110,5 +112,37 @@ class Funcs {
 			}
 		}
 		return $markerArray;
+	}
+
+	public function getSlideshow($content, $conf) {
+		$return_string = NULL;
+		if ($this->cObj->data['tx_imagecycle_activate']) {
+			$instanceClass = ($conf['instanceClass'] ? $conf['instanceClass'] : ExtensionManagementUtility::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
+			if (! file_exists($instanceClass)) {
+				// try to get the filename if file not exists
+				$instanceClass = $GLOBALS['TSFE']->tmpl->getFileName($instanceClass);
+			}
+			if (! file_exists($instanceClass)) {
+				GeneralUtility::devLog('Class \''.$instanceClass.'\' not found', 'imagecycle', 1);
+				return $content;
+			}
+			require_once($instanceClass);
+			$instance = ($conf["instance"] ? $conf["instance"] : 'tx_imagecycle_pi1');
+			/** @var tx_imagecycle_pi1 $obj */
+			$obj = GeneralUtility::makeInstance($instance);
+			$obj->setContentKey($obj->extKey . '_' . $this->cObj->data['uid']);
+			$obj->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.'][$instance . '.'];
+			// overwrite the width and height of the config
+			$obj->conf['imagewidth'] = $GLOBALS['TSFE']->register['imagewidth'];
+			$obj->conf['imageheight'] = $GLOBALS['TSFE']->register['imageheight'];
+			if ($this->cObj->data['tx_imagecycle_duration'] > 0) {
+				$obj->conf['displayDuration'] = $this->cObj->data['tx_imagecycle_duration'];
+				$obj->conf['nivoPauseTime'] = $this->cObj->data['tx_imagecycle_duration'];
+			}
+			$obj->cObj = $this->cObj;
+			$obj->type = 'content';
+			$return_string = $obj->parseTemplate(array(), 'uploads/pics/', TRUE);
+		}
+		return $content;
 	}
 }

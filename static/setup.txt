@@ -162,7 +162,7 @@ plugin.tx_imagecycle_pi1 {
 			}
 			stdWrap {
 				dataWrap = <div class="tx-imagecycle-pi1"><ul id="{register:key}" class="tx-imagecycle-pi1-images"> | </ul></div>
-				preUserFunc = tx_imagecycle->getSlideshow
+				preUserFunc = TYPO3Extension\ImageCycle\Miscellaneous\TtNewsUserFunctions->getSlideshow
 				preUserFunc.instanceClass = EXT:imagecycle/pi1/class.tx_imagecycle_pi1.php
 				preUserFunc.instance = tx_imagecycle_pi1
 				preUserFunc.type = ttnews
