@@ -54,6 +54,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 	protected $piFlexForm = array();
 	protected $imageDir   = 'uploads/tx_imagecycle/';
 	protected $templateFileJS = null;
+	/** @var \TYPO3\CMS\Core\Page\PageRenderer */
 	protected $pagerenderer = NULL;
 	protected $uid        = NULL;
 
