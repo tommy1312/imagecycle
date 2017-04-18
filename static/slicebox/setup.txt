@@ -1,4 +1,6 @@
+plugin.tx_imagecycle_pi5 = USER
 plugin.tx_imagecycle_pi5 {
+	userFunc = TYPO3Extension\Imagecycle\Plugin\SliceBox->main
 
 	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
 	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}

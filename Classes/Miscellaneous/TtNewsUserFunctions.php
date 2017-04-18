@@ -93,11 +93,11 @@ class TtNewsUserFunctions {
 
 				// define the file
 				if ($row['tx_imagecycle_activate']) {
-					$image = $pObj->local_cObj->IMAGE($lConf[$imageConf]);
+					$image = $pObj->local_cObj->cObjGetSingle('IMAGE', $lConf[$imageConf]);
 					$caption = $pObj->local_cObj->stdWrap($image, $lConf['captionWrap.']);
 					$theImgCode .= $pObj->local_cObj->stdWrap($caption, $lConf['itemWrap.']);
 				} else {
-					$theImgCode .= $pObj->local_cObj->IMAGE($lConf[$imageConf]).$pObj->local_cObj->stdWrap($imgsCaptions[$cc], $lConf['caption_stdWrap.']);
+					$theImgCode .= $pObj->local_cObj->cObjGetSingle('IMAGE', $lConf[$imageConf]).$pObj->local_cObj->stdWrap($imgsCaptions[$cc], $lConf['caption_stdWrap.']);
 				}
 			}
 			$cc ++;

@@ -25,6 +25,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
@@ -59,14 +60,21 @@ class tx_imagecycle_pagerenderer
 	}
 
 	/**
+	 * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	 */
+	protected function getTypoScriptFrontendController() {
+		return $GLOBALS['TSFE'];
+	}
+
+	/**
 	* Include all defined resources (JS / CSS)
 	*
 	* @return void
 	*/
 	public function addResources() {
-		$pagerender = $GLOBALS['TSFE']->getPageRenderer();
+		$pagerender = GeneralUtility::makeInstance(PageRenderer::class);
 		// Fix moveJsFromHeaderToFooter (add all scripts to the footer)
-		if ($GLOBALS['TSFE']->config['config']['moveJsFromHeaderToFooter']) {
+		if ($this->getTypoScriptFrontendController()->config['config']['moveJsFromHeaderToFooter']) {
 			$allJsInFooter = TRUE;
 		} else {
 			$allJsInFooter = FALSE;
@@ -160,10 +168,10 @@ class tx_imagecycle_pagerenderer
 	 * Return the webbased path
 	 *
 	 * @param string $path
-	 * return string
+	 * @return string
 	 */
 	public function getPath($path="") {
-		return $GLOBALS['TSFE']->tmpl->getFileName($path);
+		return $this->getTypoScriptFrontendController()->tmpl->getFileName($path);
 	}
 
 	/**

@@ -27,4 +27,3 @@ foreach ([\TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems::class, \TYPO3
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['flexFormSegment'][$dataProviderName]['depends'][]
         = \TYPO3Extension\Imagecycle\Form\FormDataProvider\SelectOrCheckboxField::class;
 }
-?>

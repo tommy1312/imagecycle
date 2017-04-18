@@ -78,7 +78,7 @@ $tempColumns['tx_imagecycle_stoprecursion'] = array(
     )
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages', $tempColumns, 1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages', $tempColumns);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('pages', '--div--;LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_div, tx_imagecycle_mode;;;;3-3-3, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
 
 $GLOBALS['TCA']['pages']['ctrl']['requestUpdate'] .= ($GLOBALS['TCA']['pages']['ctrl']['requestUpdate'] ? ',' : ''). 'tx_imagecycle_mode';

@@ -19,4 +19,3 @@ if (TYPO3_MODE == 'BE') {
 
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('imagecycle').'lib/class.tx_imagecycle_itemsProcFunc.php');
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('imagecycle').'lib/class.tx_imagecycle_TCAform.php');
-?>

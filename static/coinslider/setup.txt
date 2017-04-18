@@ -1,4 +1,6 @@
+plugin.tx_imagecycle_pi2 = USER
 plugin.tx_imagecycle_pi2 {
+	userFunc = TYPO3Extension\Imagecycle\Plugin\CoinSlider->main
 
 	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
 	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}

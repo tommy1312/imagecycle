@@ -1,4 +1,6 @@
+plugin.tx_imagecycle_pi4 = USER
 plugin.tx_imagecycle_pi4 {
+	userFunc = TYPO3Extension\Imagecycle\Plugin\CrossSlider->main
 
 	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
 	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}

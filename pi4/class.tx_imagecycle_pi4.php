@@ -339,7 +339,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 				$GLOBALS['TSFE']->register['CURRENT_ID'] = $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] + 1;
 
 				$this->applyCurrentResource($totalImagePath);
-				$image = $this->cObj->IMAGE($imgConf);
+				$image = $this->cObj->cObjGetSingle('IMAGE', $imgConf);
 				$this->resetCurrentResource();
 
 				$lastImageInfo = $GLOBALS['TSFE']->lastImageInfo;

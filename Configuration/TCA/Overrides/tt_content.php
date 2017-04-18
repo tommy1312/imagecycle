@@ -24,7 +24,7 @@ $tempColumns = array(
     ),
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', $tempColumns, 1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', $tempColumns);
 $GLOBALS['TCA']['tt_content']['palettes']['tx_imagecycle'] = array(
     'showitem' => 'tx_imagecycle_activate,tx_imagecycle_duration',
     'canNotCollapse' => 1,

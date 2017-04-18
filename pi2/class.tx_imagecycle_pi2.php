@@ -348,14 +348,14 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 					unset($imgConf['imageLinkWrap.']);
 
 					$this->applyCurrentResource($totalImagePath);
-					$image = $this->cObj->IMAGE($imgConf);
+					$image = $this->cObj->cObjGetSingle('IMAGE', $imgConf);
 					$this->resetCurrentResource();
 
 					$imageWrap = $this->cObj->stdWrap($image, $this->conf['coin.'][$this->type.'.']['imageWrap.']);
 					$imageLink = $this->cObj->typolink($imageWrap, $this->conf['coin.'][$this->type.'.']['imageLink.']);
 				} else {
 					$this->applyCurrentResource($totalImagePath);
-					$imageLink = $this->cObj->IMAGE($imgConf);
+					$imageLink = $this->cObj->cObjGetSingle('IMAGE', $imgConf);
 					$this->resetCurrentResource();
 
 					if ($this->cObj->data['image_zoom'] != 1) {

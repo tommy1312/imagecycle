@@ -431,7 +431,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 					$thumbconf['file'] = $totalImagePath;
 					$thumbconf['file.']['width']  = $this->conf['thumbwidth'];
 					$thumbconf['file.']['height'] = $this->conf['thumbheight'];
-					$GLOBALS['TSFE']->register['thumbrel'] = $this->cObj->IMG_RESOURCE($thumbconf);
+					$GLOBALS['TSFE']->register['thumbrel'] = $this->cObj->cObjGetSingle('IMG_RESOURCE', $thumbconf);
 				} else {
 					$GLOBALS['TSFE']->register['thumbrel'] = '';
 				}
@@ -445,7 +445,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 				}
 
 				$this->applyCurrentResource($totalImagePath);
-				$image = $this->cObj->IMAGE($imgConf);
+				$image = $this->cObj->cObjGetSingle('IMAGE', $imgConf);
 				$this->resetCurrentResource();
 
 				$lastImageInfo = $GLOBALS['TSFE']->lastImageInfo;

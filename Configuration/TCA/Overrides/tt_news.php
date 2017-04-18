@@ -26,7 +26,7 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('tt_news')) {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/tt_news/', 'Image-Cycle for tt_news - Cycle');
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/tt_news/nivoslider/', 'Image-Cycle for tt_news - Nivo');
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_news', $tempColumns, 1);
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_news', $tempColumns);
     $GLOBALS['TCA']['tt_news']['palettes']['tx_imagecycle'] = array(
         'showitem' => 'tx_imagecycle_activate,tx_imagecycle_duration',
         'canNotCollapse' => 1,

@@ -363,7 +363,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 				}
 
 				$this->applyCurrentResource($totalImagePath);
-				$image = $this->cObj->IMAGE($imgConf);
+				$image = $this->cObj->cObjGetSingle('IMAGE', $imgConf);
 				$this->resetCurrentResource();
 
 				// Add the noscript wrap to the first image

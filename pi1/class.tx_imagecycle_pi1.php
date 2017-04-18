@@ -687,7 +687,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 				}
 
 				$this->applyCurrentResource($totalImagePath);
-				$image = $this->cObj->IMAGE($imgConf);
+				$image = $this->cObj->cObjGetSingle('IMAGE', $imgConf);
 				$this->resetCurrentResource();
 
 				if ($item['caption'] && $this->conf['showcaption']) {
