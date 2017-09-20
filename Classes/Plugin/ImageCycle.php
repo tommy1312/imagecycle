@@ -25,7 +25,7 @@ namespace TYPO3Extension\Imagecycle\Plugin;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-require_once(ExtensionManagementUtility::extPath('imagecycle').'pi3/class.tx_imagecycle_pi1.php');
+require_once(ExtensionManagementUtility::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
 
 class ImageCycle extends \tx_imagecycle_pi1 {
 

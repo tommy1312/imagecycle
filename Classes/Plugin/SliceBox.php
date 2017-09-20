@@ -25,7 +25,7 @@ namespace TYPO3Extension\Imagecycle\Plugin;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-require_once(ExtensionManagementUtility::extPath('imagecycle').'pi3/class.tx_imagecycle_pi5.php');
+require_once(ExtensionManagementUtility::extPath('imagecycle').'pi5/class.tx_imagecycle_pi5.php');
 
 class SliceBox extends \tx_imagecycle_pi5 {
 

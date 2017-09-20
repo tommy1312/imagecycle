@@ -25,7 +25,7 @@ namespace TYPO3Extension\Imagecycle\Plugin;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-require_once(ExtensionManagementUtility::extPath('imagecycle').'pi3/class.tx_imagecycle_pi4.php');
+require_once(ExtensionManagementUtility::extPath('imagecycle').'pi4/class.tx_imagecycle_pi4.php');
 
 class CrossSlider extends \tx_imagecycle_pi4 {
 

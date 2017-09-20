@@ -25,7 +25,7 @@ namespace TYPO3Extension\Imagecycle\Plugin;
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-require_once(ExtensionManagementUtility::extPath('imagecycle').'pi3/class.tx_imagecycle_pi3.php');
+require_once(ExtensionManagementUtility::extPath('imagecycle').'pi2/class.tx_imagecycle_pi2.php');
 
 class CoinSlider extends \tx_imagecycle_pi3 {
 
