@@ -1,6 +1,6 @@
 plugin.tx_imagecycle_pi1 = USER
 plugin.tx_imagecycle_pi1 {
-	userFunc = TYPO3Extension\Imagecycle\Plugin\NivoSlider->main
+	userFunc = TYPO3Extension\Imagecycle\Plugin\ImageCycle->main
 
 	linkTarget = {$plugin.tx_imagecycle_pi1.linkTarget}
 	extlinkTarget = {$plugin.tx_imagecycle_pi1.extlinkTarget}
