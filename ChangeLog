@@ -1,0 +1,4 @@
+2019-10-07  Franz Holzinger  <franz@ttproducts.de>
+
+    * add ext_autoload.php
+    * Initial version as fork from imagecycle 3.1.2 by Matteo Bonaker for a7digital, formerly by Juergen Furrer
