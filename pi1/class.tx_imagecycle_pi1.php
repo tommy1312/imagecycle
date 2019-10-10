@@ -72,7 +72,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		$this->pi_loadLL();
 
 		// define the key of the element
-		$this->setContentKey("imagecycle");
+		$this->setContentKey('imagecycle');
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
@@ -101,10 +101,10 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 				foreach ($imagesRTE['el'] as $elKey => $el) {
 					if (is_numeric($elKey)) {
 						$this->conf['imagesRTE'][] = array(
-							"image"   => $el['data']['el']['image']['vDEF'],
-							"href"    => $el['data']['el']['href']['vDEF'],
-							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
-							"hide"    => $el['data']['el']['hide']['vDEF'],
+							'image'   => $el['data']['el']['image']['vDEF'],
+							'href'    => $el['data']['el']['href']['vDEF'],
+							'caption' => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+							'hide'    => $el['data']['el']['hide']['vDEF'],
 						);
 					}
 				}
@@ -134,21 +134,21 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
-			$this->setContentKey("imagecycle_c" . $this->uid);
+			$this->setContentKey('imagecycle_c' . $this->uid);
 
 			// define the images
 			switch ($this->conf['mode']) {
-				case "" : {}
-				case "folder" : {}
-				case "upload" : {
+				case '' : {}
+				case 'folder' : {}
+				case 'upload' : {
 					$this->setDataUpload();
 					break;
 				}
-				case "uploadRTE" : {
+				case 'uploadRTE' : {
 					$this->setDataUploadRTE();
 					break;
 				}
-				case "uploadData" : {
+				case 'uploadData' : {
 					$this->setDataUploadData();
 					break;
 				}
@@ -184,7 +184,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 			if ($this->lConf['fastOnEvent']) {
 				$this->conf['fastOnEvent'] = $this->lConf['fastOnEvent'];
 			}
-			// Will be overridden, if not "from TS"
+			// Will be overridden, if not 'from TS'
 			if ($this->lConf['showcaption'] < 2) {
 				$this->conf['showcaption'] = $this->lConf['showcaption'];
 			}
@@ -259,9 +259,9 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 				}
 				// define the images
 				switch ($this->conf['mode']) {
-					case "" : {}
-					case "folder" : {}
-					case "upload" : {
+					case '' : {}
+					case 'folder' : {}
+					case 'upload' : {
 						$this->images   = GeneralUtility::trimExplode(',',     $used_page['tx_imagecycle_images']);
 						$this->hrefs    = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
 						$this->captions = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
@@ -381,12 +381,12 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 			}
 			// define the captions
 			$this->captions = array();
-			$captions = GeneralUtility::trimExplode(",", $this->conf['captionsData']);
+			$captions = GeneralUtility::trimExplode(',', $this->conf['captionsData']);
 			$count = count($images) > count($captions) ? count($images) : count($captions);
 			for ($a=0; $a < $count; $a++) {
 				$GLOBALS['TSFE']->register['source'] = $captions[$a];
 				// get the used table
-				$table = substr($captions[$a], 0, strrpos($captions[$a], "_"));
+				$table = substr($captions[$a], 0, strrpos($captions[$a], '_'));
 				$dataConfTable = $this->conf['dataConf.'][$table.'.'];
 				$cObjImage = $this->cObj->cObjGetSingle($dataConfTable['image'], $dataConfTable['image.']);
 				if ($cObjImage) {
@@ -429,32 +429,32 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 
 		// define the contentKey if not exist
 		if ($this->getContentKey() == '') {
-			$this->setContentKey("imagecycle_key");
+			$this->setContentKey('imagecycle_key');
 		}
 
 		// The template for JS
 		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle.js");
+			$this->templateFileJS = $this->cObj->fileResource('EXT:imagecycle/res/tx_imagecycle.js');
 		}
 
 		// set the key
 		$markerArray = array();
-		$markerArray["KEY"] = $this->getContentKey();
+		$markerArray['KEY'] = $this->getContentKey();
 
 		// define the jQuery mode and function
 		if ($this->conf['jQueryNoConflict']) {
-			$jQueryNoConflict = "jQuery.noConflict();";
+			$jQueryNoConflict = 'jQuery.noConflict();';
 		} else {
-			$jQueryNoConflict = "";
+			$jQueryNoConflict = '';
 		}
 
 		$options = array();
 
 		if (! $this->conf['imagewidth']) {
-			$this->conf['imagewidth'] = ($this->conf['imagewidth'] ? $this->conf['imagewidth'] : "200c");
+			$this->conf['imagewidth'] = ($this->conf['imagewidth'] ? $this->conf['imagewidth'] : '200c');
 		}
 		if (! $this->conf['imageheight']) {
-			$this->conf['imageheight'] = ($this->conf['imageheight'] ? $this->conf['imageheight'] : "200c");
+			$this->conf['imageheight'] = ($this->conf['imageheight'] ? $this->conf['imageheight'] : '200c');
 		}
 
 		// wrap if integer
@@ -466,42 +466,42 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		}
 
 		if ($this->conf['type']) {
-			$options['fx'] = "fx: '{$this->conf['type']}'";
+			$options['fx'] = 'fx: \'' . $this->conf['type'] . '\'';
 		}
 		if (in_array($this->conf['transition'], array('linear', 'swing'))) {
-			$options['easing'] = "easing: '{$this->conf['transition']}'";
+			$options['easing'] = 'easing: \'' . $this->conf['transition'] . '\'';
 		} elseif ($this->conf['transitionDir'] && $this->conf['transition']) {
-			$options['easing'] = "easing: 'ease{$this->conf['transitionDir']}{$this->conf['transition']}'";
+			$options['easing'] = 'easing: ease\'' . $this->conf['transitionDir'] . $this->conf['transition'] . '\'';
 		}
 		if ($this->conf['transitionDuration'] > 0) {
-			$options['speed'] = "speed: '{$this->conf['transitionDuration']}'";
+			$options['speed'] = 'speed: \'' . $this->conf['transitionDuration'] . '\'';
 		}
 		if ($this->conf['displayDuration'] > 0) {
-			$options['timeout'] = "timeout: '{$this->conf['displayDuration']}'";
+			$options['timeout'] = 'timeout: \'' . $this->conf['displayDuration'] . '\'';
 		}
 		if (is_numeric($this->conf['delayDuration']) && $this->conf['delayDuration'] != 0) {
-			$options['delay'] = "delay: {$this->conf['delayDuration']}";
+			$options['delay'] = 'delay: ' . $this->conf['delayDuration'];
 		}
 		if ($this->conf['fastOnEvent'] > 0) {
-			$options['fastOnEvent'] = "fastOnEvent: ".$this->conf['fastOnEvent'];
+			$options['fastOnEvent'] = 'fastOnEvent: ' . $this->conf['fastOnEvent'];
 		}
 
 		if ($this->conf['stopOnMousover']) {
-			$options['pause'] = "pause: true";
+			$options['pause'] = 'pause: true';
 		}
 		if ($this->conf['stopAfterOneCycle'] && is_array($data) && count($data) > 0) {
-			$options['autostop']      = "autostop: true";
-			$options['autostopCount'] = "autostopCount: '".count($data)."'";
+			$options['autostop']      = 'autostop: true';
+			$options['autostopCount'] = 'autostopCount: \'' . count($data) . '\'';
 		}
 
-		$options['sync'] = "sync: ".($this->conf['sync'] ? 'true' : 'false');
+		$options['sync'] = 'sync: ' . ($this->conf['sync'] ? 'true' : 'false');
 		if (count($data) > 1) {
-			$options['random'] = "random: ".($this->conf['random'] ? 'true' : 'false');
+			$options['random'] = 'random: ' . ($this->conf['random'] ? 'true' : 'false');
 		}
-		$options['cleartypeNoBg'] = "cleartypeNoBg: ".($this->conf['cleartypeNoBg'] ? 'true' : 'false');
+		$options['cleartypeNoBg'] = 'cleartypeNoBg: ' . ($this->conf['cleartypeNoBg'] ? 'true' : 'false');
 
 		$captionTag = $this->cObj->stdWrap($this->conf['cycle.'][$this->type.'.']['captionTag'], $this->conf['cycle.'][$this->type.'.']['captionTag.']);
-		$markerArray["CAPTION_TAG"] = $captionTag;
+		$markerArray['CAPTION_TAG'] = $captionTag;
 		$before = NULL;
 		$after  = NULL;
 		// add caption
@@ -509,21 +509,21 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 			// define the animation for the caption
 			$fx = array();
 			if (! $this->conf['captionAnimate']) {
-				$before .= "jQuery('{$captionTag}', this).css('display', 'none');";
-				$after  .= "jQuery('{$captionTag}', this).css('display', 'block');";
+				$before .= 'jQuery(\'' . $captionTag . '\'', this).css(\'display\', \'none\');';
+				$after  .= 'jQuery(\'' . $captionTag , '\'', this).css(\'display\', \'block\');';
 			} else {
 				if ($this->conf['captionTypeOpacity']) {
-					$fx[] = "opacity: 'show'";
+					$fx[] = 'opacity: \'show\'';
 				}
 				if ($this->conf['captionTypeHeight']) {
-					$fx[] = "height: 'show'";
+					$fx[] = 'height: \'show\'';
 				}
 				if ($this->conf['captionTypeWidth']) {
-					$fx[] = "width: 'show'";
+					$fx[] = 'width: \'show\'';
 				}
 				// if no effect is choosen, opacity is the fallback
 				if (count($fx) < 1) {
-					$fx[] = "opacity: 'show'";
+					$fx[] = 'opacity: \'show\'';
 				}
 				if (! is_numeric($this->conf['captionSpeed'])) {
 					$this->conf['captionSpeed'] = 200;
@@ -531,13 +531,13 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 
 				$easing = NULL;
 				if (in_array($this->conf['captionTransition'], array('linear', 'swing'))) {
-					$easing = ",'{$this->conf['captionTransition']}'";
+					$easing = ',\'' . $this->conf['captionTransition'] . '\'';
 				} elseif ($this->conf['captionTransitionDir'] && $this->conf['captionTransition']) {
-					$easing = ",'ease{$this->conf['captionTransitionDir']}{$this->conf['captionTransition']}'";
+					$easing = ',\'ease' . $this->conf['captionTransitionDir'] . $this->conf['captionTransition'] . '\'';
 				}
 
-				$before .= "jQuery('{$captionTag}', this).css('display', 'none');";
-				$after  .= "jQuery('{$captionTag}', this).animate({".(implode(",", $fx))."},{$this->conf['captionSpeed']}{$easing});";
+				$before .= 'jQuery(\'' . $captionTag . '\', this).css(\'display\', \'none\');';
+				$after  .= 'jQuery(\'' . $captionTag . '\', this).animate({' .(implode(',', $fx)) . '},' . $this->conf['captionSpeed'] . $easing . ');';
 			}
 			if ($this->conf['captionSync']) {
 				$before = $before . $after;
@@ -546,14 +546,14 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		}
 		// 
 		if ($this->conf['showPager']) {
-			$templateActivatePagerCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_ACTIVATE_PAGER_JS###"));
+			$templateActivatePagerCode = trim($this->cObj->getSubpart($this->templateFileJS, '###TEMPLATE_ACTIVATE_PAGER_JS###'));
 			$after .= $this->cObj->substituteMarkerArray($templateActivatePagerCode, $markerArray, '###|###', 0);
 		}
 		if ($before) {
-			$options['before'] = "before: function(a,n,o,f) {".$before."}";
+			$options['before'] = 'before: function(a,n,o,f) {' . $before .' }';
 		}
 		if ($after) {
-			$options['after'] = "after: function(a,n,o,f) {".$after."}";
+			$options['after'] = 'after: function(a,n,o,f) {' . $after . '}';
 		}
 
 		// overwrite all options if set
@@ -572,14 +572,14 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		$this->pagerenderer->addCssFile($this->conf['cssFile']);
 
 		// get the Template of the Javascript
-		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_JS###"))) {
-			$templateCode = "alert('Template TEMPLATE_JS is missing')";
+		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, '###TEMPLATE_JS###'))) {
+			$templateCode = 'alert('Template TEMPLATE_JS is missing')';
 		}
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
 		// Show the caption when sync is turned off
 		if ($this->conf['showcaption'] && ! $this->conf['captionSync']) {
-			$templateShowCaption = trim($this->cObj->getSubpart($templateCode, "###SHOW_CAPTION_AT_START###"));
+			$templateShowCaption = trim($this->cObj->getSubpart($templateCode, '###SHOW_CAPTION_AT_START###'));
 		} else {
 			$templateShowCaption = null;
 		}
@@ -587,9 +587,9 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 
 		// define the control
 		if ($this->conf['showControl']) {
-			$templateControl = trim($this->cObj->getSubpart($templateCode, "###CONTROL###"));
-			$templateControlAfter = trim($this->cObj->getSubpart($templateCode, "###CONTROL_AFTER###"));
-			$options[] = trim($this->cObj->getSubpart($templateCode, "###CONTROL_OPTIONS###"));
+			$templateControl = trim($this->cObj->getSubpart($templateCode, '###CONTROL###'));
+			$templateControlAfter = trim($this->cObj->getSubpart($templateCode, '###CONTROL_AFTER###'));
+			$options[] = trim($this->cObj->getSubpart($templateCode, '###CONTROL_OPTIONS###'));
 		} else {
 			$templateControl = null;
 		}
@@ -599,8 +599,8 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 
 		// define the play class
 		if ($this->conf['pausedBegin']) {
-			$templatePaused = $this->cObj->getSubpart($templateCode, "###PAUSED###");
-			$templatePausedBegin = $this->cObj->getSubpart($templateCode, "###PAUSED_BEGIN###");;
+			$templatePaused = $this->cObj->getSubpart($templateCode, '###PAUSED###');
+			$templatePausedBegin = $this->cObj->getSubpart($templateCode, '###PAUSED_BEGIN###');
 		} else {
 			$templatePaused = null;
 			$templatePausedBegin = null;
@@ -610,7 +610,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 
 		// define the pager
 		if ($this->conf['showPager']) {
-			$templatePager = $this->cObj->getSubpart($templateCode, "###PAGER###");
+			$templatePager = $this->cObj->getSubpart($templateCode, '###PAGER###');
 		} else {
 			$templatePager = null;
 		}
@@ -618,8 +618,8 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 
 		// Slow connection will have a load to start
 		if ($this->conf['fixSlowConnection']) {
-			$templateSlowBefore = $this->cObj->getSubpart($templateCode, "###SLOW_CONNECTION_BEFORE###");
-			$templateSlowAfter  = $this->cObj->getSubpart($templateCode, "###SLOW_CONNECTION_AFTER###");
+			$templateSlowBefore = $this->cObj->getSubpart($templateCode, '###SLOW_CONNECTION_BEFORE###');
+			$templateSlowAfter  = $this->cObj->getSubpart($templateCode, '###SLOW_CONNECTION_AFTER###');
 		} else {
 			$templateSlowBefore = null;
 		}
@@ -628,7 +628,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 
 		// If only one image is displayed, the caption will be show
 		if (is_array($data) && count($data) == 1) {
-			$templateOnlyOneImage = $this->cObj->getSubpart($templateCode, "###ONLY_ONE_IMAGE###");
+			$templateOnlyOneImage = $this->cObj->getSubpart($templateCode, '###ONLY_ONE_IMAGE###');
 		} else {
 			$templateOnlyOneImage = null;
 		}
@@ -636,8 +636,8 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 
 		// define the markers
 		$markerArray = array();
-		$markerArray["OPTIONS"]     = implode(",\n		", $options);
-		$markerArray["CAPTION_TAG"] = $captionTag;
+		$markerArray['OPTIONS']     = implode(',' . PHP_EOL . '		', $options);
+		$markerArray['CAPTION_TAG'] = $captionTag;
 
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
@@ -673,7 +673,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 			foreach ($data as $key => $item) {
 				$image = null;
 				$imgConf = $this->conf['cycle.'][$this->type.'.']['image.'];
-				if (file_exists(GeneralUtility::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+				if (file_exists(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/' . $item['image'])) {
 					$totalImagePath = $item['image'];
 				} else {
 					$totalImagePath = $dir . $item['image'];
@@ -740,19 +740,19 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		$this->setFlexFormData();
 		if (! isset($this->piFlexForm['data'])) {
 			if ($devlog === true) {
-				GeneralUtility::devLog("Flexform Data not set", $this->extKey, 1);
+				GeneralUtility::devLog('Flexform Data not set', $this->extKey, 1);
 			}
 			return null;
 		}
 		if (! isset($this->piFlexForm['data'][$sheet])) {
 			if ($devlog === true) {
-				GeneralUtility::devLog("Flexform sheet '{$sheet}' not defined", $this->extKey, 1);
+				GeneralUtility::devLog('Flexform sheet ' . $sheet . ' not defined', $this->extKey, 1);
 			}
 			return null;
 		}
 		if (! isset($this->piFlexForm['data'][$sheet]['lDEF'][$name])) {
 			if ($devlog === true) {
-				GeneralUtility::devLog("Flexform Data [{$sheet}][{$name}] does not exist", $this->extKey, 1);
+				GeneralUtility::devLog('Flexform Data [' . $sheet . '][' . $name . '] does not exist', $this->extKey, 1);
 			}
 			return null;
 		}

@@ -1,5 +1,7 @@
 <?php
-defined('TYPO3_MODE') or die();
+defined('TYPO3_MODE') || die('Access denied.');
+
+$table = 'pages_language_overlay';
 
 // PAGE
 $tempColumns = array();
@@ -78,7 +80,7 @@ $tempColumns['tx_imagecycle_stoprecursion'] = array(
     )
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages_language_overlay', $tempColumns);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('pages_language_overlay', '--div--;LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_div, tx_imagecycle_mode;;;;3-3-3, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns($table, $tempColumns);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes($table, '--div--;LLL:EXT:imagecycle/locallang_db.xml:pages.tx_imagecycle_div, tx_imagecycle_mode;;;;3-3-3, tx_imagecycle_damimages, tx_imagecycle_damcategories, tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_stoprecursion');
 
-$GLOBALS['TCA']['pages_language_overlay']['ctrl']['requestUpdate'] .= ($GLOBALS['TCA']['pages_language_overlay']['ctrl']['requestUpdate'] ? ',' : ''). 'tx_imagecycle_mode';
+$GLOBALS['TCA'][$table]['ctrl']['requestUpdate'] .= ($GLOBALS['TCA'][$table]['ctrl']['requestUpdate'] ? ',' : ''). 'tx_imagecycle_mode';

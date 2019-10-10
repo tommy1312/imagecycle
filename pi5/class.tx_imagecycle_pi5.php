@@ -74,7 +74,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 		$this->pi_loadLL();
 
 		// define the key of the element
-		$this->setContentKey("imagecycle-slice");
+		$this->setContentKey('imagecycle-slice');
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
@@ -103,10 +103,10 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 				foreach ($imagesRTE['el'] as $elKey => $el) {
 					if (is_numeric($elKey)) {
 						$this->conf['imagesRTE'][] = array(
-							"image"   => $el['data']['el']['image']['vDEF'],
-							"href"    => $el['data']['el']['href']['vDEF'],
-							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
-							"hide"    => $el['data']['el']['hide']['vDEF'],
+							'image'   => $el['data']['el']['image']['vDEF'],
+							'href'    => $el['data']['el']['href']['vDEF'],
+							'caption' => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+							'hide'    => $el['data']['el']['hide']['vDEF'],
 						);
 					}
 				}
@@ -133,21 +133,21 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
-			$this->setContentKey("imagecycle-slice_c" . $this->uid);
+			$this->setContentKey('imagecycle-slice_c' . $this->uid);
 
 			// define the images
 			switch ($this->conf['mode']) {
-				case "" : {}
-				case "folder" : {}
-				case "upload" : {
+				case '' : {}
+				case 'folder' : {}
+				case 'upload' : {
 					$this->setDataUpload();
 					break;
 				}
-				case "uploadRTE" : {
+				case 'uploadRTE' : {
 					$this->setDataUploadRTE();
 					break;
 				}
-				case "uploadData" : {
+				case 'uploadData' : {
 					$this->setDataUploadData();
 					break;
 				}
@@ -242,9 +242,9 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 				}
 				// define the images
 				switch ($this->conf['mode']) {
-					case "" : {}
-					case "folder" : {}
-					case "upload" : {
+					case '' : {}
+					case 'folder' : {}
+					case 'upload' : {
 						$this->images   = GeneralUtility::trimExplode(',',     $used_page['tx_imagecycle_images']);
 						$this->hrefs    = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
 						$this->captions = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
@@ -313,14 +313,14 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 
 		// define the contentKey if not exist
 		if ($this->getContentKey() == '') {
-			$this->setContentKey("imagecycle-slice_key");
+			$this->setContentKey('imagecycle-slice_key');
 		}
 
 		if (! $this->conf['imagewidth']) {
-			$this->conf['imagewidth'] = "200c";
+			$this->conf['imagewidth'] = '200c';
 		}
 		if (! $this->conf['imageheight']) {
-			$this->conf['imageheight'] = "200c";
+			$this->conf['imageheight'] = '200c';
 		}
 
 		// wrap if integer
@@ -346,10 +346,10 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 		$GLOBALS['TSFE']->register['IMAGE_COUNT'] = count($data);
 		if (is_array($data) && count($data) > 0) {
 			foreach ($data as $key => $item) {
-				$GLOBALS['TSFE']->register['caption_key'] = $this->getContentKey() . "-" .$GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'];
+				$GLOBALS['TSFE']->register['caption_key'] = $this->getContentKey() . '-' . $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'];
 				$image = null;
 				$imgConf = $this->conf['slice.'][$this->type.'.']['image.'];
-				if (file_exists(GeneralUtility::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+				if (file_exists(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/' . $item['image'])) {
 					$totalImagePath = $item['image'];
 				} else {
 					$totalImagePath = $dir . $item['image'];
@@ -380,47 +380,47 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 
 		// define the jQuery mode and function
 		if ($this->conf['jQueryNoConflict']) {
-			$jQueryNoConflict = "jQuery.noConflict();";
+			$jQueryNoConflict = 'jQuery.noConflict();';
 		} else {
-			$jQueryNoConflict = "";
+			$jQueryNoConflict = '';
 		}
 
 		$options = array();
 
 		if ($this->conf['sliceColorHiddenSides']) {
-			$options['colorHiddenSides'] = "colorHiddenSides: '#".str_replace('#', '', $this->conf['sliceColorHiddenSides'])."'";
+			$options['colorHiddenSides'] = 'colorHiddenSides: \'#' . str_replace('#', '', $this->conf['sliceColorHiddenSides']) . '\'';
 		}
 
 		if (in_array($this->conf['sliceOrientation'], array('v', 'h', 'r'))) {
-			$options['orientation'] = "orientation: '".$this->conf['sliceOrientation']."'";
+			$options['orientation'] = 'orientation: \'' . $this->conf['sliceOrientation'] . '\'';
 		}
 		if ($this->conf['slicePerspective'] > 0) {
-			$options['perspective'] = "perspective: {$this->conf['slicePerspective']}";
+			$options['perspective'] = 'perspective: ' . $this->conf['slicePerspective']' . '\'';
 		}
 		if ($this->conf['sliceSlicesCount'] > 0) {
-			$options['cuboidsCount'] = "cuboidsCount: {$this->conf['sliceSlicesCount']}";
+			$options['cuboidsCount'] = 'cuboidsCount: ' . $this->conf['sliceSlicesCount'];
 		}
 		if ($this->conf['sliceDisperseFactor'] > 0) {
-			$options['disperseFactor'] = "disperseFactor: {$this->conf['sliceDisperseFactor']}";
+			$options['disperseFactor'] = 'disperseFactor: ' . $this->conf['sliceDisperseFactor'];
 		}
-		$options['sequentialRotation'] = "sequentialRotation: ".($this->conf['sliceSequentialRotation'] ? 'true' : 'false');
+		$options['sequentialRotation'] = 'sequentialRotation: ' . ($this->conf['sliceSequentialRotation'] ? 'true' : 'false');
 		if ($this->conf['sliceSequentialFactor'] > 0) {
-			$options['sequentialFactor'] = "sequentialFactor: {$this->conf['sliceSequentialFactor']}";
+			$options['sequentialFactor'] = 'sequentialFactor: ' . $this->conf['sliceSequentialFactor'];
 		}
 		if ($this->conf['sliceSpeed3d'] > 0) {
-			$options['speed'] = "speed: {$this->conf['sliceSpeed3d']}";
+			$options['speed'] = 'speed: ' . $this->conf['sliceSpeed3d'];
 		}
 		/* FALLBACK*/
 		if ($this->conf['sliceEasing']) {
-			$options['easing'] = "easing: '{$this->conf['sliceEasing']}'";
+			$options['easing'] = 'easing: \'' . $this->conf['sliceEasing'] . '\'';
 		}
 		if ($this->conf['sliceSpeed'] > 0) {
-			$options['fallbackFadeSpeed'] = "fallbackFadeSpeed: {$this->conf['sliceSpeed']}";
+			$options['fallbackFadeSpeed'] = 'fallbackFadeSpeed: ' . $this->conf['sliceSpeed'];
 		}
 		/* SLIDESHOW */
-		$options['slideshow'] = "autoplay: ".($this->conf['sliceSlideshow'] ? 'true' : 'false');
+		$options['slideshow'] = 'autoplay: ' . ($this->conf['sliceSlideshow'] ? 'true' : 'false');
 		if ($this->conf['sliceSlideshowTime'] > 0) {
-			$options['slideshowTime'] = "interval: {$this->conf['sliceSlideshowTime']}";
+			$options['slideshowTime'] = 'interval: ' . $this->conf['sliceSlideshowTime'];
 		}
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
@@ -445,18 +445,18 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 
 		// The template for JS
 		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle.js");
+			$this->templateFileJS = $this->cObj->fileResource('EXT:imagecycle/res/tx_imagecycle.js');
 		}
 
 		// get the Template of the Javascript
-		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_SLICEBOX_JS###"))) {
-			$templateCode = "alert('Template TEMPLATE_SLICEBOX_JS is missing')";
+		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, '###TEMPLATE_SLICEBOX_JS###'))) {
+			$templateCode = 'alert(\'Template TEMPLATE_SLICEBOX_JS is missing\')';
 		}
 
 		// define the markers
 		$markerArray = array();
-		$markerArray["KEY"]     = $this->getContentKey();
-		$markerArray["OPTIONS"] = implode(",\n				", $options);
+		$markerArray['KEY']     = $this->getContentKey();
+		$markerArray['OPTIONS'] = implode(',' . PHP_EOL . '				', $options);
 
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);

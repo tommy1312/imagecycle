@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3_MODE') or die();
+defined('TYPO3_MODE') || die('Access denied.');
 
 // Page module hook
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info']['imagecycle_pi1']['imagecycle'] = 'EXT:imagecycle/lib/class.tx_imagecycle_cms_layout.php:tx_imagecycle_cms_layout->getExtensionSummary';

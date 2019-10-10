@@ -98,7 +98,7 @@ class tx_imagecycle_pagerenderer
 							$pagerender->addJsFile($file, 'text/javascript', $this->conf['jsMinify']);
 						}
 					} else {
-						GeneralUtility::devLog("'{$jsToLoad}' does not exists!", $this->extKey, 2);
+						GeneralUtility::devLog('\'' . $jsToLoad. '\' does not exist!', $this->extKey, 2);
 					}
 				}
 			}
@@ -137,7 +137,7 @@ class tx_imagecycle_pagerenderer
 				if ($file) {
 					$pagerender->addCssFile($file, 'stylesheet', 'all', '', $this->conf['cssMinify']);
 				} else {
-					GeneralUtility::devLog("'{$cssToLoad}' does not exists!", $this->extKey, 2);
+					GeneralUtility::devLog($cssToLoad . ' does not exist!', $this->extKey, 2);
 				}
 			}
 		}
@@ -148,9 +148,9 @@ class tx_imagecycle_pagerenderer
 				$file = $this->getPath($cssToLoad['file']);
 				if ($file) {
 					// Theres no possibility to add conditions for IE by pagerenderer, so this will be added in additionalHeaderData
-					$GLOBALS['TSFE']->additionalHeaderData['cssFile_'.$this->extKey.'_'.$file] = '<!--[if '.$cssToLoad['rule'].']><link rel="stylesheet" type="text/css" href="'.$file.'" media="all" /><![endif]-->'.chr(10);
+					$GLOBALS['TSFE']->additionalHeaderData['cssFile_' . $this->extKey . '_' . $file] = '<!--[if ' . $cssToLoad['rule'] . ']><link rel="stylesheet" type="text/css" href="' . $file . '" media="all" /><![endif]-->' . chr(10);
 				} else {
-					GeneralUtility::devLog("'{$cssToLoad['file']}' does not exists!", $this->extKey, 2);
+					GeneralUtility::devLog('\'' . $cssToLoad['file'] . '\' does not exist!', $this->extKey, 2);
 				}
 			}
 		}
@@ -170,7 +170,7 @@ class tx_imagecycle_pagerenderer
 	 * @param string $path
 	 * @return string
 	 */
-	public function getPath($path="") {
+	public function getPath($path = '') {
 		return $this->getTypoScriptFrontendController()->tmpl->getFileName($path);
 	}
 
@@ -181,7 +181,7 @@ class tx_imagecycle_pagerenderer
 	 * @param boolean $first
 	 * @return void
 	 */
-	public function addJsFile($script="", $first=FALSE) {
+	public function addJsFile($script = '', $first = FALSE) {
 		if ($this->getPath($script) && ! in_array($script, $this->jsFiles)) {
 			if ($first === TRUE) {
 				$this->jsFiles = array_merge(array($script), $this->jsFiles);
@@ -197,7 +197,7 @@ class tx_imagecycle_pagerenderer
 	 * @param string $script
 	 * @return void
 	 */
-	public function addJS($script="") {
+	public function addJS($script = '') {
 		if (! in_array($script, $this->js)) {
 			$this->js[] = $script;
 		}
@@ -209,7 +209,7 @@ class tx_imagecycle_pagerenderer
 	 * @param string $script
 	 * @return void
 	 */
-	public function addCssFile($script="") {
+	public function addCssFile($script = '') {
 		if ($this->getPath($script) && ! in_array($script, $this->cssFiles)) {
 			$this->cssFiles[] = $script;
 		}
@@ -219,10 +219,10 @@ class tx_imagecycle_pagerenderer
 	 * Add additional CSS file to include into IE only
 	 *
 	 * @param string $script
-	 * @param string $include for example use "lte IE 7"
+	 * @param string $include for example use 'lte IE 7'
 	 * @return void
 	 */
-	public function addCssFileInc($script="", $include='IE') {
+	public function addCssFileInc($script = '', $include = 'IE') {
 		if ($this->getPath($script) && ! in_array($script, $this->cssFiles) && $include) {
 			$this->cssFilesInc[] = array(
 				'file' => $script,
@@ -237,7 +237,7 @@ class tx_imagecycle_pagerenderer
 	 * @param string $script
 	 * @return void
 	 */
-	public function addCSS($script="") {
+	public function addCSS($script = '') {
 		if (! in_array($script, $this->css)) {
 			$this->css[] = $script;
 		}

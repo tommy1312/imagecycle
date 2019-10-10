@@ -74,7 +74,7 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 		$this->pi_loadLL();
 
 		// define the key of the element
-		$this->setContentKey("imagecycle-coin");
+		$this->setContentKey('imagecycle-coin');
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
@@ -103,10 +103,10 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 				foreach ($imagesRTE['el'] as $elKey => $el) {
 					if (is_numeric($elKey)) {
 						$this->conf['imagesRTE'][] = array(
-							"image"   => $el['data']['el']['image']['vDEF'],
-							"href"    => $el['data']['el']['href']['vDEF'],
-							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
-							"hide"    => $el['data']['el']['hide']['vDEF'],
+							'image'   => $el['data']['el']['image']['vDEF'],
+							'href'    => $el['data']['el']['href']['vDEF'],
+							'caption' => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+							'hide'    => $el['data']['el']['hide']['vDEF'],
 						);
 					}
 				}
@@ -129,21 +129,21 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
-			$this->setContentKey("imagecycle-coin_c" . $this->uid);
+			$this->setContentKey('imagecycle-coin_c' . $this->uid);
 
 			// define the images
 			switch ($this->conf['mode']) {
-				case "" : {}
-				case "folder" : {}
-				case "upload" : {
+				case '' : {}
+				case 'folder' : {}
+				case 'upload' : {
 					$this->setDataUpload();
 					break;
 				}
-				case "uploadRTE" : {
+				case 'uploadRTE' : {
 					$this->setDataUploadRTE();
 					break;
 				}
-				case "uploadData" : {
+				case 'uploadData' : {
 					$this->setDataUploadData();
 					break;
 				}
@@ -179,7 +179,7 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			if (is_numeric($this->lConf['coinTitleSpeed']) && $this->lConf['coinTitleSpeed'] != 0) {
 				$this->conf['coinTitleSpeed'] = $this->lConf['coinTitleSpeed'];
 			}
-			// Will be overridden, if not "from TS"
+			// Will be overridden, if not 'from TS'
 			if ($this->lConf['coinNavigation'] < 2) {
 				$this->conf['coinNavigation'] = $this->lConf['coinNavigation'];
 			}
@@ -226,9 +226,9 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 				}
 				// define the images
 				switch ($this->conf['mode']) {
-					case "" : {}
-					case "folder" : {}
-					case "upload" : {
+					case '' : {}
+					case 'folder' : {}
+					case 'upload' : {
 						$this->images   = GeneralUtility::trimExplode(',',     $used_page['tx_imagecycle_images']);
 						$this->hrefs    = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
 						$this->captions = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
@@ -297,17 +297,17 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 
 		// define the contentKey if not exist
 		if ($this->getContentKey() == '') {
-			$this->setContentKey("imagecycle-coin_key");
+			$this->setContentKey('imagecycle-coin_key');
 		}
 
 		if (! $this->conf['coinEffect']) {
-			$this->conf['coinEffect'] = "random";
+			$this->conf['coinEffect'] = 'random';
 		}
 		if (! $this->conf['imagewidth']) {
-			$this->conf['imagewidth'] = "200c";
+			$this->conf['imagewidth'] = '200c';
 		}
 		if (! $this->conf['imageheight']) {
-			$this->conf['imageheight'] = "200c";
+			$this->conf['imageheight'] = '200c';
 		}
 
 		// wrap if integer
@@ -334,7 +334,7 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 			foreach ($data as $key => $item) {
 				$image = null;
 				$imgConf = $this->conf['coin.'][$this->type.'.']['image.'];
-				if (file_exists(GeneralUtility::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+				if (file_exists(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/' . $item['image'])) {
 					$totalImagePath = $item['image'];
 				} else {
 					$totalImagePath = $dir . $item['image'];
@@ -384,50 +384,50 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 
 		// The template for JS
 		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle.js");
+			$this->templateFileJS = $this->cObj->fileResource('EXT:imagecycle/res/tx_imagecycle.js');
 		}
 
 		// define the jQuery mode and function
 		if ($this->conf['jQueryNoConflict']) {
-			$jQueryNoConflict = "jQuery.noConflict();";
+			$jQueryNoConflict = 'jQuery.noConflict();';
 		} else {
-			$jQueryNoConflict = "";
+			$jQueryNoConflict = '';
 		}
 
 		$options = array();
 
-		$options['effect'] = "effect: '{$this->conf['coinEffect']}'";
-		$options['width']  = "width: '{$maxWidth}'";
-		$options['height'] = "height: '{$maxHeight}'";
+		$options['effect'] = 'effect: \'' . $this->conf['coinEffect'] . '\'';
+		$options['width']  = 'width: \'' . $maxWidth . '\'';
+		$options['height'] = 'height: \'' . $maxHeight . '\'';
 
-		$this->pagerenderer->addCSS("
+		$this->pagerenderer->addCSS('
 #c{$this->cObj->data['uid']} {
-	width: {$maxWidth}px;
-}");
+	width: ' . $maxWidth . 'px;
+}');
 
 		if ($this->conf['coinSpw'] > 0) {
-			$options['spw'] = "spw: '{$this->conf['coinSpw']}'";
+			$options['spw'] = 'spw: \'' . $this->conf['coinSpw'] . '\'';
 		}
 		if ($this->conf['coinSph'] > 0) {
-			$options['sph'] = "sph: '{$this->conf['coinSph']}'";
+			$options['sph'] = 'sph: \'' . $this->conf['coinSph'] . '\'';
 		}
 		if (is_numeric($this->conf['coinDelay']) && $this->conf['coinDelay'] != 0) {
-			$options['delay'] = "delay: {$this->conf['coinDelay']}";
+			$options['delay'] = 'delay: ' . $this->conf['coinDelay'];
 		}
 		if (is_numeric($this->conf['coinSDelay']) && $this->conf['coinSDelay'] != 0) {
-			$options['sDelay'] = "sDelay: {$this->conf['coinSDelay']}";
+			$options['sDelay'] = 'sDelay: ' . $this->conf['coinSDelay'];
 		}
 		if (is_numeric($this->conf['coinOpacity'])) {
-			$options['opacity'] = "opacity: {$this->conf['coinOpacity']}";
+			$options['opacity'] = 'opacity: ' . $this->conf['coinOpacity'];
 		}
 		if (is_numeric($this->conf['coinTitleSpeed']) && $this->conf['coinTitleSpeed'] != 0) {
-			$options['titleSpeed'] = "titleSpeed: {$this->conf['coinTitleSpeed']}";
+			$options['titleSpeed'] = 'titleSpeed: ' . $this->conf['coinTitleSpeed'];
 		}
-		$options['navigation'] = "navigation: ".($this->conf['coinNavigation'] ? 'true' : 'false');
-		$options['links']      = "links: ".($this->conf['coinLinks'] ? 'true' : 'false');
-		$options['hoverPause'] = "hoverPause: ".($this->conf['coinHoverPause'] ? 'true' : 'false');
-		$options['prev']       = "prev: '".$this->pi_getLL('prev')."'";
-		$options['next']       = "next: '".$this->pi_getLL('next')."'";
+		$options['navigation'] = 'navigation: ' . ($this->conf['coinNavigation'] ? 'true' : 'false');
+		$options['links']      = 'links: ' . ($this->conf['coinLinks'] ? 'true' : 'false');
+		$options['hoverPause'] = 'hoverPause: ' . ($this->conf['coinHoverPause'] ? 'true' : 'false');
+		$options['prev']       = 'prev: \'' . $this->pi_getLL('prev') . '\'';
+		$options['next']       = 'next: \'' . $this->pi_getLL('next') . '\'';
 
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
@@ -449,14 +449,14 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 		$this->pagerenderer->addJsFile($this->conf['jQueryCoin']);
 
 		// get the Template of the Javascript
-		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_COINSLIDER_JS###"))) {
-			$templateCode = "alert('Template TEMPLATE_COINSLIDER_JS is missing')";
+		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, '###TEMPLATE_COINSLIDER_JS###'))) {
+			$templateCode = 'alert(\'Template TEMPLATE_COINSLIDER_JS is missing\')';
 		}
 
 		// define the markers
 		$markerArray = array();
-		$markerArray["KEY"]     = $this->getContentKey();
-		$markerArray["OPTIONS"] = implode(",\n		", $options);
+		$markerArray['KEY']     = $this->getContentKey();
+		$markerArray['OPTIONS'] = implode(',' . PHP_EOL . '		', $options);
 
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);

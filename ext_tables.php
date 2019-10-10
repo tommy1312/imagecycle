@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3_MODE') or die();
+defined('TYPO3_MODE') || die('Access denied.');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/', 'Image-Cycle');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile('imagecycle', 'static/tt_content/', 'Image-Cycle for tt_content');

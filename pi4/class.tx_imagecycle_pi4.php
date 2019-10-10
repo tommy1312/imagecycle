@@ -74,7 +74,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 		$this->pi_loadLL();
 
 		// define the key of the element
-		$this->setContentKey("imagecycle-cross");
+		$this->setContentKey('imagecycle-cross');
 
 		// set the system language
 		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
@@ -103,10 +103,10 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 				foreach ($imagesRTE['el'] as $elKey => $el) {
 					if (is_numeric($elKey)) {
 						$this->conf['imagesRTE'][] = array(
-							"image"   => $el['data']['el']['image']['vDEF'],
-							"href"    => $el['data']['el']['href']['vDEF'],
-							"caption" => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
-							"hide"    => $el['data']['el']['hide']['vDEF'],
+							'image'   => $el['data']['el']['image']['vDEF'],
+							'href'    => $el['data']['el']['href']['vDEF'],
+							'caption' => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+							'hide'    => $el['data']['el']['hide']['vDEF'],
 						);
 					}
 				}
@@ -126,21 +126,21 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			$this->lConf['optionsOverride'] = $this->getFlexformData('special', 'optionsOverride');
 
 			// define the key of the element
-			$this->setContentKey("imagecycle-cross_c" . $this->uid);
+			$this->setContentKey('imagecycle-cross_c' . $this->uid);
 
 			// define the images
 			switch ($this->conf['mode']) {
-				case "" : {}
-				case "folder" : {}
-				case "upload" : {
+				case '' : {}
+				case 'folder' : {}
+				case 'upload' : {
 					$this->setDataUpload();
 					break;
 				}
-				case "uploadRTE" : {
+				case 'uploadRTE' : {
 					$this->setDataUploadRTE();
 					break;
 				}
-				case "uploadData" : {
+				case 'uploadData' : {
 					$this->setDataUploadData();
 					break;
 				}
@@ -170,7 +170,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			if ($this->lConf['crossFromTo']) {
 				$this->conf['crossFromTo'] = $this->lConf['crossFromTo'];
 			}
-			// Will be overridden, if not "from TS"
+			// Will be overridden, if not 'from TS'
 			if ($this->lConf['crossVariant'] < 2) {
 				$this->conf['crossVariant'] = $this->lConf['crossVariant'];
 			}
@@ -216,9 +216,9 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 				}
 				// define the images
 				switch ($this->conf['mode']) {
-					case "" : {}
-					case "folder" : {}
-					case "upload" : {
+					case '' : {}
+					case 'folder' : {}
+					case 'upload' : {
 						$this->images   = GeneralUtility::trimExplode(',',     $used_page['tx_imagecycle_images']);
 						$this->hrefs    = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
 						$this->captions = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
@@ -292,14 +292,14 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 
 		// define the contentKey if not exist
 		if ($this->getContentKey() == '') {
-			$this->setContentKey("imagecycle-cross_key");
+			$this->setContentKey('imagecycle-cross_key');
 		}
 
 		if (! $this->conf['imagewidth']) {
-			$this->conf['imagewidth'] = "200c";
+			$this->conf['imagewidth'] = '200c';
 		}
 		if (! $this->conf['imageheight']) {
-			$this->conf['imageheight'] = "200c";
+			$this->conf['imageheight'] = '200c';
 		}
 
 		// wrap if integer
@@ -328,7 +328,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			foreach ($data as $key => $item) {
 				$image = null;
 				$imgConf = $this->conf['cross.'][$this->type.'.']['image.'];
-				if (file_exists(GeneralUtility::getIndpEnv("TYPO3_DOCUMENT_ROOT") . '/' . $item['image'])) {
+				if (file_exists(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/' . $item['image'])) {
 					$totalImagePath = $item['image'];
 				} else {
 					$totalImagePath = $dir . $item['image'];
@@ -364,36 +364,36 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 			}
 			$returnString = $this->cObj->stdWrap(' ', $this->conf['cross.'][$this->type.'.']['stdWrap.']);
 			$returnString .= $no_script;
-			$imagesString = str_replace("\/", "/", json_encode($images));
+			$imagesString = str_replace('\/', '/', json_encode($images));
 		}
 
 		// The template for JS
 		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource("EXT:imagecycle/res/tx_imagecycle.js");
+			$this->templateFileJS = $this->cObj->fileResource('EXT:imagecycle/res/tx_imagecycle.js');
 		}
 
 		// define the jQuery mode and function
 		if ($this->conf['jQueryNoConflict']) {
-			$jQueryNoConflict = "jQuery.noConflict();";
+			$jQueryNoConflict = 'jQuery.noConflict();';
 		} else {
-			$jQueryNoConflict = "";
+			$jQueryNoConflict = '';
 		}
 
-		$this->pagerenderer->addCSS("
+		$this->pagerenderer->addCSS('
 #{$this->getContentKey()} {
 	width: {$maxWidth}px;
 	height: {$maxHeight}px;
-}");
+}');
 
 		$options = array();
 
 		if ($this->conf['crossFade'] > 0) {
-			$options['fade'] = "fade: ".($this->conf['crossFade'] / 1000);
+			$options['fade'] = 'fade: ' . ($this->conf['crossFade'] / 1000);
 		}
 		if ($this->conf['crossTransitionDir'] && $this->conf['crossTransition']) {
-			$options['easing'] = "easing: 'ease{$this->conf['crossTransitionDir']}{$this->conf['crossTransition']}'";
+			$options['easing'] = 'easing: \'ease' . $this->conf['crossTransitionDir'] . $this->conf['crossTransition'] . '\'';
 		}
-		$options['variant'] = "variant: ".($this->conf['crossVariant'] ? 'true' : 'false');
+		$options['variant'] = 'variant: ' . ($this->conf['crossVariant'] ? 'true' : 'false');
 
 		// overwrite all options if set
 		if (trim($this->conf['options'])) {
@@ -419,15 +419,15 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 		$this->pagerenderer->addCssFile($this->conf['cssFileCross']);
 
 		// get the Template of the Javascript
-		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, "###TEMPLATE_CROSSSLIDER_JS###"))) {
-			$templateCode = "alert('Template TEMPLATE_CROSSSLIDER_JS is missing')";
+		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, '###TEMPLATE_CROSSSLIDER_JS###'))) {
+			$templateCode = 'alert(\'Template TEMPLATE_CROSSSLIDER_JS is missing\')';
 		}
 
 		// define the markers
 		$markerArray = array();
-		$markerArray["KEY"]     = $this->getContentKey();
-		$markerArray["OPTIONS"] = implode(",\n		", $options);
-		$markerArray["IMAGES"] = $imagesString;
+		$markerArray['KEY']     = $this->getContentKey();
+		$markerArray['OPTIONS'] = implode(',' . PHP_EOL . '		', $options);
+		$markerArray['IMAGES'] = $imagesString;
 
 		// set the markers
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);

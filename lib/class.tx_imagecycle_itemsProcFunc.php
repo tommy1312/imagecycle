@@ -44,12 +44,12 @@ class tx_imagecycle_itemsProcFunc
 	public function getEffects($config, $item)
 	{
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
-		$availableEffects = GeneralUtility::trimExplode(",", $confArr['effects'], true);
+		$availableEffects = GeneralUtility::trimExplode(',', $confArr['effects'], true);
 		if (count($availableEffects) < 1) {
 			$availableEffects = array('none','blindX','blindY','blindZ','cover','curtainX','curtainY','fade','fadeout','fadeZoom','growX','growY','scrollUp','scrollDown','scrollLeft','scrollRight','scrollHorz','scrollVert','shuffle','slideX','slideY','toss','turnUp','turnDown','turnLeft','turnRight','uncover','wipe','zoom','all');
 		}
 		$pageTS = BackendUtility::getPagesTSconfig($config['row']['pid']);
-		$imagecycleEffects = GeneralUtility::trimExplode(",", $pageTS['mod.']['imagecycle.']['effects'], true);
+		$imagecycleEffects = GeneralUtility::trimExplode(',', $pageTS['mod.']['imagecycle.']['effects'], true);
 		$optionList = array();
 		if (is_array($imagecycleEffects) && count($imagecycleEffects) > 0) {
 			foreach ($availableEffects as $key => $availableEffect) {
@@ -81,12 +81,12 @@ class tx_imagecycle_itemsProcFunc
 	public function getEffectsCoin($config, $item)
 	{
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
-		$availableEffects = GeneralUtility::trimExplode(",", $confArr['effectsCoin'], true);
+		$availableEffects = GeneralUtility::trimExplode(',', $confArr['effectsCoin'], true);
 		if (count($availableEffects) < 1) {
 			$availableEffects = array('random','swirl','rain','straight');
 		}
 		$pageTS = BackendUtility::getPagesTSconfig($config['row']['pid']);
-		$imagecycleEffects = GeneralUtility::trimExplode(",", $pageTS['mod.']['imagecycle.']['effectsCoin'], true);
+		$imagecycleEffects = GeneralUtility::trimExplode(',', $pageTS['mod.']['imagecycle.']['effectsCoin'], true);
 		$optionList = array();
 		if (is_array($imagecycleEffects) && count($imagecycleEffects) > 0) {
 			foreach ($availableEffects as $key => $availableEffect) {
@@ -118,12 +118,12 @@ class tx_imagecycle_itemsProcFunc
 	public function getEffectsNivo($config, $item)
 	{
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
-		$availableEffects = GeneralUtility::trimExplode(",", $confArr['effectsNivo'], true);
+		$availableEffects = GeneralUtility::trimExplode(',', $confArr['effectsNivo'], true);
 		if (count($availableEffects) < 1) {
 			$availableEffects = array('random','sliceDown','sliceDownLeft','sliceUp','sliceUpLeft','sliceUpDown','sliceUpDownLeft','fold','fade','slideInRight','slideInLeft', 'boxRandom', 'boxRain', 'boxRainReverse', 'boxRainGrow', 'boxRainGrowReverse');
 		}
 		$pageTS = BackendUtility::getPagesTSconfig($config['row']['pid']);
-		$imagecycleEffects = GeneralUtility::trimExplode(",", $pageTS['mod.']['imagecycle.']['effectsNivo'], true);
+		$imagecycleEffects = GeneralUtility::trimExplode(',', $pageTS['mod.']['imagecycle.']['effectsNivo'], true);
 		$optionList = array();
 		if (is_array($imagecycleEffects) && count($imagecycleEffects) > 0) {
 			foreach ($availableEffects as $key => $availableEffect) {
@@ -158,7 +158,7 @@ class tx_imagecycle_itemsProcFunc
 		if (! is_dir(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder']))) {
 			// if the defined folder does not exist, define the default folder
 			GeneralUtility::devLog('Path \''.$confArr['nivoThemeFolder'].'\' does not exist', 'imagecycle', 1);
-			$confArr['nivoThemeFolder'] = "EXT:imagecycle/res/css/nivoslider/";
+			$confArr['nivoThemeFolder'] = 'EXT:imagecycle/res/css/nivoslider/';
 		}
 
 		// get the selected item
@@ -213,19 +213,19 @@ class tx_imagecycle_itemsProcFunc
 		$optionList = array();
 		$optionList[] = array(
 			$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.upload'),
-			"upload",
-			"EXT:imagecycle/mode_upload.gif"
+			'upload',
+			'EXT:imagecycle/mode_upload.gif'
 		);
 		if ($config['config']['displayMode'] != 'page') {
 			$optionList[] = array(
 				$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.rte'),
-				"uploadRTE",
-				"EXT:imagecycle/mode_rte.gif"
+				'uploadRTE',
+				'EXT:imagecycle/mode_rte.gif'
 			);
 			$optionList[] = array(
 				$GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.data'),
-				"uploadData",
-				"EXT:imagecycle/mode_data.gif"
+				'uploadData',
+				'EXT:imagecycle/mode_data.gif'
 			);
 		}
 		if (isset($config['items']) && is_array($config['items'])) {

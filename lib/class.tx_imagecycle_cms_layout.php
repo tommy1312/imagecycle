@@ -49,29 +49,29 @@ class tx_imagecycle_cms_layout
 			$result = $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.not_configured').'<br/>';
 		} else {
 			switch ($params['row']['list_type']) {
-				case "imagecycle_pi1" : {
-					$type   = "jQuery Cycle (" . ($data['data']['movement']['lDEF']['type']['vDEF'] ? implode(', ', GeneralUtility::trimExplode(',', $data['data']['movement']['lDEF']['type']['vDEF'])) : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ")";
+				case 'imagecycle_pi1' : {
+					$type   = 'jQuery Cycle (' . ($data['data']['movement']['lDEF']['type']['vDEF'] ? implode(', ', GeneralUtility::trimExplode(',', $data['data']['movement']['lDEF']['type']['vDEF'])) : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ')';
 					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.$type.'</strong><br/>');
 					break;
 				}
-				case "imagecycle_pi2" : {
-					$type   = "Coin-Slider (" . ($data['data']['settings']['lDEF']['coinEffect']['vDEF'] ? $data['data']['settings']['lDEF']['coinEffect']['vDEF'] : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ")";
+				case 'imagecycle_pi2' : {
+					$type   = 'Coin-Slider (' . ($data['data']['settings']['lDEF']['coinEffect']['vDEF'] ? $data['data']['settings']['lDEF']['coinEffect']['vDEF'] : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ')';
 					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.$type.'</strong><br/>');
 					break;
 				}
-				case "imagecycle_pi3" : {
-					$type   = "Nivo-Slider (" . ($data['data']['settings']['lDEF']['nivoEffect']['vDEF'] ? implode(', ', GeneralUtility::trimExplode(',', $data['data']['settings']['lDEF']['nivoEffect']['vDEF'])) : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ")";
+				case 'imagecycle_pi3' : {
+					$type   = 'Nivo-Slider (' . ($data['data']['settings']['lDEF']['nivoEffect']['vDEF'] ? implode(', ', GeneralUtility::trimExplode(',', $data['data']['settings']['lDEF']['nivoEffect']['vDEF'])) : $GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.from_ts')) . ')';
 					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.$type.'</strong><br/>');
 					break;
 				}
-				case "imagecycle_pi4" : {
-					$type   = "Cross-Slide";
+				case 'imagecycle_pi4' : {
+					$type   = 'Cross-Slide';
 					$result = sprintf($GLOBALS['LANG']->sL('LLL:EXT:imagecycle/locallang.xml:cms_layout.style'), '<strong>'.$type.'</strong><br/>');
 					break;
 				}
 			}
 		}
-		if (ExtensionManagementUtility::isLoaded("templavoila")) {
+		if (ExtensionManagementUtility::isLoaded('templavoila')) {
 			$result = strip_tags($result);
 		}
 		return $result;

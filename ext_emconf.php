@@ -1,10 +1,10 @@
 <?php
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Image Cycle',
-	'description' => 'Insert a slideshow into your page or template. Manage the images, captions and hrefs recursively in the pagetree and show it in a jQuery-Cycle, Coin-Slider, Nivo-Slider or Cross-Slider. Use t3jquery for better integration with other jQuery extensions.',
+	'description' => 'Insert a slideshow into your page or template. Manage the images, captions and hrefs recursively in the pagetree and show it in a jQuery-Cycle, Coin-Slider, Nivo-Slider or Cross-Slider.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '3.1.2',
+	'version' => '3.2.0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -16,8 +16,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'modify_tables' => '',
 	'clearcacheonload' => 1,
 	'lockType' => '',
-	'author' => 'Juergen Furrer',
-	'author_email' => 'juergen.furrer@gmail.com',
+	'author' => 'Franz Holzinger, Juergen Furrer',
+	'author_email' => 'franz@ttproducts.de',
 	'author_company' => '',
 	'constraints' => array(
 		'depends' => array(
@@ -28,7 +28,6 @@ $EM_CONF[$_EXTKEY] = array(
 		'conflicts' => array(
 		),
 		'suggests' => array(
-			'jftcaforms' => '0.2.1-0.0.0',
 		),
 	),
 	'autoload' => array(

@@ -1,4 +1,6 @@
-2019-10-07  Franz Holzinger  <franz@ttproducts.de>
+2019-10-10  Franz Holzinger  <franz@ttproducts.de>
+    * adaptions according the Coding Guidelines
 
+2019-10-07  Franz Holzinger  <franz@ttproducts.de>
     * add ext_autoload.php
     * Initial version as fork from imagecycle 3.1.2 by Matteo Bonaker for a7digital, formerly by Juergen Furrer

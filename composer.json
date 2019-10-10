@@ -1,13 +1,18 @@
 {
   "name": "typo3-extension/imagecycle",
   "type": "typo3-cms-extension",
-  "description": "Insert a slideshow into your page or template. Manage the images, captions and hrefs recursively in the pagetree and show it in a jQuery-Cycle, Coin-Slider, Nivo-Slider or Cross-Slider. Use t3jquery for better integration with other jQuery extensions.",
+  "description": "Insert a slideshow into your page or template. Manage the images, captions and hrefs recursively in the pagetree and show it in a jQuery-Cycle, Coin-Slider, Nivo-Slider or Cross-Slider.",
   "license": ["GPL-2.0+"],
-  "version": "3.0.0",
 
   "authors": [
     {
-      "name": "Juerge Furrer",
+      "name": "Franz Holzinger",
+      "role": "Developer",
+      "email": "franz@ttproducts.de",
+      "homepage": "https://ttproducts.de"
+    },
+    {
+      "name": "Juergen Furrer",
       "email": "juergen.furrer@gmail.com"
     },
     {
@@ -17,15 +22,21 @@
   ],
 
   "require": {
-    "typo3/cms-core": ">=7.6.0,<8.0"
-  },
-  "replace": {
-    "imagecycle": "self.version",
-    "typo3-ter/imagecycle": "self.version"
+    "typo3/cms-core": ">=7.6.0,<9.0"
   },
   "autoload": {
     "psr-4": {
       "TYPO3Extension\\Imagecycle\\": "Classes"
     }
+  },
+  "replace": {
+    "imagecycle": "self.version",
+    "typo3-ter/imagecycle": "self.version"
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "imagecycle"
+    }
   }
 }
+
