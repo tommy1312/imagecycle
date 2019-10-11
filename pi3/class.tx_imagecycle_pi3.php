@@ -34,7 +34,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 require_once(ExtensionManagementUtility::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
 
 /**
- * Plugin 'Coin-Slider' for the 'imagecycle' extension.
+ * Plugin 'Nivo-Slider' for the 'imagecycle' extension.
  *
  * @author	Juergen Furrer <juergen.furrer@gmail.com>
  * @package	TYPO3

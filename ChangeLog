@@ -1,3 +1,10 @@
+
+
+
+2019-10-11  Franz Holzinger  <franz@ttproducts.de>
+    * new plugin wizard for TYPO3 8
+    * use new constant IMAGECYLCE_EXT
+
 2019-10-10  Franz Holzinger  <franz@ttproducts.de>
     * adaptions according the Coding Guidelines
 

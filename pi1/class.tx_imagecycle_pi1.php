@@ -80,7 +80,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		// set the uid of the tt_content
 		$this->uid = $this->cObj->data['_LOCALIZED_UID'] ? $this->cObj->data['_LOCALIZED_UID'] : $this->cObj->data['uid'];
 
-		if ($this->cObj->data['list_type'] == $this->extKey.'_pi1') {
+		if ($this->cObj->data['list_type'] == $this->extKey . '_pi1') {
 			$this->type = 'normal';
 
 			// It's a content, all data from flexform
