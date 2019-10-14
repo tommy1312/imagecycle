@@ -2,7 +2,7 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 if (!defined ('IMAGECYLCE_EXT')) {
-    define('IMAGECYLCE_EXT', 'imagecylce');
+    define('IMAGECYLCE_EXT', 'imagecycle');
 }
 
 // Page module hook
@@ -31,3 +31,9 @@ foreach ([\TYPO3\CMS\Backend\Form\FormDataProvider\TcaSelectItems::class, \TYPO3
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['flexFormSegment'][$dataProviderName]['depends'][]
         = \TYPO3Extension\Imagecycle\Form\FormDataProvider\SelectOrCheckboxField::class;
 }
+
+
+if (TYPO3_MODE == 'BE') {
+    $GLOBALS['TBE_MODULES_EXT']['xMOD_db_new_content_el']['addElClasses']['TYPO3Extension\\Imagecycle\\Controller\\WizardIcon'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('imagecycle') . 'Classes/Controller/WizardIcon.php';
+}
+
