@@ -1,4 +1,7 @@
 <?php
+
+namespace TYPO3Extension\Imagecycle\Backend;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -28,6 +31,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+
 /**
  * 'itemsProcFunc' for the 'imagecycle' extension.
  *
@@ -35,7 +39,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package    TYPO3
  * @subpackage tx_imagecycle
  */
-class tx_imagecycle_itemsProcFunc
+class ItemsProcFunc
 {
 	/**
 	 * Get defined Effects for dropdown

@@ -44,7 +44,7 @@ class tx_imagecycle_tsparserext
 	*/
 	public function getThemesNivo(&$params, &$tsObj)
 	{
-		$itemsProcFunc = GeneralUtility::makeInstance('tx_imagecycle_itemsProcFunc');
+		$itemsProcFunc = GeneralUtility::makeInstance(TYPO3Extension\Imagecycle\Backend\ItemsProcFunc::class);
 		$config = $itemsProcFunc->getThemesNivo(array('items'=> array()), array());
 		$items = $config['items'];
 

@@ -13,7 +13,7 @@ $tempColumns['tx_imagecycle_mode'] = array(
         'items' => array (
             array('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.mode.I.recursiv', 'recursiv'),
         ),
-        'itemsProcFunc' => 'tx_imagecycle_itemsProcFunc->getModes',
+        'itemsProcFunc' => 'TYPO3Extension\Imagecycle\Backend\ItemsProcFunc->getModes',
         'displayMode' => 'page',
         'size' => 1,
         'maxitems' => 1,
@@ -66,7 +66,7 @@ $tempColumns['tx_imagecycle_effect'] = array(
         'items' => array(
             array('LLL:EXT:imagecycle/locallang_db.xml:tt_content.pi_flexform.from_ts', ''),
         ),
-        'itemsProcFunc' => 'tx_imagecycle_itemsProcFunc->getEffects',
+        'itemsProcFunc' => 'TYPO3Extension\Imagecycle\Backend\ItemsProcFunc->getEffects',
         'size' => 1,
         'maxitems' => 1,
     )

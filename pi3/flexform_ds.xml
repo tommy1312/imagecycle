@@ -18,7 +18,7 @@
 								<type>select</type>
 								<size>1</size>
 								<maxitems>1</maxitems>
-								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getModes</itemsProcFunc>
+                                <itemsProcFunc>TYPO3Extension\Imagecycle\Backend\ItemsProcFunc->getModes</itemsProcFunc>
 								<displayMode>flex</displayMode>
 								<renderType>selectSingle</renderType>
 							</config>
@@ -199,7 +199,7 @@
 								<size>12</size>
 								<maxitems>100</maxitems>
 								<multiple>1</multiple>
-								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getEffectsNivo</itemsProcFunc>
+                                <itemsProcFunc>TYPO3Extension\Imagecycle\Backend\ItemsProcFunc->getEffectsNivo</itemsProcFunc>
 								<renderType>selectMultipleSideBySide</renderType>
 							</config>
 						</TCEforms>
@@ -219,7 +219,7 @@
 										<numIndex index="1"></numIndex>
 									</numIndex>
 								</items>
-								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getThemesNivo</itemsProcFunc>
+                                <itemsProcFunc>TYPO3Extension\Imagecycle\Backend\ItemsProcFunc->getThemesNivo</itemsProcFunc>
 								<renderType>selectSingle</renderType>
 							</config>
 						</TCEforms>

@@ -18,7 +18,7 @@
 								<type>select</type>
 								<size>1</size>
 								<maxitems>1</maxitems>
-								<itemsProcFunc>tx_imagecycle_itemsProcFunc->getModes</itemsProcFunc>
+                                <itemsProcFunc>TYPO3Extension\Imagecycle\Backend\ItemsProcFunc->getModes</itemsProcFunc>
 								<displayMode>flex</displayMode>
 								<renderType>selectSingle</renderType>
 							</config>
