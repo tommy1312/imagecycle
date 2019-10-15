@@ -5,8 +5,6 @@ $key = 'imagecycle';
 $extensionPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($key, $script);
 
 return array(
-    'tx_imagecycle_cms_layout' => $extensionPath . 'lib/class.tx_imagecycle_cms_layout.php',
-    'tx_imagecycle_itemsProcFunc' => $extensionPath . 'lib/class.tx_imagecycle_itemsProcFunc.php',
     'tx_imagecycle_pagerenderer' => $extensionPath . 'lib/class.tx_imagecycle_pagerenderer.php',
     'tx_imagecycle_TCAform' => $extensionPath . 'lib/class.tx_imagecycle_TCAform.php',
     'tx_imagecycle_tsparserext' => $extensionPath . 'lib/class.tx_imagecycle_tsparserext.php',

@@ -1,5 +1,6 @@
 
 2019-10-15  Franz Holzinger  <franz@ttproducts.de>
+    * move lib/class.tx_imagecycle_cms_layout.php -> Classes/Hooks/CmsLayout.php
     * move lib/class.tx_imagecycle_itemsProcFunc.php -> Classes/Backend/ItemsProcFunc.php
 
 2019-10-11  Franz Holzinger  <franz@ttproducts.de>

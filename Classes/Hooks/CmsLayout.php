@@ -1,4 +1,7 @@
 <?php
+
+namespace TYPO3Extension\Imagecycle\Hooks;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -25,6 +28,7 @@
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+
 /**
  * 'cms_layout' for the 'imagecycle' extension.
  *
@@ -32,7 +36,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package    TYPO3
  * @subpackage tx_imagecycle
  */
-class tx_imagecycle_cms_layout
+class CmsLayout
 {
 	/**
 	 * Returns information about this extension's pi1 plugin
