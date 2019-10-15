@@ -11,7 +11,7 @@ plugin.tx_imagecycle_pi3 {
 	# cat=plugin.tx_imagecycle.nivoslider/typo/010; type=options[,random,sliceDown,sliceDownLeft,sliceUp,sliceUpLeft,sliceUpDown,sliceUpDownLeft,fold,fade,slideInRight,slideInLeft,boxRandom,boxRain,boxRainReverse,boxRainGrow,boxRainGrowReverse]; label=Effect for Nivo-Slider: This will set the default effect for Nivo-Slider
 	nivoEffect = random
 
-	# cat=plugin.tx_imagecycle.nivoslider/typo/020; type=user[EXT:imagecycle/lib/class.tx_imagecycle_tsparserext.php:tx_imagecycle_tsparserext->getThemesNivo]; label=Used Theme: Set the default theme to use
+	# cat=plugin.tx_imagecycle.nivoslider/typo/020; type=user[TYPO3Extension\Imagecycle\Backend\ExtensionManagerConfiguration->getThemesNivo]; label=Used Theme: Set the default theme to use
 	nivoTheme = default
 
 	# cat=plugin.tx_imagecycle.nivoslider/typo/030; type=string; label=Width: Width of slider panel

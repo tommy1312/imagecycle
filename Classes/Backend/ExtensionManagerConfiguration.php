@@ -1,4 +1,7 @@
 <?php
+
+namespace TYPO3Extension\Imagecycle\Backend;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -34,7 +37,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package    TYPO3
  * @subpackage tx_imagecycle
  */
-class tx_imagecycle_tsparserext
+
+class ExtensionManagerConfiguration
 {
 	/**
 	* Return the dropdown with all skins for constant editor

@@ -1,5 +1,6 @@
 
 2019-10-15  Franz Holzinger  <franz@ttproducts.de>
+    * lib/class.tx_imagecycle_tsparserext.php -> Classes/Backend/ExtensionManagerConfiguration.php
     * move lib/class.tx_imagecycle_pagerenderer.php -> Classes/Controller/PageRenderer.php
     * move lib/class.tx_imagecycle_TCAform.php -> Classes/Backend/TcaForm.php
     * move lib/class.tx_imagecycle_cms_layout.php -> Classes/Hooks/CmsLayout.php

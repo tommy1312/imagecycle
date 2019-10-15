@@ -17,7 +17,6 @@ useSelectInsteadCheckbox = 0
 # cat=basic/enable/60; type=string; label=Allowed DB-Types for captions: Sets the allowed DB-Types for "Upload with data" (tt_content,fe_users,tt_news, tt_address)
 allowedDbTypesForCaption = 
 
-
-
-# cat=basic/dev/1000; type=user[EXT:imagecycle/lib/class.tx_imagecycle_tsparserext.php:tx_imagecycle_tsparserext->displayMessage]; label=Updater
+# cat=basic/dev/1000; type=user[TYPO3Extension\Imagecycle\Backend\ExtensionManagerConfiguration->displayMessage]; label=Updater
 updateMessage = 0
+
