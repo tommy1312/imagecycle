@@ -509,8 +509,10 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 			// define the animation for the caption
 			$fx = array();
 			if (! $this->conf['captionAnimate']) {
-				$before .= 'jQuery(\'' . $captionTag . '\'', this).css(\'display\', \'none\');';
-				$after  .= 'jQuery(\'' . $captionTag , '\'', this).css(\'display\', \'block\');';
+                $before .= 'jQuery(\'' . $captionTag . '\', this).css(\'display\', \'none\');';
+
+
+				$after  .= 'jQuery(\'' . $captionTag . '\', this).css(\'display\', \'block\');';
 			} else {
 				if ($this->conf['captionTypeOpacity']) {
 					$fx[] = 'opacity: \'show\'';
@@ -573,7 +575,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 
 		// get the Template of the Javascript
 		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, '###TEMPLATE_JS###'))) {
-			$templateCode = 'alert('Template TEMPLATE_JS is missing')';
+			$templateCode = 'alert(\'Template TEMPLATE_JS is missing\')';
 		}
 		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
