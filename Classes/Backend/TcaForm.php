@@ -1,4 +1,7 @@
 <?php
+
+namespace TYPO3Extension\Imagecycle\Backend;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -31,14 +34,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package    TYPO3
  * @subpackage tx_imagecycle
  */
-class tx_imagecycle_TCAform
+class TcaForm
 {
 	/**
 	 * Removes the FlexForm toggle/add-section component.
 	 *
 	 * @return array
 	 */
-	function hideRTE()
+	public function hideRTE()
 	{
 		return GeneralUtility::wrapJS(
 			'TYPO3.jQuery(".t3-form-field-container.t3-form-flex").parents(".panel.panel-tab").remove();'
