@@ -76,7 +76,7 @@ class ExtensionManagerConfiguration
 	 *
 	 * @return	string
 	 */
-	function displayMessage(&$params, &$tsObj)
+	public function displayMessage(&$params, &$tsObj)
 	{
 		$out = '';
 
@@ -97,11 +97,11 @@ class ExtensionManagerConfiguration
 	}
 
 	/**
-	 * Check the config for a gifen feature
+	 * Check the config for a given feature
 	 * 
 	 * @return boolean
 	 */
-	function checkConfig()
+	public function checkConfig()
 	{
 		$confDefault = array(
 			'effects',
@@ -113,7 +113,7 @@ class ExtensionManagerConfiguration
 		);
 		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
 		foreach ($confDefault as $val) {
-			if (! isset($confArr[$val]) && ! isset($_POST['data'][$val])) {
+			if (!isset($confArr[$val]) && !isset($_POST['data'][$val])) {
 				return false;
 			}
 		}
