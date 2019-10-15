@@ -298,7 +298,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
-		$this->pagerenderer = GeneralUtility::makeInstance('tx_imagecycle_pagerenderer');
+		$this->pagerenderer = GeneralUtility::makeInstance(\TYPO3Extension\Imagecycle\Controller\PageRenderer);
 		$this->pagerenderer->setConf($this->conf);
 
 		// define the directory of images

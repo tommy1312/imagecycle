@@ -12,7 +12,6 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-
 namespace TYPO3Extension\Imagecycle\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;

@@ -1,4 +1,6 @@
 <?php
+namespace TYPO3Extension\Imagecycle\Controller;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -30,10 +32,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
-if (ExtensionManagementUtility::isLoaded('t3jquery')) {
-	require_once(ExtensionManagementUtility::extPath('t3jquery').'class.tx_t3jquery.php');
-}
-
 /**
  * This class implements a all needed functions to add Javascripts and Stylesheets to a page
  *
@@ -41,7 +39,10 @@ if (ExtensionManagementUtility::isLoaded('t3jquery')) {
  * @package    TYPO3
  * @subpackage tx_imagecycle
  */
-class tx_imagecycle_pagerenderer
+ 
+
+
+class PageRenderer
 {
 	public $conf = array();
 	public $extKey = 'imagecycle';

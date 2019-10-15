@@ -29,7 +29,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Plugin\AbstractPlugin;
 
-require_once(ExtensionManagementUtility::extPath('imagecycle').'lib/class.tx_imagecycle_pagerenderer.php');
 
 /**
  * Plugin 'Image Cycle' for the 'imagecycle' extension.
@@ -414,7 +413,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
-		$this->pagerenderer = GeneralUtility::makeInstance('tx_imagecycle_pagerenderer');
+		$this->pagerenderer = GeneralUtility::makeInstance(\TYPO3Extension\Imagecycle\Controller\PageRenderer::class);
 		$this->pagerenderer->setConf($this->conf);
 
 		// define the directory of images
