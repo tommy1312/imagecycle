@@ -27,7 +27,6 @@ namespace TYPO3Extension\Imagecycle\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
@@ -39,7 +38,6 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
  * @package    TYPO3
  * @subpackage tx_imagecycle
  */
- 
 
 
 class PageRenderer
@@ -73,7 +71,7 @@ class PageRenderer
 	* @return void
 	*/
 	public function addResources() {
-		$pagerender = GeneralUtility::makeInstance(PageRenderer::class);
+		$pagerender = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
 		// Fix moveJsFromHeaderToFooter (add all scripts to the footer)
 		if ($this->getTypoScriptFrontendController()->config['config']['moveJsFromHeaderToFooter']) {
 			$allJsInFooter = TRUE;
