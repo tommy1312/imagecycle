@@ -1,11 +1,11 @@
 # TYPO3 Extension Imagecycle
 
-This repository is a fork of the currently unmaintained TYPO3 Extension
-[Imagecycle](https://typo3.org/extensions/repository/view/imagecycle) and of its fork at [a7digital Imagecycle](https://github.com/a7digital/imagecycle).
+This repository is replacing the TYPO3 Extension
+[Imagecycle](https://typo3.org/extensions/repository/view/imagecycle) and it has been built starting from the former fork at [a7digital Imagecycle](https://github.com/a7digital/imagecycle).
 
 ## Remarks
 
-The scope is to bring back functionality and compatibility in newer versions of TYPO3 CMS. There are future plans to continue maintaining this extension on a voluntary basis. You are invited to make contributions as issues and pull requests or pay my further work.
+The scope is to bring back functionality and compatibility for newer versions of TYPO3 CMS. There are future plans to continue maintaining this extension on a voluntary basis. You are invited to make contributions as issues and pull requests or pay my further work.
 
 ## Side notes
 
