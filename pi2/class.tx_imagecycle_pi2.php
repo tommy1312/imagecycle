@@ -280,7 +280,7 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 	 * @param $data
 	 * @return string
 	 */
-	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
+	public function parseTemplate($data = array(), $dir = '', $onlyJS = false)
 	{
 		$this->pagerenderer = GeneralUtility::makeInstance(\TYPO3Extension\Imagecycle\Controller\PageRenderer);
 		$this->pagerenderer->setConf($this->conf);

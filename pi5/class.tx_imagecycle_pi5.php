@@ -273,7 +273,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 		}
 		$data = array();
 		$i = 0;
-		for ($a=0; $a<$count; $a++) {
+		for ($a = 0; $a < $count; $a++) {
 			if ($this->conf['onlyFirstImage']) {
 				// Only use the first image
 				$image = $this->images[0];
@@ -352,7 +352,7 @@ class tx_imagecycle_pi5 extends tx_imagecycle_pi1
 			foreach ($data as $key => $item) {
 				$GLOBALS['TSFE']->register['caption_key'] = $this->getContentKey() . '-' . $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'];
 				$image = null;
-				$imgConf = $this->conf['slice.'][$this->type.'.']['image.'];
+				$imgConf = $this->conf['slice.'][$this->type . '.']['image.'];
 				if (file_exists(GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/' . $item['image'])) {
 					$totalImagePath = $item['image'];
 				} else {

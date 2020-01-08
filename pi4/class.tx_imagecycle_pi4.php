@@ -385,8 +385,8 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 
 		$this->pagerenderer->addCSS('
 #{$this->getContentKey()} {
-	width: {$maxWidth}px;
-	height: {$maxHeight}px;
+	width: ' . $maxWidth . 'px;
+	height:' . $maxHeight . 'px;
 }');
 
 		$options = array();
@@ -425,7 +425,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 		$this->pagerenderer->addCssFile($this->conf['cssFileCross']);
 
 		// get the Template of the Javascript
-		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, '###TEMPLATE_CROSSSLIDER_JS###'))) {
+		if (!$templateCode = trim($this->cObj->getSubpart($this->templateFileJS, '###TEMPLATE_CROSSSLIDER_JS###'))) {
 			$templateCode = 'alert(\'Template TEMPLATE_CROSSSLIDER_JS is missing\')';
 		}
 

@@ -302,7 +302,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		}
 		$data = array();
 		$i = 0;
-		for ($a=0; $a<$count; $a++) {
+		for ($a = 0; $a < $count; $a++) {
 			if ($this->conf['onlyFirstImage']) {
 				// Only use the first image
 				$image = $this->images[0];
@@ -325,7 +325,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 	 * @param $data
 	 * @return string
 	 */
-	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
+	public function parseTemplate ($data = array(), $dir = '', $onlyJS = false)
 	{
 		$this->pagerenderer = GeneralUtility::makeInstance(\TYPO3Extension\Imagecycle\Controller\PageRenderer);
 		$this->pagerenderer->setConf($this->conf);
@@ -388,7 +388,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 			$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
 			if (! is_dir(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder']))) {
 				// if the defined folder does not exist, define the default folder
-				GeneralUtility::devLog('Path \''.$confArr['nivoThemeFolder'].'\' does not exist', 'imagecycle', 1);
+				GeneralUtility::devLog('Path \'' . $confArr['nivoThemeFolder'] . '\' does not exist', 'imagecycle', 1);
 				$confArr['nivoThemeFolder'] = 'EXT:imagecycle/res/css/nivoslider/';
 			}
 			if (! is_dir(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder'] . $this->conf['nivoTheme']))) {
