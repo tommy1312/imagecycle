@@ -4,7 +4,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Insert a slideshow into your page or template. Manage the images, captions and hrefs recursively in the pagetree and show it in a jQuery-Cycle, Coin-Slider, Nivo-Slider or Cross-Slider.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '3.2.0',
+	'version' => '3.2.1',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -28,6 +28,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'conflicts' => array(
 		),
 		'suggests' => array(
+            'lib_jquery' => '2.1.0-0.0.0',
 		),
 	),
 	'autoload' => array(

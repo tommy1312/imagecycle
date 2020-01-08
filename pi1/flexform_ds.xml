@@ -176,7 +176,7 @@
 							<label></label>
 							<config>
 								<type>user</type>
-                                <userFunc>\TYPO3Extension\Imagecycle\Backend\TcaForm->hideRTE</userFunc>
+                                <userFunc>TYPO3Extension\Imagecycle\Backend\TcaForm->hideRTE</userFunc>
 							</config>
 						</TCEforms>
 					</hideRTE>

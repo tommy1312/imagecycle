@@ -284,6 +284,10 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 	{
 		$this->pagerenderer = GeneralUtility::makeInstance(\TYPO3Extension\Imagecycle\Controller\PageRenderer);
 		$this->pagerenderer->setConf($this->conf);
+		$jQueryAvailable = false;
+		if (class_exists(\Sonority\LibJquery\Hooks\PageRenderer::class)) {
+            $jQueryAvailable = true;
+		}
 
 		// define the directory of images
 		if ($dir == '') {
@@ -439,7 +443,9 @@ class tx_imagecycle_pi2 extends tx_imagecycle_pi1
 		}
 
 		// checks if t3jquery is loaded
-		if (defined('T3JQUERY') && T3JQUERY === true) {
+        if ($jQueryAvailable) {
+            // nothing
+		} else if (defined('T3JQUERY') && T3JQUERY === true) {
 			tx_t3jquery::addJqJS();
 		} else {
 			$this->pagerenderer->addJsFile($this->conf['jQueryLibrary'], true);

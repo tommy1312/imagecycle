@@ -1,3 +1,19 @@
+2020-01-08  Franz Holzinger  <franz@ttproducts.de>
+    * new feature: add support for extension lib_jquery to include the jquery-1.10.0.min.js library in many versions.
+	* move static/coinslider/constants.txt -> Configuration/TypoScript/PluginSetup/coinslider/constants.txt
+	* move static/coinslider/setup.txt -> Configuration/TypoScript/PluginSetup/coinslider/setup.txt
+	* move static/constants.txt -> Configuration/TypoScript/PluginSetup/constants.txt
+	* move static/crossslide/constants.txt -> Configuration/TypoScript/PluginSetup/crossslide/constants.txt
+	* move static/crossslide/setup.txt -> Configuration/TypoScript/PluginSetup/crossslide/setup.txt
+	* move static/nivoslider/constants.txt -> Configuration/TypoScript/PluginSetup/nivoslider/constants.txt
+	* move static/nivoslider/setup.txt -> Configuration/TypoScript/PluginSetup/nivoslider/setup.txt
+	* move static/setup.txt -> Configuration/TypoScript/PluginSetup/setup.txt
+	* move static/slicebox/constants.txt -> Configuration/TypoScript/PluginSetup/slicebox/constants.txt
+	* move static/slicebox/setup.txt -> Configuration/TypoScript/PluginSetup/slicebox/setup.txt
+	* move static/tt_content/setup.txt -> Configuration/TypoScript/PluginSetup/tt_content/setup.txt
+	* move static/tt_news/nivoslider/setup.txt -> Configuration/TypoScript/PluginSetup/tt_news/nivoslider/setup.txt
+	* move static/tt_news/setup.txt -> Configuration/TypoScript/PluginSetup/tt_news/setup.txt
+
 2019-12-19  Franz Holzinger  <franz@ttproducts.de>
     * fix composer.json: add missing namespace typo3-extension
 
