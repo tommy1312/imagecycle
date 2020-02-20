@@ -1,3 +1,8 @@
+
+
+2020-02-20  Franz Holzinger  <franz@ttproducts.de>
+    * fix issue #2: errors in makeInstance with missing class operator
+
 2020-01-08  Franz Holzinger  <franz@ttproducts.de>
     * new feature: add support for extension lib_jquery to include the jquery-1.10.0.min.js library in many versions.
 	* move static/coinslider/constants.txt -> Configuration/TypoScript/PluginSetup/coinslider/constants.txt

@@ -277,7 +277,7 @@ class tx_imagecycle_pi4 extends tx_imagecycle_pi1
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
-		$this->pagerenderer = GeneralUtility::makeInstance(\TYPO3Extension\Imagecycle\Controller\PageRenderer);
+		$this->pagerenderer = GeneralUtility::makeInstance(\TYPO3Extension\Imagecycle\Controller\PageRenderer::class);
 		$this->pagerenderer->setConf($this->conf);
         $jQueryAvailable = false;
         if (class_exists(\Sonority\LibJquery\Hooks\PageRenderer::class)) {
