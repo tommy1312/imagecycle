@@ -327,7 +327,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 	 */
 	public function parseTemplate ($data = array(), $dir = '', $onlyJS = false)
 	{
-		$this->pagerenderer = GeneralUtility::makeInstance(\TYPO3Extension\Imagecycle\Controller\PageRenderer);
+		$this->pagerenderer = GeneralUtility::makeInstance(\TYPO3Extension\Imagecycle\Controller\PageRenderer::class);
 		$this->pagerenderer->setConf($this->conf);
         $jQueryAvailable = false;
         if (class_exists(\Sonority\LibJquery\Hooks\PageRenderer::class)) {
@@ -513,7 +513,7 @@ class tx_imagecycle_pi3 extends tx_imagecycle_pi1
 		$options['next'] = 'nextText: \'' . GeneralUtility::slashJS($this->pi_getLL('next')) . '\'';
 
 		if ($this->conf['nivoSlices'] > 0) {
-			$options['slices'] = 'slices: ' . $this->conf['nivoSlices'] . '\'';
+			$options['slices'] = 'slices: ' . $this->conf['nivoSlices'];
 		}
 		if ($this->conf['nivoBoxCols'] > 0) {
 			$options['boxCols'] = 'boxCols: ' . $this->conf['nivoBoxCols'];
