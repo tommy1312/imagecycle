@@ -1,6 +1,10 @@
 <?php
 defined('TYPO3_MODE') || die('Access denied.');
 
+if (!defined ('IMAGECYLCE_EXT')) {
+    define('IMAGECYLCE_EXT', 'imagecycle');
+}
+
 $table = 'pages';
 
 // PAGE
