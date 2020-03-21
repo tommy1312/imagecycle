@@ -76,8 +76,7 @@ plugin.tx_imagecycle_pi1 {
 				file.import.data = register:file
 				file.width.data = register:imagewidth
 				file.height.data = register:imageheight
-				imageLinkWrap < tt_content.image.20.1.imageLinkWrap
-				imageLinkWrap = 1
+                imageLinkWrap < tt_content.image.20.1.imageLinkWrap
 				imageLinkWrap {
 					enable.data = register:href
 				}

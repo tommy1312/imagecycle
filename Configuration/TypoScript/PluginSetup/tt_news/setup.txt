@@ -1,7 +1,6 @@
 [globalString = TYPO3_LOADED_EXT|tt_news|type=*]
-includeLibs.imagecycle = EXT:imagecycle/class.tx_imagecycle.php
 plugin.tt_news {
-	imageMarkerFunc = tx_imagecycle->getImageForTTnews
+	imageMarkerFunc = TYPO3Extension\Imagecycle\Miscellaneous\TtNewsUserFunctions->getImageForTTnews
 
 	displaySingle {
 		imagecycleSingleImage < plugin.tx_imagecycle_pi1.cycle.ttnews.image

@@ -66,7 +66,7 @@ class WizardIcon
         foreach ($wizardArray as $type => $wizardConf) {
             $params = '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=' . $wizardConf['list_type'];
             $wizardItem = array(
-                'title' => $GLOBALS['LANG']->sL('LLL:EXT:' . IMAGECYLCE_EXT . 'locallang.xml:' . $type . '_title')
+                'title' => $GLOBALS['LANG']->sL('LLL:EXT:' . IMAGECYLCE_EXT . 'locallang.xml:' . $type . '_title'),
                 'description' => $GLOBALS['LANG']->sL('LLL:EXT:' . IMAGECYLCE_EXT . DIV2007_LANGUAGE_SUBPATH . 'locallang.xml:' . $type . '_plus_wiz_description'),
                 'params' => $params
             );

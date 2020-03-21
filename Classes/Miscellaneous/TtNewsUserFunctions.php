@@ -32,6 +32,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 
 class TtNewsUserFunctions {
 	/**
@@ -77,7 +78,7 @@ class TtNewsUserFunctions {
 
 		reset($imgs);
 		$cc = 0;
-		while (list($key, $val) = each($imgs)) {
+		foreach($imgs as $key => $val) {
 			if ($cc == $imageNum) {
 				break;
 			}
@@ -120,7 +121,11 @@ class TtNewsUserFunctions {
 			$instanceClass = ($conf['instanceClass'] ? $conf['instanceClass'] : ExtensionManagementUtility::extPath('imagecycle').'pi1/class.tx_imagecycle_pi1.php');
 			if (! file_exists($instanceClass)) {
 				// try to get the filename if file not exists
-				$instanceClass = $GLOBALS['TSFE']->tmpl->getFileName($instanceClass);
+				if (class_exists(FilePathSanitizer::class)) {
+					$instanceClass = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($instanceClass);
+				} else {
+					$instanceClass = $GLOBALS['TSFE']->tmpl->getFileName($instanceClass);
+				}
 			}
 			if (! file_exists($instanceClass)) {
 				GeneralUtility::devLog('Class \''.$instanceClass.'\' not found', 'imagecycle', 1);
@@ -131,12 +136,17 @@ class TtNewsUserFunctions {
 			/** @var tx_imagecycle_pi1 $obj */
 			$obj = GeneralUtility::makeInstance($instance);
 			$obj->setContentKey($obj->extKey . '_' . $this->cObj->data['uid']);
+			// @extensionScannerIgnoreLine
 			$obj->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.'][$instance . '.'];
 			// overwrite the width and height of the config
+			// @extensionScannerIgnoreLine
 			$obj->conf['imagewidth'] = $GLOBALS['TSFE']->register['imagewidth'];
+			// @extensionScannerIgnoreLine
 			$obj->conf['imageheight'] = $GLOBALS['TSFE']->register['imageheight'];
 			if ($this->cObj->data['tx_imagecycle_duration'] > 0) {
+			    // @extensionScannerIgnoreLine
 				$obj->conf['displayDuration'] = $this->cObj->data['tx_imagecycle_duration'];
+				// @extensionScannerIgnoreLine
 				$obj->conf['nivoPauseTime'] = $this->cObj->data['tx_imagecycle_duration'];
 			}
 			$obj->cObj = $this->cObj;

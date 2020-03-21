@@ -27,6 +27,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 require_once(ExtensionManagementUtility::extPath('imagecycle').'pi2/class.tx_imagecycle_pi2.php');
 
-class CoinSlider extends \tx_imagecycle_pi3 {
+class CoinSlider extends \tx_imagecycle_pi2 {
 
 }

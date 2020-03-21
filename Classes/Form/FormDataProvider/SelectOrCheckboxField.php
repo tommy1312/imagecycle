@@ -14,9 +14,11 @@ namespace TYPO3Extension\Imagecycle\Form\FormDataProvider;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
 use TYPO3\CMS\Backend\Form\FormDataProvider\AbstractItemProvider;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 /**
  * Resolves custom select or checkbox field.
@@ -71,7 +73,11 @@ class SelectOrCheckboxField extends AbstractItemProvider implements FormDataProv
      */
     protected function useSelectInsteadCheckbox()
     {
-        $configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        if (class_exists(ExtensionConfiguration::class)) {
+            $configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('backend');
+        } else {
+            $configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        }
         return (!empty($configuration['useSelectInsteadCheckbox']));
     }
 }

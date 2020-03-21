@@ -28,6 +28,10 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Plugin\AbstractPlugin;
+use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
+use TYPO3\CMS\Core\Service\MarkerBasedTemplateService;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3Extension\Imagecycle\Controller\PageRenderer;
 
 
 /**
@@ -74,7 +78,12 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		$this->setContentKey('imagecycle');
 
 		// set the system language
-		$this->sys_language_uid = $GLOBALS['TSFE']->sys_language_content;
+        if (class_exists(Context::class)) {
+			$languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
+			$this->sysLanguageUid = $languageAspect->getId();
+        } else {
+			$this->sysLanguageUid = $GLOBALS['TSFE']->sys_language_content;
+		}
 
 		// set the uid of the tt_content
 		$this->uid = $this->cObj->data['_LOCALIZED_UID'] ? $this->cObj->data['_LOCALIZED_UID'] : $this->cObj->data['uid'];
@@ -98,14 +107,12 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 			$this->conf['imagesRTE'] = array();
 			if (is_array($imagesRTE['el']) && count($imagesRTE['el']) > 0) {
 				foreach ($imagesRTE['el'] as $elKey => $el) {
-					if (is_numeric($elKey)) {
-						$this->conf['imagesRTE'][] = array(
-							'image'   => $el['data']['el']['image']['vDEF'],
-							'href'    => $el['data']['el']['href']['vDEF'],
-							'caption' => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
-							'hide'    => $el['data']['el']['hide']['vDEF'],
-						);
-					}
+					$this->conf['imagesRTE'][] = array(
+						'image'   => $el['data']['el']['image']['vDEF'],
+						'href'    => $el['data']['el']['href']['vDEF'],
+						'caption' => $this->pi_RTEcssText($el['data']['el']['caption']['vDEF']),
+						'hide'    => $el['data']['el']['hide']['vDEF'],
+					);
 				}
 			}
 
@@ -246,8 +253,10 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 				}
 			}
 			if ($pageID) {
-				if ($this->sys_language_uid) {
-					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_mode', 'pages_language_overlay', 'pid='.intval($pageID).' AND sys_language_uid='.$this->sys_language_uid, '', '', 1);
+                if ($this->sysLanguageUid) {
+                    // @extensionScannerIgnoreLine
+                    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('tx_imagecycle_images, tx_imagecycle_hrefs, tx_imagecycle_captions, tx_imagecycle_effect, tx_imagecycle_mode', 'pages_language_overlay', 'pid='.intval($pageID).' AND sys_language_uid='.$this->sysLanguageUid, '', '', 1);
+                    // @extensionScannerIgnoreLine
 					$row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 					if (trim($used_page['tx_imagecycle_effect'])) {
 						$this->conf['type'] = $row['tx_imagecycle_effect'];
@@ -265,7 +274,7 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 						$this->hrefs    = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_hrefs']);
 						$this->captions = GeneralUtility::trimExplode(chr(10), $used_page['tx_imagecycle_captions']);
 						// Language overlay
-						if ($this->sys_language_uid) {
+                        if ($this->sysLanguageUid) {
 							if (trim($row['tx_imagecycle_images']) != '') {
 								$this->images   = GeneralUtility::trimExplode(',',     $row['tx_imagecycle_images']);
 								$this->hrefs    = GeneralUtility::trimExplode(chr(10), $row['tx_imagecycle_hrefs']);
@@ -413,7 +422,8 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 	 */
 	public function parseTemplate($data=array(), $dir='', $onlyJS=false)
 	{
-		$this->pagerenderer = GeneralUtility::makeInstance(\TYPO3Extension\Imagecycle\Controller\PageRenderer::class);
+        $this->pagerenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $this->templateService = GeneralUtility::makeInstance(MarkerBasedTemplateService::class );
 		$this->pagerenderer->setConf($this->conf);
         $jQueryAvailable = false;
         if (class_exists(\Sonority\LibJquery\Hooks\PageRenderer::class)) {
@@ -436,10 +446,19 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		}
 
 		// The template for JS
-		if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
-			$this->templateFileJS = $this->cObj->fileResource('EXT:imagecycle/res/tx_imagecycle.js');
+        if (class_exists(FilePathSanitizer::class)) {
+			$template = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($this->conf['templateFileJS']);
+			if ($template !== null && file_exists($template)) {
+				$this->templateFileJS = file_get_contents($template);
+			} else {
+				$this->templateFileJS = file_get_contents('EXT:imagecycle/res/tx_imagecycle.js');
+			}
+		} else {
+			if (! $this->templateFileJS = $this->cObj->fileResource($this->conf['templateFileJS'])) {
+				$this->templateFileJS = $this->cObj->fileResource('EXT:imagecycle/res/tx_imagecycle.js');
+			}
 		}
-
+		
 		// set the key
 		$markerArray = array();
 		$markerArray['KEY'] = $this->getContentKey();
@@ -551,8 +570,10 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		}
 		// 
 		if ($this->conf['showPager']) {
-			$templateActivatePagerCode = trim($this->cObj->getSubpart($this->templateFileJS, '###TEMPLATE_ACTIVATE_PAGER_JS###'));
-			$after .= $this->cObj->substituteMarkerArray($templateActivatePagerCode, $markerArray, '###|###', 0);
+            // @extensionScannerIgnoreLine
+            $templateActivatePagerCode = trim($this->templateService->getSubpart($this->templateFileJS, '###TEMPLATE_ACTIVATE_PAGER_JS###'));
+            // @extensionScannerIgnoreLine
+            $after .= $this->templateService->substituteMarkerArray($templateActivatePagerCode, $markerArray, '###|###', 0);
 		}
 		if ($before) {
 			$options['before'] = 'before: function(a,n,o,f) {' . $before .' }';
@@ -577,67 +598,89 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		$this->pagerenderer->addCssFile($this->conf['cssFile']);
 
 		// get the Template of the Javascript
-		if (! $templateCode = trim($this->cObj->getSubpart($this->templateFileJS, '###TEMPLATE_JS###'))) {
+        // @extensionScannerIgnoreLine
+        if (! $templateCode = trim($this->templateService->getSubpart($this->templateFileJS, '###TEMPLATE_JS###'))) {
 			$templateCode = 'alert(\'Template TEMPLATE_JS is missing\')';
 		}
-		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
 		// Show the caption when sync is turned off
 		if ($this->conf['showcaption'] && ! $this->conf['captionSync']) {
-			$templateShowCaption = trim($this->cObj->getSubpart($templateCode, '###SHOW_CAPTION_AT_START###'));
+            // @extensionScannerIgnoreLine
+            $templateShowCaption = trim($this->templateService->getSubpart($templateCode, '###SHOW_CAPTION_AT_START###'));
 		} else {
 			$templateShowCaption = null;
 		}
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SHOW_CAPTION_AT_START###', $templateShowCaption, 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteSubpart($templateCode, '###SHOW_CAPTION_AT_START###', $templateShowCaption, 0);
 
 		// define the control
 		if ($this->conf['showControl']) {
-			$templateControl = trim($this->cObj->getSubpart($templateCode, '###CONTROL###'));
-			$templateControlAfter = trim($this->cObj->getSubpart($templateCode, '###CONTROL_AFTER###'));
-			$options[] = trim($this->cObj->getSubpart($templateCode, '###CONTROL_OPTIONS###'));
+            // @extensionScannerIgnoreLine
+            $templateControl = trim($this->templateService->getSubpart($templateCode, '###CONTROL###'));
+            // @extensionScannerIgnoreLine
+            $templateControlAfter = trim($this->templateService->getSubpart($templateCode, '###CONTROL_AFTER###'));
+            // @extensionScannerIgnoreLine
+            $options[] = trim($this->templateService->getSubpart($templateCode, '###CONTROL_OPTIONS###'));
 		} else {
 			$templateControl = null;
 		}
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL###', $templateControl, 0);
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL_AFTER###', $templateControlAfter, 0);
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###CONTROL_OPTIONS###', '', 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteSubpart($templateCode, '###CONTROL###', $templateControl, 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteSubpart($templateCode, '###CONTROL_AFTER###', $templateControlAfter, 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteSubpart($templateCode, '###CONTROL_OPTIONS###', '', 0);
 
 		// define the play class
 		if ($this->conf['pausedBegin']) {
-			$templatePaused = $this->cObj->getSubpart($templateCode, '###PAUSED###');
-			$templatePausedBegin = $this->cObj->getSubpart($templateCode, '###PAUSED_BEGIN###');
+            // @extensionScannerIgnoreLine
+            $templatePaused = $this->templateService->getSubpart($templateCode, '###PAUSED###');
+            // @extensionScannerIgnoreLine
+            $templatePausedBegin = $this->templateService->getSubpart($templateCode, '###PAUSED_BEGIN###');
 		} else {
 			$templatePaused = null;
 			$templatePausedBegin = null;
 		}
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAUSED###', $templatePaused, 0);
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAUSED_BEGIN###', $templatePausedBegin, 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteSubpart($templateCode, '###PAUSED###', $templatePaused, 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteSubpart($templateCode, '###PAUSED_BEGIN###', $templatePausedBegin, 0);
 
 		// define the pager
 		if ($this->conf['showPager']) {
-			$templatePager = $this->cObj->getSubpart($templateCode, '###PAGER###');
+            // @extensionScannerIgnoreLine
+            $templatePager = $this->templateService->getSubpart($templateCode, '###PAGER###');
 		} else {
 			$templatePager = null;
 		}
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###PAGER###', $templatePager, 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteSubpart($templateCode, '###PAGER###', $templatePager, 0);
 
 		// Slow connection will have a load to start
 		if ($this->conf['fixSlowConnection']) {
-			$templateSlowBefore = $this->cObj->getSubpart($templateCode, '###SLOW_CONNECTION_BEFORE###');
-			$templateSlowAfter  = $this->cObj->getSubpart($templateCode, '###SLOW_CONNECTION_AFTER###');
+            // @extensionScannerIgnoreLine
+            $templateSlowBefore = $this->templateService->getSubpart($templateCode, '###SLOW_CONNECTION_BEFORE###');
+            // @extensionScannerIgnoreLine
+            $templateSlowAfter  = $this->templateService->getSubpart($templateCode, '###SLOW_CONNECTION_AFTER###');
 		} else {
 			$templateSlowBefore = null;
 		}
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SLOW_CONNECTION_BEFORE###', $templateSlowBefore, 0);
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###SLOW_CONNECTION_AFTER###',  $templateSlowAfter, 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteSubpart($templateCode, '###SLOW_CONNECTION_BEFORE###', $templateSlowBefore, 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteSubpart($templateCode, '###SLOW_CONNECTION_AFTER###',  $templateSlowAfter, 0);
 
 		// If only one image is displayed, the caption will be show
 		if (is_array($data) && count($data) == 1) {
-			$templateOnlyOneImage = $this->cObj->getSubpart($templateCode, '###ONLY_ONE_IMAGE###');
+            // @extensionScannerIgnoreLine
+            $templateOnlyOneImage = $this->templateService->getSubpart($templateCode, '###ONLY_ONE_IMAGE###');
 		} else {
 			$templateOnlyOneImage = null;
 		}
-		$templateCode = $this->cObj->substituteSubpart($templateCode, '###ONLY_ONE_IMAGE###', $templateOnlyOneImage, 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteSubpart($templateCode, '###ONLY_ONE_IMAGE###', $templateOnlyOneImage, 0);
 
 		// define the markers
 		$markerArray = array();
@@ -645,12 +688,13 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 		$markerArray['CAPTION_TAG'] = $captionTag;
 
 		// set the markers
-		$templateCode = $this->cObj->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
+        // @extensionScannerIgnoreLine
+        $templateCode = $this->templateService->substituteMarkerArray($templateCode, $markerArray, '###|###', 0);
 
 		$this->pagerenderer->addJS($jQueryNoConflict . $templateCode);
 
 		// checks if t3jquery is loaded
-        if ($jQueryAvailable) {
+      if ($jQueryAvailable) {
 			$this->pagerenderer->addJsFile($this->conf['jQueryEasing']);
 		} else if (defined('T3JQUERY') && T3JQUERY === true) {
 			tx_t3jquery::addJqJS();
@@ -715,7 +759,8 @@ class tx_imagecycle_pi1 extends AbstractPlugin
 			$markerArray['PAGER'] = $this->cObj->stdWrap($pager, $this->conf['cycle.'][$this->type.'.']['pagerWrap.']);
 			// the stdWrap
 			$images = $this->cObj->stdWrap($images, $this->conf['cycle.'][$this->type.'.']['stdWrap.']);
-			$return_string = $this->cObj->substituteMarkerArray($images, $markerArray, '###|###', 0);
+            // @extensionScannerIgnoreLine
+            $return_string = $this->templateService->substituteMarkerArray($images, $markerArray, '###|###', 0);
 			// add the noscript
 			$return_string .= $no_script;
 		}

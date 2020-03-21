@@ -15,6 +15,7 @@ namespace TYPO3Extension\Imagecycle\Form\FormDataProvider;
  */
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
 use TYPO3\CMS\Backend\Form\FormDataProvider\AbstractItemProvider;
 
@@ -67,7 +68,11 @@ class AllowedGroupField extends AbstractItemProvider implements FormDataProvider
     {
         $allowedTypesForCaption = '';
 
-        $configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        if (class_exists(ExtensionConfiguration::class)) {
+			$configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('backend');
+        } else {
+            $configuration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        }
         if (!empty($configuration['allowedDbTypesForCaption'])) {
             $allowedTypesForCaption = $configuration['allowedDbTypesForCaption'];
         }

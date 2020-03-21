@@ -28,7 +28,7 @@ namespace TYPO3Extension\Imagecycle\Backend;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 
@@ -47,7 +47,11 @@ class ItemsProcFunc
 	 */
 	public function getEffects($config, $item)
 	{
-		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        if (class_exists(ExtensionConfiguration::class)) {
+			$confArr = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('backend');
+        } else {
+            $confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        }
 		$availableEffects = GeneralUtility::trimExplode(',', $confArr['effects'], true);
 		if (count($availableEffects) < 1) {
 			$availableEffects = array('none','blindX','blindY','blindZ','cover','curtainX','curtainY','fade','fadeout','fadeZoom','growX','growY','scrollUp','scrollDown','scrollLeft','scrollRight','scrollHorz','scrollVert','shuffle','slideX','slideY','toss','turnUp','turnDown','turnLeft','turnRight','uncover','wipe','zoom','all');
@@ -84,7 +88,11 @@ class ItemsProcFunc
 	 */
 	public function getEffectsCoin($config, $item)
 	{
-		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        if (class_exists(ExtensionConfiguration::class)) {
+			$confArr = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('backend');
+        } else {
+            $confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        }
 		$availableEffects = GeneralUtility::trimExplode(',', $confArr['effectsCoin'], true);
 		if (count($availableEffects) < 1) {
 			$availableEffects = array('random','swirl','rain','straight');
@@ -121,7 +129,11 @@ class ItemsProcFunc
 	 */
 	public function getEffectsNivo($config, $item)
 	{
-		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        if (class_exists(ExtensionConfiguration::class)) {
+			$confArr = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('backend');
+        } else {
+            $confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        }
 		$availableEffects = GeneralUtility::trimExplode(',', $confArr['effectsNivo'], true);
 		if (count($availableEffects) < 1) {
 			$availableEffects = array('random','sliceDown','sliceDownLeft','sliceUp','sliceUpLeft','sliceUpDown','sliceUpDownLeft','fold','fade','slideInRight','slideInLeft', 'boxRandom', 'boxRain', 'boxRainReverse', 'boxRainGrow', 'boxRainGrowReverse');
@@ -158,7 +170,11 @@ class ItemsProcFunc
 	*/
 	public function getThemesNivo($config, $item)
 	{
-		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        if (class_exists(ExtensionConfiguration::class)) {
+			$confArr = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('backend');
+        } else {
+            $confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        }
 		if (! is_dir(GeneralUtility::getFileAbsFileName($confArr['nivoThemeFolder']))) {
 			// if the defined folder does not exist, define the default folder
 			GeneralUtility::devLog('Path \''.$confArr['nivoThemeFolder'].'\' does not exist', 'imagecycle', 1);

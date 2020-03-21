@@ -2,7 +2,7 @@
 
 This repository is replacing the TYPO3 Extension
 [Imagecycle](https://typo3.org/extensions/repository/view/imagecycle) and it has been built starting from the former fork at [a7digital Imagecycle](https://github.com/a7digital/imagecycle).
-TYPO3 8.7 is supported.
+TYPO3 8.7 and 9.5 is supported.
 
 ## Remarks
 

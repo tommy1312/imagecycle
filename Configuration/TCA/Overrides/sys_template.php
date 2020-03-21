@@ -41,4 +41,15 @@ if (!defined ('IMAGECYLCE_EXT')) {
     'Slice-Box'
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+    IMAGECYLCE_EXT,
+    'Configuration/TypoScript/PluginSetup/tt_news/',
+    'Image-Cycle for tt_news - Cycle'
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+    IMAGECYLCE_EXT,
+    'Configuration/TypoScript/PluginSetup/tt_news/nivoslider/',
+    'Image-Cycle for tt_news - Nivo'
+);
 

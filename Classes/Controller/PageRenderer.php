@@ -30,6 +30,7 @@ namespace TYPO3Extension\Imagecycle\Controller;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
+use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 
 /**
  * This class implements a all needed functions to add Javascripts and Stylesheets to a page
@@ -54,14 +55,14 @@ class PageRenderer
 	 * Set the configuration for the pagerenderer
 	 * @param array $conf
 	 */
-	public function setConf ($conf) {
+	public function setConf($conf) {
 		$this->conf = $conf;
 	}
 
 	/**
 	 * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	 */
-	protected function getTypoScriptFrontendController () {
+	protected function getTypoScriptFrontendController() {
 		return $GLOBALS['TSFE'];
 	}
 
@@ -70,7 +71,7 @@ class PageRenderer
 	*
 	* @return void
 	*/
-	public function addResources () {
+	public function addResources() {
 		$pagerender = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
 		// Fix moveJsFromHeaderToFooter (add all scripts to the footer)
 		if ($this->getTypoScriptFrontendController()->config['config']['moveJsFromHeaderToFooter']) {
@@ -169,8 +170,15 @@ class PageRenderer
 	 * @param string $path
 	 * @return string
 	 */
-	public function getPath ($path = '') {
-		return $this->getTypoScriptFrontendController()->tmpl->getFileName($path);
+	public function getPath($path = '') {
+        if ($path !== '')
+			if (class_exists(FilePathSanitizer::class)) {
+				return GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize($path);
+			} else {
+				return $this->getTypoScriptFrontendController()->tmpl->getFileName($path);
+			}
+
+        return $path;
 	}
 
 	/**
@@ -180,7 +188,7 @@ class PageRenderer
 	 * @param boolean $first
 	 * @return void
 	 */
-	public function addJsFile ($script = '', $first = FALSE) {
+	public function addJsFile($script = '', $first = FALSE) {
 		if ($this->getPath($script) && ! in_array($script, $this->jsFiles)) {
 			if ($first === TRUE) {
 				$this->jsFiles = array_merge(array($script), $this->jsFiles);
@@ -196,7 +204,7 @@ class PageRenderer
 	 * @param string $script
 	 * @return void
 	 */
-	public function addJS ($script = '') {
+	public function addJS($script = '') {
 		if (! in_array($script, $this->js)) {
 			$this->js[] = $script;
 		}
@@ -208,7 +216,7 @@ class PageRenderer
 	 * @param string $script
 	 * @return void
 	 */
-	public function addCssFile ($script = '') {
+	public function addCssFile($script = '') {
 		if ($this->getPath($script) && ! in_array($script, $this->cssFiles)) {
 			$this->cssFiles[] = $script;
 		}
@@ -221,7 +229,7 @@ class PageRenderer
 	 * @param string $include for example use 'lte IE 7'
 	 * @return void
 	 */
-	public function addCssFileInc ($script = '', $include = 'IE') {
+	public function addCssFileInc($script = '', $include = 'IE') {
 		if ($this->getPath($script) && ! in_array($script, $this->cssFiles) && $include) {
 			$this->cssFilesInc[] = array(
 				'file' => $script,
@@ -236,7 +244,7 @@ class PageRenderer
 	 * @param string $script
 	 * @return void
 	 */
-	public function addCSS ($script = '') {
+	public function addCSS($script = '') {
 		if (! in_array($script, $this->css)) {
 			$this->css[] = $script;
 		}
@@ -247,7 +255,7 @@ class PageRenderer
 	 * @param string $key
 	 * @return string
 	 */
-	public function getExtensionVersion ($key) {
+	public function getExtensionVersion($key) {
 		if (! ExtensionManagementUtility::isLoaded($key)) {
 			return '';
 		}

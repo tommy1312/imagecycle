@@ -29,6 +29,7 @@ namespace TYPO3Extension\Imagecycle\Backend;
  ***************************************************************/
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 /**
  * Class that renders fields for the extensionmanager configuration
@@ -111,7 +112,11 @@ class ExtensionManagerConfiguration
 			'useSelectInsteadCheckbox',
 			'allowedDbTypesForCaption',
 		);
-		$confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        if (class_exists(ExtensionConfiguration::class)) {
+			$confArr = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('backend');
+        } else {
+            $confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['imagecycle']);
+        }
 		foreach ($confDefault as $val) {
 			if (!isset($confArr[$val]) && !isset($_POST['data'][$val])) {
 				return false;

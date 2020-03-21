@@ -1,4 +1,6 @@
-
+2020-03-19  Tommy  <tommy@sallingstadt.net>
+    * compatible to TYPO3 9.5
+    * several fixes
 
 2020-02-20  Franz Holzinger  <franz@ttproducts.de>
     * fix issue #2: errors in makeInstance with missing class operator
